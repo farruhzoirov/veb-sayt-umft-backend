@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update Direction Data</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      background-color: #f0f0f0;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    input, select, textarea {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #currentImage {
+      max-width: 200px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Update Direction Data</h1>
+<form id="updateForm" enctype="multipart/form-data">
+  <label for="modelId">Model ID</label>
+  <input type="text" id="modelId" name="modelId" required>
+
+  <label for="code">Code</label>
+  <input type="number" id="code" name="code">
+
+  <label for="faculty">Faculty ID</label>
+  <input type="text" id="faculty" name="faculty">
+
+  <label for="degree">Degree ID</label>
+  <input type="text" id="degree" name="degree">
+
+  <label for="format">Format ID (optional)</label>
+  <input type="text" id="format" name="format">
+
+  <label for="name">Translate Name</label>
+  <input type="text" id="name" name="translate[name]">
+
+  <label for="language">Language</label>
+  <input type="text" id="language" name="translate[language]" value="67112b4072c9b24f5f0d03f4">
+
+  <label for="description">Translate Description</label>
+  <textarea id="description" name="translate[description]" rows="4"></textarea>
+
+  <label for="img">Upload New Images</label>
+  <input type="file" id="img" name="image" multiple>
+
+  <div>
+    <p>Current Image:</p>
+    <img id="currentImage" name="img" src="" alt="Current Image" style="display: none;">
+  </div>
+
+  <button type="submit" id="putButton">Update (PUT)</button>
+  <button type="submit" id="patchButton">Update (PATCH)</button>
+</form>
+
+<script>
+  const form = document.getElementById('updateForm');
+  const currentImage = document.getElementById('currentImage');
+  const putButton = document.getElementById('putButton');
+  const patchButton = document.getElementById('patchButton');
+
+  async function updateDirection(method) {
+    const formData = new FormData(form);
+    const modelId = formData.get('modelId');
+    formData.delete('modelId');
+    console.log(formData)
+    try {
+      const response = await fetch(`http://localhost:8000/api/direction/${modelId}`, {
+        method: method,
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(errorMessage);
+      }
+
+      const result = await response.json();
+      if (result.newData.img && result.newData.img.length > 0) {
+        currentImage.src = "http://localhost:8000/" + result.newData.img[0];
+        currentImage.style.display = "block";
+      } else {
+        alert('No image found in the response.');
+      }
+      console.log(result);
+      alert(`Direction data ${method === 'PUT' ? 'replaced' : 'updated'} successfully!`);
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Failed to update: ' + error.message);
+    }
+  }
+
+  putButton.addEventListener('click', async (e) => {
+    e.preventDefault();
+    await updateDirection('PUT');
+  });
+
+  patchButton.addEventListener('click', async (e) => {
+    e.preventDefault();
+    await updateDirection('PATCH');
+  });
+
+  // Fetch and populate current data
+  document.getElementById('modelId').addEventListener('change', async (e) => {
+    const modelId = e.target.value;
+    if (!modelId) return;
+
+    try {
+      const response = await fetch(`http://localhost:8000/api/direction/${modelId}`);
+      if (!response.ok) throw new Error('Failed to fetch direction data');
+
+      const data = await response.json();
+
+      // Populate form fields with current data
+      document.getElementById('code').value = data.code || '';
+      document.getElementById('faculty').value = data.faculty || '';
+      document.getElementById('degree').value = data.degree || '';
+      document.getElementById('format').value = data.format || '';
+
+      if (data.translate) {
+        document.getElementById('name').value = data.translate.name || '';
+        document.getElementById('language').value = data.translate.language || '';
+        document.getElementById('description').value = data.translate.description || '';
+      }
+
+      if (data.img && data.img.length > 0) {
+        currentImage.src = "http://localhost:8000/" + data.img[0];
+        currentImage.style.display = "block";
+      } else {
+        currentImage.style.display = "none";
+      }
+    } catch (error) {
+      console.error('Error fetching direction data:', error);
+      alert('Failed to fetch direction data: ' + error.message);
+    }
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2948 @@
+openapi: 3.1.0
+info:
+  title: NEW UMFT SITE  API
+  description: Optional multiline or single-line description in HTML.
+  version: 0.1.9
+servers:
+  - url: http://195.158.9.124:4121/
+    description: Optional server description, e.g. Main (production) server
+tags:
+  - name: Auth
+    description: Endpoints related to authentication
+
+paths:
+
+  ## Auth
+  /auth/login/addAdmin:
+    get:
+      summary: Adminni yaratish.
+      description: Optional extended description in CommonMark or HTML.
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  type: string
+      tags:
+        - Auth
+  /auth/login:
+    post:
+      summary: login.
+      description: Optional extended description in CommonMark or HTML.
+      requestBody:
+        description: Optional description in *Markdown*
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/login"
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: "#/components/schemas/login"
+      tags:
+        - Auth
+  /auth/checkuser:
+    get:
+      summary: userni  tekshirish layout uchun.
+      security:
+        - BearerAuth: [ ]
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  type: string
+      tags:
+        - Auth
+
+
+  ## User
+  /user:
+    get:
+      summary: barcha foydalanuvchilar.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: name
+          schema:
+            type: string
+          required: false
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                # $ref: "#/components/schemas/topsearch"
+      tags:
+        - Users
+
+  /user/add:
+    post:
+      summary: bitta userni yaratish.
+      requestBody:
+        description: Optional description in *Markdown*
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/user"
+      responses:
+        "201": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+              #   items:
+              #     $ref: '#/components/schemas/country'
+      tags:
+        - Users
+  /user/{userId}:
+    put:
+      summary: bitta userni tahrirlash.
+      requestBody:
+        description: Optional description in *Markdown*
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/user"
+      responses:
+        "201": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+              #   items:
+              #     $ref: '#/components/schemas/country'
+      tags:
+        - Users
+  /user/userId:
+    get:
+      summary: bitta userni olish.
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+        - Users
+
+  /user/delete:
+    delete:
+      summary: bitta userni o'chirish.
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+        - Users
+
+
+
+  ##Language
+  /api/language:
+    get:
+      summary: barcha tillar.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: title
+          schema:
+            type: string
+          required: false
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                # $ref: "#/components/schemas/topsearch"
+      tags:
+        - Language
+    post:
+      summary: bitta tilni yaratish.
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: Optional description in *Markdown*
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/language"
+      responses:
+        "201": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+              #   items:
+              #     $ref: '#/components/schemas/country'
+      tags:
+        - Language
+    put:
+      summary: bitta tilni tahrirlash.
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: Optional description in *Markdown*
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/languageUp"
+      responses:
+        "201": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+              #   items:
+              #     $ref: '#/components/schemas/country'
+      tags:
+        - Language
+  /api/language/id:
+    get:
+      summary: bitta tilni olish.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/language'
+      tags:
+        - Language
+  /api/language/{id}:
+    delete:
+      summary: tilni o'chirish.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+              #   items:
+              #     $ref: '#/components/schemas/country'
+      tags:
+        - Language
+  
+
+  
+  ## Category
+  /api/category:
+    get:
+      summary: barcha category.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+
+        - in: query
+          name: search
+          schema:
+            type: string
+          required: false
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                # $ref: "#/components/schemas/topsearch"
+      tags:
+        - Category
+    post:
+      summary: bitta categoryni yaratish.
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: Birinchi model qo´shganda bodyda modelId kelmaydi translatelari uchun bo'lishi kerak.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/category"
+      responses:
+        "201": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+              #   items:
+              #     $ref: '#/components/schemas/country'
+      tags:
+        - Category
+    put:
+      summary: bitta categoryni tahrirlash.
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: Optional description in *Markdown*
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/categoryUp"
+      responses:
+        "201": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+              #   items:
+              #     $ref: '#/components/schemas/country'
+      tags:
+        - Category
+  /category/all:
+    get:
+      summary: barcha categorylarni til bo'yicha front uchun.
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: language
+          schema:
+            type: string
+          required: true
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                # $ref: "#/components/schemas/topsearch"
+      tags:
+        - Category
+  /category/{slug}:
+    get:
+      summary: bitta categoryni olish front uchun.
+
+      parameters:
+        - in: path
+          name: slug
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: language
+          schema:
+            type: string
+          required: true
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/category'
+      tags:
+        - Category
+  /api/category/{id}:
+    get:
+      summary: bitta categoryni olish.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: language
+          schema:
+            type: string
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/category'
+      tags:
+        - Category
+    delete:
+      summary: categoryni o'chirish.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+              #   items:
+              #     $ref: '#/components/schemas/country'
+      tags:
+        - Category
+  /api/category/{id}/{status}:
+    get:
+      summary: bitta categoryni holatini tahrirlash.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: status
+          schema:
+            type: string
+          required: true
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+              #   items:
+              #     $ref: '#/components/schemas/country'
+      tags:
+        - Category
+  /api/category/upload:
+    post:
+      summary: bitta category fileni yaratish.
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required:
+                - file
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+              #   items:
+              #     $ref: '#/components/schemas/country'
+      tags:
+        - Category
+
+
+
+
+
+
+
+
+  ## News
+  /api/news:
+    get:
+      summary: barcha yangiliklar.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: school
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: title
+          schema:
+            type: string
+          required: false
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                # $ref: "#/components/schemas/topsearch"
+      tags:
+        - News
+    post:
+      summary: bitta yangilikni yaratish.
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: Optional description in *Markdown*
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/news"
+      responses:
+        "201": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+              #   items:
+              #     $ref: '#/components/schemas/country'
+      tags:
+        - News
+    put:
+      summary: bitta yangilikni tahrirlash.
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: Optional description in *Markdown*
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/news"
+      responses:
+        "200":
+          description: Updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/updateModel"
+      tags:
+        - News
+  /news/all:
+    get:
+      summary: barcha yangiliklarni til bo'yicha front uchun.
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: language
+          schema:
+            type: string
+          required: true
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                # $ref: "#/components/schemas/topsearch"
+      tags:
+        - News
+  /news/{slug}:
+    get:
+      summary: bitta yangilikni olish front uchun.
+
+      parameters:
+        - in: path
+          name: slug
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: language
+          schema:
+            type: string
+          required: true
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/category'
+      tags:
+        - News
+  /api/news/{id}:
+    get:
+      summary: bitta yangilikni olish.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: language
+          schema:
+            type: string
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/category'
+      tags:
+        - News
+    delete:
+      summary: yangilikni o'chirish.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/deleteModel"
+      tags:
+        - News
+  /api/news/{id}/{status}:
+    get:
+      summary: bitta yangiliklarni holatini tahrirlash.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: status
+          schema:
+            type: string
+          required: true
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+              #   items:
+              #     $ref: '#/components/schemas/country'
+      tags:
+        - News
+  /api/news/upload:
+    post:
+      summary: bitta yangilik fileni yaratish.
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required:
+                - file
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+              #   items:
+              #     $ref: '#/components/schemas/country'
+      tags:
+        - News
+
+
+
+
+  ## Page
+  /api/page:
+    get:
+      summary: barcha pagelar.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: school
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: title
+          schema:
+            type: string
+          required: false
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                # $ref: "#/components/schemas/topsearch"
+      tags:
+        - Page
+    post:
+      summary: bitta pageni yaratish.
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: Optional description in *Markdown*
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/page"
+      responses:
+        "201": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+              #   items:
+              #     $ref: '#/components/schemas/country'
+      tags:
+        - Page
+    put:
+      summary: bitta pageni tahrirlash.
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: Optional description in *Markdown*
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/pageUp"
+      responses:
+        "201": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+              #   items:
+              #     $ref: '#/components/schemas/country'
+      tags:
+        - Page
+  /page/all:
+    get:
+      summary: barcha pageni til bo'yicha front uchun.
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: language
+          schema:
+            type: string
+          required: true
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                # $ref: "#/components/schemas/topsearch"
+      tags:
+        - Page
+  /page/{slug}:
+    get:
+      summary: bitta pageni olish front uchun.
+
+      parameters:
+        - in: path
+          name: slug
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: language
+          schema:
+            type: string
+          required: true
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/page'
+      tags:
+        - Page
+  /api/page/{id}:
+    get:
+      summary: bitta pageni olish.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: language
+          schema:
+            type: string
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/category'
+      tags:
+        - Page
+    delete:
+      summary: pageni o'chirish.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+              #   items:
+              #     $ref: '#/components/schemas/country'
+      tags:
+        - Page
+  /api/page/{id}/{status}:
+    get:
+      summary: bitta yangiliklarni holatini tahrirlash.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: status
+          schema:
+            type: string
+          required: true
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+              #   items:
+              #     $ref: '#/components/schemas/country'
+      tags:
+        - Page
+
+##Degree
+  /api/degree:
+    get:
+      summary: Get all degrees
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: search
+          schema:
+          type: string
+          required: false
+      responses:
+        "200":
+          description: List of degrees
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/degree"
+      tags:
+        - Degree
+
+    post:
+      summary: Create a degree
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: Degree creation payload
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/degree"
+      responses:
+        "201":
+          description: Degree created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/degree"
+      tags:
+        - Degree
+
+  /api/degree/{id}:
+      get:
+        summary: Get a single degree by ID
+        security:
+          - BearerAuth: [ ]
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: string
+            required: true
+        responses:
+          "200":
+            description: Single degree
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/degree"
+        tags:
+          - Degree
+
+      put:
+        summary: Update a degree by ID
+        security:
+          - BearerAuth: [ ]
+        parameters:
+          - in: path
+            name: modelId
+            schema:
+              type: string
+            required: true
+        requestBody:
+          description: Degree update payload
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/degreePut"
+        responses:
+          "200":
+            description: Updated successfully
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/updateModel"
+        tags:
+          - Degree
+
+      delete:
+        summary: Delete a degree by ID
+        security:
+          - BearerAuth: [ ]
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: string
+            required: true
+        requestBody:
+          description: Degree delete payload
+          required: false
+        responses:
+          "200":
+            description: Deleted successfully
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/deleteModel"
+        tags:
+          - Degree
+
+##Direction
+
+  /api/direction:
+              get:
+                summary: Get all directions
+                security:
+                  - BearerAuth: [ ]
+                parameters:
+                  - in: query
+                    name: limit
+                    schema:
+                      type: string
+                    required: false
+                  - in: query
+                    name: page
+                    schema:
+                      type: string
+                    required: false
+                  - in: query
+                    name: select
+                    schema:
+                      type: string
+                    required: false
+                  - in: query
+                    name: search
+                    schema:
+                    type: string
+                    required: false
+                responses:
+                  "200":
+                    description: List of directions
+                    content:
+                      application/json:
+                        schema:
+                          type: array
+                          items:
+                            $ref: "#/components/schemas/directionAll"
+                tags:
+                  - Direction
+
+              post:
+                summary: Create a degree
+                security:
+                  - BearerAuth: []
+                requestBody:
+                  description: direction creation payload
+                  required: true
+                  content:
+                    application/json:
+                      schema:
+                        $ref: "#/components/schemas/direction"
+                responses:
+                  "201":
+                    description: Degree created successfully
+                    content:
+                      application/json:
+                        schema:
+                          $ref: "#/components/schemas/direction"
+                tags:
+                  - Direction
+
+  /api/direction/{id}:
+              get:
+                summary: Get a single direction by ID
+                security:
+                  - BearerAuth: [ ]
+                parameters:
+                  - in: path
+                    name: id
+                    schema:
+                      type: string
+                    required: true
+                responses:
+                  "200":
+                    description: Single degree
+                    content:
+                      application/json:
+                        schema:
+                          $ref: "#/components/schemas/directionAll"
+                tags:
+                  - Direction
+              put:
+                summary: Update a direction by ID
+                security:
+                  - BearerAuth: [ ]
+                parameters:
+                  - in: path
+                    name: modelId
+                    schema:
+                      type: string
+                    required: true
+                requestBody:
+                  description: Direction update payload
+                  required: true
+                  content:
+                    application/json:
+                      schema:
+                        $ref: "#/components/schemas/direction"
+                responses:
+                  "200":
+                    description: Updated successfully
+                    content:
+                      application/json:
+                        schema:
+                          $ref: "#/components/schemas/updateModel"
+                tags:
+                  - Direction
+
+              delete:
+                summary: Delete a direction by ID
+                security:
+                  - BearerAuth: [ ]
+                parameters:
+                  - in: path
+                    name: id
+                    schema:
+                      type: string
+                    required: true
+                responses:
+                  "200":
+                    description: Deleted successfully
+                    content:
+                      application/json:
+                        schema:
+                          $ref: "#/components/schemas/deleteModel"
+                tags:
+                  - Direction
+
+    ##Faculty
+  /api/faculty:
+                get:
+                  summary: Get all faculties
+                  security:
+                    - BearerAuth: [ ]
+                  parameters:
+                    - in: query
+                      name: limit
+                      schema:
+                        type: string
+                      required: false
+                    - in: query
+                      name: page
+                      schema:
+                        type: string
+                      required: false
+                    - in: query
+                      name: select
+                      schema:
+                        type: string
+                      required: false
+                    - in: query
+                      name: search
+
+                  responses:
+                    "200":
+                      description: List of faculties
+                      content:
+                        application/json:
+                          schema:
+                              $ref: "#/components/schemas/faculty"
+                  tags:
+                    - Faculty
+
+                post:
+                  summary: Create a faculty
+                  security:
+                    - BearerAuth: []
+                  requestBody:
+                    description: Faculty creation payload
+                    required: true
+                    content:
+                      application/json:
+                        schema:
+                          $ref: "#/components/schemas/faculty"
+                  responses:
+                    "201":
+                      description: Created successfully
+                      content:
+                        application/json:
+                          schema:
+                            $ref: "#/components/schemas/faculty"
+                  tags:
+                    - Faculty
+
+  /api/faculty/{id}:
+                get:
+                  summary: Get a single faculty by ID
+                  security:
+                    - BearerAuth: [ ]
+                  parameters:
+                    - in: path
+                      name: id
+                      schema:
+                        type: string
+                      required: true
+                  responses:
+                    "200":
+                      description: Single degree
+                      content:
+                        application/json:
+                          schema:
+                            $ref: "#/components/schemas/faculty"
+                  tags:
+                    - Faculty
+                put:
+                  summary: Update a faculty by ID
+                  security:
+                    - BearerAuth: [ ]
+                  parameters:
+                    - in: path
+                      name: modelId
+                      schema:
+                        type: string
+                      required: true
+                  requestBody:
+                    description: Faculty update payload
+                    required: true
+                    content:
+                      application/json:
+                        schema:
+                          $ref: "#/components/schemas/faculty"
+                  responses:
+                    "200":
+                      description: Updated successfully
+                      content:
+                        application/json:
+                          schema:
+                            $ref: "#/components/schemas/updateModel"
+                  tags:
+                    - Faculty
+
+                delete:
+                  summary: Delete a faculty by ID
+                  security:
+                    - BearerAuth: [ ]
+                  parameters:
+                    - in: path
+                      name: id
+                      schema:
+                        type: string
+                      required: true
+
+                  responses:
+                    "200":
+                      description: Deleted successfully
+                      content:
+                          application/json:
+                            schema:
+                              $ref: "#/components/schemas/deleteModel"
+                  tags:
+                    - Faculty
+
+   ##Format
+  /api/format:
+                get:
+                  summary: Get all formats
+                  security:
+                    - BearerAuth: [ ]
+                  parameters:
+                    - in: query
+                      name: limit
+                      schema:
+                        type: string
+                      required: false
+                    - in: query
+                      name: page
+                      schema:
+                        type: string
+                      required: false
+                    - in: query
+                      name: select
+                      schema:
+                        type: string
+                      required: false
+                    - in: query
+                      name: search
+                  responses:
+                      "200":
+                        description: List of formats
+                        content:
+                          application/json:
+                            schema:
+                              $ref: "#/components/schemas/formatGet"
+                  tags:
+                      - Format
+
+                post:
+                    summary: Create a format
+                    security:
+                      - BearerAuth: [ ]
+                    requestBody:
+                      description: Formats creation payload
+                      required: true
+                      content:
+                        application/json:
+                          schema:
+                            $ref: "#/components/schemas/formatGet"
+                    responses:
+                      "201":
+                        description: Created successfully
+                        content:
+                          application/json:
+                            schema:
+                              $ref: "#/components/schemas/formatGet"
+                    tags:
+                      - Format
+
+  /api/format/{id}:
+                get:
+                    summary: Get a single format by ID
+                    security:
+                      - BearerAuth: [ ]
+                    parameters:
+                      - in: path
+                        name: id
+                        schema:
+                          type: string
+                        required: true
+                    responses:
+                      "200":
+                        description: Single Format
+                        content:
+                          application/json:
+                            schema:
+                              $ref: "#/components/schemas/format"
+                    tags:
+                      - Format
+                put:
+                    summary: Update a format by ID
+                    security:
+                      - BearerAuth: [ ]
+                    parameters:
+                      - in: path
+                        name: modelId
+                        schema:
+                          type: string
+                        required: true
+                    requestBody:
+                      description: Format update payload
+                      required: true
+                      content:
+                        application/json:
+                          schema:
+                            $ref: "#/components/schemas/format"
+                    responses:
+                      "200":
+                        description: Updated successfully
+                        content:
+                          application/json:
+                            schema:
+                              $ref: "#/components/schemas/updateModel"
+                    tags:
+                      - Format
+
+                delete:
+                    summary: Delete a format by ID
+                    security:
+                      - BearerAuth: [ ]
+                    parameters:
+                      - in: path
+                        name: id
+                        schema:
+                          type: string
+                        required: true
+
+                    responses:
+                      "200":
+                        description: Deleted successfully
+                        content:
+                          application/json:
+                            schema:
+                              $ref: "#/components/schemas/deleteModel"
+                    tags:
+                      - Format
+
+
+    ##Level
+  /api/level:
+                get:
+                    summary: Get all levels
+                    security:
+                      - BearerAuth: []
+                    parameters:
+                      - in: query
+                        name: limit
+                        schema:
+                          type: string
+                        required: false
+                      - in: query
+                        name: page
+                        schema:
+                          type: string
+                        required: false
+                      - in: query
+                        name: select
+                        schema:
+                          type: string
+                        required: false
+                      - in: query
+                        name: search
+                    responses:
+                      "200":
+                        description: List of levels
+                        content:
+                          application/json:
+                            schema:
+                              $ref: "#/components/schemas/levelGet"
+                    tags:
+                      - Level
+                post:
+                    summary: Create a level
+                    security:
+                      - BearerAuth: [ ]
+                    requestBody:
+                      description: Levels creation payload
+                      required: true
+                      content:
+                        application/json:
+                          schema:
+                            $ref: "#/components/schemas/levelGet"
+                    responses:
+                      "201":
+                        description: Created successfully
+                        content:
+                          application/json:
+                            schema:
+                              $ref: "#/components/schemas/format"
+                    tags:
+                      - Level
+
+  /api/level/{id}:
+              get:
+                    summary: Get a single level by ID
+                    security:
+                      - BearerAuth: [ ]
+                    parameters:
+                      - in: path
+                        name: id
+                        schema:
+                          type: string
+                        required: true
+                    responses:
+                      "200":
+                        description: Single Level
+                        content:
+                          application/json:
+                            schema:
+                              $ref: "#/components/schemas/levelGet"
+                    tags:
+                      - Level
+              put:
+                    summary: Update a level by ID
+                    security:
+                      - BearerAuth: [ ]
+                    parameters:
+                      - in: path
+                        name: modelId
+                        schema:
+                          type: string
+                        required: true
+                    requestBody:
+                      description: Level update payload
+                      required: true
+                      content:
+                        application/json:
+                          schema:
+                            $ref: "#/components/schemas/levelGet"
+                    responses:
+                      "200":
+                        description: Updated successfully
+                        content:
+                          application/json:
+                            schema:
+                              $ref: "#/components/schemas/updateModel"
+                    tags:
+                      - Level
+
+              delete:
+                    summary: Delete a level by ID
+                    security:
+                      - BearerAuth: []
+                    parameters:
+                      - in: path
+                        name: id
+                        schema:
+                          type: string
+                        required: true
+                    responses:
+                      "200":
+                        description: Deleted successfully
+                        content:
+                          application/json:
+                            schema:
+                              $ref: "#/components/schemas/deleteModel"
+                    tags:
+                      - Level
+  ##Partner
+  /api/partner:
+              get:
+                  summary: Get all partners
+                  security:
+                    - BearerAuth: [ ]
+                  parameters:
+                    - in: query
+                      name: limit
+                      schema:
+                        type: string
+                      required: false
+                    - in: query
+                      name: page
+                      schema:
+                        type: string
+                      required: false
+                    - in: query
+                      name: select
+                      schema:
+                        type: string
+                      required: false
+                    - in: query
+                      name: search
+                  responses:
+                    "200":
+                      description: List of partners
+                      content:
+                        application/json:
+                          schema:
+                            $ref: "#/components/schemas/partners"
+                  tags:
+                    - Partner
+              post:
+                  summary: Create a partners
+                  security:
+                    - BearerAuth: [ ]
+                  requestBody:
+                    description: Partners creation payload
+                    required: true
+                    content:
+                      application/json:
+                        schema:
+                          $ref: "#/components/schemas/partners"
+                  responses:
+                    "201":
+                      description: Created successfully
+                      content:
+                        application/json:
+                          schema:
+                            $ref: "#/components/schemas/format"
+                  tags:
+                    - Partner
+
+  /api/partner/{id}:
+                get:
+                  summary: Get a single partner by ID
+                  security:
+                    - BearerAuth: [ ]
+                  parameters:
+                    - in: path
+                      name: id
+                      schema:
+                        type: string
+                      required: true
+                  responses:
+                    "200":
+                      description: Single partner
+                      content:
+                        application/json:
+                          schema:
+                            $ref: "#/components/schemas/partners"
+                  tags:
+                    - Partner
+                put:
+                  summary: Update a partner by ID
+                  security:
+                    - BearerAuth: [ ]
+                  parameters:
+                    - in: path
+                      name: modelId
+                      schema:
+                        type: string
+                      required: true
+                  requestBody:
+                    description: Partner update payload
+                    required: true
+                    content:
+                      application/json:
+                        schema:
+                          $ref: "#/components/schemas/partners"
+                  responses:
+                    "200":
+                      description: Updated successfully
+                      content:
+                        application/json:
+                          schema:
+                            $ref: "#/components/schemas/updateModel"
+                  tags:
+                    - Partner
+                delete:
+                  summary: Delete a partner by ID
+                  security:
+                    - BearerAuth: [ ]
+                  parameters:
+                    - in: path
+                      name: id
+                      schema:
+                        type: string
+                      required: true
+                  responses:
+                    "200":
+                      description: Deleted successfully
+                      content:
+                        application/json:
+                          schema:
+                            $ref: "#/components/schemas/deleteModel"
+                  tags:
+                    - Partner
+
+
+  ##Topic
+  /api/topic:
+    get:
+      summary: Get all topics
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: search
+          schema:
+            type: string
+          required: false
+      responses:
+        "200":
+          description: List of topics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/topics"
+      tags:
+        - Topic
+    post:
+      summary: Create a topic
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: Topics creation payload (direction and level they are Ids)
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/topicsPost"
+      responses:
+        "201":
+          description: Created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/topics"
+      tags:
+        - Topic
+
+  /api/topic/{id}:
+    get:
+      summary: Get a single topic by ID
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Single topic
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/topics"
+      tags:
+        - Topic
+    put:
+      summary: Update a topic by ID
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: modelId
+          schema:
+            type: string
+          required: true
+      requestBody:
+        description: Topic update payload
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/topics"
+      responses:
+        "200":
+          description: Updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/updateModel"
+      tags:
+        - Topic
+    delete:
+      summary: Delete a topic by ID
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/deleteModel"
+      tags:
+        - Topic
+
+  ##EventsCategory
+  /api/eventsCategory:
+    get:
+      summary: Get all eventsCategory
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: search
+      responses:
+        "200":
+          description: List of eventsCategories
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/eventsCategory"
+      tags:
+        - EventsCategory
+    post:
+      summary: Create a eventsCategory
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: eventsCategory creation payload
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/eventsCategoryPost"
+      responses:
+        "201":
+          description: Created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/eventsCategory"
+      tags:
+        - EventsCategory
+
+  /api/eventsCategory/{id}:
+      get:
+        summary: Get a single eventsCategory by ID
+        security:
+          - BearerAuth: [ ]
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: string
+            required: true
+        responses:
+          "200":
+            description: Single eventsCategory
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/eventsCategory"
+        tags:
+          - EventsCategory
+      put:
+        summary: EventsCategory a eventsCategory by ID
+        security:
+          - BearerAuth: [ ]
+        parameters:
+          - in: path
+            name: modelId
+            schema:
+              type: string
+            required: true
+        requestBody:
+          description: EventsCategory update payload
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/eventsCategory"
+        responses:
+          "200":
+            description: Updated successfully
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/updateModel"
+        tags:
+          - EventsCategory
+      delete:
+        summary: Delete a eventsCategory by ID
+        security:
+          - BearerAuth: []
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: string
+            required: true
+        responses:
+          "200":
+            description: Deleted successfully
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/deleteModel"
+        tags:
+          - EventsCategory
+
+
+  ##Events
+  /api/events:
+    get:
+      summary: Get all events
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: search
+          schema:
+            type: string
+          required: false
+      responses:
+        "200":
+          description: List of eventsCategories
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/events"
+      tags:
+        - Events
+    post:
+      summary: Create a events
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: event creation payload
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/eventsPost"
+      responses:
+        "201":
+          description: Created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/events"
+      tags:
+        - Events
+
+  /api/events/{id}:
+    get:
+      summary: Get a single event by ID
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Single event
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/events"
+      tags:
+        - Events
+    put:
+      summary: Update  events by ID
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: modelId
+          schema:
+            type: string
+          required: true
+      requestBody:
+        description: Events update payload
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/events"
+      responses:
+        "200":
+          description: Updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/updateModel"
+      tags:
+        - Events
+    delete:
+      summary: Delete a events by ID
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/deleteModel"
+      tags:
+        - Events
+
+
+  ##SpecialistsInfo
+  /api/specialistInfo:
+      get:
+        summary: Get all specialistsInfo
+        security:
+          - BearerAuth: [ ]
+        parameters:
+          - in: query
+            name: limit
+            schema:
+              type: string
+            required: false
+          - in: query
+            name: page
+            schema:
+              type: string
+            required: false
+          - in: query
+            name: select
+            schema:
+              type: string
+            required: false
+          - in: query
+            name: search
+            schema:
+              type: string
+            required: false
+        responses:
+          "200":
+            description: List of specialistsInfo
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/specialistsInfo"
+        tags:
+          - SpecialistsInfo
+      post:
+        summary: Create a specialistInfo
+        security:
+          - BearerAuth: [ ]
+        requestBody:
+          description: specialistInfo creation payload
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/specialistsInfoPost"
+        responses:
+          "201":
+            description: Created successfully
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/specialistsInfo"
+        tags:
+          - SpecialistsInfo
+
+  /api/specialistInfo/{id}:
+      get:
+        summary: Get a single specialistInfo by ID
+        security:
+          - BearerAuth: [ ]
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: string
+            required: true
+        responses:
+          "200":
+            description: Single specialistInfo
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/specialistsInfo"
+        tags:
+          - SpecialistsInfo
+      put:
+        summary: Update  specialistInfo by ID
+        security:
+          - BearerAuth: [ ]
+        parameters:
+          - in: path
+            name: modelId
+            schema:
+              type: string
+            required: true
+        requestBody:
+          description: specialistInfo update payload
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/specialistsInfo"
+        responses:
+          "200":
+            description: Updated successfully
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/updateModel"
+        tags:
+          - SpecialistsInfo
+      delete:
+        summary: Delete a specialistInfo by ID
+        security:
+          - BearerAuth: [ ]
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: string
+            required: true
+        responses:
+          "200":
+            description: Deleted successfully
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/deleteModel"
+        tags:
+          - SpecialistsInfo
+
+
+#Components
+components:
+  securitySchemes:
+    BearerAuth: # This is an arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT # Optional, just for documentation purposes
+  schemas:
+    updateModel:
+      type: object
+      properties:
+        ok:
+          type: boolean
+        message:
+          type: string
+    deleteModel:
+      type: object
+      properties:
+        ok:
+          type: boolean
+        message:
+          type: string
+    login:
+      type: object
+      properties:
+        login:
+          type: string
+          example: "login@gmail.com"
+        password:
+          type: string
+          example: "12345"
+    user:
+      type: object
+      required:
+        - name
+        - login
+        - phone
+        - password
+        - language
+      properties:
+        name:
+          type: string
+          example: John Doe
+        login:
+          type: string
+          example: johndoe
+        phone:
+          type: string
+          example: "+1234567890"
+        password:
+          type: string
+          example: "strongPassword123"
+        language:
+          type: string
+          example: "324234234234234"
+        image:
+          type: array
+          items:
+            type: string
+            example: "/uploads/image1.jpg"
+      SuccessResponse:
+        type: object
+        properties:
+          ok:
+            type: boolean
+            example: true
+          message:
+            type: string
+            example: User created successfully.
+      ErrorResponse:
+        type: object
+        properties:
+          ok:
+            type: boolean
+            example: false
+          message:
+            type: string
+            example: "Invalid data or user already exists"
+
+    ## Language
+    language:
+      type: object
+      properties:
+        title:
+          type: string
+        isDefault:
+          type: boolean
+        img:
+          type: array
+        slug:
+          type: string
+
+    languageUp:
+      type: object
+      properties:
+        title:
+          type: string
+        isDefault:
+          type: boolean
+        img:
+          type: array
+        _id:
+          type: string
+        slug:
+          type: string
+
+    ## Category
+    category:
+      type: object
+      properties:
+        modelId?:
+          type: string | null
+        img:
+          type: array
+        slug:
+          type: string
+        translate:
+          type: object
+          properties:
+            title:
+              type: string
+            language:
+              type: string
+    categoryUp:
+      type: object
+      properties:
+        img:
+          type: array
+        modelId:
+          type: string
+        slug:
+          type: string
+        translate:
+          type: object
+          properties:
+            title:
+              type: string
+            language:
+              type: string
+
+    categorytransAdd:
+      type: object
+      properties:
+        _id:
+          type: string
+        title:
+          type: string
+        
+        
+        language:
+          type: string
+    ## News
+    news:
+      type: object
+      properties:
+        img:
+          type: array
+        slug:
+          type: string
+
+        category:
+          type: string
+        translate:
+          type: object
+          properties:
+            title:
+              type: string
+            text:
+              type: string
+            description:
+              type: string
+            language:
+              type: string
+    newsUp:
+      type: object
+      properties:
+        _id:
+          type: string
+        img:
+          type: array
+        slug:
+          type: string
+        category:
+          type: string
+        translate:
+          type: object
+          properties:
+            title:
+              type: string
+            text:
+              type: string
+            description:
+              type: string
+            language:
+              type: string
+    ## Page
+    page:
+      type: object
+      properties:
+        img:
+          type: array
+        slug:
+          type: string
+
+        translate:
+          type: object
+          properties:
+            title:
+              type: string
+            text:
+              type: string
+            description:
+              type: string
+            language:
+              type: string
+    pageUp:
+      type: object
+      properties:
+        _id:
+          type: string
+        img:
+          type: array
+        slug:
+          type: string
+        translate:
+          type: object
+          properties:
+            title:
+              type: string
+            text:
+              type: string
+            description:
+              type: string
+            language:
+              type: string
+
+    ## Degrees
+    degree:
+      type: object
+      properties:
+        modelId?:
+          type: string | null
+        translate:
+          type: object
+          properties:
+            name:
+              type: string
+            language:
+              type: string
+    degreePut:
+      type: object
+      properties:
+        translate:
+          type: object
+          properties:
+            name:
+              type: string
+            language:
+              type: string
+
+    degreeDeleteOne:
+      type: object
+      properties:
+        modelId?:
+          type: string | null
+        translate:
+          type: object
+          properties:
+            id:
+              type: string
+
+    ## Directions
+    direction:
+      type: object
+      properties:
+        modelId?:
+          type: string | null
+        code:
+          type: number
+        views?:
+          type: number
+        image:
+          type: file
+        faculty:
+          type: string
+        degree:
+          type: string
+        format:
+          type: string
+        translate:
+          type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            price:
+              type: string
+            duration:
+              type: string
+            language:
+              type: string
+
+    directionAll:
+      type: object
+      properties:
+        _id?:
+          type: string | null
+        code:
+          type: number
+        views?:
+          type: number
+        img:
+          type: []
+        faculty:
+          type: object
+          properties:
+              _id:
+                string
+              translates:
+                type: array
+                items:
+                  type: object
+                  properties:
+                      _id:
+                        type: string
+                      name:
+                        type: string
+        degree:
+          type: object
+          properties:
+            _id:
+              string
+            translates:
+              type: array
+              items:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  name:
+                    type: string
+        format:
+          type: object
+          properties:
+            _id:
+              string
+            translates:
+              type: array
+              items:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  name:
+                    type: string
+        translate:
+          type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            price:
+              type: string
+            duration:
+              type: string
+            language:
+              type: string
+    faculty:
+        type: object
+        properties:
+            data:
+              type: array
+              items:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  img:
+                    type: array
+                  status:
+                    type: number
+                  translate:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      language:
+                        type: string
+
+    formatGet:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              _id:
+                type: string
+              translates:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    language:
+                      type: string
+
+    format:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+          properties:
+            _id:
+              type: string
+              translates:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    language:
+                      type: string
+
+    levelGet:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              _id:
+                type: string
+              translates:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    language:
+                      type: string
+
+    partners:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              _id:
+                type: string
+              img:
+                type: array
+              status:
+                type: number
+              translates:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    language:
+                      type: string
+
+    topics:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              _id:
+                type: string
+              direction:
+                type: string
+              level:
+                type: string
+              translates:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    language:
+                      type: string
+    topicsPost:
+        type: object
+        properties:
+          data:
+            type: array
+            items:
+              type: object
+              properties:
+                modelId?:
+                  type: string
+                direction:
+                  type: string
+                level:
+                  type: string
+                translates:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      language:
+                        type: string
+    eventsCategory:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              _id:
+                type: string
+              translates:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    language:
+                      type: string
+
+    eventsCategoryPost:
+        type: object
+        properties:
+          data:
+            type: array
+            items:
+              type: object
+              properties:
+                modelId?:
+                  type: string
+                translates:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      language:
+                        type: string
+    events:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              _id?:
+                type: string
+              eventsCategory?:
+                type: string
+              time:
+                type: Date
+              img:
+                type: array
+              translates:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    language:
+                      type: string
+    eventsPost:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              modelId?:
+                type: string
+              eventsCategory:
+                type: string
+              translates:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    location:
+                      type: string
+                    language:
+                      type: string
+
+    specialistsInfo:
+        type: object
+        properties:
+          data:
+            type: array
+            items:
+              type: object
+              properties:
+                _id:
+                  type: string
+                user:
+                  type: string
+                files:
+                  type: file
+                articles:
+                  type: string
+                img:
+                  type: array
+                translates:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      completed_university_name:
+                        type: string
+                      description:
+                        type: string
+                      language:
+                        type: string
+
+    specialistsInfoPost:
+          type: object
+          properties:
+            data:
+              type: array
+              items:
+                type: object
+                properties:
+                  modelId?:
+                    type: string
+                  user:
+                    type: string
+                  files:
+                    type: file
+                  articles:
+                    type: string
+                  img:
+                    type: array
+                  translates:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        completed_university_name:
+                          type: string
+                        description:
+                          type: string
+                        language:
+                          type: string

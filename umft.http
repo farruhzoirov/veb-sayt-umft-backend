@@ -1,0 +1,38 @@
+POST http://localhost:8000/api/category
+
+Content-Type: application/json
+{
+  "img": [],
+  "slug": "Hi there",
+   "translate": {
+      "title": "Uzbek",
+      "language": "67112b4072c9b24f5f0d03f4",
+      "status: 1,
+    }
+}
+
+### Send POST request with body as parameters
+
+POST http://localhost:8000/api/language
+Content-Type: application/json
+
+{
+  "title": "english",
+  "slug": "eng",
+  "isDefault": false,
+  "img": [],
+  "status": 0
+}
+
+### Send POST request with body as parameters
+
+GET http://localhost:8000/api/language
+Content-Type: application/json
+
+{
+  "title": "english",
+  "slug": "eng",
+  "isDefault": false,
+  "img": [],
+  "status": 0
+}
