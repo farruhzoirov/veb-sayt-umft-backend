@@ -70,7 +70,6 @@ class AddModelsService {
      */
     async addTranslations(req, res, model, modelId) {
         const transModel = this.TranslateModel[model].ref;
-        console.log("Translate",req.body.translate)
         if (this.Model[model].translate && req.body.translate && transModel) {
             const dynamicTranslateModel = getModelsTranslateHelper(transModel);
             const existingTranslation = await dynamicTranslateModel.findOne({
@@ -86,15 +85,15 @@ class AddModelsService {
             } else {
                 await dynamicTranslateModel.updateOne(
                     {[model]: modelId, language: req.body.translate.language},
-                    {$set: {...req.body.translate}}
+                    {$set: { ...req.body.translate }}
                 );
             }
         }
     }
-
     /**
      * Populates the model with any required fields and translations.
      */
+
     async populateModelData(model, modelId) {
         const dynamicModel = getModelsHelper(model);
         let newData = await dynamicModel.findById(modelId).lean();

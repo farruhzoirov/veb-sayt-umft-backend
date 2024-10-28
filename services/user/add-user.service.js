@@ -1,6 +1,4 @@
 const User = require("../../models/user");
-const mongoose = require("mongoose");
-
 
 class CreateUserService {
     async addUser(req, res) {

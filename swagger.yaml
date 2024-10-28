@@ -4,7 +4,8 @@ info:
   description: Optional multiline or single-line description in HTML.
   version: 0.1.9
 servers:
-  - url: http://195.158.9.124:4121/
+  ##- url: http://195.158.9.124:4121/
+  - url: http://localhost:8000/
     description: Optional server description, e.g. Main (production) server
 tags:
   - name: Auth
@@ -19,13 +20,11 @@ paths:
       description: Optional extended description in CommonMark or HTML.
       responses:
         "200": # status code
-          description: A JSON array of user names
+          description: Adding admin
           content:
             application/json:
               schema:
-                type: object
-                items:
-                  type: string
+                $ref: "#/components/schemas/addModel"
       tags:
         - Auth
   /auth/login:
@@ -45,9 +44,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                items:
-                  $ref: "#/components/schemas/login"
+                $ref: "#/components/schemas/loginSuccess"
       tags:
         - Auth
   /auth/checkuser:
@@ -67,11 +64,10 @@ paths:
       tags:
         - Auth
 
-
   ## User
-  /user:
+  /user/get-all:
     get:
-      summary: barcha foydalanuvchilar.
+      summary: All users.
       security:
         - BearerAuth: [ ]
       parameters:
@@ -109,7 +105,7 @@ paths:
 
   /user/add:
     post:
-      summary: bitta userni yaratish.
+      summary: Creating one user.
       requestBody:
         description: Optional description in *Markdown*
         required: true
@@ -123,14 +119,12 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-              #   items:
-              #     $ref: '#/components/schemas/country'
+               $ref: '#/components/schemas/addUserResponse'
       tags:
         - Users
   /user/{userId}:
     put:
-      summary: bitta userni tahrirlash.
+      summary: Update one user
       requestBody:
         description: Optional description in *Markdown*
         required: true
@@ -144,14 +138,13 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-              #   items:
-              #     $ref: '#/components/schemas/country'
+                $ref: '#/components/schemas/updateUserResponse'
+
       tags:
         - Users
   /user/userId:
     get:
-      summary: bitta userni olish.
+      summary: Getting one user by id.
       parameters:
         - in: path
           name: userId
@@ -170,7 +163,7 @@ paths:
 
   /user/delete:
     delete:
-      summary: bitta userni o'chirish.
+      summary: Deleting one user by id.
       parameters:
         - in: path
           name: userId
@@ -183,7 +176,8 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/deleteUserResponse'
+
       tags:
         - Users
 
@@ -192,7 +186,7 @@ paths:
   ##Language
   /api/language:
     get:
-      summary: barcha tillar.
+      summary: All languages
       security:
         - BearerAuth: [ ]
       parameters:
@@ -222,13 +216,11 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                items:
-                # $ref: "#/components/schemas/topsearch"
+                $ref: "#/components/schemas/languageGet"
       tags:
         - Language
     post:
-      summary: bitta tilni yaratish.
+      summary: Creating language.
       security:
         - BearerAuth: [ ]
       requestBody:
@@ -250,7 +242,7 @@ paths:
       tags:
         - Language
     put:
-      summary: bitta tilni tahrirlash.
+      summary: Update one language.
       security:
         - BearerAuth: [ ]
       requestBody:
@@ -262,7 +254,7 @@ paths:
               $ref: "#/components/schemas/languageUp"
       responses:
         "201": # status code
-          description: A JSON array of user names
+          description: updating one language
           content:
             application/json:
               schema:
@@ -295,7 +287,7 @@ paths:
         - Language
   /api/language/{id}:
     delete:
-      summary: tilni o'chirish.
+      summary: Deleting one language.
       security:
         - BearerAuth: [ ]
       parameters:
@@ -306,7 +298,7 @@ paths:
           required: true
       responses:
         "200": # status code
-          description: A JSON array of user names
+          description: Deleting one language
           content:
             application/json:
               schema:
@@ -321,7 +313,7 @@ paths:
   ## Category
   /api/category:
     get:
-      summary: barcha category.
+      summary: All categories.
       security:
         - BearerAuth: [ ]
       parameters:
@@ -348,7 +340,7 @@ paths:
           required: false
       responses:
         "200": # status code
-          description: A JSON array of user names
+          description: All categories
           content:
             application/json:
               schema:
@@ -358,11 +350,11 @@ paths:
       tags:
         - Category
     post:
-      summary: bitta categoryni yaratish.
+      summary: Creating one user.
       security:
         - BearerAuth: [ ]
       requestBody:
-        description: Birinchi model qo´shganda bodyda modelId kelmaydi translatelari uchun bo'lishi kerak.
+        description: (Birinchi model qo´shganda bodyda modelId kelmaydi translatelari uchun bo'lishi kerak.)
         required: true
         content:
           application/json:
@@ -370,7 +362,7 @@ paths:
               $ref: "#/components/schemas/category"
       responses:
         "201": # status code
-          description: A JSON array of user names
+          description: Creating one category
           content:
             application/json:
               schema:
@@ -380,7 +372,7 @@ paths:
       tags:
         - Category
     put:
-      summary: bitta categoryni tahrirlash.
+      summary: Updating one category
       security:
         - BearerAuth: [ ]
       requestBody:
@@ -396,9 +388,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-              #   items:
-              #     $ref: '#/components/schemas/country'
+                  $ref: '#/components/schemas/updateModel'
       tags:
         - Category
   /category/all:
@@ -459,7 +449,7 @@ paths:
         - Category
   /api/category/{id}:
     get:
-      summary: bitta categoryni olish.
+      summary:  Getting one category by id.
       security:
         - BearerAuth: [ ]
       parameters:
@@ -484,7 +474,7 @@ paths:
       tags:
         - Category
     delete:
-      summary: categoryni o'chirish.
+      summary: Deleting category.
       security:
         - BearerAuth: [ ]
       parameters:
@@ -495,13 +485,11 @@ paths:
           required: true
       responses:
         "200": # status code
-          description: A JSON array of user names
+          description: Deleting category
           content:
             application/json:
               schema:
-                type: object
-              #   items:
-              #     $ref: '#/components/schemas/country'
+               $ref: '#/components/schemas/deleteModel'
       tags:
         - Category
   /api/category/{id}/{status}:
@@ -709,7 +697,7 @@ paths:
         - News
   /api/news/{id}:
     get:
-      summary: bitta yangilikni olish.
+      summary: Getting one news.
       security:
         - BearerAuth: [ ]
       parameters:
@@ -717,14 +705,13 @@ paths:
           name: id
           schema:
             type: string
-          required: true
         - in: path
           name: language
           schema:
             type: string
       responses:
         "200": # status code
-          description: A JSON array of user names
+          description: Getting one news
           content:
             application/json:
               schema:
@@ -734,7 +721,7 @@ paths:
       tags:
         - News
     delete:
-      summary: yangilikni o'chirish.
+      summary: Deleting news.
       security:
         - BearerAuth: [ ]
       parameters:
@@ -768,33 +755,6 @@ paths:
           schema:
             type: string
           required: true
-      responses:
-        "200": # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema:
-                type: object
-              #   items:
-              #     $ref: '#/components/schemas/country'
-      tags:
-        - News
-  /api/news/upload:
-    post:
-      summary: bitta yangilik fileni yaratish.
-      security:
-        - BearerAuth: [ ]
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                file:
-                  type: string
-                  format: binary
-              required:
-                - file
       responses:
         "200": # status code
           description: A JSON array of user names
@@ -1311,7 +1271,6 @@ paths:
                       required: false
                     - in: query
                       name: search
-
                   responses:
                     "200":
                       description: List of faculties
@@ -2290,6 +2249,15 @@ components:
           type: boolean
         message:
           type: string
+
+    addModel:
+      type: object
+      properties:
+        ok:
+          type: boolean
+        message:
+          type: string
+
     login:
       type: object
       properties:
@@ -2299,6 +2267,21 @@ components:
         password:
           type: string
           example: "12345"
+    loginSuccess:
+
+      properties:
+        token:
+          type: string
+        user:
+          type: object
+          properties:
+            name:
+              type: string
+            role:
+              type: string
+            login:
+              type: string
+
     user:
       type: object
       required:
@@ -2314,9 +2297,12 @@ components:
         login:
           type: string
           example: johndoe
+        userId?:
+          type: string
         phone:
           type: string
           example: "+1234567890"
+
         password:
           type: string
           example: "strongPassword123"
@@ -2346,6 +2332,31 @@ components:
           message:
             type: string
             example: "Invalid data or user already exists"
+    addUserResponse:
+        type: object
+        properties:
+          ok:
+            type: boolean
+          message:
+            type: string
+
+    updateUserResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+        message:
+          type: string
+
+    deleteUserResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+        message:
+          type: string
+
+
 
     ## Language
     language:
@@ -2359,6 +2370,12 @@ components:
           type: array
         slug:
           type: string
+    languageGet:
+      type: object
+      properties:
+        data:
+          type: array
+          properties:
 
     languageUp:
       type: object
@@ -2415,8 +2432,6 @@ components:
           type: string
         title:
           type: string
-        
-        
         language:
           type: string
     ## News
@@ -2427,8 +2442,9 @@ components:
           type: array
         slug:
           type: string
-
         category:
+          type: string
+        modelId?:
           type: string
         translate:
           type: object
@@ -2581,12 +2597,12 @@ components:
         views?:
           type: number
         img:
-          type: []
+          type: array
         faculty:
           type: object
           properties:
               _id:
-                string
+                type: string
               translates:
                 type: array
                 items:
@@ -2600,7 +2616,7 @@ components:
           type: object
           properties:
             _id:
-              string
+              type: string
             translates:
               type: array
               items:
@@ -2614,7 +2630,7 @@ components:
           type: object
           properties:
             _id:
-              string
+              type: string
             translates:
               type: array
               items:

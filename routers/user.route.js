@@ -7,7 +7,8 @@ const upload = require("../helpers/uploads/upload-users.helper");
 
 const userController = new UserController();
 
-router.get('/getOne/:userId', userController.get);
+router.get('/:userId', userController.get);
+
 
 router.get('/get-all', userController.all);
 

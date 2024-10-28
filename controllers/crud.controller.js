@@ -35,7 +35,7 @@ class DefaultController {
         await updateModelsService.updateModel(req, res);
     }
     */
-    async remove(req,   res) {
+    async remove(req, res) {
         const deleteModelsService = new DeleteModelsService();
         await deleteModelsService.deleteModel(req, res);
     }
