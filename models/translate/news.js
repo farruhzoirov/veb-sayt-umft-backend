@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const NewsTranslateSchema = new Schema({
     title: String,
-    text:String,
+    text: String,
     description:String,
     news: {
         type: Schema.Types.ObjectId,
@@ -16,6 +16,8 @@ const NewsTranslateSchema = new Schema({
         type: Number,
         default: 0
     },
-}, { timestamps: true })
+}, {
+    timestamps: true
+})
 
 module.exports = model("newsTranslate",  NewsTranslateSchema);

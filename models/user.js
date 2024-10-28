@@ -14,7 +14,9 @@ const User = new Schema({
     password: {
         type: String,
     },
-    userId: Number,
+    telegramId: {
+        type: Number,
+    },
     role: {
         type: String,
         enum: ['admin','teacher','support','user'],
