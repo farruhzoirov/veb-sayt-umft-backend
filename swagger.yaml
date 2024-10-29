@@ -2718,20 +2718,21 @@ components:
               type: string
     degreeGet:
       type: object
-      data:
-        type: array
-        items:
-          type: object
-          properties:
-              _id:
-                type: string
-              translate:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    language:
-                      type: string
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+                _id:
+                  type: string
+                translate:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      language:
+                        type: string
 
     degreePut:
       type: object
