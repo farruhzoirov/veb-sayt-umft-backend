@@ -16,7 +16,7 @@ paths:
   ## Auth
   /auth/login/addAdmin:
     get:
-      summary: Adminni yaratish.
+      summary: Creating admin.
       description: Optional extended description in CommonMark or HTML.
       responses:
         "200": # status code
@@ -49,7 +49,7 @@ paths:
         - Auth
   /auth/checkuser:
     get:
-      summary: userni  tekshirish layout uchun.
+      summary: checking user exist or don't.
       security:
         - BearerAuth: [ ]
       responses:
