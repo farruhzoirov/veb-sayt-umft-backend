@@ -4,6 +4,7 @@ const {
     getModelsTranslateHelper,
     getModel,
 } = require("../helpers/get-models.helper");
+
 const {populateGet} = require("../helpers/get-populates.helper");
 const mongoose = require("mongoose");
 
@@ -34,13 +35,18 @@ class AddModelsService {
                         img: imagePaths,
                     }).save();
                     await this.addTranslations(req, res, model, data._id); // Add translations if needed
-                    const newData = await this.populateModelData(model, data._id);
+                    // const newData = await this.populateModelData(model, data._id);
+                    await this.populateModelData(model, data._id);
                     return res.status(201).json({
                         ok: true,
-                        newData: newData
+                        message: "Model Created successfully",
+                        // newData: newData
                     });
                 } catch (error) {
-                    return res.status(400).json({message: "Error adding model"});
+                    return res.status(400).json({
+                        ok: false,
+                        message: "Error adding model"
+                    });
                 }
 
             }
@@ -56,12 +62,19 @@ class AddModelsService {
                 });
             }
             await this.addTranslations(req, res, model, modelId); // Add translations
-            const updatedData = await this.populateModelData(model, modelId);
-            return res.status(200).json(updatedData);
+            // const updatedData = await this.populateModelData(model, modelId);
+            await this.populateModelData(model, modelId);
+            return res.status(200).json({
+                ok: true,
+                message: "Model Created successfully",
+            });
 
         } catch (error) {
-            console.error("Error:", error);
-            return res.status(500).json({message: error.message});
+            console.error("Error:", error?.message);
+            return res.status(500).json({
+                ok: false,
+                message: "There is issue with creating model"
+            });
         }
     }
 

@@ -29,6 +29,7 @@ class UpdateModelsService {
     async patchModel(req, res) {
         return this.updateModel(req, res, 'PATCH');
     }
+
     /**
      * Core update logic for both PUT and PATCH methods.
      */
@@ -36,9 +37,12 @@ class UpdateModelsService {
         try {
             const model = await getModel(req, res);
             if (!model) {
-                return res.status(404).json({message: "Model not found"});
+                return res.status(404).json({
+                    ok: false,
+                    message: "Model not found"
+                });
             }
-            const { modelId } = req.params;
+            const {modelId} = req.params;
             if (!mongoose.Types.ObjectId.isValid(modelId)) {
                 return res.status(400).json({message: "Invalid modelId"});
             }
@@ -47,8 +51,7 @@ class UpdateModelsService {
             if (!existingModel) {
                 return res.status(404).json({message: "Model not found"});
             }
-
-            let updateData = { ...req.body };
+            let updateData = {...req.body};
             if (req.files && req.files.image) {
                 let newImagePaths = (req.files.image || []).map((file) => file.path);
                 if (existingModel.img && existingModel.img.length) {
@@ -58,7 +61,7 @@ class UpdateModelsService {
             }
             await dynamicModel.findByIdAndUpdate(
                 modelId,
-                method === 'PUT' ? updateData : {$set: updateData},
+                method === 'PUT' ? updateData : { $set: updateData },
                 {
                     new: true
                 }

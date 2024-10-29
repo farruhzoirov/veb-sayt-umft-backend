@@ -236,9 +236,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-              #   items:
-              #     $ref: '#/components/schemas/country'
+                $ref: '#/components/schemas/addModel'
       tags:
         - Language
     put:
@@ -350,7 +348,7 @@ paths:
       tags:
         - Category
     post:
-      summary: Creating one user.
+      summary: Creating one category.
       security:
         - BearerAuth: [ ]
       requestBody:
@@ -366,9 +364,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-              #   items:
-              #     $ref: '#/components/schemas/country'
+                $ref: '#/components/schemas/addModel'
       tags:
         - Category
     put:
@@ -519,35 +515,6 @@ paths:
               #     $ref: '#/components/schemas/country'
       tags:
         - Category
-  /api/category/upload:
-    post:
-      summary: bitta category fileni yaratish.
-      security:
-        - BearerAuth: [ ]
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                file:
-                  type: string
-                  format: binary
-              required:
-                - file
-      responses:
-        "200": # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema:
-                type: object
-              #   items:
-              #     $ref: '#/components/schemas/country'
-      tags:
-        - Category
-
-
 
 
   ## News
@@ -608,9 +575,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-              #   items:
-              #     $ref: '#/components/schemas/country'
+                $ref: '#/components/schemas/addModel'
       tags:
         - News
     put:
@@ -763,13 +728,12 @@ paths:
 
 
 
-
   ## Page
   /api/page:
     get:
       summary: All pages.
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       parameters:
         - in: query
           name: limit
@@ -824,9 +788,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-              #   items:
-              #     $ref: '#/components/schemas/country'
+                $ref: '#/components/schemas/addModel'
       tags:
         - Page
     put:
@@ -846,9 +808,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-              #   items:
-              #     $ref: '#/components/schemas/country'
+               $ref: '#/components/schemas/updateModel'
       tags:
         - Page
   /page/all:
@@ -1047,7 +1007,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/degree"
+                $ref: "#/components/schemas/addModel"
       tags:
         - Degree
 
@@ -1184,7 +1144,7 @@ paths:
                     content:
                       application/json:
                         schema:
-                          $ref: "#/components/schemas/direction"
+                          $ref: "#/components/schemas/addModel"
                 tags:
                   - Direction
 
@@ -1224,7 +1184,7 @@ paths:
                   content:
                     application/json:
                       schema:
-                        $ref: "#/components/schemas/direction"
+                        $ref: "#/components/schemas/directionPut"
                 responses:
                   "200":
                     description: Updated successfully
@@ -1299,14 +1259,14 @@ paths:
                     content:
                       application/json:
                         schema:
-                          $ref: "#/components/schemas/faculty"
+                          $ref: "#/components/schemas/facultyPost"
                   responses:
                     "201":
                       description: Created successfully
                       content:
                         application/json:
                           schema:
-                            $ref: "#/components/schemas/faculty"
+                            $ref: "#/components/schemas/addModel"
                   tags:
                     - Faculty
 
@@ -1346,7 +1306,7 @@ paths:
                     content:
                       application/json:
                         schema:
-                          $ref: "#/components/schemas/faculty"
+                          $ref: "#/components/schemas/facultyPut"
                   responses:
                     "200":
                       description: Updated successfully
@@ -1428,14 +1388,14 @@ paths:
                       content:
                         application/json:
                           schema:
-                            $ref: "#/components/schemas/formatGet"
+                            $ref: "#/components/schemas/formatPost"
                     responses:
                       "201":
                         description: Created successfully
                         content:
                           application/json:
                             schema:
-                              $ref: "#/components/schemas/formatGet"
+                              $ref: "#/components/schemas/addModel"
                     tags:
                       - Format
 
@@ -1475,7 +1435,7 @@ paths:
                       content:
                         application/json:
                           schema:
-                            $ref: "#/components/schemas/format"
+                            $ref: "#/components/schemas/formatPut"
                     responses:
                       "200":
                         description: Updated successfully
@@ -1557,14 +1517,14 @@ paths:
                       content:
                         application/json:
                           schema:
-                            $ref: "#/components/schemas/levelGet"
+                            $ref: "#/components/schemas/levelPost"
                     responses:
                       "201":
                         description: Created successfully
                         content:
                           application/json:
                             schema:
-                              $ref: "#/components/schemas/format"
+                              $ref: "#/components/schemas/addModel"
                     tags:
                       - Level
 
@@ -1604,7 +1564,7 @@ paths:
                       content:
                         application/json:
                           schema:
-                            $ref: "#/components/schemas/levelGet"
+                            $ref: "#/components/schemas/levelPut"
                     responses:
                       "200":
                         description: Updated successfully
@@ -1683,14 +1643,14 @@ paths:
                     content:
                       application/json:
                         schema:
-                          $ref: "#/components/schemas/partners"
+                          $ref: "#/components/schemas/partnersPost"
                   responses:
                     "201":
                       description: Created successfully
                       content:
                         application/json:
                           schema:
-                            $ref: "#/components/schemas/format"
+                            $ref: "#/components/schemas/addModel"
                   tags:
                     - Partner
 
@@ -1730,7 +1690,7 @@ paths:
                     content:
                       application/json:
                         schema:
-                          $ref: "#/components/schemas/partners"
+                          $ref: "#/components/schemas/partnersPut"
                   responses:
                     "200":
                       description: Updated successfully
@@ -1823,7 +1783,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/topics"
+                $ref: "#/components/schemas/addModel"
       tags:
         - Topic
 
@@ -1863,7 +1823,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/topics"
+              $ref: "#/components/schemas/topicsPut"
       responses:
         "200":
           description: Updated successfully
@@ -1943,7 +1903,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/eventsCategory"
+                $ref: "#/components/schemas/addModel"
       tags:
         - EventsCategory
 
@@ -1983,7 +1943,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/eventsCategory"
+                $ref: "#/components/schemas/eventsCategoryPut"
         responses:
           "200":
             description: Updated successfully
@@ -2066,7 +2026,7 @@ paths:
     post:
       summary: Create a events
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
       requestBody:
         description: event creation payload
         required: true
@@ -2080,7 +2040,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/events"
+                $ref: "#/components/schemas/addModel"
       tags:
         - Events
 
@@ -2120,7 +2080,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/events"
+              $ref: "#/components/schemas/eventsPut"
       responses:
         "200":
           description: Updated successfully
@@ -2196,7 +2156,7 @@ paths:
       post:
         summary: Create a specialistInfo
         security:
-          - BearerAuth: [ ]
+          - BearerAuth: []
         requestBody:
           description: specialistInfo creation payload
           required: true
@@ -2210,7 +2170,7 @@ paths:
             content:
               application/json:
                 schema:
-                  $ref: "#/components/schemas/specialistsInfo"
+                  $ref: "#/components/schemas/addModel"
         tags:
           - SpecialistsInfo
 
@@ -2250,7 +2210,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/specialistsInfo"
+                $ref: "#/components/schemas/specialistsInfoPut"
         responses:
           "200":
             description: Updated successfully
@@ -2279,6 +2239,131 @@ paths:
                   $ref: "#/components/schemas/deleteModel"
         tags:
           - SpecialistsInfo
+
+  ##University
+  /api/university:
+    get:
+      summary: Get all university
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: search
+          schema:
+            type: string
+          required: false
+      responses:
+        "200":
+          description: List of university
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/university"
+      tags:
+        - University
+    post:
+      summary: Create a university
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: specialistInfo creation payload
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/universityPost"
+      responses:
+        "201":
+          description: Created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/addModel"
+      tags:
+        - University
+
+  /api/university/{id}:
+    get:
+      summary: Get a single university by ID
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Single university
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/specialistsInfo"
+      tags:
+        - University
+    put:
+      summary: Update  university by ID
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: modelId
+          schema:
+            type: string
+          required: true
+      requestBody:
+        description: university update payload
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/universityPut"
+      responses:
+        "200":
+          description: Updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/updateModel"
+      tags:
+        - University
+    delete:
+      summary: Delete a university by ID
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/deleteModel"
+      tags:
+        - University
+
+
 
 
 #Components
@@ -2428,7 +2513,26 @@ components:
       properties:
         data:
           type: array
-          properties:
+          items:
+            type: object
+            properties:
+              _id:
+                type: string
+              title:
+                type: string
+              slug:
+                type: string
+              isDefault:
+                type: boolean
+              img:
+                type: array
+              status:
+                type: number
+
+
+
+
+
 
     languageUp:
       type: object
@@ -2614,27 +2718,31 @@ components:
               type: string
     degreeGet:
       type: object
-      properties:
-          _id:
-            type: string
-          translate:
-              type: object
-              properties:
-                name:
-                  type: string
-                language:
-                  type: string
+      data:
+        type: array
+        items:
+          type: object
+          properties:
+              _id:
+                type: string
+              translate:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    language:
+                      type: string
 
     degreePut:
       type: object
       properties:
-        translate:
-          type: object
-          properties:
-            name:
-              type: string
-            language:
-              type: string
+          translate:
+            type: object
+            properties:
+              name:
+                type: string
+              language:
+                type: string
 
     ## Directions
     direction:
@@ -2642,6 +2750,35 @@ components:
       properties:
         modelId?:
           type: string | null
+        code:
+          type: number
+        views?:
+          type: number
+        image:
+          type: file
+        faculty:
+          type: string
+        degree:
+          type: string
+        format:
+          type: string
+        translate:
+          type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            price:
+              type: string
+            duration:
+              type: string
+            language:
+              type: string
+
+    directionPut:
+      type: object
+      properties:
         code:
           type: number
         views?:
@@ -2757,6 +2894,41 @@ components:
                         type: string
                       language:
                         type: string
+    facultyPost:
+      type: object
+      properties:
+            modelId?:
+              type: string
+            img:
+              type: array
+            status:
+              type: number
+            translate:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                language:
+                  type: string
+
+    facultyPut:
+        type: object
+        properties:
+          img:
+            type: array
+          status:
+            type: number
+          translate:
+            type: object
+            properties:
+              name:
+                type: string
+              description:
+                type: string
+              language:
+                type: string
 
     formatGet:
       type: object
@@ -2777,6 +2949,33 @@ components:
                       type: string
                     language:
                       type: string
+
+    formatPost:
+        type: object
+        properties:
+            modelId?:
+              type: string
+            translate:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  language:
+                    type: string
+    formatPut:
+      type: object
+      properties:
+        translate:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              language:
+                type: string
 
     format:
       type: object
@@ -2818,6 +3017,35 @@ components:
                     language:
                       type: string
 
+
+    levelPost:
+      type: object
+      properties:
+          modelId?:
+            type: string
+          translate:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                language:
+                  type: string
+
+    levelPut:
+      type: object
+      properties:
+        translate:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              language:
+                type: string
+
     partners:
       type: object
       properties:
@@ -2841,6 +3069,43 @@ components:
                       type: string
                     language:
                       type: string
+
+    partnersPost:
+        type: object
+        properties:
+            modelId?:
+              type: string
+            img:
+              type: array
+            status:
+              type: number
+            translate:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  language:
+                    type: string
+
+    partnersPut:
+      type: object
+      properties:
+        img:
+          type: array
+        status:
+          type: number
+        translate:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              language:
+                type: string
+
 
     topics:
       type: object
@@ -2870,28 +3135,42 @@ components:
     topicsPost:
         type: object
         properties:
-          data:
-            type: array
-            items:
-              type: object
-              properties:
-                modelId?:
-                  type: string
-                direction:
-                  type: string
-                level:
-                  type: string
-                translates:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                      description:
-                        type: string
-                      language:
-                        type: string
+            modelId?:
+              type: string
+            direction:
+              type: string
+            level:
+              type: string
+            translate:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  language:
+                    type: string
+
+    topicsPut:
+      type: object
+      properties:
+        direction:
+          type: string
+        level:
+          type: string
+        translate:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              description:
+                type: string
+              language:
+                type: string
     eventsCategory:
       type: object
       properties:
@@ -2915,22 +3194,31 @@ components:
     eventsCategoryPost:
         type: object
         properties:
-          data:
-            type: array
-            items:
-              type: object
-              properties:
-                modelId?:
-                  type: string
-                translates:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                      language:
-                        type: string
+            modelId?:
+              type: string
+            translate:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  language:
+                    type: string
+
+    eventsCategoryPut:
+      type: object
+      properties:
+        translate:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              language:
+                type: string
+
     events:
       type: object
       properties:
@@ -2939,9 +3227,9 @@ components:
           items:
             type: object
             properties:
-              _id?:
+              _id:
                 type: string
-              eventsCategory?:
+              eventsCategory:
                 type: string
               time:
                 type: Date
@@ -2961,28 +3249,42 @@ components:
     eventsPost:
       type: object
       properties:
-        data:
-          type: array
-          items:
-            type: object
-            properties:
-              modelId?:
-                type: string
-              eventsCategory:
-                type: string
-              translates:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    description:
-                      type: string
-                    location:
-                      type: string
-                    language:
-                      type: string
+            modelId?:
+              type: string
+            eventsCategory:
+              type: string
+            translate:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  location:
+                    type: string
+                  language:
+                    type: string
+
+    eventsPut:
+        type: object
+        properties:
+          eventsCategory:
+            type: string
+          translate:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                location:
+                  type: string
+                language:
+                  type: string
 
     specialistsInfo:
         type: object
@@ -3017,18 +3319,61 @@ components:
     specialistsInfoPost:
           type: object
           properties:
+              modelId?:
+                type: string
+              user:
+                type: string
+              files:
+                type: file
+              articles:
+                type: string
+              img:
+                type: array
+              translate:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    completed_university_name:
+                      type: string
+                    description:
+                      type: string
+                    language:
+                      type: string
+
+
+    specialistsInfoPut:
+      type: object
+      properties:
+          user:
+            type: string
+          files:
+            type: file
+          articles:
+            type: string
+          img:
+            type: array
+          translate:
+            type: array
+            items:
+              type: object
+              properties:
+                completed_university_name:
+                  type: string
+                description:
+                  type: string
+                language:
+                  type: string
+
+    university:
+          type: object
+          properties:
             data:
               type: array
               items:
                 type: object
                 properties:
-                  modelId?:
-                    type: string
-                  user:
-                    type: string
-                  files:
-                    type: file
-                  articles:
+                  _id:
                     type: string
                   img:
                     type: array
@@ -3037,9 +3382,44 @@ components:
                     items:
                       type: object
                       properties:
-                        completed_university_name:
-                          type: string
                         description:
                           type: string
                         language:
                           type: string
+
+
+
+    universityPost:
+          type: object
+          properties:
+              modelId?:
+                    type: string
+              img:
+                    type: array
+              translate:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        description:
+                          type: string
+                        language:
+                          type: string
+
+    universityPut:
+      type: object
+      properties:
+        img:
+          type: array
+        translate:
+          type: array
+          items:
+            type: object
+            properties:
+              description:
+                type: string
+              language:
+                type: string
+
+
+
