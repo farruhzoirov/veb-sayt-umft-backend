@@ -92,7 +92,6 @@ class AddModelsService {
     async populateModelData(model, modelId) {
         const dynamicModel = getModelsHelper(model);
         let newData = await dynamicModel.findById(modelId).lean();
-
         const transModel = TranslateModel[model]?.ref;
         if (Model[model].translate && transModel) {
             const dynamicTranslateModel = getModelsTranslateHelper(transModel);
