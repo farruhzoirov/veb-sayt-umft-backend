@@ -7,12 +7,13 @@ const cors = require('cors')
 const app = express()
 const routerList = require('./routers.js')
 const upload = require("./helpers/uploads/upload-models.helper");
+
 class Server {
     constructor(){
         this.init()
         this.useMiddleWares()
         this.addRoutes()
-        this.listenServer()
+        this.listenServer().then()
     }
     init(){
 
@@ -22,15 +23,15 @@ class Server {
         app.use('/images',express.static('images'))
         app.use(cors({
             origin: 'http://localhost:63342',
-            methods: 'GET,POST,PUT,DELETE,PATCH,OPTIONS',
-            allowedHeaders: 'Content-Type,Authorization'
+            methods: 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+            allowedHeaders: 'Content-Type, Authorization'
         }));
 
         app.use(express.json());
         app.use(express.urlencoded({ extended: true }));
     }
     addRoutes() {
-        app.use(routerList);  // Register your routes
+        app.use(routerList);
         app.use((err, req, res, next) => {  // Error-handling middleware
             const { statusCode = 500, message = 'Internal Server Error' } = err;
             res.status(statusCode).json({
@@ -41,8 +42,7 @@ class Server {
         });
         swagger(app);
     }
-
-    listenServer(){
+    async listenServer(){
         const server = async () => {
             try {
                 await mongoose.connect(process.env.MONGO_URI)
@@ -62,7 +62,7 @@ class Server {
                 console.log(e)
             }
         }
-        server().then();
+        await server();
     }
 }
 

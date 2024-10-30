@@ -9,17 +9,9 @@ const {populateGet} = require("../helpers/get-populates.helper");
 const mongoose = require("mongoose");
 
 class AddModelsService {
-    constructor() {
-        this.Model = Model;
-        this.TranslateModel = TranslateModel;
-    }
-    /**
-     * Adds a new model or updates an existing model with translations.
-     */
     async addModel(req, res) {
         try {
             const model = await getModel(req, res);
-            console.log("Req body", req.body)
             if (!model) {
                 return res.status(404).json({message: "Model not found"});
             }
@@ -27,7 +19,6 @@ class AddModelsService {
             const dynamicModel = getModelsHelper(model);
             let files = req.files || [];
             let imagePaths = (files.image || []).map((file) => file.path);
-            // ------------------  Case 1: If no modelId is provided, create a new model -----------------
             if (!modelId) {
                 try {
                     const data = await new dynamicModel({
@@ -50,7 +41,6 @@ class AddModelsService {
                 }
 
             }
-            // **Case 2:** If modelId is provided, validate it and add translations
             if (!mongoose.Types.ObjectId.isValid(modelId)) {
                 return res.status(400).json({message: "Invalid modelId"});
             }
@@ -77,13 +67,9 @@ class AddModelsService {
             });
         }
     }
-
-    /**
-     *  ------------------- Adds translations to the model if applicable. ------------------
-     */
     async addTranslations(req, res, model, modelId) {
-        const transModel = this.TranslateModel[model].ref;
-        if (this.Model[model].translate && req.body.translate && transModel) {
+        const transModel = TranslateModel[model].ref;
+        if (Model[model].translate && req.body.translate && transModel) {
             const dynamicTranslateModel = getModelsTranslateHelper(transModel);
             const existingTranslation = await dynamicTranslateModel.findOne({
                 [model]: modelId,
@@ -103,23 +89,19 @@ class AddModelsService {
             }
         }
     }
-    /**
-     * Populates the model with any required fields and translations.
-     */
-
     async populateModelData(model, modelId) {
         const dynamicModel = getModelsHelper(model);
         let newData = await dynamicModel.findById(modelId).lean();
 
-        const transModel = this.TranslateModel[model]?.ref;
-        if (this.Model[model].translate && transModel) {
+        const transModel = TranslateModel[model]?.ref;
+        if (Model[model].translate && transModel) {
             const dynamicTranslateModel = getModelsTranslateHelper(transModel);
             const translations = await dynamicTranslateModel.find({[model]: modelId}).lean();
             newData.translates = translations || [];
         }
-        if (this.Model[model].populate) {
+        if (Model[model].populate) {
             await Promise.all(
-                this.Model[model].populate.map(async (field) => {
+                Model[model].populate.map(async (field) => {
                     newData[field] = await populateGet(field, newData[field]);
                 })
             );

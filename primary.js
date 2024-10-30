@@ -6,9 +6,8 @@ const cpuCount = os.cpus().length;
 console.log(`CPU count: ${cpuCount}`);
 console.log(`Primary PID: ${process.pid}`);
 
-// Set up the master process
 cluster.setupMaster({
-    exec: __dirname + '/server.js' // Path to the worker script
+    exec: __dirname + '/server.js'
 });
 
 // Fork worker processes

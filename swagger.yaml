@@ -12,7 +12,6 @@ tags:
     description: Endpoints related to authentication
 
 paths:
-
   ## Auth
   /auth/login/addAdmin:
     get:
@@ -342,9 +341,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                items:
-                # $ref: "#/components/schemas/topsearch"
+                $ref: "#/components/schemas/categoriesGet"
       tags:
         - Category
     post:
@@ -515,7 +512,6 @@ paths:
               #     $ref: '#/components/schemas/country'
       tags:
         - Category
-
 
   ## News
   /api/news:
@@ -941,12 +937,6 @@ paths:
               #     $ref: '#/components/schemas/country'
       tags:
         - Page
-
-
-
-
-
-
 
 
 
@@ -2565,6 +2555,33 @@ components:
               type: string
             language:
               type: string
+
+    categoriesGet:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              _id:
+                type: string
+              img:
+                type: array
+              slug:
+                type: string
+              status:
+                type: string
+              translates:
+                type: array
+                items:
+                  type: object
+                  properties:
+                      title:
+                        type: string
+                      language:
+                        type: string
+
     categoryUp:
       type: object
       properties:
@@ -2620,26 +2637,30 @@ components:
       properties:
         data:
           type: array
-          schema:
-            img:
-              type: array
-            slug:
-              type: string
-            category:
-              type: string
-            _id:
-              type: string
-            translates:
-              type: array
-              properties:
-                title:
-                  type: string
-                text:
-                  type: string
-                description:
-                  type: string
-                language:
-                  type: string
+          items:
+            type: object
+            properties:
+              img:
+                type: array
+              slug:
+                type: string
+              category:
+                type: string
+              _id:
+                type: string
+              translates:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    text:
+                      type: string
+                    description:
+                      type: string
+                    language:
+                      type: string
     newsUp:
       type: object
       properties:

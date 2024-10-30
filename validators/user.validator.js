@@ -8,7 +8,7 @@ const userSchema = Joi.object({
 
 module.exports =  async (req, res, next) => {
     try {
-        const value = await userSchema.validateAsync(req.body);
+        await userSchema.validateAsync(req.body);
         next()
     } catch (err) {
         if (err) {

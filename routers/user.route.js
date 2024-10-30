@@ -1,7 +1,7 @@
 const router = require('express').Router()
 
 const UserController = require('../controllers/user.controller')
-const authMiddleware = require('../middlewares/auth');
+const authMiddleware = require('../middlewares/auth.middleware');
 
 const upload = require("../helpers/uploads/upload-users.helper");
 
@@ -15,7 +15,7 @@ router.get('/get-all', userController.all);
 router.post('/add', upload.fields(
     [
         {
-            name: 'image', maxCount: 1
+            name: 'image', maxCount: 5
         },
     ]
 ), userController.create);
@@ -24,7 +24,7 @@ router.post('/add', upload.fields(
 router.put('/:userId', upload.fields(
     [
         {
-            name: 'image', maxCount: 1
+            name: 'image', maxCount: 5
         },
     ]
 ), userController.update)
