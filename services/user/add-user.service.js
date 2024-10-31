@@ -1,15 +1,9 @@
-const User = require("../../models/user");
+const User = require("../../models/user.model");
 
 class CreateUserService {
     async addUser(req, res) {
         try {
             const { name, login, phone, password, language } = req.body;
-            if (!name || !login || !phone || !password || !language) {
-                return res.status(400).json({
-                    ok: false,
-                    message: "Invalid data"
-                })
-            }
             let findUser = await User.findOne(login);
             if (findUser) res.status(400).json({
                 message: "User already exists"
@@ -23,6 +17,7 @@ class CreateUserService {
                 ...req.body,
                 img: imagePaths || []
             });
+
             await userCreate.save()
             return res.status(201).json({
                 message: 'User created successfully.'

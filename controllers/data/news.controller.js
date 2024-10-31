@@ -1,6 +1,6 @@
 const DefaultController = require('../crud.controller')
-const NewsController = require('../../models/data/news')
-const newsTranslate = require('../../models/translate/news')
+const NewsController = require('../../models/data/news.model')
+const newsTranslate = require('../../models/translate/news.model')
 
 class NewsController extends DefaultController {
     constructor() {

@@ -1,7 +1,7 @@
 
-const Category = require('../models/data/category');
-const Direction = require('../models/data/directions');
-const Language = require('../models/settings/language');
+const Category = require('../models/data/category.model');
+const Direction = require('../models/data/directions.model');
+const Language = require('../models/settings/language.model');
 
 
 class StatisticController {

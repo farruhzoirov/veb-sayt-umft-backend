@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const {getModelsHelper, getModelsTranslateHelper, getModel} = require("../helpers/get-models.helper");
 
-const {Model, TranslateModel} = require("../common/constants/models");
+const {Model, TranslateModel} = require("../common/constants/models.constants");
 const {populateGet} = require("../helpers/get-populates.helper");
 
 

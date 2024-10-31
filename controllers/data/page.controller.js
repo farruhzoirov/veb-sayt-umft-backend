@@ -1,6 +1,6 @@
 const DefaultController = require('../crud.controller')
-const PageController = require('../../models/data/page')
-const pageTranslate = require('../../models/translate/page')
+const PageController = require('../../models/data/page.model')
+const pageTranslate = require('../../models/translate/page.model')
 
 class PageController extends DefaultController {
     constructor() {

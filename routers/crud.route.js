@@ -21,6 +21,7 @@ router.put('/:model/:modelId', upload.fields([
     { name: 'file', maxCount: 5 },   // Up to 5 other files
 ]), validateModel,  crudController.put);
 
+
 router.patch('/:model/:modelId',  crudController.patch);
 //router.patch('/:model/modelId',  crudController.update);
 

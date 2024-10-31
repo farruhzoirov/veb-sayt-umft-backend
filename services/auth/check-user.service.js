@@ -1,5 +1,5 @@
 const decoded = require("../../helpers/decoded.helper");
-const User = require("../../models/user");
+const User = require("../../models/user.model");
 
 
 class CheckUserService {

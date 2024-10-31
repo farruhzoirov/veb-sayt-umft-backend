@@ -1,4 +1,4 @@
-const {Model, TranslateModel} = require("../common/constants/models");
+const {Model, TranslateModel} = require("../common/constants/models.constants");
 const {
     getModelsHelper,
     getModelsTranslateHelper,

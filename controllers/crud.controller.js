@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { Model, TranslateModel } = require("../common/constants/models");
+const { Model, TranslateModel } = require("../common/constants/models.constants");
 
 // Services
 const GetAllService = require("../services/get-all.service");

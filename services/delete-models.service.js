@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const fs = require("fs");
 const {getModelsHelper, getModelsTranslateHelper, getModel} = require("../helpers/get-models.helper");
-const {Model, TranslateModel} = require("../common/constants/models");
+const {Model, TranslateModel} = require("../common/constants/models.constants");
 const path = require("node:path");
 
 
