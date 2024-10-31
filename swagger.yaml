@@ -3331,7 +3331,9 @@ components:
                   items:
                     type: object
                     properties:
-                      completed_university_name:
+                      completed_university:
+                        type: string
+                      study_duration:
                         type: string
                       description:
                         type: string
@@ -3356,7 +3358,9 @@ components:
                 items:
                   type: object
                   properties:
-                    completed_university_name:
+                    completed_university:
+                      type: string
+                    study_duration:
                       type: string
                     description:
                       type: string
@@ -3380,7 +3384,9 @@ components:
             items:
               type: object
               properties:
-                completed_university_name:
+                completed_university:
+                  type: string
+                study_duration:
                   type: string
                 description:
                   type: string

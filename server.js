@@ -33,7 +33,7 @@ class Server {
     addRoutes() {
         app.use(routerList);
         app.use((err, req, res, next) => {  // Error-handling middleware
-            const { statusCode = 500, message = 'Internal Server Error' } = err;
+            const { statusCode = 500, message  } = err;
             res.status(statusCode).json({
                 status: "error",
                 statusCode,

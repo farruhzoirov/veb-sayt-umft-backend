@@ -11,11 +11,7 @@ const NewsTranslateSchema = new Schema({
     language: {
         type: Schema.Types.ObjectId,
         ref: 'language'
-    },
-    status: {
-        type: Number,
-        default: 0
-    },
+    }
 }, {
     timestamps: true
 })

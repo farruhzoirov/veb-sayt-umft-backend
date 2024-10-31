@@ -15,7 +15,7 @@ class AddModelsService {
             if (!model) {
                 return res.status(404).json({message: "Model not found"});
             }
-            const { modelId } = req.body;
+            const {modelId} = req.body;
             const dynamicModel = getModelsHelper(model);
             let files = req.files || [];
             let imagePaths = (files.image || []).map((file) => file.path);
@@ -44,7 +44,6 @@ class AddModelsService {
             if (!mongoose.Types.ObjectId.isValid(modelId)) {
                 return res.status(400).json({message: "Invalid modelId"});
             }
-
             const existingModel = await dynamicModel.findById(modelId);
             if (!existingModel) {
                 return res.status(404).json({
@@ -58,7 +57,6 @@ class AddModelsService {
                 ok: true,
                 message: "Model Created successfully",
             });
-
         } catch (error) {
             console.error("Error:", error?.message);
             return res.status(500).json({
@@ -67,9 +65,10 @@ class AddModelsService {
             });
         }
     }
+
     async addTranslations(req, res, model, modelId) {
         const transModel = TranslateModel[model].ref;
-        if (Model[model].translate && req.body.translate && transModel) {
+        if (Model[model].translate && req.body.translate && transModel && req.body.translate.language) {
             const dynamicTranslateModel = getModelsTranslateHelper(transModel);
             const existingTranslation = await dynamicTranslateModel.findOne({
                 [model]: modelId,
@@ -81,14 +80,19 @@ class AddModelsService {
                     ...req.body.translate,
                 });
                 await newTranslation.save();
-            } else {
-                await dynamicTranslateModel.updateOne(
-                    {[model]: modelId, language: req.body.translate.language},
-                    {$set: { ...req.body.translate }}
-                );
             }
+            return res.status(400).json({
+                ok: false,
+                message: "Model exists in this language (You can update this using patch api)"
+            })
+        } else {
+            return res.status(400).json({
+                ok: false,
+                message: "Error adding translation"
+            })
         }
     }
+
     async populateModelData(model, modelId) {
         const dynamicModel = getModelsHelper(model);
         let newData = await dynamicModel.findById(modelId).lean();

@@ -12,12 +12,8 @@ const CategoryTranslateSchema = new Schema({
     language: {
         type: Schema.Types.ObjectId,
         ref: 'language',
-        default: null,
     },
-    status: {
-        type: Number,
-        default: 0
-    },
+
 }, { timestamps: true })
 
 module.exports = model("categoryTranslate", CategoryTranslateSchema);

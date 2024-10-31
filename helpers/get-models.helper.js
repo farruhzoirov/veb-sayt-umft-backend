@@ -1,5 +1,5 @@
-const universitySchema = require('../models/data/about-university');
-const universityTranslateSchema = require('../models/translate/about-university');
+const universitySchema = require('../models/data/university');
+const universityTranslateSchema = require('../models/translate/university');
 const categorySchema = require('../models/data/category');
 const categoryTranslateSchema = require('../models/translate/category');
 const directionSchema = require('../models/data/directions');

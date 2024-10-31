@@ -2,7 +2,11 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const SpecialistInfoTranslateSchema = new Schema({
-    completed_university_name: {
+    completed_university: {
+        type: String,
+        required: true,
+    },
+    study_duration: {
         type: String,
         required: true,
     },
@@ -19,8 +23,6 @@ const SpecialistInfoTranslateSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Language'
     }
-}, {
-    timestamps: true
 });
 
 module.exports = mongoose.model('specialistInfoTranslate', SpecialistInfoTranslateSchema);
