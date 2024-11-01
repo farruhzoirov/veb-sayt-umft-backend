@@ -9,7 +9,6 @@ const UpdateModelsService = require("../services/update-models.service");
 const DeleteModelsService = require("../services/delete-models.service");
 
 class DefaultController {
-
     constructor() {
         // Services
         this.getAllService = new GetAllService();
@@ -17,7 +16,6 @@ class DefaultController {
         this.addModelsService = new AddModelsService();
         this.updateModelsService = new UpdateModelsService();
         this.deleteModelsService = new DeleteModelsService();
-
         // Bind
         this.all = this.all.bind(this);
         this.add = this.add.bind(this);
