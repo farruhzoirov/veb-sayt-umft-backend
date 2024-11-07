@@ -2,17 +2,25 @@ const mongoose = require("mongoose");
 const {Schema} = require("mongoose");
 
 
+const StructureType =  new Schema({
+        code: String,
+        name: String,
+})
+
+// hemisId is departmentId in the hemis.
 const DepartmentSchema = new Schema({
     code: {
         type: Number,
         required: true,
     },
-    HemisId: {
+    hemisId: {
         type: Number,
     },
-    structureType: {
-
-    }
+    structureType: StructureType,
+    active: {
+        type: Boolean,
+        default: true,
+    },
 });
 
 

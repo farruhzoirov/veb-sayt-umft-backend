@@ -17,6 +17,7 @@ router.post('/login', userValidator, authController.login);
 router.get('/check-user', adminMiddleware, authController.checkUser);
 
 
+
 module.exports = router;
 
 

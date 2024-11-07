@@ -17,7 +17,7 @@ class DeleteModelsService {
 
         if (!mongoose.Types.ObjectId.isValid(_id))
             return res.status(500).json({
-                msg: '_id is not valid'
+                message: '_id is not valid'
             })
         const data = await dynamicModel.findById(_id).select(['_id', 'img', 'file']).lean()
         if (data.img && data.img.length && Array.isArray(data.img)) {

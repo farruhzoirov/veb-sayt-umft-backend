@@ -6,8 +6,6 @@ const UpdateUsersService = require('../services/user/update-user.service');
 const DeleteUserService = require('../services/user/delete-user.service');
 
 class UserController {
-    constructor() {
-    }
     async all(req, res) {
         const getAllUsersService = new GetAllUsersService();
         await getAllUsersService.getAllUsers(req, res);
