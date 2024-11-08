@@ -25,7 +25,6 @@ class AuthMiddleware {
                 });
             }
             const decoded = this.verifyToken(token);
-
             req.user = this.verifyToken(token);
             next();
         } catch (e) {
