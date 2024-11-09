@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const {Schema} = require("mongoose");
 
-
 const StructureType =  new Schema({
         code: String,
         name: String,
@@ -16,6 +15,7 @@ const DepartmentSchema = new Schema({
     hemisId: {
         type: Number,
     },
+    img: [],
     structureType: StructureType,
     active: {
         type: Boolean,
@@ -28,7 +28,6 @@ const DepartmentSchema = new Schema({
         type: Date,
     }
 });
-
 
 module.exports = mongoose.model("department", DepartmentSchema);
 

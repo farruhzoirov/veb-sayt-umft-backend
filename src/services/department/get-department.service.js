@@ -1,17 +1,26 @@
-const axios = require('axios');
-const Language = require('../../models/settings/language.model');
-const Department = require('../../models/data/department.model');
 const DepartmentTranslate = require('../../models/translate/department.model');
 
 class FetchDepartmentsService {
     async getDepartments(req, res) {
         try {
-
-            const allDepartments = await Department.find().select().lean();
+            let page = req.query.page || 1;
+            let limit = req.query.limit || 20;
+            let select = req.query.select || [];
+            const skip = (page - 1) * limit;
+            const allDepartments = await DepartmentTranslate.find()
+                .select(select.toString())
+                .skip(skip)
+                .limit(limit)
+                .populate('department', 'code, hemisId, img, structureType, active')
+                .lean();
+            return res.status(200).json({
+                ok: true,
+                data: allDepartments
+            })
         } catch (error) {
             console.error('Error in getDepartments:', error);
             return res.status(500).json({
-                success: false,
+                ok: false,
                 message: 'Failed to synchronize departments',
                 error: error.message
             });

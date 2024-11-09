@@ -6,7 +6,7 @@ const DepartmentTranslate = require('../../models/translate/department.model');
 class FetchDepartmentsService {
     async fetchDepartments(req, res) {
         try {
-            const language = await Language.findOne({isDefault: true}).lean();
+            const language = await Language.findOne({ isDefault: true }).lean();
             const languageId = language ? language._id : null;
 
             const response = await axios.get('');  // Replace with actual API URL
@@ -88,7 +88,7 @@ class FetchDepartmentsService {
         } catch (error) {
             console.error('Error in getDepartments:', error);
             return res.status(500).json({
-                success: false,
+                ok: false,
                 message: 'Failed to synchronize departments',
                 error: error.message
             });

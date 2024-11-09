@@ -1,6 +1,6 @@
-const { getModelsHelper, getModelsTranslateHelper, getModel } = require("../../helpers/get-models.helper");
-const { Model, TranslateModel } = require("../../common/constants/models.constants");
-const { populateGet } = require("../../helpers/get-populates.helper");
+const {getModelsHelper, getModelsTranslateHelper, getModel} = require("../../helpers/get-models.helper");
+const {Model, TranslateModel} = require("../../common/constants/models.constants");
+const {populateGet} = require("../../helpers/get-populates.helper");
 const {buildQuery} = require("../../helpers/filter.helper");
 
 class GetAllService {
@@ -8,6 +8,7 @@ class GetAllService {
         this.Model = Model;
         this.TranslateModel = TranslateModel;
     }
+
     async getAll(req, res) {
         const model = await getModel(req);
         if (!model) {
@@ -15,7 +16,6 @@ class GetAllService {
                 message: "Model not found"
             });
         }
-        console.log(model)
         const dynamicModel = getModelsHelper(model);
         let page = req.query.page || 1;
         let limit = req.query.limit || 20;
@@ -26,10 +26,10 @@ class GetAllService {
         let search = req.query.search;
         let searchField = req.query.searchField;
         const skip = (page - 1) * limit;
-        const query = buildQuery(model, { ...req.query, search, searchField });
+        const query = buildQuery(model, {...req.query, search, searchField});
         const populateOptions = this.Model[model].populate || [];
         if (this.Model[model].translate) {
-            return this.getAllWithTranslate(model, page, query,  select, skip, limit, sort, populateOptions, res);
+            return this.getAllWithTranslate(model, page, query, select, skip, limit, sort, populateOptions, res);
         } else {
             return this.getAllWithoutTranslate(dynamicModel, page, query, select, skip, limit, sort, populateOptions, res);
         }
@@ -42,21 +42,20 @@ class GetAllService {
         const matchingTranslates = await dynamicTranslateModel.find(query).lean();
         const matchingIds = matchingTranslates.map(t => t[model]);
         const data = await dynamicModel
-            .find({ _id: { $in: matchingIds } })
+            .find({_id: {$in: matchingIds}})
             .select(select.toString())
             .skip(skip)
             .limit(limit)
             .sort(sort)
             .lean() || [];
-        console.log(data)
         const populatedData = await Promise.all(data.map(async el => {
             await Promise.all(populateOptions.map(async elem => {
                 el[elem] = await populateGet(elem, el[elem]);
             }));
-            el.translates = await dynamicTranslateModel.find({ [model]: el._id }).select(select.length ? select : []).lean();
+            el.translates = await dynamicTranslateModel.find({[model]: el._id}).select(select.length ? select : []).lean();
             return el;
         }));
-        const count = await dynamicModel.countDocuments({ _id: { $in: matchingIds }, ...query });
+        const count = await dynamicModel.countDocuments({_id: {$in: matchingIds}, ...query});
         return res.json({
             data: populatedData,
             count,
@@ -64,6 +63,7 @@ class GetAllService {
             limit: Number(limit)
         });
     }
+
     async getAllWithoutTranslate(dynamicModel, page, query, select, skip, limit, sort, populateOptions, res) {
         const data = await dynamicModel
             .find(query)
