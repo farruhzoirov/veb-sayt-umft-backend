@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
-const {verify} = require("jsonwebtoken");
+const { verify } = require("jsonwebtoken");
 
 
 class AuthMiddleware {

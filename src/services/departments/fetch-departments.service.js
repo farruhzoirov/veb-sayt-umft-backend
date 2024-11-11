@@ -55,7 +55,7 @@ class FetchDepartmentsService {
                             updatedAt: department.updatedAt,
                         }
                     },
-                    {new: true}
+                    { new: true }
                 );
                 await DepartmentTranslate.findOneAndUpdate(
                     {
@@ -73,7 +73,7 @@ class FetchDepartmentsService {
             });
             const deleteDepartmentPromises = removedDepartmentIds.map(async id => {
                 await Department.findByIdAndDelete(id);
-                await DepartmentTranslate.deleteMany({departmentId: id});
+                await DepartmentTranslate.deleteMany({ departmentId: id });
             });
 
             await Promise.all([

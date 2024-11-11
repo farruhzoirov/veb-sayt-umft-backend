@@ -1,9 +1,10 @@
 // Services
-const GetAllUsersService = require('../services/user/get-users.service');
-const CreateUsersService = require('../services/user/add-user.service');
-const GetUserService = require('../services/user/get-user.service');
-const UpdateUsersService = require('../services/user/update-user.service');
-const DeleteUserService = require('../services/user/delete-user.service');
+const GetAllUsersService = require('../../services/user/get-users.service');
+const CreateUsersService = require('../../services/user/add-user.service');
+const GetUserService = require('../../services/user/get-user.service');
+const UpdateUsersService = require('../../services/user/update-user.service');
+const DeleteUserService = require('../../services/user/delete-user.service');
+
 
 class UserController {
     async all(req, res) {

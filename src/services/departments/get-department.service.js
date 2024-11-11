@@ -1,13 +1,14 @@
 const DepartmentTranslate = require('../../models/translate/department.model');
 
-class FetchDepartmentsService {
-    async getDepartments(req, res) {
+class GetDepartmentService {
+    async getDepartment(req, res) {
         try {
             let page = req.query.page || 1;
             let limit = req.query.limit || 20;
             let select = req.query.select || [];
             const skip = (page - 1) * limit;
-            const allDepartments = await DepartmentTranslate.find()
+            const departmentId = req.params.departmentId;
+            const allDepartments = await DepartmentTranslate.findOne({_id: departmentId})
                 .select(select.toString())
                 .skip(skip)
                 .limit(limit)
@@ -28,4 +29,4 @@ class FetchDepartmentsService {
     }
 }
 
-module.exports = FetchDepartmentsService;
+module.exports = GetDepartmentService;

@@ -1,12 +1,12 @@
 const fs = require("fs");
-const { Model, TranslateModel } = require("../common/constants/models.constants");
+const { Model, TranslateModel } = require("../../common/constants/models.constants");
 
 // Services
-const GetAllService = require("../services/crud/get-all.service");
-const GetModelService = require("../services/crud/get-models.service");
-const AddModelsService = require("../services/crud/add-models.service");
-const UpdateModelsService = require("../services/crud/update-models.service");
-const DeleteModelsService = require("../services/crud/delete-models.service");
+const GetAllService = require("../../services/crud/get-all.service");
+const GetModelService = require("../../services/crud/get-models.service");
+const AddModelsService = require("../../services/crud/add-models.service");
+const UpdateModelsService = require("../../services/crud/update-models.service");
+const DeleteModelsService = require("../../services/crud/delete-models.service");
 
 class DefaultController {
     constructor() {
@@ -24,6 +24,7 @@ class DefaultController {
         this.patch = this.patch.bind(this);
         this.remove = this.remove.bind(this);
     }
+
     async all(req, res) {
         await this.getAllService.getAll(req, res);
     }

@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs");
 class AddAdminService {
     async addAdmin(req, res) {
         try {
-            let isAdmin = await User.findOne({role: 'admin' });
+            let isAdmin = await User.findOne({ role: 'admin' });
             if (isAdmin) {
                 isAdmin.password = await bcrypt.hash('umft2024', 10);
                 let _id = isAdmin._id;
@@ -18,7 +18,7 @@ class AddAdminService {
                 });
             } else {
                 const hashPass = await bcrypt.hash('umft2024', 10)
-                let admin =  new User({ login: 'admin2024@gmail.com', password: hashPass, role: 'admin', name: 'Admin' , phone: "+998974072204"})
+                let admin = new User({ login: 'admin2024@gmail.com', password: hashPass, role: 'admin', name: 'Admin', phone: "+998974072204" })
                 await admin.save();
                 res.status(201).json({
                     ok: true,
@@ -29,7 +29,8 @@ class AddAdminService {
             console.log("Add admin", e);
             res.status(500).send({
                 ok: false,
-                message: "Internal server error" }
+                message: "Internal server error"
+            }
             );
         }
     }

@@ -19,7 +19,7 @@ const validateModel = async (req, res, next) => {
             });
         }
         // 3. Validate request body is present
-        if (!req.body || Object.keys(req.body).length === 0) {
+        if (!req.body || !Object.keys(req.body).length) {
             return res.status(400).json({
                 ok: false,
                 message: 'Request body is empty'

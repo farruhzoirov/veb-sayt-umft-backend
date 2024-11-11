@@ -181,6 +181,83 @@ paths:
         - Users
 
 
+ ## Applicants
+  /submit/applicants:
+      get:
+        summary: All applicants.
+        security:
+          - BearerAuth: [ ]
+        parameters:
+          - in: query
+            name: limit
+            schema:
+              type: string
+            required: false
+          - in: query
+            name: page
+            schema:
+              type: string
+            required: false
+          - in: query
+            name: select
+            schema:
+              type: string
+            required: false
+          - in: query
+            name: name
+            schema:
+              type: string
+            required: false
+        responses:
+          '200':
+            description: A JSON array of applicants names
+            content:
+              application/json:
+                schema:
+                  type: object
+        tags:
+          - Applicants
+
+      post:
+        summary: Creating one applicant.
+        requestBody:
+          description: Optional description in *Markdown*
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicants'
+        responses:
+          '201':
+            description: A JSON array of user names
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/addUserResponse'
+        tags:
+          - Applicants
+
+  /submit/applicants/{id}:
+      get:
+        summary: Getting one applicant by id.
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: string
+            required: true
+            description: The applicant ID
+        responses:
+          '200':
+            description: A JSON array of user names
+            content:
+              application/json:
+                schema:
+                  type: object
+        tags:
+          - Applicants
+
+
 
   ##Language
   /api/language:
@@ -2482,6 +2559,24 @@ components:
         ok:
           type: boolean
         message:
+          type: string
+
+  #Apllicants
+    applicants:
+      type: object
+      required:
+        - slug
+        - name
+        - phone
+        - email
+      properties:
+        slug:
+          type: string
+        name:
+          type: string
+        phone:
+          type: string
+        email:
           type: string
 
 

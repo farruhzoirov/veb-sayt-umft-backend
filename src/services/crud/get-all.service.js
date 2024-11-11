@@ -1,7 +1,7 @@
-const {getModelsHelper, getModelsTranslateHelper, getModel} = require("../../helpers/get-models.helper");
-const {Model, TranslateModel} = require("../../common/constants/models.constants");
-const {populateGet} = require("../../helpers/get-populates.helper");
-const {buildQuery} = require("../../helpers/filter.helper");
+const { getModelsHelper, getModelsTranslateHelper, getModel } = require("../../helpers/get-models.helper");
+const { Model, TranslateModel } = require("../../common/constants/models.constants");
+const { populateGet } = require("../../helpers/get-populates.helper");
+const { buildQuery } = require("../../helpers/filter.helper");
 
 class GetAllService {
     constructor() {
@@ -26,7 +26,7 @@ class GetAllService {
         let search = req.query.search;
         let searchField = req.query.searchField;
         const skip = (page - 1) * limit;
-        const query = buildQuery(model, {...req.query, search, searchField});
+        const query = buildQuery(model, { ...req.query, search, searchField });
         const populateOptions = this.Model[model].populate || [];
         if (this.Model[model].translate) {
             return this.getAllWithTranslate(model, page, query, select, skip, limit, sort, populateOptions, res);
@@ -42,7 +42,7 @@ class GetAllService {
         const matchingTranslates = await dynamicTranslateModel.find(query).lean();
         const matchingIds = matchingTranslates.map(t => t[model]);
         const data = await dynamicModel
-            .find({_id: {$in: matchingIds}})
+            .find({ _id: { $in: matchingIds } })
             .select(select.toString())
             .skip(skip)
             .limit(limit)
@@ -52,10 +52,10 @@ class GetAllService {
             await Promise.all(populateOptions.map(async elem => {
                 el[elem] = await populateGet(elem, el[elem]);
             }));
-            el.translates = await dynamicTranslateModel.find({[model]: el._id}).select(select.length ? select : []).lean();
+            el.translates = await dynamicTranslateModel.find({ [model]: el._id }).select(select.length ? select : []).lean();
             return el;
         }));
-        const count = await dynamicModel.countDocuments({_id: {$in: matchingIds}, ...query});
+        const count = await dynamicModel.countDocuments({ _id: { $in: matchingIds }, ...query });
         return res.json({
             data: populatedData,
             count,

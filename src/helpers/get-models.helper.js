@@ -16,7 +16,7 @@ const partnerSchema = require('../models/data/partners.model');
 const partnerTranslateSchema = require('../models/translate/partners.model');
 const specialistInfoSchema = require('../models/data/specialists-info.model');
 const specialistInfoTranslateSchema = require('../models/translate/specialists-info.model');
-const userSchema = require('../models/user.model');
+const userSchema = require('../models/user/user.model');
 const languageSchema = require('../models/settings/language.model');
 const degreeTranslateSchema = require('../models/translate/degrees.model');
 const degreeSchema = require('../models/data/degrees.model');
@@ -105,14 +105,18 @@ function getModelsTranslateHelper(modelKey) {
 }
 
 async function getModel(req, res) {
-    let model = req.params.model || null;
+    const model = req.params.model;
     if (!model) {
         return res.json({
-            msg: "model not exists"
+            ok: false,
+            message: "model's name is required"
         })
     }
     if (!Model.hasOwnProperty(model)) {
-        return false;
+        return res.json({
+            ok: false,
+            message: "model is not found"
+        })
     }
     return Model[model].ref;
 }

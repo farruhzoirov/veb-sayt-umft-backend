@@ -5,22 +5,21 @@ const mongoose = require('mongoose')
 const swagger = require('./swagger')
 const cors = require('cors')
 const app = express()
-const routerList = require('./routers.js')
-const upload = require("./helpers/uploads/upload-models.helper");
+const routersList = require('./routers.js');
 
 class Server {
-    constructor(){
+    constructor() {
         this.init()
         this.useMiddleWares()
         this.addRoutes()
         this.listenServer().then()
     }
-    init(){
+    init() {
 
     }
-    useMiddleWares(){
+    useMiddleWares() {
         app.use('/files', express.static('files'))
-        app.use('/images',express.static('images'))
+        app.use('/images', express.static('images'))
         app.use(cors({
             origin: 'http://localhost:63342',
             methods: 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
@@ -31,9 +30,10 @@ class Server {
         app.use(express.urlencoded({ extended: true }));
     }
     addRoutes() {
-        app.use(routerList);
-        app.use((err, req, res, next) => {  // Error-handling middleware
-            const { statusCode = 500, message  } = err;
+        app.use(routersList);
+        // Error-handling middleware
+        app.use((err, req, res, next) => {
+            const { statusCode = 500, message } = err;
             res.status(statusCode).json({
                 status: "error",
                 statusCode,
@@ -42,7 +42,7 @@ class Server {
         });
         swagger(app);
     }
-    async listenServer(){
+    async listenServer() {
         const server = async () => {
             try {
                 await mongoose.connect(process.env.MONGO_URI)

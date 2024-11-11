@@ -20,12 +20,12 @@ const storage = multer.diskStorage({
     },
 });
 
-const fileFilter =  (req, file, cb) => {
+const fileFilter = (req, file, cb) => {
     if (file.mimetype === 'image/jpg' ||
         file.mimetype === 'image/png' ||
         file.mimetype === 'image/jpeg' ||
-        file.mimetype === 'image/svg' ) {
-        cb (null, true);
+        file.mimetype === 'image/svg') {
+        cb(null, true);
     } else {
         cb(new Error('Only images  are allowed'), false);
     }
