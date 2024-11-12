@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose')
+const {Schema, model} = require('mongoose')
 
 const LanguageModel = new Schema({
     title: {
@@ -7,13 +7,14 @@ const LanguageModel = new Schema({
     },
     slug: {
         type: String,
-        unique:true,
+        unique: true,
         required: [true, 'Language type must be like that (ru, uz, en)!']
     },
-    isDefault:{
-        type:Boolean,
+    isDefault: {
+        type: Boolean,
         default: false
     },
+
     img: [],
     status: {
         type: Number,

@@ -1,7 +1,7 @@
 const Language = require('../../models/settings/language.model');
 const Department = require('../../models/data/department.model');
 const DepartmentTranslate = require('../../models/translate/department.model');
-const { default: mongoose } = require('mongoose');
+const {default: mongoose} = require('mongoose');
 
 class UpdateDepartmentsService {
     async updateDepartments(req, res) {
@@ -13,8 +13,8 @@ class UpdateDepartmentsService {
                     message: 'Invalid departmentId'
                 });
             }
-            const updatedData = { ...req.body } || {};
-            const findDepartment = Department.findOne({ _id: departmentId }).lean();
+            const forAddingTranslateData = {...req.body} || {};
+            const findDepartment = await Department.findOne({_id: departmentId}).lean();
             if (!findDepartment) {
                 return res.status(404).json({
                     ok: false,
@@ -31,11 +31,18 @@ class UpdateDepartmentsService {
                     {
                         $set: {
                             img: imagePaths,
-                            ...updatedData
                         }
                     }
                 )
             }
+            if (forAddingTranslateData) {
+                const newDepartmentTranslate = await new DepartmentTranslate({
+                    ...forAddingTranslateData,
+                    department: departmentId
+                });
+                await newDepartmentTranslate.save();
+            }
+
             return res.status(200).json({
                 success: true,
                 message: 'Departments updated successfully'

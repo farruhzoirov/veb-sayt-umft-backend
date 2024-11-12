@@ -1,9 +1,13 @@
-const { Schema, model } = require('mongoose')
+const {Schema, model} = require('mongoose')
 const mongoose = require("mongoose");
 
-// Hamkorlar
+// Partners
 const PartnerTranslateSchema = new Schema({
     name: {
+        type: String,
+        required: true,
+    },
+    description: {
         type: String,
         required: true,
     },

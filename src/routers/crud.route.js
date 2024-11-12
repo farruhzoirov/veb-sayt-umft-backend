@@ -1,7 +1,7 @@
 const {Router} = require('express');
 const router = Router();
 const authMiddleware = require('../middlewares/auth.middleware');
-const DefaultController = require('../controllers/crud.controller');
+const DefaultController = require('../controllers/crud/crud.controller');
 const upload = require('../helpers/uploads/upload-models.helper')
 const validateModel = require("../validators/models/models.validator");
 

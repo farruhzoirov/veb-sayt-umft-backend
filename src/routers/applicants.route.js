@@ -12,4 +12,8 @@ const applicantsValidator = require('../validators/applicants/applicants.validat
 router.post('/applicants', applicantsValidator, applicantsController.post);
 
 
+router.get('/applicants', applicantsController.get);
+
+
 module.exports = router;
+
