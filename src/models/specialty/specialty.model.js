@@ -3,8 +3,12 @@ const mongoose = require("mongoose");
 
 const SpecialtySchema = new Schema({
     img: [],
-    code: {
+    hemisId: {
         type: Number,
+        required: true,
+    },
+    code: {
+        type: String,
         required: true,
     },
     degree: {
@@ -20,7 +24,6 @@ const SpecialtySchema = new Schema({
         default: 1
     }
 })
-
 
 
 module.exports = mongoose.model('specialty', SpecialtySchema);

@@ -1,7 +1,7 @@
 // Services
-const AddAdminService = require('../services/auth/add-admin.service');
-const LoginService = require('../services/auth/login.service');
-const CheckUserService = require('../services/auth/check-user.service');
+const AddAdminService = require('../../services/auth/add-admin.service');
+const LoginService = require('../../services/auth/login.service');
+const CheckUserService = require('../../services/auth/check-user.service');
 
 
 class AuthController {

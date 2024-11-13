@@ -6,18 +6,18 @@ const DepartmentTranslate = require('../../models/translate/department.model');
 class FetchDepartmentsService {
     async fetchDepartments(req, res) {
         try {
-            const language = await Language.findOne({ isDefault: true }).lean();
-            const languageId = language ? language._id : null;
+            const defaultLanguage = await Language.findOne({ isDefault: true }).lean();
+            const languageId = defaultLanguage ? defaultLanguage._id : null;
 
             const response = await axios.get('');  // Replace with actual API URL
             const departments = response.data;
 
             if (!Array.isArray(departments)) {
-                throw new Error('Departments must be an array');
+                 new Error('Departments must be an array');
             }
 
             if (!departments.translate || !departments.translate.name) {
-                throw new Error('For translate fields are requred');
+                new Error('For translate fields are requred');
             }
 
             const existingDepartments = await Department.find().lean();

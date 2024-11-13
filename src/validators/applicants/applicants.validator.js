@@ -12,7 +12,6 @@ const ApplicantSchema = Joi.object({
 module.exports = async (req, res, next) => {
     try {
         await ApplicantSchema.validateAsync(req.body);
-
         next();
     } catch (err) {
         if (err instanceof ValidateError) {

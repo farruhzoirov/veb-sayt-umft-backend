@@ -12,13 +12,21 @@ class GetApplicantsService {
             let applicants;
             if (!applicantId) {
                 applicants = await Applicants.find()
-                    .select(select)
+                    .select(select ? select : {
+                        slug: 1,
+                        name: 1,
+                        email: 1,
+                        phone: 1,
+                    })
                     .limit(limit)
                     .skip(skip)
                     .lean();
                 return res.status(200).json({
-                    ok: false,
+                    ok: true,
                     data: applicants,
+                    count: applicants.length,
+                    page: Number(page),
+                    limit: Number(limit)
                 });
             }
             if (!mongoose.Types.ObjectId.isValid(applicantId)) {
@@ -34,8 +42,11 @@ class GetApplicantsService {
                 phone: 1
             }).lean();
             return res.status(200).json({
-                ok: false,
+                ok: true,
                 data: applicants,
+                count: applicants.length,
+                page: Number(page),
+                limit: Number(limit)
             });
         } catch (error) {
             res.status(500).send({

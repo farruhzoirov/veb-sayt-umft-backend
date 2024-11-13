@@ -21,7 +21,7 @@ class Server {
         app.use('/files', express.static('files'))
         app.use('/images', express.static('images'))
         app.use(cors({
-            origin: 'http://localhost:63342',
+            origin: '*',
             methods: 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
             allowedHeaders: 'Content-Type, Authorization'
         }));

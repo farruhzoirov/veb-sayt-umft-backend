@@ -6,6 +6,9 @@ const SpecialtyTranslateSchema = new Schema({
         type: String,
         required: true,
     },
+    description: {
+        type: String,
+    },
     specialty: {
         type: Schema.Types.ObjectId,
         ref: 'department',
@@ -13,6 +16,17 @@ const SpecialtyTranslateSchema = new Schema({
     status: {
         type: Number,
         default: 1
+    },
+    price: {
+        type: String,
+    },
+    duration: {
+        type: String,
+    },
+    language: {
+        type: Schema.Types.ObjectId,
+        ref: 'language',
+        required: true,
     }
 })
 

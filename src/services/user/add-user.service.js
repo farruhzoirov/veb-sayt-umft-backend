@@ -1,4 +1,4 @@
-const User = require("../../models/user.model");
+const User = require("../../models/user/user.model");
 const UserTranslate = require("../../models/translate/user.model");
 
 class CreateUserService {
