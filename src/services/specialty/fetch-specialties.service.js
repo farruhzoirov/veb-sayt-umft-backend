@@ -1,5 +1,4 @@
 const axios = require('axios');
-
 // --- Models --- //
 const Specialty = require('../../models/specialty/specialty.model');
 const SpecialtyTranslate = require('../../models/translate/specialty.model');
@@ -80,7 +79,10 @@ class FetchSpecialtiesService {
 
         } catch (error) {
             console.error('FetchSpecialtiesService Error:', error);
-            return res.status(500).send({ok: false, message: "An error occurred while fetching specialties"});
+            return res.status(500).send({
+                ok: false,
+                message: "An error occurred while fetching specialties"
+            });
         }
     }
 }

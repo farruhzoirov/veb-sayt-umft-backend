@@ -2,7 +2,7 @@ const Joi = require('joi');
 const ValidateError = require('joi').ValidationError;
 
 const ApplicantSchema = Joi.object({
-    name: Joi.string().required(),
+    name: Joi.string().min(3).required(),
     email: Joi.string().email().required(),
     phone: Joi.string().required(),
     slug: Joi.string().required(),

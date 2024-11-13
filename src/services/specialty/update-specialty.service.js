@@ -20,7 +20,7 @@ class UpdateSpecialtiesService {
                     message: 'Invalid Specialty ID',
                 });
             }
-            const forAddingTranslateData = {...req.body.translate } || {};
+            const forAddingTranslateData = {...req.body.translate} || {};
             const findSpecialty = await Specialty.findOne({_id: specialtyId}).lean();
             if (!findSpecialty) {
                 return res.status(404).json({
