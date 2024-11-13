@@ -19,6 +19,10 @@ const SpecialtySchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'department',
     },
+    active: {
+        type: Boolean,
+        default: true,
+    },
     status: {
         type: Number,
         default: 1

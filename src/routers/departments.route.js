@@ -12,7 +12,7 @@ router.get('/get-department', departmentsController.getDepartment);
 
 router.get('/get-departments', departmentsController.getAllDepartment);
 
-// router.put('/update-department', upload.fields[{name: 'image', maxCount: 2}], departmentsController.updateDepartment);
+router.put('/update-department/:departmentId', upload.fields([{name: 'image', maxCount: 2}]), departmentsController.updateDepartment);
 
 
 module.exports = router;
