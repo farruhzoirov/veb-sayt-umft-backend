@@ -24,7 +24,6 @@ class FetchSpecialtiesService {
                     message: "Invalid specialties data"
                 });
             }
-
             const defaultLanguage = await Language.findOne({isDefault: true}).lean();
             if (!defaultLanguage) {
                 return res.status(500).send({
@@ -70,7 +69,6 @@ class FetchSpecialtiesService {
                     throw err;
                 }
             });
-
             await Promise.all(specialtyPromises);
             return res.status(200).send({
                 ok: true,

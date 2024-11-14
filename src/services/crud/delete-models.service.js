@@ -15,10 +15,13 @@ class DeleteModelsService {
         const model = await getModel(req, res);
         const dynamicModel = getModelsHelper(model)
 
-        if (!mongoose.Types.ObjectId.isValid(_id))
+        if (!mongoose.Types.ObjectId.isValid(_id)) {
             return res.status(500).json({
+                ok: false,
                 message: '_id is not valid'
             })
+        }
+
         const data = await dynamicModel.findById(_id).select(['_id', 'img', 'file']).lean()
         if (data.img && data.img.length && Array.isArray(data.img)) {
             data.img.forEach(elem => {
@@ -31,7 +34,7 @@ class DeleteModelsService {
                 fs.unlinkSync(path.join(`${__dirname}/../${data.img}`))
             }
         }
-        if (data.file && data.file.length > 0) {
+        if (data.file && data.file.length) {
             data.file.forEach(elem => {
                 if (fs.existsSync(elem)) {
                     fs.unlinkSync(path.join(`${__dirname}/../${elem}`))
@@ -45,6 +48,7 @@ class DeleteModelsService {
             await dynamicTranslateModel.deleteMany({ [model]: _id })
         }
         res.status(200).json({
+            ok: true,
             message: 'Deleted successfully'
         })
     }

@@ -15,8 +15,4 @@ class StatisticController {
     }
 }
 
-class Statistics {
-
-}
-
 module.exports = StatisticController;

@@ -13,7 +13,10 @@ class AddModelsService {
         try {
             const model = await getModel(req, res);
             if (!model) {
-                return res.status(404).json({message: "Model not found"});
+                return res.status(404).json({
+                    ok: false,
+                    message: "Model not found"
+                });
             }
             const {modelId} = req.body;
             const dynamicModel = getModelsHelper(model);
@@ -42,12 +45,16 @@ class AddModelsService {
 
             }
             if (!mongoose.Types.ObjectId.isValid(modelId)) {
-                return res.status(400).json({message: "Invalid modelId"});
+                return res.status(400).json({
+                    ok: false,
+                    message: "Invalid modelId"
+                });
             }
             const existingModel = await dynamicModel.findById(modelId);
             if (!existingModel) {
                 return res.status(404).json({
-                    message: "Model not found"
+                    ok: false,
+                    message: "Model doesn't  exists"
                 });
             }
             await this.addTranslations(req, res, model, modelId); // Add translations
@@ -83,7 +90,7 @@ class AddModelsService {
             }
             return res.status(400).json({
                 ok: false,
-                message: "Model exists in this language (You can update this using patch api)"
+                message: "Model exists in this language (You can update this using put api)"
             })
         } else {
             return res.status(400).json({
@@ -96,7 +103,7 @@ class AddModelsService {
     async populateModelData(model, modelId) {
         const dynamicModel = getModelsHelper(model);
         let newData = await dynamicModel.findById(modelId).lean();
-        const transModel = TranslateModel[model]?.ref;
+        const transModel = TranslateModel[model].ref;
         if (Model[model].translate && transModel) {
             const dynamicTranslateModel = getModelsTranslateHelper(transModel);
             const translations = await dynamicTranslateModel.find({[model]: modelId}).lean();

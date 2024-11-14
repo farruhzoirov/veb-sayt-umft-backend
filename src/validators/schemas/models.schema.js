@@ -119,6 +119,7 @@ const partnersSchema = Joi.object({
     status: Joi.number().optional(),
     translate: Joi.object({
         name: Joi.string().required(),
+        description: Joi.string().required(),
         language: Joi.string().required(),
     }).required()
 })
@@ -168,6 +169,8 @@ const languagesSchema = Joi.object({
     isDefault: Joi.boolean().required(),
     status: Joi.number().optional(),
 })
+
+
 
 module.exports = {
     category: categorySchema,

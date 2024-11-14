@@ -1,4 +1,5 @@
 const  Joi  =  require('joi');
+const {ValidationError} = require("joi");
 
 const userSchema = Joi.object({
     login: Joi.string().email().required(),
@@ -11,7 +12,7 @@ module.exports =  async (req, res, next) => {
         await userSchema.validateAsync(req.body);
         next()
     } catch (err) {
-        if (err) {
+        if (err instanceof ValidationError) {
             res.status(400).send({
                 ok: false,
                 error: err?.details[0]?.message,

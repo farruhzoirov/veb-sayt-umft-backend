@@ -17,13 +17,12 @@ class GetModelService {
         const _id = req.params.id || null
         let select = req.query.select || [];
         const populateOptions = this.Model[model].populate || [];
-
         if (!mongoose.Types.ObjectId.isValid(_id)) {
             return res.status(500).json({
+                ok: false,
                 message: 'id is not valid'
             });
         }
-
         const data = await dynamicModel.findById(_id).select(select).lean() || {}
         if (this.Model[model].translate) {
             let transModel = this.TranslateModel[model].ref
@@ -36,7 +35,10 @@ class GetModelService {
                 return el;
             }));
         }
-        res.json(data);
+        return res.status(200).json({
+            ok: true,
+            data: data
+        });
     }
 }
 

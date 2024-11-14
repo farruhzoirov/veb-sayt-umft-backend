@@ -1,4 +1,5 @@
 const modelSchemas = require('../schemas/models.schema');
+const {ValidationError} = require("joi");
 
 const validateModel = async (req, res, next) => {
     try {
@@ -33,7 +34,7 @@ const validateModel = async (req, res, next) => {
         next();
     } catch (error) {
         // Handle validation errors
-        if (error.isJoi) {
+        if (error instanceof ValidationError) {
             return res.status(400).json({
                 ok: false,
                 message: 'Validation failed',

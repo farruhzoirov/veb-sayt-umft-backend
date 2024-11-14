@@ -9,7 +9,11 @@ class FetchDepartmentsService {
             const defaultLanguage = await Language.findOne({ isDefault: true }).lean();
             const languageId = defaultLanguage ? defaultLanguage._id : null;
 
-            const response = await axios.get('');  // Replace with actual API URL
+            const response = await axios.get('', {
+                headers: {
+                    'Accept': 'application/json',
+                }
+            });  // Replace with actual API URL
             const departments = response.data;
 
             if (!Array.isArray(departments)) {
