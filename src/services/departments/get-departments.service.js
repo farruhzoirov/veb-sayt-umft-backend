@@ -29,3 +29,4 @@ class GetDepartmentsService {
 }
 
 module.exports = GetDepartmentsService;
+
