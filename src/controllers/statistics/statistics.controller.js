@@ -9,6 +9,7 @@ class StatisticController {
         let language = await Language.countDocuments() || 0;
         let category = await Category.countDocuments() || 0;
         let direction = await Direction.countDocuments() || 0;
+
         res.status(200).json({
             language, direction, category
         });
