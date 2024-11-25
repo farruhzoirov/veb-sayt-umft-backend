@@ -1,5 +1,4 @@
 // filter.helper.js
-
 const searchFields = {
     'university': ['description'],
     'category': ['title'],
@@ -18,7 +17,7 @@ const searchFields = {
 };
 
 function buildQuery(model, queryParams) {
-    const { search, searchField, filters, dateRange } = queryParams;
+    const {search, searchField, filters, dateRange} = queryParams;
     let query = {};
 
     if (search && typeof search === 'string') {
@@ -39,13 +38,11 @@ function buildTextSearchQuery(model, searchText, searchField) {
         return [];
     }
     return searchFields[model].map((field) => {
-        console.log("field", field);
-        console.log(searchField)
         if (field === searchField) {
-        return {
-            [field]: { $regex: new RegExp(searchText.trim(), 'i') }
+            return {
+                [field]: {$regex: new RegExp(searchText.trim(), 'i')}
+            }
         }
-    }
     });
 }
 
@@ -53,7 +50,7 @@ function buildFilterQuery(filters) {
     const query = {};
     Object.entries(filters).forEach(([key, value]) => {
         if (Array.isArray(value)) {
-            query[key] = { $in: value };
+            query[key] = {$in: value};
         } else if (typeof value === 'object' && value !== null) {
             // Handle range queries
             const rangeQuery = {};
@@ -68,10 +65,10 @@ function buildFilterQuery(filters) {
 }
 
 function buildDateRangeQuery(dateRange) {
-    const { start, end, field = 'createdAt' } = dateRange;
+    const {start, end, field = 'createdAt'} = dateRange;
     const query = {};
-    if (start) query[field] = { $gte: new Date(start) };
-    if (end) query[field] = { ...query[field], $lte: new Date(end) };
+    if (start) query[field] = {$gte: new Date(start)};
+    if (end) query[field] = {...query[field], $lte: new Date(end)};
     return query;
 }
 

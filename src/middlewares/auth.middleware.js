@@ -16,7 +16,6 @@ class AuthMiddleware {
                     message: "Auth bearer token is missing"
                 });
             }
-
             const token = authHeader && authHeader.split(' ')[1];
             if (!token) {
                 return res.status(401).json({

@@ -33,6 +33,7 @@ class Server {
         app.use(routersList);
         // Error-handling middleware
         app.use((err, req, res, next) => {
+            console.error("Error",err)
             const { statusCode = 500, message } = err;
             res.status(statusCode).json({
                 status: "error",
