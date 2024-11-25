@@ -1154,11 +1154,11 @@ paths:
 
 
 
-##Direction
+##Specialty
 
-  /api/direction:
+  /api/specialty:
               get:
-                summary: Get all directions
+                summary: Get all specialty
                 security:
                   - BearerAuth: [ ]
                 parameters:
@@ -1180,11 +1180,11 @@ paths:
                   - in: query
                     name: search
                     schema:
-                    type: string
-                    required: false
+                      type: string
+                      required: false
                 responses:
                   "200":
-                    description: List of directions
+                    description: List of specialties
                     content:
                       application/json:
                         schema:
@@ -1192,14 +1192,14 @@ paths:
                           items:
                             $ref: "#/components/schemas/directionAll"
                 tags:
-                  - Direction
+                  - Specialty
 
               post:
-                summary: Create a degree
+                summary: Create a specialty
                 security:
                   - BearerAuth: []
                 requestBody:
-                  description: direction creation payload
+                  description: Specialty creation payload
                   required: true
                   content:
                     application/json:
@@ -1207,17 +1207,17 @@ paths:
                         $ref: "#/components/schemas/direction"
                 responses:
                   "201":
-                    description: Degree created successfully
+                    description: Specialty created successfully
                     content:
                       application/json:
                         schema:
                           $ref: "#/components/schemas/addModel"
                 tags:
-                  - Direction
+                  - Specialty
 
-  /api/direction/{id}:
+  /api/specialty/{id}:
               get:
-                summary: Get a single direction by ID
+                summary: Get a single Specialty by ID
                 security:
                   - BearerAuth: [ ]
                 parameters:
@@ -1228,15 +1228,15 @@ paths:
                     required: true
                 responses:
                   "200":
-                    description: Single degree
+                    description: Single Specialty
                     content:
                       application/json:
                         schema:
                           $ref: "#/components/schemas/directionAll"
                 tags:
-                  - Direction
+                  - Specialty
               put:
-                summary: Update a direction by ID
+                summary: Update a Specialty by ID
                 security:
                   - BearerAuth: [ ]
                 parameters:
@@ -1246,7 +1246,7 @@ paths:
                       type: string
                     required: true
                 requestBody:
-                  description: Direction update payload
+                  description: Specialty update payload
                   required: true
                   content:
                     application/json:
@@ -1260,10 +1260,10 @@ paths:
                         schema:
                           $ref: "#/components/schemas/updateModel"
                 tags:
-                  - Direction
+                  - Specialty
 
               delete:
-                summary: Delete a direction by ID
+                summary: Delete a Specialty by ID
                 security:
                   - BearerAuth: [ ]
                 parameters:
@@ -1280,9 +1280,9 @@ paths:
                         schema:
                           $ref: "#/components/schemas/deleteModel"
                 tags:
-                  - Direction
+                  - Specialty
 
-    ##Faculty
+    ##Department
   /api/faculty:
                 get:
                   summary: Get all faculties
