@@ -2,10 +2,11 @@ const mongoose = require("mongoose");
 const {Schema} = require("mongoose");
 
 const DegreeSchema = new Schema({
+    img: [],
     status: {
         type: Number,
-        default: 0
-    }
+        default: 1
+    },
 });
 
 

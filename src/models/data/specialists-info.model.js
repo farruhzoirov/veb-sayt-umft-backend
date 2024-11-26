@@ -15,7 +15,11 @@ const specialistInfoSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
-    }
+    },
+    status: {
+        type: Number,
+        default: 1
+    },
 }, {
     timestamps: true
 });

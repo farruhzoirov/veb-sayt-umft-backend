@@ -3,7 +3,7 @@ const router = require('express').Router()
 const UserController = require('../controllers/user/user.controller')
 const authMiddleware = require('../middlewares/auth.middleware');
 
-const upload = require("../helpers/uploads/upload-users.helper");
+const upload = require("../utils/uploads/upload-users.helper");
 
 const userController = new UserController();
 

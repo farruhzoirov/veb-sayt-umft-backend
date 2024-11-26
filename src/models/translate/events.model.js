@@ -6,6 +6,9 @@ const EventsTranslateSchema = new Schema({
         type: String,
         required: true,
     },
+    text: {
+        type: String
+    },
     description: {
         type: String,
         required: true,

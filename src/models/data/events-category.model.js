@@ -2,6 +2,11 @@ const { Schema, model } = require('mongoose')
 const mongoose = require("mongoose");
 
 const EventsCategorySchema = new Schema({
+    img: [],
+    status: {
+        type: Number,
+        default: 1
+    },
 });
 
 

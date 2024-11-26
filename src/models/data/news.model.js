@@ -1,23 +1,25 @@
-const { Schema, model } = require("mongoose");
+const {Schema, model} = require("mongoose");
 
 const NewsModel = new Schema({
     img: [],
-    category:{
-      type:Schema.Types.ObjectId,
-      ref:'category'
+    category: {
+        type: Schema.Types.ObjectId,
+        ref: 'category'
     },
-    views:{
-      type:Number,
-      default:0  
-    },
-    slug: {
-        type: String,
-        required: [true, 'Havola mavjud emas!']
-    },
-    status: {
+    views: {
         type: Number,
         default: 0
     },
-}, { timestamps: true })
+    slug: {
+        type: String,
+        required: [true, 'Link doesn\'t exist']
+    },
+    status: {
+        type: Number,
+        default: 1
+    },
+}, {
+    timestamps: true
+})
 
-module.exports = model("news", NewsModel)
+module.exports = model("news", NewsModel);

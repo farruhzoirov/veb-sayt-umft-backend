@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const upload = require('../helpers/uploads/upload-models.helper')
+const upload = require('../utils/uploads/upload-models.helper')
 const authMiddleware = require('../middlewares/auth.middleware');
 
 

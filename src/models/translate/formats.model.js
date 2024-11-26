@@ -8,6 +8,9 @@ const FormatsTranslateSchema = new Schema({
         type: String,
         required: true,
     },
+    text: {
+        type: String
+    },
     format: {
         type: Schema.Types.ObjectId,
         ref: 'format',

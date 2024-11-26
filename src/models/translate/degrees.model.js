@@ -7,6 +7,9 @@ const DegreeTranslateSchema = new Schema({
         type: String,
         required: true,
     },
+    text: {
+        type: String
+    },
     degree: {
         type: Schema.Types.ObjectId,
         ref: "degree",

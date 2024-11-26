@@ -1,9 +1,9 @@
-const {Schema, model,Mongoose} = require('mongoose')
+const {Schema, model, Mongoose} = require('mongoose');
 
 const UserModel = new Schema({
-    login:{
-        type:String,
-        unique:true,
+    login: {
+        type: String,
+        unique: true,
     },
     phone: {
         type: String,
@@ -18,13 +18,13 @@ const UserModel = new Schema({
     },
     role: {
         type: String,
-        enum: ['admin','teacher','support','user'],
+        enum: ['admin', 'teacher', 'support', 'user'],
         default: 'user'
     },
-    language:String,
+    language: String,
     status: {
-        type: Boolean,
-        default: true
+        type: Number,
+        default: 1
     },
     action: {
         type: String,

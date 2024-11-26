@@ -11,7 +11,7 @@ const DirectionSchema = new Schema({
         default: 0,
     },
     img: [],
-    // Why we need attributes
+
     faculty: {
         type:  Schema.Types.ObjectId,
         ref: 'Faculty',

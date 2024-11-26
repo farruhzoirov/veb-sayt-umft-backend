@@ -5,7 +5,11 @@ const mongoose = require("mongoose");
 
 // It may be Online, Offline or remote study.
 const FormatsSchema = new Schema({
-
+    img: [],
+    status: {
+        type: Number,
+        default: 1
+    },
 });
 
 

@@ -6,6 +6,9 @@ const SpecialistInfoTranslateSchema = new Schema({
         type: String,
         required: true,
     },
+    text: {
+        type: String
+    },
     study_duration: {
         type: String,
         required: true,

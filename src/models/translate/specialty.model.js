@@ -1,27 +1,36 @@
-const {Schema, model} = require('mongoose')
+const {Schema} = require('mongoose')
 const mongoose = require("mongoose");
+
+const DurationSchema = new Schema({
+    format: {
+        type: Schema.Types.ObjectId,
+        ref: 'format'
+    },
+    year: {
+        type: Number,
+        required: true
+    }
+})
 
 const SpecialtyTranslateSchema = new Schema({
     name: {
         type: String,
         required: true,
     },
+    text: {
+        type: String
+    },
     description: {
         type: String,
     },
+    duration: [DurationSchema],
     specialty: {
         type: Schema.Types.ObjectId,
-        ref: 'department',
+        ref: 'specialty',
     },
     status: {
         type: Number,
         default: 1
-    },
-    price: {
-        type: String,
-    },
-    duration: {
-        type: String,
     },
     language: {
         type: Schema.Types.ObjectId,

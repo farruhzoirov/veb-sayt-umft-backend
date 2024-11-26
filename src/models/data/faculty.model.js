@@ -6,6 +6,7 @@ const FacultySchema = new Schema({
     img: [],
     status: {
         type: Number,
+        default: 1,
     }
 });
 

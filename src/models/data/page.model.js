@@ -4,11 +4,11 @@ const PageModel = new Schema({
     img: [],
     slug: {
         type: String,
-        required: [true, 'Havola mavjud emas!']
+        required: [true, 'Link doesn\'t exist']
     },
     status: {
         type: Number,
-        default: 0
+        default: 1
     },
 })
 

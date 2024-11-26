@@ -50,7 +50,7 @@ function buildFilterQuery(filters) {
     const query = {};
     Object.entries(filters).forEach(([key, value]) => {
         if (Array.isArray(value)) {
-            query[key] = {$in: value};
+            query[key] = { $in: value };
         } else if (typeof value === 'object' && value !== null) {
             // Handle range queries
             const rangeQuery = {};

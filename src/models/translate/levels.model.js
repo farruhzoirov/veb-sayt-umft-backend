@@ -7,6 +7,9 @@ const LevelTranslateSchema = new Schema({
         type: String,
         required: true,
     },
+    text: {
+        type: String
+    },
     level: {
         type: Schema.Types.ObjectId,
         ref: "level",

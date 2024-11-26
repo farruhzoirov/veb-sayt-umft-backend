@@ -21,6 +21,10 @@ const DepartmentSchema = new Schema({
         type: Boolean,
         default: true,
     },
+    status: {
+        type: Number,
+        default: 1
+    },
     createdAt: {
         type: Date,
     },

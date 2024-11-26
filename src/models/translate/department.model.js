@@ -7,6 +7,9 @@ const DepartmentTranslateSchema = new Schema({
        type: String,
        required: true,
    },
+    text: {
+        type: String
+    },
     department: {
        type: Schema.Types.ObjectId,
         ref: "department",

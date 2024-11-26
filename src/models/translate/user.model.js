@@ -1,9 +1,12 @@
-const { Schema, model } = require("mongoose")
+const {Schema, model} = require("mongoose")
 
 const UserTranslateSchema = new Schema({
     name: {
         type: String,
         required: [true, "User's name is required"],
+    },
+    text: {
+        type: String
     },
     user: {
         type: Schema.Types.ObjectId,
@@ -14,6 +17,8 @@ const UserTranslateSchema = new Schema({
         ref: 'language',
     },
 
-}, { timestamps: true })
+}, {
+    timestamps: true
+})
 
 module.exports = model("userTranslate", UserTranslateSchema);

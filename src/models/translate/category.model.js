@@ -5,6 +5,9 @@ const CategoryTranslateSchema = new Schema({
         type: String,
         required: [true, "The CategoryName field must not be empty."]
     },
+    text: {
+        type: String
+    },
     category: {
         type: Schema.Types.ObjectId,
         ref: 'category',
