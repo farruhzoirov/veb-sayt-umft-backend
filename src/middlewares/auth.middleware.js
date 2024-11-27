@@ -1,11 +1,13 @@
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
 const { verify } = require("jsonwebtoken");
+
+const config = require('../config/config');
+
 
 
 class AuthMiddleware {
     verifyToken(token) {
-        return jwt.verify(token, process.env.JWT_SECRET_KEY);
+        return jwt.verify(token, config.JWT_SECRET_KEY);
     }
     async auth(req, res, next) {
         try {

@@ -7,6 +7,9 @@ const cors = require('cors')
 const app = express()
 const routersList = require('./routers.js');
 
+
+const config = require('./config/config.js');
+
 class Server {
     constructor() {
         this.init()
@@ -45,7 +48,7 @@ class Server {
     async listenServer() {
         const server = async () => {
             try {
-                await mongoose.connect(process.env.MONGO_URI)
+                await mongoose.connect(config.MONGODB_URI);
                 console.log('Database Connected');
                 app.listen(8000)
                 const shutdown = () => {
