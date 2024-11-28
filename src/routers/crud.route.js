@@ -14,18 +14,18 @@ const crudController = new DefaultController();
 
 router.get('/:model', authMiddleware.adminMiddleware, crudController.all);
 
-router.get('/:model/:id',  crudController.get);
+router.get('/:model/:id',authMiddleware.adminMiddleware, crudController.get);
 
-router.post('/:model', validateModel, crudController.add);
+router.post('/:model',  authMiddleware.adminMiddleware, validateModel, crudController.add);
 
-router.post('/:model/upload', authMiddleware.adminMiddleware,  upload.fields([
+router.post('/:model/upload', authMiddleware.adminMiddleware, upload.fields([
     { name: 'file', maxCount: 5 },
 ]), crudController.upload);
 
-router.put('/:model/:modelId', authMiddleware.adminMiddleware, upload.fields([
+router.put('/:model/:modelId', authMiddleware.adminMiddleware, validateModel, upload.fields([
     { name: 'image', maxCount: 5 },
     { name: 'file', maxCount: 5 },
-]), validateModel,  crudController.put);
+]),  crudController.put);
 
 router.patch('/:model/:modelId', authMiddleware.adminMiddleware,  crudController.patch);
 
