@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 const BaseError = require('../../errors/base.error');
-
 // Static Models' names
 const {Model, TranslateModel} = require("../../common/constants/models.constants");
 
@@ -11,10 +10,6 @@ const {getModelsHelper, getModelsTranslateHelper, getModel,} = require("../../he
 // helpers for adding translations and populations
 const addTranslations = require("../../helpers/translate.helper");
 const populateModelData = require("../../helpers/populate.helper");
-
-
-
-
 
 class AddModelsService {
     constructor() {
