@@ -7,6 +7,7 @@ const GetModelService = require("../../services/crud/get-model.service");
 const AddModelsService = require("../../services/crud/add-models.service");
 const UpdateModelsService = require("../../services/crud/update-models.service");
 const DeleteModelsService = require("../../services/crud/delete-models.service");
+const UploadService = require("../../services/crud/upload.service");
 
 class DefaultController {
     constructor() {
@@ -16,6 +17,7 @@ class DefaultController {
         this.addModelsService = new AddModelsService();
         this.updateModelsService = new UpdateModelsService();
         this.deleteModelsService = new DeleteModelsService();
+        this.uploadService = new UploadService();
         // Bind
         this.all = this.all.bind(this);
         this.add = this.add.bind(this);
@@ -23,6 +25,7 @@ class DefaultController {
         this.put = this.put.bind(this);
         this.patch = this.patch.bind(this);
         this.remove = this.remove.bind(this);
+        this.upload = this.upload.bind(this);
     }
 
     async all(req, res) {
@@ -42,6 +45,9 @@ class DefaultController {
     }
     async remove(req, res) {
         await this.deleteModelsService.deleteModel(req, res);
+    }
+    async upload(req, res) {
+        await this.uploadService.uploadFile(req, res);
     }
 }
 

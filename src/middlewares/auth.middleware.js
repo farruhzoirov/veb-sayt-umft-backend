@@ -53,7 +53,8 @@ class AuthMiddleware {
                     message: "no token provided"
                 });
             }
-            const decoded = this.verifyToken(token);
+            const decoded = jwt.verify(token, config.JWT_SECRET_KEY);
+            console.log(decoded)
             if (!decoded.role) {
                 return res.status(401).json({
                     ok: false,

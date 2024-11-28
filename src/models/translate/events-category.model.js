@@ -7,7 +7,7 @@ const EventsCategoryTranslateSchema = new Schema({
         required: true,
     },
     text: {
-        type: String
+        type: String,
     },
     eventsCategory: {
         type: Schema.Types.ObjectId,

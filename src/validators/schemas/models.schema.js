@@ -5,10 +5,10 @@ const universitySchema = Joi.object({
     status: Joi.number().optional(),
     translate: Joi.object({
         description: Joi.string().required(),
+        text: Joi.string().optional(),
         language: Joi.string().required(),
     }).required()
 });
-
 
 const categorySchema = Joi.object({
     modelId: Joi.string().optional(),
@@ -16,6 +16,7 @@ const categorySchema = Joi.object({
     status: Joi.number().optional(),
     translate: Joi.object({
         title: Joi.string().required(),
+        text: Joi.string().optional(),
         language: Joi.string().required(),
     }).required()
 });
@@ -26,11 +27,12 @@ const degreesSchema = Joi.object({
     status: Joi.number().optional(),
     translate: Joi.object({
         name: Joi.string().required(),
+        text: Joi.string().optional(),
         language: Joi.string().required(),
     }).required()
 });
 
-
+// This must be changed
 const directionSchema = Joi.object({
     modelId: Joi.string().optional(),
     code: Joi.number().required(),
@@ -47,11 +49,13 @@ const directionSchema = Joi.object({
     }).required()
 });
 
-
 const eventsCategorySchema = Joi.object({
     modelId: Joi.string().optional(),
+    status: Joi.number().optional(),
+    slug: Joi.string().optional(),
     translate: Joi.object({
         name: Joi.string().required(),
+        text: Joi.string().optional(),
         language: Joi.string().required(),
     }).required()
 })
@@ -62,13 +66,14 @@ const eventsSchema = Joi.object({
     eventsCategory: Joi.string().required(),
     translate: Joi.object({
         name: Joi.string().required(),
+        text: Joi.string().optional(),
         description: Joi.string().required(),
         location: Joi.string().required(),
         language: Joi.string().required(),
     }).required()
 })
 
-
+// it must be changed
 
 const facultySchema = Joi.object({
     modelId: Joi.string().optional(),
@@ -80,25 +85,26 @@ const facultySchema = Joi.object({
     }).required()
 })
 
-
 const formatsSchema = Joi.object({
     modelId: Joi.string().optional(),
     status: Joi.number().optional(),
     translate: Joi.object({
         name: Joi.string().required(),
+        text: Joi.string().optional(),
         description: Joi.string().required(),
         language: Joi.string().required(),
     }).required()
 })
 
+
 const levelSchema = Joi.object({
     modelId: Joi.string().optional(),
     translate: Joi.object({
         name: Joi.string().required(),
+        text: Joi.string().optional(),
         language: Joi.string().required(),
     }).required()
 })
-
 
 const newsSchema = Joi.object({
     modelId: Joi.string().optional(),
@@ -113,29 +119,28 @@ const newsSchema = Joi.object({
     }).required()
 })
 
-
 const partnersSchema = Joi.object({
     modelId: Joi.string().optional(),
     status: Joi.number().optional(),
     translate: Joi.object({
         name: Joi.string().required(),
+        text: Joi.string().optional(),
         description: Joi.string().required(),
         language: Joi.string().required(),
     }).required()
 })
-
 
 const specialistsInfoSchema = Joi.object({
     modelId: Joi.string().optional(),
     user: Joi.string().required(),
     translate: Joi.object({
         completed_university: Joi.string().required(),
+        text: Joi.string().optional(),
         study_duration: Joi.string().required(),
         description: Joi.string().required(),
         language: Joi.string().required(),
     }).required()
 })
-
 
 const topicsSchema = Joi.object({
     modelId: Joi.string().optional(),
@@ -144,11 +149,11 @@ const topicsSchema = Joi.object({
     level: Joi.string().required(),
     translate: Joi.object({
         name: Joi.string().required(),
+        text: Joi.string().optional(),
         description: Joi.string().required(),
         language: Joi.string().required(),
     }).required()
 })
-
 
 const pagesSchema = Joi.object({
     modelId: Joi.string().optional(),
@@ -164,12 +169,22 @@ const pagesSchema = Joi.object({
 
 
 const languagesSchema = Joi.object({
-    title: Joi.string().required(),
+    title: Joi.string().optional(),
     slug: Joi.string().optional(),
-    isDefault: Joi.boolean().required(),
+    isDefault: Joi.boolean().optional(),
     status: Joi.number().optional(),
 })
 
+const messengerSchema = Joi.object({
+    modelId: Joi.string().optional(),
+    link: Joi.string().required(),
+    slug: Joi.string().required(),
+    translate: {
+        name: Joi.string().required(),
+        text: Joi.string().optional(),
+        language: Joi.string().required(),
+    }
+})
 
 
 module.exports = {
@@ -188,5 +203,6 @@ module.exports = {
     topics: topicsSchema,
     page: pagesSchema,
     language: languagesSchema,
+    messenger: messengerSchema,
 };
 

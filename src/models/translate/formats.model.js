@@ -1,7 +1,6 @@
 const { Schema } = require('mongoose')
 const mongoose = require("mongoose");
 
-
 // It may be Online, Offline or remote study.
 const FormatsTranslateSchema = new Schema({
     name: {

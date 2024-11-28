@@ -12,6 +12,7 @@ const Model = {
     'level': { ref: 'level', translate: true },
     'format': { ref: 'format', translate: true },
     'topic': { ref: 'topic', translate: true },
+    'messenger': { ref: 'messenger', translate: true },
     'user': { ref: 'User', translate: true },
     'language': { ref: 'language', translate: false },
 };
@@ -31,6 +32,7 @@ const TranslateModel = {
     'degree': { ref: 'degreeTranslate' },
     'level': { ref: 'levelTranslate' },
     'topic': { ref: 'topicTranslate' },
+    'messenger': { ref: 'messengerTranslate' },
     'user': { ref: 'userTranslate' },
 };
 

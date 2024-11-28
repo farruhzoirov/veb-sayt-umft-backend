@@ -50,7 +50,6 @@ const validateModel = async (req, res, next) => {
             ok: false,
             message: 'Internal server error during validation'
         });
-
     }
 };
 

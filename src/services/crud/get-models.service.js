@@ -8,9 +8,9 @@ class GetModelsService {
         this.Model = Model;
         this.TranslateModel = TranslateModel;
     }
-
     async getAll(req, res) {
         const model = await getModel(req);
+        console.log(model)
         if (!model) {
             return res.status(404).send({
                 message: "Model not found"

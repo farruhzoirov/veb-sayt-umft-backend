@@ -14,7 +14,6 @@ const LanguageModel = new Schema({
         type: Boolean,
         default: false
     },
-
     img: [],
     status: {
         type: Number,

@@ -1,11 +1,15 @@
 const multer = require('multer');
 const path = require('path');
 const fs = require("fs");
+const {getModel} = require("../../helpers/get-models.helper");
 
 const storage = multer.diskStorage({
     destination: async function (req, file, cb) {
         try {
-            const model = req.params.model;
+            const model = await getModel(req);
+            if (!model) {
+               throw new Error(`This Model not found: ${req.params.model}`);
+            }
             const destinationDirectory = path.join('images', model);
             await fs.promises.mkdir(destinationDirectory, { recursive: true });
             cb(null, destinationDirectory);
@@ -20,6 +24,7 @@ const storage = multer.diskStorage({
     },
 });
 
+
 const fileFilter =  (req, file, cb) => {
     if (file.mimetype === 'image/jpg' ||
         file.mimetype === 'image/png' ||
@@ -31,11 +36,12 @@ const fileFilter =  (req, file, cb) => {
         cb(new Error('Only images and pdfs are allowed'), false);
     }
 }
-const uploadModelsHelper = multer({
+
+const uploadModelsUtil = multer({
     storage,
     limits: { fileSize: 30 * 1024 * 1024 },  // Max 30mb
     fileFilter: fileFilter
 });
 
 
-module.exports = uploadModelsHelper;
+module.exports = uploadModelsUtil;

@@ -5,7 +5,7 @@ info:
   version: 0.1.9
 servers:
   ##- url: http://195.158.9.124:4121/
-  - url: http://localhost:8000/
+  - url: 192.168.27.206:4130
     description: Optional server description, e.g. Main (production) server
 tags:
   - name: Auth
@@ -46,7 +46,7 @@ paths:
                 $ref: "#/components/schemas/loginSuccess"
       tags:
         - Auth
-  /auth/checkuser:
+  /auth/check-user:
     get:
       summary: checking user exist or don't.
       security:

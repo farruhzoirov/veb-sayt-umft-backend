@@ -1,12 +1,11 @@
 require('dotenv').config();
-const PORT = process.env.PORT || 3000
 const express = require('express')
 const mongoose = require('mongoose')
 const swagger = require('./swagger')
 const cors = require('cors')
-const app = express()
-const routersList = require('./routers.js');
+const app = express();
 
+const routersList = require('./routers.js');
 
 const config = require('./config/config.js');
 
@@ -17,9 +16,7 @@ class Server {
         this.addRoutes()
         this.listenServer().then()
     }
-    init() {
-
-    }
+    init() {}
     useMiddleWares() {
         app.use('/files', express.static('files'))
         app.use('/images', express.static('images'))
@@ -28,15 +25,16 @@ class Server {
             methods: 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
             allowedHeaders: 'Content-Type, Authorization'
         }));
-
         app.use(express.json());
         app.use(express.urlencoded({ extended: true }));
     }
+
     addRoutes() {
         app.use(routersList);
         // Error-handling middleware
         app.use((err, req, res, next) => {
-            const { statusCode = 500, message } = err;
+            const {statusCode = 500, message} = err;
+            console.log(err);
             res.status(statusCode).json({
                 status: "error",
                 statusCode,
@@ -50,7 +48,7 @@ class Server {
             try {
                 await mongoose.connect(config.MONGODB_URI);
                 console.log('Database Connected');
-                app.listen(8000)
+                app.listen(config.APP_PORT);
                 const shutdown = () => {
                     console.log('Shutting down gracefully...');
                     server.close(() => {
@@ -60,7 +58,7 @@ class Server {
                 };
                 process.on('SIGINT', shutdown);
                 process.on('SIGTERM', shutdown);
-                console.log(`Server ${PORT} is running. MongoDB is good`);
+                console.log(`Server ${config.APP_PORT} is running. MongoDB is good`);
             } catch (e) {
                 console.log(e)
             }

@@ -2,8 +2,8 @@ const  Joi  =  require('joi');
 const {ValidationError} = require("joi");
 
 const userSchema = Joi.object({
-    login: Joi.string().email().required(),
-    password: Joi.string().min(5).required()
+    login: Joi.string().required(),
+    password: Joi.string().min(3).required()
 });
 
 

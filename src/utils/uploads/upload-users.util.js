@@ -30,11 +30,11 @@ const fileFilter = (req, file, cb) => {
         cb(new Error('Only images  are allowed'), false);
     }
 }
-const uploadUsersHelper = multer({
+const uploadUsersUtil = multer({
     storage,
     limits: { fileSize: 30 * 1024 * 1024 },  // Max 30mb
     fileFilter: fileFilter
 });
 
 
-module.exports = uploadUsersHelper;
+module.exports = uploadUsersUtil;

@@ -1,25 +1,37 @@
 const universitySchema = require('../models/data/university.model');
 const universityTranslateSchema = require('../models/translate/university.model');
+
 const categorySchema = require('../models/data/category.model');
 const categoryTranslateSchema = require('../models/translate/category.model');
+
 const directionSchema = require('../models/data/directions.model');
 const directionTranslateSchema = require('../models/translate/directions.model');
+
 const eventsSchema = require('../models/data/events.model');
 const eventsTranslateSchema = require('../models/translate/events.model');
+
 const facultySchema = require('../models/data/faculty.model');
 const facultyTranslateSchema = require('../models/translate/faculty.model');
+
 const newsSchema = require('../models/data/news.model');
 const newsTranslateSchema = require('../models/translate/news.model');
+
 const pageSchema = require('../models/data/page.model');
 const pageTranslateSchema = require('../models/translate/page.model');
+
 const partnerSchema = require('../models/data/partners.model');
 const partnerTranslateSchema = require('../models/translate/partners.model');
+
 const specialistInfoSchema = require('../models/data/specialists-info.model');
 const specialistInfoTranslateSchema = require('../models/translate/specialists-info.model');
+
 const userSchema = require('../models/user/user.model');
+
 const languageSchema = require('../models/settings/language.model');
+
 const degreeTranslateSchema = require('../models/translate/degrees.model');
 const degreeSchema = require('../models/data/degrees.model');
+
 const levelSchema = require('../models/data/levels.model');
 const levelTranslateSchema = require('../models/translate/levels.model');
 
@@ -28,11 +40,15 @@ const formatSchema = require('../models/data/format.model');
 const formatTranslateSchema = require('../models/translate/formats.model');
 
 // Topics
-
 const topicSchema = require('../models/data/topics.model');
 const topicTranslateSchema = require('../models/translate/topics.model');
 
+const messengerSchema = require('../models/data/messenger.model');
+const messengerTranslateSchema = require('../models/translate/messenger.model');
+
+
 const { Model, TranslateModel } = require("../common/constants/models.constants")
+
 
 function getModelsHelper(modelKey) {
     switch (modelKey) {
@@ -40,12 +56,12 @@ function getModelsHelper(modelKey) {
             return universitySchema;
         case Model.category.ref:
             return categorySchema;
-        case Model.direction.ref:
-            return directionSchema;
+        // case Model.direction.ref:
+        //     return directionSchema;
         case Model.events.ref:
             return eventsSchema;
-        case Model.faculty.ref:
-            return facultySchema;
+        // case Model.faculty.ref:
+        //     return facultySchema;
         case Model.news.ref:
             return newsSchema;
         case Model.page.ref:
@@ -66,6 +82,8 @@ function getModelsHelper(modelKey) {
             return formatSchema;
         case Model.topic.ref:
             return topicSchema;
+        case Model.messenger.ref:
+            return messengerSchema;
         default:
             throw new Error(`Model "${modelKey}" not found.`);
     }
@@ -77,12 +95,12 @@ function getModelsTranslateHelper(modelKey) {
             return universityTranslateSchema;
         case TranslateModel.category.ref:
             return categoryTranslateSchema;
-        case TranslateModel.direction.ref:
-            return directionTranslateSchema;
+        // case TranslateModel.direction.ref:
+        //     return directionTranslateSchema;
         case TranslateModel.events.ref:
             return eventsTranslateSchema;
-        case TranslateModel.faculty.ref:
-            return facultyTranslateSchema;
+        // case TranslateModel.faculty.ref:
+        //     return facultyTranslateSchema;
         case TranslateModel.news.ref:
             return newsTranslateSchema;
         case TranslateModel.page.ref:
@@ -99,24 +117,17 @@ function getModelsTranslateHelper(modelKey) {
             return levelTranslateSchema;
         case TranslateModel.topic.ref:
             return topicTranslateSchema;
+        case TranslateModel.messenger.ref:
+            return topicTranslateSchema;
         default:
             throw new Error(`Translation model "${modelKey}" not found.`);
     }
 }
 
-async function getModel(req, res) {
-    const model = req.params.model;
-    if (!model) {
-        return res.json({
-            ok: false,
-            message: "model's name is required"
-        })
-    }
+async function getModel(req) {
+    const model = req.params ? req.params.model : {};
     if (!Model.hasOwnProperty(model)) {
-        return res.json({
-            ok: false,
-            message: "model is not found"
-        })
+        return false;
     }
     return Model[model].ref;
 }

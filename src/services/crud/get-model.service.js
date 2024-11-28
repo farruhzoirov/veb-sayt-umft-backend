@@ -4,14 +4,19 @@ const { getModelsHelper, getModelsTranslateHelper, getModel } = require("../../h
 const { Model, TranslateModel } = require("../../common/constants/models.constants");
 const { populateGet } = require("../../helpers/get-populates.helper");
 
-
 class GetModelService {
     constructor() {
-        this.Model = Model
-        this.TranslateModel = TranslateModel
+        this.Model = Model;
+        this.TranslateModel = TranslateModel;
     }
     async getModelById(req, res) {
-        const model = await getModel(req, res);
+        const model = await getModel(req);
+        if (!model) {
+            return res.status(404).json({
+                ok: false,
+                message: "Model not found"
+            });
+        }
         let language = req.query.language
         const dynamicModel = getModelsHelper(model);
         const _id = req.params.id || null
