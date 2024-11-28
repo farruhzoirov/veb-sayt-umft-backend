@@ -15,6 +15,7 @@ class AddModelsService {
     constructor() {
         this.Model = Model
     }
+
     async addModel(modelName, modelData) {
         const dynamicModel = getModelsHelper(modelName);
         const isSlugExists = await dynamicModel.findOne({slug: modelData.slug});
@@ -23,7 +24,7 @@ class AddModelsService {
         }
         let newData;
         if (!modelData.modelId) {
-             newData = await new dynamicModel({
+            newData = await new dynamicModel({
                 ...modelData,
                 img: [modelData.file],
             }).save();
@@ -38,7 +39,7 @@ class AddModelsService {
         }
 
         if (!mongoose.Types.ObjectId.isValid(modelData.modelId)) {
-            throw  BaseError.BadRequest('Invalid modelId');
+            throw BaseError.BadRequest('Invalid modelId');
         }
 
         const existingModel = await dynamicModel.findById(modelData.modelId);
@@ -52,7 +53,7 @@ class AddModelsService {
             newData.translates = await addTranslations(modelName, modelData.modelId, modelData.translate);
         }
         if (this.Model[modelName]?.populate) {
-             newData = await populateModelData(modelName, modelData.modelId, this.Model[modelName].populate );
+            newData = await populateModelData(modelName, modelData.modelId, this.Model[modelName].populate);
         }
         return newData;
     }
