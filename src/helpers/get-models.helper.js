@@ -127,7 +127,7 @@ function getModelsTranslateHelper(modelKey) {
 async function getModel(req) {
     const model = req.params ? req.params.model : {};
     if (!Model.hasOwnProperty(model)) {
-        return false;
+       throw new Error('Model "' + model + '" not found.');
     }
     return Model[model].ref;
 }

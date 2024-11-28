@@ -10,7 +10,6 @@ class DeleteModelsService {
         this.Model = Model
         this.TranslateModel = TranslateModel
     }
-
     async deleteModel(req, res) {
         let _id = req.params.id;
         const model = await getModel(req);

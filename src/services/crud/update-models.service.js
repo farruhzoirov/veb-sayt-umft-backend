@@ -36,6 +36,7 @@ class UpdateModelsService {
     async updateModel(req, res, method) {
         try {
             const model = await getModel(req);
+
             if (!model) {
                 return res.status(404).json({
                     ok: false,

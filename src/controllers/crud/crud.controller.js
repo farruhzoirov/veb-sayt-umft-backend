@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { Model, TranslateModel } = require("../../common/constants/models.constants");
+const {Model, TranslateModel} = require("../../common/constants/models.constants");
 
 // Services
 const GetAllService = require("../../services/crud/get-models.service");
@@ -8,6 +8,8 @@ const AddModelsService = require("../../services/crud/add-models.service");
 const UpdateModelsService = require("../../services/crud/update-models.service");
 const DeleteModelsService = require("../../services/crud/delete-models.service");
 const UploadService = require("../../services/crud/upload.service");
+
+const {getModel} = require("../../helpers/get-models.helper");
 
 class DefaultController {
     constructor() {
@@ -31,21 +33,34 @@ class DefaultController {
     async all(req, res) {
         await this.getAllService.getAll(req, res);
     }
-    async add(req, res) {
-        await this.addModelsService.addModel(req, res);
+
+    async add(req, res, next) {
+        try {
+            const modelData = req.body;
+            const modelName = await getModel(req);
+            const newData = await this.addModelsService.addModel(modelName, modelData);
+            return res.status(201).json(newData);
+        } catch (err) {
+            next(err);
+        }
     }
+
     async get(req, res) {
         await this.getModelService.getModelById(req, res);
     }
+
     async put(req, res) {
         await this.updateModelsService.putModel(req, res);
     }
+
     async patch(req, res) {
         await this.updateModelsService.patchModel(req, res);
     }
+
     async remove(req, res) {
         await this.deleteModelsService.deleteModel(req, res);
     }
+
     async upload(req, res) {
         await this.uploadService.uploadFile(req, res);
     }

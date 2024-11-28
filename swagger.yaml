@@ -5,7 +5,7 @@ info:
   version: 0.1.9
 servers:
   ##- url: http://195.158.9.124:4121/
-  - url: 192.168.27.206:4130
+  - url: localhost:4131
     description: Optional server description, e.g. Main (production) server
 tags:
   - name: Auth

@@ -9,6 +9,9 @@ const routersList = require('./routers.js');
 
 const config = require('./config/config.js');
 
+const errorMiddleware = require('./middlewares/errors.middleware');
+
+
 class Server {
     constructor() {
         this.init()
@@ -31,16 +34,7 @@ class Server {
 
     addRoutes() {
         app.use(routersList);
-        // Error-handling middleware
-        app.use((err, req, res, next) => {
-            const {statusCode = 500, message} = err;
-            console.log(err);
-            res.status(statusCode).json({
-                status: "error",
-                statusCode,
-                message
-            });
-        });
+        app.use(errorMiddleware);
         swagger(app);
     }
     async listenServer() {

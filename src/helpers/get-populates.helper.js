@@ -2,7 +2,7 @@ const { Model, TranslateModel } = require("../common/constants/models.constants"
 const { Types } = require("mongoose");
 const { getModelsTranslateHelper, getModelsHelper } = require("./get-models.helper");
 
-async function populateGet(model, _id) {
+async function getPopulates(model, _id) {
     let modelForPopulate = Model[model].ref
     const dynamicModel = getModelsHelper(modelForPopulate)
     if (!Types.ObjectId.isValid(_id))
@@ -19,5 +19,5 @@ async function populateGet(model, _id) {
 }
 
 module.exports = {
-    populateGet
+    getPopulates
 }

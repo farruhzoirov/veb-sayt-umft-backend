@@ -7,7 +7,6 @@ const LanguageModel = new Schema({
     },
     slug: {
         type: String,
-        unique: true,
         required: [true, 'Language type must be like that (ru, uz, en)!']
     },
     isDefault: {
