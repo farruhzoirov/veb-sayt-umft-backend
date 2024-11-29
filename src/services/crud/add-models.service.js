@@ -1,21 +1,19 @@
 const mongoose = require("mongoose");
 
 const BaseError = require('../../errors/base.error');
+
 // Static Models' names
-const {Model, TranslateModel} = require("../../common/constants/models.constants");
+const {Model} = require("../../common/constants/models.constants");
 
-// helpers for getting models
-const {getModelsHelper, getModelsTranslateHelper, getModel,} = require("../../helpers/get-models.helper");
+const {getModelsHelper} = require("../../helpers/get-models.helper");
 
-// helpers for adding translations and populations
-const addTranslations = require("../../helpers/translate.helper");
+const { addTranslations } = require("../../helpers/translate.helper");
 const populateModelData = require("../../helpers/populate.helper");
 
 class AddModelsService {
     constructor() {
         this.Model = Model
     }
-
     async addModel(modelName, modelData) {
         const dynamicModel = getModelsHelper(modelName);
         const isSlugExists = await dynamicModel.findOne({slug: modelData.slug});

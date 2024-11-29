@@ -1,12 +1,11 @@
+const {BaseError} = require("../../errors/base.error");
+
 class UploadService {
     async uploadFile(req, res) {
         try {
             let files = req.files.file || [];
             if (!files.length) {
-                return res.status(400).json({
-                    ok: false,
-                    message: "No files uploaded",
-                });
+                throw  BaseError.BadRequest('No file uploaded');
             }
             let filePaths = files[0].path;
             return res.status(200).json({

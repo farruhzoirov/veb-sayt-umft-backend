@@ -28,8 +28,4 @@ class ApplicantsController {
 }
 
 
-
-
-
-
 module.exports = ApplicantsController;
