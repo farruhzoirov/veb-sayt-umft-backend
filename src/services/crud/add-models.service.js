@@ -23,15 +23,20 @@ class AddModelsService {
         }
         let newData;
         if (!modelData.modelId) {
+            console.log(modelData);
             if (modelName.trim() === 'language' && !modelData.isDefault) {
                 const languageExists = await dynamicModel.find();
                 if (!languageExists.length) {
                     newData = await new dynamicModel({
                         ...modelData,
                         isDefault: true,
-                        img: modelData.file ? [modelData.file] : [],
+                        img: modelData.img ? [modelData.img] : [],
                     }).save();
                 }
+                newData = await new dynamicModel({
+                    ...modelData,
+                    img: modelData.img ? [modelData.img] : [],
+                }).save();
                 return newData;
             }
             if (modelName.trim() === 'language' && modelData.isDefault) {
@@ -39,31 +44,18 @@ class AddModelsService {
                 if (!languageExists.length) {
                     newData = await new dynamicModel({
                         ...modelData,
-                        img: modelData.file ? [modelData.file] : [],
+                        img: modelData.img ? [modelData.img] : [],
                     }).save();
                 }
-                return newData;
-            }
-            if (modelName.trim() === 'language' && modelData.isDefault) {
-                const isDefaultLanguageExists = await dynamicModel.findOne({ isDefault: true });
-                if (!isDefaultLanguageExists.length) {
-                    newData = await new dynamicModel({
-                        ...modelData,
-                        img: modelData.file ? [modelData.file] : [],
-                    }).save();
-                }
-                isDefaultLanguageExists.isDefault = false;
-                await isDefaultLanguageExists.save();
                 newData = await new dynamicModel({
                     ...modelData,
-                    img: modelData.file ? [modelData.file] : [],
+                    img: modelData.img ? [modelData.img] : [],
                 }).save();
                 return newData;
             }
-
             newData = await new dynamicModel({
                 ...modelData,
-                img: modelData.file ? [modelData.file] : [],
+                img: modelData.img ? [modelData.img] : [],
             }).save();
 
             if (this.Model[modelName].translate) {
