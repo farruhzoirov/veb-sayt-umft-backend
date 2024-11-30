@@ -17,13 +17,50 @@ class AddModelsService {
 
     async addModel(modelName, modelData) {
         const dynamicModel = getModelsHelper(modelName);
-        console.log(modelData)
         const isSlugExists = await dynamicModel.findOne({ slug: modelData.slug });
         if (isSlugExists) {
             throw BaseError.BadRequest('Slug already exists');
         }
         let newData;
         if (!modelData.modelId) {
+            if (modelName.trim() === 'language' && !modelData.isDefault) {
+                const languageExists = await dynamicModel.find();
+                if (!languageExists.length) {
+                    newData = await new dynamicModel({
+                        ...modelData,
+                        isDefault: true,
+                        img: modelData.file ? [modelData.file] : [],
+                    }).save();
+                }
+                return newData;
+            }
+            if (modelName.trim() === 'language' && modelData.isDefault) {
+                const languageExists = await dynamicModel.find();
+                if (!languageExists.length) {
+                    newData = await new dynamicModel({
+                        ...modelData,
+                        img: modelData.file ? [modelData.file] : [],
+                    }).save();
+                }
+                return newData;
+            }
+            if (modelName.trim() === 'language' && modelData.isDefault) {
+                const isDefaultLanguageExists = await dynamicModel.findOne({ isDefault: true });
+                if (!isDefaultLanguageExists.length) {
+                    newData = await new dynamicModel({
+                        ...modelData,
+                        img: modelData.file ? [modelData.file] : [],
+                    }).save();
+                }
+                isDefaultLanguageExists.isDefault = false;
+                await isDefaultLanguageExists.save();
+                newData = await new dynamicModel({
+                    ...modelData,
+                    img: modelData.file ? [modelData.file] : [],
+                }).save();
+                return newData;
+            }
+
             newData = await new dynamicModel({
                 ...modelData,
                 img: modelData.file ? [modelData.file] : [],

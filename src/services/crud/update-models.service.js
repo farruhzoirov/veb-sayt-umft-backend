@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
-const {Model} = require("../../common/constants/models.constants");
+const { Model } = require("../../common/constants/models.constants");
 
-const {updateTranslations} = require("../../helpers/translate.helper");
+const { updateTranslations } = require("../../helpers/translate.helper");
 
-const {getModelsHelper} = require("../../helpers/get-models.helper");
+const { getModelsHelper } = require("../../helpers/get-models.helper");
 
 const BaseError = require("../../errors/base.error");
 
@@ -34,13 +34,14 @@ class UpdateModelsService {
                 }
             }
         }
-
         newData = await dynamicModel.findOneAndUpdate(
-            modelId,
+            {
+                _id: modelId
+            },
             {
                 $set: updateData
             },
-            {new: true}
+            { new: true }
         );
         // Update translations
         if (updateData.translate) {
