@@ -25,12 +25,22 @@ class UpdateModelsService {
         if (!existingModel) {
             throw BaseError.BadRequest("Model doesn't exist");
         }
+        if (modelName.trim() === 'language' && updateData.isDefault) {
+            const isDefaultLanguageExists = await dynamicModel.find({ isDefault: true });
+            if (isDefaultLanguageExists.length) {
+                for (const element of isDefaultLanguageExists) {
+                    element.isDefault = false;
+                    await element.save();
+                }
+            }
+        }
+
         newData = await dynamicModel.findOneAndUpdate(
             modelId,
             {
                 $set: updateData
             },
-            { new: true }
+            {new: true}
         );
         // Update translations
         if (updateData.translate) {

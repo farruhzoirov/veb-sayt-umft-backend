@@ -24,7 +24,7 @@ class DefaultController {
         this.get = this.get.bind(this);
         this.put = this.put.bind(this);
         this.patch = this.patch.bind(this);
-        this.remove = this.remove.bind(this);
+        this.delete = this.delete.bind(this);
         this.upload = this.upload.bind(this);
         this.deleteFile = this.deleteFile.bind(this);
     }
@@ -64,9 +64,18 @@ class DefaultController {
         // await this.updateModelsService.patchModel(req, res);
     }
 
-    async remove(req, res) {
-
-        await this.deleteModelsService.deleteModel(req, res);
+    async delete(req, res, next) {
+        try {
+            const modelId = req.params.modelId;
+            const modelName = await getModel(req);
+            await this.deleteModelsService.deleteModel(modelId, modelName);
+            return res.status(200).json({
+                ok: true,
+                message: "Model deleted successfully."
+            });
+        } catch (err) {
+            next(err);
+        }
     }
 
     async upload(req, res) {

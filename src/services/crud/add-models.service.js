@@ -7,15 +7,17 @@ const {Model} = require("../../common/constants/models.constants");
 
 const {getModelsHelper} = require("../../helpers/get-models.helper");
 
-const { addTranslations } = require("../../helpers/translate.helper");
+const {addTranslations} = require("../../helpers/translate.helper");
 const populateModelData = require("../../helpers/populate.helper");
 
 class AddModelsService {
     constructor() {
         this.Model = Model
     }
+
     async addModel(modelName, modelData) {
         const dynamicModel = getModelsHelper(modelName);
+        console.log(modelData)
         const isSlugExists = await dynamicModel.findOne({slug: modelData.slug});
         if (isSlugExists) {
             throw BaseError.BadRequest('Slug already exists');
@@ -24,7 +26,7 @@ class AddModelsService {
         if (!modelData.modelId) {
             newData = await new dynamicModel({
                 ...modelData,
-                img: [modelData.file],
+                img: modelData.file ? [modelData.file] : [],
             }).save();
 
             if (this.Model[modelName].translate) {

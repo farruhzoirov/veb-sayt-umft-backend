@@ -22,7 +22,7 @@ class Server {
     init() {}
     useMiddleWares() {
         app.use('/files', express.static('files'))
-        app.use('/images', express.static('images'))
+        app.use('/uploads', express.static('uploads'))
         app.use(cors({
             origin: '*',
             methods: 'GET, POST, PUT, DELETE, PATCH, OPTIONS',

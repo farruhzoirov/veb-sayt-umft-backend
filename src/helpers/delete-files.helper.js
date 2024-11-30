@@ -1,16 +1,18 @@
-const BaseError = require("../errors/base.error");
+const path = require('path');
 const fs = require('fs').promises;
+const BaseError = require("../errors/base.error");
 
 const deleteFilesHelper = async (files) => {
-    for (const imagePath of files) {
+    for (const filePath of files) {
         try {
-            await fs.unlink(imagePath);
+            const absolutePath = path.join(process.cwd(), filePath); // Convert to absolute path
+            await fs.access(absolutePath); // Check if file exists
+            await fs.unlink(absolutePath); // Delete file
         } catch (error) {
-            throw BaseError.InternalServerError(error.message);
+            console.error(`Error deleting file: ${filePath}`, error.message);
+            // Log the error but don't throw; handle missing files gracefully
         }
     }
-}
+};
 
 module.exports = deleteFilesHelper;
-
-

@@ -381,7 +381,54 @@ paths:
               #     $ref: '#/components/schemas/country'
       tags:
         - Language
-  
+
+  /api/language/upload:
+    post:
+      summary: Uploading file and getting path
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: File must be sent
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/uploadFile"
+
+      responses:
+        "200": # status code
+          description: File path
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/uploadResponse"
+
+      tags:
+        - Language
+
+  /api/language/deleteFile:
+      delete:
+        summary: Deleting file and getting response
+        security:
+          - BearerAuth: [ ]
+        requestBody:
+          description: imagePath must be sent
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/deleteFile"
+
+        responses:
+          "200": # status code
+            description: File path
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/deletingFileResponse"
+
+        tags:
+          - Language
 
   
   ## Category
@@ -3548,5 +3595,26 @@ components:
               language:
                 type: string
 
+    uploadFile:
+      properties:
+        file:
+          type: array
 
+    uploadResponse:
+      properties:
+        files:
+          type: string
+
+    deleteFile:
+      properties:
+          filePath:
+            type: string
+
+    deletingFileResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+        message:
+          type: string
 

@@ -10,8 +10,10 @@ const storage = multer.diskStorage({
             if (!model) {
                throw new Error(`This Model not found: ${req.params.model}`);
             }
-            const destinationDirectory = path.join('images', model);
-            await fs.promises.mkdir(destinationDirectory, { recursive: true });
+            const destinationDirectory = path.join('uploads', model);
+            if (!fs.existsSync(destinationDirectory)) {
+                await fs.promises.mkdir(destinationDirectory, { recursive: true });
+            }
             cb(null, destinationDirectory);
         } catch (error) {
             cb(error, null);

@@ -5,11 +5,13 @@ class UploadService {
         try {
             let files = req.files.file || [];
             if (!files.length) {
-                throw  BaseError.BadRequest('No file uploaded');
+                throw BaseError.BadRequest('No file uploaded');
             }
+            console.log(files)
             let filePaths = files[0].path;
+
             return res.status(200).json({
-                images: filePaths,
+                files: filePaths,
             });
         } catch (error) {
             console.error("Upload Error:", error);
