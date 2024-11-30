@@ -55,6 +55,7 @@ class AddModelsService {
                 }).save();
                 return newData;
             }
+
             newData = await new dynamicModel({
                 ...modelData,
                 img: modelData.img ? [modelData.img] : [],
