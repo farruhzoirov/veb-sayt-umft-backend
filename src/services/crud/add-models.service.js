@@ -3,11 +3,11 @@ const mongoose = require("mongoose");
 const BaseError = require('../../errors/base.error');
 
 // Static Models' names
-const {Model} = require("../../common/constants/models.constants");
+const { Model } = require("../../common/constants/models.constants");
 
-const {getModelsHelper} = require("../../helpers/get-models.helper");
+const { getModelsHelper } = require("../../helpers/get-models.helper");
 
-const {addTranslations} = require("../../helpers/translate.helper");
+const { addTranslations } = require("../../helpers/translate.helper");
 const populateModelData = require("../../helpers/populate.helper");
 
 class AddModelsService {
@@ -18,7 +18,7 @@ class AddModelsService {
     async addModel(modelName, modelData) {
         const dynamicModel = getModelsHelper(modelName);
         console.log(modelData)
-        const isSlugExists = await dynamicModel.findOne({slug: modelData.slug});
+        const isSlugExists = await dynamicModel.findOne({ slug: modelData.slug });
         if (isSlugExists) {
             throw BaseError.BadRequest('Slug already exists');
         }

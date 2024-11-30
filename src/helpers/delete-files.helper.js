@@ -10,7 +10,7 @@ const deleteFilesHelper = async (files) => {
             await fs.unlink(absolutePath); // Delete file
         } catch (error) {
             console.error(`Error deleting file: ${filePath}`, error.message);
-            // Log the error but don't throw; handle missing files gracefully
+            throw BaseError.BadRequest(error.message);
         }
     }
 };
