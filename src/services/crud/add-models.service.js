@@ -32,6 +32,7 @@ class AddModelsService {
                         isDefault: true,
                         img: modelData.img ? [modelData.img] : [],
                     }).save();
+                    return newData;
                 }
                 newData = await new dynamicModel({
                     ...modelData,
@@ -46,6 +47,7 @@ class AddModelsService {
                         ...modelData,
                         img: modelData.img ? [modelData.img] : [],
                     }).save();
+                    return newData;
                 }
                 newData = await new dynamicModel({
                     ...modelData,
