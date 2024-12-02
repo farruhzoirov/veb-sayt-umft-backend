@@ -43,7 +43,6 @@ class AddModelsService {
                 ...modelData,
                 img: modelData.img ? [modelData.img] : [],
             }).save();
-
             if (this.Model[modelName].translate) {
                 newData.translates = await addTranslations(modelName, newData._id, modelData.translate);
             }

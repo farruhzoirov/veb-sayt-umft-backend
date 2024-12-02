@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
-const { getModelsHelper, getModelsTranslateHelper, getModel } = require("../../helpers/get-models.helper");
+const {getModelsHelper, getModelsTranslateHelper, getModel} = require("../../helpers/get-models.helper");
 
-const { Model, TranslateModel } = require("../../common/constants/models.constants");
-const { populateGet } = require("../../helpers/get-populates.helper");
+const {Model, TranslateModel} = require("../../common/constants/models.constants");
+const {populateGet} = require("../../helpers/get-populates.helper");
 
 class GetModelService {
     constructor() {
@@ -36,17 +36,16 @@ class GetModelService {
                 await Promise.all(populateOptions.map(async elem => {
                     el[elem] = await populateGet(elem, el[elem]);
                 }));
-                el.translates = await dynamicTranslateModel.findOne({ [model]: el._id, language }).select(select.length ? select : "name description language").lean();
+                el.translates = await dynamicTranslateModel.findOne({
+                    [model]: el._id,
+                    language
+                }).select(select.length ? select : "name description language").lean();
                 return el;
             }));
         }
-
-        return res.status(200).json(
-            data
-        );
+        return res.status(200).json(data);
     }
 }
-
 
 
 module.exports = GetModelService;
