@@ -21,6 +21,7 @@ class AddModelsService {
         if (isSlugExists) {
             throw BaseError.BadRequest('Slug already exists');
         }
+
         let newData;
         if (!modelData.modelId) {
             if (modelName.trim() === 'language' && !modelData.isDefault) {
@@ -39,6 +40,7 @@ class AddModelsService {
                 }).save();
                 return newData;
             }
+
             newData = await new dynamicModel({
                 ...modelData,
                 img: modelData.img ? [modelData.img] : [],

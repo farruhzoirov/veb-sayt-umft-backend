@@ -11,12 +11,13 @@ const addTranslations = async (modelName, modelId, translationData) => {
     const dynamicTranslateModel = getModelsTranslateHelper(forTranslateModel);
     const isModelTranslateEmpty = await dynamicTranslateModel.find();
     if ( !isModelTranslateEmpty.length && !translationData.language) {
-        const defaultLanguage = await Language.findOne({isDefault: true});
+        const defaultLanguage = await Language.findOne({ isDefault: true });
         const newTranslation = new dynamicTranslateModel({
             [modelName]: modelId,
             language: defaultLanguage._id,
             ...translationData,
         });
+        return newTranslation.save();
     }
     const existingTranslation = await dynamicTranslateModel.findOne({
         [modelName]: modelId,
@@ -29,7 +30,7 @@ const addTranslations = async (modelName, modelId, translationData) => {
         });
         return await newTranslation.save();
     }
-    throw BaseError.BadRequest("Translation already exists for this language");
+    throw BaseError.BadRequest("Translation already exists for this language ");
 }
 
 const updateTranslations = async (modelName, modelId, translationData) => {

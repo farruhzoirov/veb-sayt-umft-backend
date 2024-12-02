@@ -3105,14 +3105,14 @@ components:
               _id:
                 type: string
               translates:
-                type: array
-                items:
-                  type: object
+                  type: array
+                  items: object
                   properties:
-                    name:
-                      type: string
-                    language:
-                      type: string
+                      name:
+                        type: string
+                      language:
+                        type: string
+
 
     formatPost:
         type: object
@@ -3120,8 +3120,6 @@ components:
             modelId?:
               type: string
             translate:
-              type: array
-              items:
                 type: object
                 properties:
                   name:
@@ -3586,7 +3584,6 @@ components:
         img:
           type: array
         translate:
-          type: array
           items:
             type: object
             properties:
