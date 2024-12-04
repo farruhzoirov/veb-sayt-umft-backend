@@ -28,7 +28,6 @@ class GetModelService {
                 message: 'id is not valid'
             });
         }
-
         const data = await dynamicModel.findById(_id).select(select).lean() || {}
         if (this.Model[model].translate) {
             let transModel = this.TranslateModel[model].ref

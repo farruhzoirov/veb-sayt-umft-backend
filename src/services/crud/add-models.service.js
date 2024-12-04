@@ -13,15 +13,15 @@ class AddModelsService {
   async addModel(modelName, modelData) {
     const dynamicModel = getModelsHelper(modelName);
 
-    const isSlugExists = await dynamicModel.findOne({slug: modelData.slug}).lean();
-
-    if (isSlugExists) {
-      throw BaseError.BadRequest('Slug already exists');
-    }
-
     let newData;
 
     if (!modelData.modelId) {
+      const isSlugExists = await dynamicModel.findOne({slug: modelData.slug}).lean();
+
+      if (isSlugExists) {
+        throw BaseError.BadRequest('Slug already exists');
+      }
+
       const languageExists = await dynamicModel.findOne();
 
       if (modelName.trim() === 'language' && !modelData.isDefault) {
