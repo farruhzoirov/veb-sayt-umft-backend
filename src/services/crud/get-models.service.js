@@ -1,7 +1,7 @@
 const { getModelsHelper, getModelsTranslateHelper, getModel } = require("../../helpers/get-models.helper");
 const { Model, TranslateModel } = require("../../common/constants/models.constants");
 const { getPopulates } = require("../../helpers/get-populates.helper");
-const { buildTextSearchQuery, buildQuery} = require("../../helpers/filter.helper");
+const { buildQuery } = require("../../helpers/filter.helper");
 
 class GetModelsService {
     constructor() {

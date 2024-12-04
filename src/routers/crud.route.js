@@ -11,6 +11,7 @@ const upload = require('../utils/uploads/upload-models.util');
 const validateModel = require("../validators/crud/models/models.validator");
 const deletingFileValidator = require("../validators/files/delete-file.validator");
 
+
 router.get('/:model', authMiddleware.adminMiddleware, crudController.all);
 
 router.get('/:model/:id',authMiddleware.adminMiddleware, crudController.get);
@@ -30,10 +31,9 @@ router.put('/:model/:id', authMiddleware.adminMiddleware, validateModel, upload.
 
 router.patch('/:model/:modelId', authMiddleware.adminMiddleware,  crudController.patch);
 
-router.delete('/:model/:modelId', authMiddleware.adminMiddleware,  crudController.delete);
-
-
 router.delete('/:model/deleteFile', authMiddleware.adminMiddleware, deletingFileValidator, crudController.deleteFile);
+
+router.delete('/:model/:modelId', authMiddleware.adminMiddleware,  crudController.delete);
 
 
 
