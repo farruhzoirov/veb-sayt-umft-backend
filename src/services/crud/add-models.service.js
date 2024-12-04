@@ -22,13 +22,23 @@ class AddModelsService {
     let newData;
 
     if (!modelData.modelId) {
+      const languageExists = await dynamicModel.findOne();
+
       if (modelName.trim() === 'language' && !modelData.isDefault) {
-        const languageExists = await dynamicModel.find();
         if (!languageExists.length) {
           newData = await this.addingModelData(dynamicModel, modelData, true);
           return newData;
         }
+        const isDefaultLanguageExists = await dynamicModel.findOne({isDefault: true}).lean();
+        if (isDefaultLanguageExists && modelData.isDefault) {
+          throw BaseError.BadRequest('Default language already exists.');
+        }
         newData = await this.addingModelData(dynamicModel, modelData);
+        return newData;
+      }
+
+      if (modelName.trim() === 'language' && !languageExists.length && modelData.isDefault) {
+        newData = await this.addingModelData(dynamicModel, modelData, true);
         return newData;
       }
 
@@ -41,6 +51,7 @@ class AddModelsService {
       if (this.Model[modelName].populate) {
         newData = await populateModelData(dynamicModel, newData._id, this.Model[modelName].populate);
       }
+
       return newData;
     }
 
@@ -49,6 +60,7 @@ class AddModelsService {
     }
 
     const existingModel = await dynamicModel.findById(modelData.modelId);
+
     if (!existingModel) {
       throw BaseError.NotFound("Model doesn't exist");
     }
@@ -57,9 +69,11 @@ class AddModelsService {
     if (this.Model[modelName].translate) {
       newData.translates = [await addTranslations(modelName, modelData.modelId, modelData.translate)];
     }
+
     if (this.Model[modelName].populate) {
       newData = await populateModelData(modelName, modelData.modelId, this.Model[modelName].populate);
     }
+
     return newData;
   }
 
@@ -69,8 +83,7 @@ class AddModelsService {
       isDefault: isDefault,
       img: modelData.img ? [modelData.img] : [],
     }).save();
-    savedDocument.toObject();
-    return savedDocument;
+    return savedDocument.toObject();
   }
 }
 

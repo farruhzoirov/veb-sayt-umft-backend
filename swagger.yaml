@@ -493,26 +493,55 @@ paths:
                 $ref: '#/components/schemas/addModel'
       tags:
         - Category
-    put:
-      summary: Updating one category
-      security:
-        - BearerAuth: [ ]
-      requestBody:
-        description: Optional description in *Markdown*
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/categoryUp"
-      responses:
-        "201": # status code
-          description: A JSON array of user names
+  /api/category/{id}:
+      put:
+        summary: Updating one category
+        security:
+          - BearerAuth: [ ]
+        parameters:
+              - in: path
+                name: id
+                required: true
+                description: ID of the category to be updated
+        requestBody:
+          description: to update category
+          required: true
           content:
             application/json:
               schema:
-                  $ref: '#/components/schemas/updateModel'
-      tags:
-        - Category
+                $ref: "#/components/schemas/categoryUp"
+        responses:
+          "201": # status code
+            description: A JSON array of user names
+            content:
+              application/json:
+                schema:
+                    $ref: '#/components/schemas/updateModel'
+        tags:
+          - Category
+
+      delete:
+        summary: Deleting one category
+        security:
+          - BearerAuth: [ ]
+        parameters:
+          - in: path
+            name: id
+            required: true
+            description: ID of the category to be updated
+        requestBody:
+          description: to update category
+          required: true
+        responses:
+          "201": # status code
+            description: A JSON array of user names
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/deleteModel'
+        tags:
+          - Category
+
 
   /category/{slug}:
     get:
@@ -690,60 +719,10 @@ paths:
                 $ref: '#/components/schemas/addModel'
       tags:
         - News
-    put:
-      summary: Updating news.
-      security:
-        - BearerAuth: [ ]
-      requestBody:
-        description: Optional description in *Markdown*
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/news"
-      responses:
-        "200":
-          description: Updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/updateModel"
-      tags:
-        - News
-  /news/all:
-    get:
-      summary: barcha yangiliklarni til bo'yicha front uchun.
-      parameters:
-        - in: query
-          name: limit
-          schema:
-            type: string
-          required: false
-        - in: query
-          name: page
-          schema:
-            type: string
-          required: false
-        - in: query
-          name: language
-          schema:
-            type: string
-          required: true
-      responses:
-        "200": # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema:
-                type: object
-                items:
-                # $ref: "#/components/schemas/topsearch"
-      tags:
-        - News
+
   /news/{slug}:
     get:
       summary: bitta yangilikni olish front uchun.
-
       parameters:
         - in: path
           name: slug
@@ -789,6 +768,34 @@ paths:
                 type: object
                 items:
                   $ref: '#/components/schemas/category'
+      tags:
+        - News
+
+    put:
+      summary: Updating news.
+      security:
+        - BearerAuth: [ ]
+          parameters:
+            - in: path
+              name: id
+              schema:
+                type: string
+              required: true
+
+      requestBody:
+        description: Optional description in *Markdown*
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/news"
+      responses:
+        "200":
+          description: Updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/updateModel"
       tags:
         - News
     delete:
@@ -2719,8 +2726,6 @@ components:
       properties:
         img:
           type: array
-        modelId:
-          type: string
         slug:
           type: string
         translate:
