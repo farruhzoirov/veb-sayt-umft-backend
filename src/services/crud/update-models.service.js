@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
-const { Model } = require("../../common/constants/models.constants");
+const {Model} = require("../../common/constants/models.constants");
 
-const { updateTranslations } = require("../../helpers/translate.helper");
+const {updateTranslations} = require("../../helpers/translate.helper");
 
-const { getModelsHelper } = require("../../helpers/get-models.helper");
+const {getModelsHelper} = require("../../helpers/get-models.helper");
 
 const BaseError = require("../../errors/base.error");
 
@@ -15,6 +15,7 @@ class UpdateModelsService {
     constructor() {
         this.Model = Model;
     }
+
     async updateModel(modelName, modelId, updateData) {
         if (!mongoose.Types.ObjectId.isValid(modelId)) {
             throw BaseError.BadRequest('Invalid modelId');
@@ -26,22 +27,22 @@ class UpdateModelsService {
             throw BaseError.BadRequest("Model doesn't exist");
         }
         if (modelName.trim() === 'language' && updateData.isDefault) {
-            const isDefaultLanguageExists = await dynamicModel.find({ isDefault: true });
+            const isDefaultLanguageExists = await dynamicModel.find({isDefault: true});
             if (isDefaultLanguageExists.length) {
-                for (const element of isDefaultLanguageExists) {
-                    element.isDefault = false;
-                    await element.save();
-                }
+                isDefaultLanguageExists.isDefault = false;
+                await isDefaultLanguageExists.save();
             }
         }
-        newData = await dynamicModel.findOneAndUpdate(
+        newData = await dynamicModel.findByIdAndUpdate(
             {
                 _id: modelId
             },
             {
                 $set: updateData
             },
-            { new: true }
+            {
+                new: true
+            }
         );
         // Update translations
         if (updateData.translate) {

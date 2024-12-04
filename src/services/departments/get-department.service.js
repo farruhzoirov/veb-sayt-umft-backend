@@ -3,17 +3,8 @@ const DepartmentTranslate = require('../../models/translate/department.model');
 class GetDepartmentService {
     async getDepartment(req, res) {
         try {
-            let page = req.query.page || 1;
-            let limit = req.query.limit || 20;
-            let select = req.query.select || [];
-            const skip = (page - 1) * limit;
             const departmentId = req.params.departmentId;
-            const allDepartments = await DepartmentTranslate.findOne({_id: departmentId})
-                .select(select.toString())
-                .skip(skip)
-                .limit(limit)
-                .populate('department', 'code, hemisId, img, structureType, active')
-                .lean();
+            const allDepartments = await DepartmentTranslate.findOne({ _id: departmentId });
             return res.status(200).json({
                 ok: true,
                 data: allDepartments

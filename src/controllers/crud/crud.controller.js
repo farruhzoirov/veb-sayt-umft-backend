@@ -6,7 +6,7 @@ const UpdateModelsService = require("../../services/crud/update-models.service")
 const DeleteModelsService = require("../../services/crud/delete-models.service");
 const UploadService = require("../../services/crud/upload.service");
 const DeleteFileService = require("../../services/crud/delete-file.service");
-const {getModel} = require("../../helpers/get-models.helper");
+const { getModel } = require("../../helpers/get-models.helper");
 
 class DefaultController {
     constructor() {
@@ -18,10 +18,11 @@ class DefaultController {
         this.deleteModelsService = new DeleteModelsService();
         this.uploadService = new UploadService();
         this.deleteFileService = new DeleteFileService();
+
         // Bind
-        this.all = this.all.bind(this);
+        this.getAllModels = this.getAllModels.bind(this);
         this.add = this.add.bind(this);
-        this.get = this.get.bind(this);
+        this.getModelById = this.getModelById.bind(this);
         this.put = this.put.bind(this);
         this.patch = this.patch.bind(this);
         this.delete = this.delete.bind(this);
@@ -29,11 +30,11 @@ class DefaultController {
         this.deleteFile = this.deleteFile.bind(this);
     }
 
-    async all(req, res) {
+    async getAllModels(req, res) {
         await this.getAllService.getAll(req, res);
     }
 
-    async get(req, res) {
+    async getModelById(req, res) {
         await this.getModelService.getModelById(req, res);
     }
 
@@ -59,11 +60,9 @@ class DefaultController {
             next(err);
         }
     }
-
     async patch(req, res) {
         // await this.updateModelsService.patchModel(req, res);
     }
-
     async delete(req, res, next) {
         try {
             const modelId = req.params.modelId;

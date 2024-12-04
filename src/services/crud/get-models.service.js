@@ -10,7 +10,6 @@ class GetModelsService {
     }
     async getAll(req, res) {
         const model = await getModel(req);
-        console.log(model)
         if (!model) {
             return res.status(404).send({
                 message: "Model not found"
@@ -23,6 +22,7 @@ class GetModelsService {
         let sort = (req.query.sort) ? JSON.parse(req.query.sort) : {
             _id: -1
         }
+
         let search = req.query.search;
         let searchField = req.query.searchField;
         const skip = (page - 1) * limit;
