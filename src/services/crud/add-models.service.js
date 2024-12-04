@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 const BaseError = require('../../errors/base.error');
-// Static Models' names
 const {Model} = require("../../common/constants/models.constants");
-
 const { getModelsHelper } = require("../../helpers/get-models.helper");
 const {addTranslations} = require("../../helpers/translate.helper");
 const populateModelData = require("../../helpers/populate.helper");
@@ -14,11 +12,15 @@ class AddModelsService {
 
     async addModel(modelName, modelData) {
         const dynamicModel = getModelsHelper(modelName);
-        const isSlugExists = await dynamicModel.findOne({slug: modelData.slug});
+
+        const isSlugExists = await dynamicModel.findOne({slug: modelData.slug}).lean();
+
         if (isSlugExists) {
             throw BaseError.BadRequest('Slug already exists');
         }
+
         let newData;
+
         if (!modelData.modelId) {
             if (modelName.trim() === 'language' && !modelData.isDefault) {
                 const languageExists = await dynamicModel.find();
@@ -35,7 +37,6 @@ class AddModelsService {
             if (this.Model[modelName].translate) {
                 newData.translates = [await addTranslations(modelName, newData._id, modelData.translate)];
             }
-
             if (this.Model[modelName].populate) {
                 newData = await populateModelData(dynamicModel, newData._id, this.Model[modelName].populate);
             }
@@ -52,10 +53,10 @@ class AddModelsService {
         }
         newData = existingModel;
 
-        if (this.Model[modelName]?.translate) {
+        if (this.Model[modelName].translate) {
             newData.translates = [await addTranslations(modelName, modelData.modelId, modelData.translate)];
         }
-        if (this.Model[modelName]?.populate) {
+        if (this.Model[modelName].populate) {
             newData = await populateModelData(modelName, modelData.modelId, this.Model[modelName].populate);
         }
         return newData;
@@ -67,8 +68,8 @@ class AddModelsService {
             isDefault: isDefault,
             img: modelData.img ? [modelData.img] : [],
         }).save();
-
-        return savedDocument.toObject();
+        savedDocument.toObject();
+        return savedDocument;
     }
 }
 
