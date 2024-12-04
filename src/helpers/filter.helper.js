@@ -73,5 +73,6 @@ function buildDateRangeQuery(dateRange) {
 }
 
 module.exports = {
-    buildQuery
+    buildQuery,
+    buildTextSearchQuery,
 };

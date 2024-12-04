@@ -10,6 +10,9 @@ const specialistInfoSchema = new Schema({
         type: [String],
         default: []
     },
+    slug: {
+        type: String,
+    },
     img: [],
     user: {
         type: mongoose.Schema.Types.ObjectId,

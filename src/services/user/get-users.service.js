@@ -11,7 +11,6 @@ class GetAllUsersService {
         return fil
     }
     async getAllUsers(req, res)  {
-        console.log(req.body);
         const page = +req.query.page || 1
         const limit = req.query.limit || 20
         let select = req.query.select || []

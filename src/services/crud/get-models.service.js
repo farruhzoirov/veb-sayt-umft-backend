@@ -1,7 +1,7 @@
 const { getModelsHelper, getModelsTranslateHelper, getModel } = require("../../helpers/get-models.helper");
 const { Model, TranslateModel } = require("../../common/constants/models.constants");
 const { populateGet } = require("../../helpers/get-populates.helper");
-const { buildQuery } = require("../../helpers/filter.helper");
+const { buildTextSearchQuery, buildQuery} = require("../../helpers/filter.helper");
 
 class GetModelsService {
     constructor() {
@@ -10,7 +10,6 @@ class GetModelsService {
     }
     async getAll(req, res) {
         const model = await getModel(req);
-        console.log(model)
         if (!model) {
             return res.status(404).send({
                 message: "Model not found"

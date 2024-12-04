@@ -1,7 +1,7 @@
 const {Schema, model} = require("mongoose");
 
 const CategorySchema = new Schema({
-    img:[],
+    img: [],
     slug: {
         type: String,
     },
@@ -9,8 +9,8 @@ const CategorySchema = new Schema({
         type: Number,
         default: 1
     },
-},{
-    timestamps:true
+}, {
+    timestamps: true
 })
 
 module.exports = model("category", CategorySchema);

@@ -6,12 +6,13 @@ const LevelSchema = new Schema({
     img: [],
     slug: {
         type: String,
-        required: [true, 'Link doesn\'t exist']
+        required: [true, 'Slug is required'],
     },
     status: {
         type: Number,
         default: 1
     },
+
 });
 
 

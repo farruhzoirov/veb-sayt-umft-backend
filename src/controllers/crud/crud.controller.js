@@ -42,6 +42,7 @@ class DefaultController {
             const modelData = req.body;
             const modelName = await getModel(req);
             const newData = await this.addModelsService.addModel(modelName, modelData);
+            console.log("New data",newData);
             return res.status(201).json(newData);
         } catch (err) {
             next(err);

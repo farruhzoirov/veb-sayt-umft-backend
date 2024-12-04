@@ -9,28 +9,33 @@ const Language  = require('../models/settings/language.model');
 const addTranslations = async (modelName, modelId, translationData) => {
     const forTranslateModel = TranslateModel[modelName]?.ref;
     const dynamicTranslateModel = getModelsTranslateHelper(forTranslateModel);
-    const isModelTranslateEmpty = await dynamicTranslateModel.find();
+    const isModelTranslateEmpty = await dynamicTranslateModel.countDocuments();
+    let  newTranslationRecord;
+
     if ( !isModelTranslateEmpty.length && !translationData.language) {
         const defaultLanguage = await Language.findOne({ isDefault: true });
-        const newTranslation = new dynamicTranslateModel({
+        newTranslationRecord = await new dynamicTranslateModel({
             [modelName]: modelId,
             language: defaultLanguage._id,
             ...translationData,
-        });
-        return newTranslation.save();
+        }).save()
+        return newTranslationRecord.toObject();
     }
-    const existingTranslation = await dynamicTranslateModel.findOne({
+
+    const isExistTranslation = await dynamicTranslateModel.findOne({
         [modelName]: modelId,
         language: translationData.language,
     });
-    if (!existingTranslation) {
-        const newTranslation = new dynamicTranslateModel({
+
+    if (!isExistTranslation) {
+        newTranslationRecord = await new dynamicTranslateModel({
             [modelName]: modelId,
             ...translationData,
-        });
-        return await newTranslation.save();
+        }).save();
+        return newTranslationRecord.toObject();
     }
-    throw BaseError.BadRequest("Translation already exists for this language ");
+
+    throw BaseError.BadRequest("Translation already exists for this language");
 }
 
 const updateTranslations = async (modelName, modelId, translationData) => {

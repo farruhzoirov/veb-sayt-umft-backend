@@ -6,6 +6,9 @@ const PartnerSchema = new Schema({
     status: {
         type: Number,
         default: 1
+    },
+    slug: {
+        type: String,
     }
 })
 

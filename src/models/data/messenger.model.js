@@ -6,6 +6,9 @@ const MessengerSchema = new Schema({
     link: {
         type: String,
         required: true,
+    },
+    slug: {
+        type: String,
     }
 })
 

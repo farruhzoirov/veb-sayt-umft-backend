@@ -9,6 +9,9 @@ const EventsSchema = new Schema({
         ref: 'eventsCategory',
         required: true,
     }],
+    slug: {
+        type: String,
+    },
     status: {
         type: Number,
         default: 1

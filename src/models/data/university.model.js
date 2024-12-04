@@ -3,6 +3,9 @@ const mongoose = require("mongoose");
 
 const UniversitySchema = new Schema({
     img: [],
+    slug: {
+        type: String,
+    },
     status: {
         type: Number,
         default: 1

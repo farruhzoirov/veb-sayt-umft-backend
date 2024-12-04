@@ -4,7 +4,7 @@ const PageModel = new Schema({
     img: [],
     slug: {
         type: String,
-        required: [true, 'Link doesn\'t exist']
+        required: [true, 'Link is required'],
     },
     status: {
         type: Number,

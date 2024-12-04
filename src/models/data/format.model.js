@@ -10,6 +10,9 @@ const FormatsSchema = new Schema({
         type: Number,
         default: 1
     },
+    slug: {
+        type: String,
+    }
 });
 
 

@@ -15,6 +15,9 @@ const DepartmentSchema = new Schema({
     hemisId: {
         type: Number,
     },
+    slug: {
+        type: String,
+    },
     img: [],
     structureType: StructureType,
     active: {
