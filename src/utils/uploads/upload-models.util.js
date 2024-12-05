@@ -19,6 +19,7 @@ const storage = multer.diskStorage({
             cb(error, null);
         }
     },
+
     filename: function (req, file, cb) {
         const uniquePrefix = Date.now() + '-' + Math.round(Math.random() * 1e9);
         const sanitizedFileName = file.originalname.trim().replace(/\s+/g, '-');
@@ -26,12 +27,11 @@ const storage = multer.diskStorage({
     },
 });
 
-
 const fileFilter =  (req, file, cb) => {
     if (file.mimetype === 'image/jpg' ||
         file.mimetype === 'image/png' ||
         file.mimetype === 'image/jpeg' ||
-        file.mimetype === 'image/svg' ||
+        file.mimetype === 'image/svg+xml' ||
         file.mimetype === 'application/pdf') {
         cb (null, true);
     } else {

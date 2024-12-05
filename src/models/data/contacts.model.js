@@ -8,6 +8,9 @@ const ContactsSchema = new mongoose.Schema({
     phone: {
         type: String,
         required: true,
+    },
+    slug: {
+        type: String,
     }
 })
 

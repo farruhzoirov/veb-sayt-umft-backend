@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const { verify } = require("jsonwebtoken");
 
 const config = require('../config/config');
 
@@ -54,7 +53,6 @@ class AuthMiddleware {
                 });
             }
             const decoded = jwt.verify(token, config.JWT_SECRET_KEY);
-            console.log(decoded)
             if (!decoded.role) {
                 return res.status(401).json({
                     ok: false,

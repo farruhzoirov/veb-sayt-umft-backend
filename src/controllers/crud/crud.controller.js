@@ -43,6 +43,7 @@ class DefaultController {
             const modelData = req.body;
             const modelName = await getModel(req);
             const newData = await this.addModelsService.addModel(modelName, modelData);
+            console.log("New data",newData);
             return res.status(201).json(newData);
         } catch (err) {
             next(err);
@@ -53,7 +54,7 @@ class DefaultController {
         try {
             const updateData = req.body;
             const modelName = await getModel(req);
-            const modelId = req.params.modelId;
+            const modelId = req.params.id;
             const newData = await this.updateModelsService.updateModel(modelName, modelId, updateData);
             return res.status(200).json(newData);
         } catch (err) {

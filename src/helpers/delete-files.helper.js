@@ -15,7 +15,6 @@ const deleteFilesHelper = async (filePaths) => {
             const absolutePath = path.join(process.cwd(), filePaths);
             await fs.access(absolutePath);
             await fs.unlink(absolutePath);
-
         } catch (error) {
             console.error(`Error deleting file: ${filePaths}`, error.message);
             throw BaseError.BadRequest(error.message);

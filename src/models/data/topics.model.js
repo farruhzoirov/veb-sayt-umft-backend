@@ -12,10 +12,13 @@ const TopicSchema = new Schema({
         ref: "level",
         required: true,
     },
+    slug: {
+        type: String,
+    },
     status: {
         type: Number,
         default: 1
-    },
+    }
 });
 
 

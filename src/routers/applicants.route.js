@@ -5,6 +5,7 @@ const ApplicantsController = require('../controllers/applicants/applicants.contr
 const applicantsController = new ApplicantsController();
 
 
+
 // Validators
 const applicantsValidator = require('../validators/applicants/applicants.validator');
 

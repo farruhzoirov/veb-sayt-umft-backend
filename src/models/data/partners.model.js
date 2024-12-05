@@ -1,4 +1,4 @@
-const {Schema, model} = require('mongoose')
+const {Schema} = require('mongoose')
 const mongoose = require("mongoose");
 
 const PartnerSchema = new Schema({
@@ -6,6 +6,9 @@ const PartnerSchema = new Schema({
     status: {
         type: Number,
         default: 1
+    },
+    slug: {
+        type: String,
     }
 })
 

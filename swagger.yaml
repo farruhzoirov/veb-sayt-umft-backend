@@ -5,7 +5,7 @@ info:
   version: 0.1.9
 servers:
   - url: http://95.130.227.52:4131
-  # - url: localhost:4131
+  #- url: http://localhost:4131
     description: Optional server description, e.g. Main (production) server
 tags:
   - name: Auth
@@ -315,31 +315,10 @@ paths:
                 $ref: '#/components/schemas/addModel'
       tags:
         - Language
-    put:
-      summary: Update one language.
-      security:
-        - BearerAuth: [ ]
-      requestBody:
-        description: Optional description in *Markdown*
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/languageUp"
-      responses:
-        "201": # status code
-          description: updating one language
-          content:
-            application/json:
-              schema:
-                type: object
-              #   items:
-              #     $ref: '#/components/schemas/country'
-      tags:
-        - Language
-  /api/language/id:
+
+  /api/language/{id}:
     get:
-      summary: bitta tilni olish.
+      summary: Getting one language.
       security:
         - BearerAuth: [ ]
       parameters:
@@ -359,7 +338,32 @@ paths:
                   $ref: '#/components/schemas/language'
       tags:
         - Language
-  /api/language/{id}:
+    put:
+      summary: Update one language.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+          - in: path
+            name: id
+      requestBody:
+        description: Optional description in *Markdown*
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/languageUp"
+      responses:
+        "201": # status code
+          description: updating one language
+          content:
+            application/json:
+              schema:
+                type: object
+              #   items:
+              #     $ref: '#/components/schemas/country'
+      tags:
+        - Language
+
     delete:
       summary: Deleting one language.
       security:
@@ -391,9 +395,14 @@ paths:
         description: File must be sent
         required: true
         content:
-          application/json:
+          multipart/form-data:
             schema:
-              $ref: "#/components/schemas/uploadFile"
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload.
 
       responses:
         "200": # status code
@@ -473,7 +482,7 @@ paths:
       security:
         - BearerAuth: [ ]
       requestBody:
-        description: (Birinchi model qo´shganda bodyda modelId kelmaydi translatelari uchun bo'lishi kerak.)
+        description: Birinchi model qo´shganda bodyda modelId kelmaydi translatelari uchun esa bo'lishi kerak.
         required: true
         content:
           application/json:
@@ -488,12 +497,18 @@ paths:
                 $ref: '#/components/schemas/addModel'
       tags:
         - Category
+  /api/category/{id}:
     put:
       summary: Updating one category
       security:
         - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID of the category to be updated
       requestBody:
-        description: Optional description in *Markdown*
+        description: to update category
         required: true
         content:
           application/json:
@@ -505,51 +520,16 @@ paths:
           content:
             application/json:
               schema:
-                  $ref: '#/components/schemas/updateModel'
+                $ref: '#/components/schemas/updateModel'
       tags:
         - Category
-  /category/all:
     get:
-      summary: barcha categorylarni til bo'yicha front uchun.
-      parameters:
-        - in: query
-          name: limit
-          schema:
-            type: string
-          required: false
-        - in: query
-          name: page
-          schema:
-            type: string
-          required: false
-        - in: query
-          name: language
-          schema:
-            type: string
-          required: true
-      responses:
-        "200": # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema:
-                type: object
-                items:
-                # $ref: "#/components/schemas/topsearch"
-      tags:
-        - Category
-  /category/{slug}:
-    get:
-      summary: bitta categoryni olish front uchun.
-
+      summary: Getting one category by id.
+      security:
+        - BearerAuth: [ ]
       parameters:
         - in: path
-          name: slug
-          schema:
-            type: string
-          required: true
-        - in: query
-          name: language
+          name: id
           schema:
             type: string
           required: true
@@ -564,79 +544,70 @@ paths:
                   $ref: '#/components/schemas/category'
       tags:
         - Category
-  /api/category/{id}:
-    get:
-      summary:  Getting one category by id.
-      security:
-        - BearerAuth: [ ]
-      parameters:
-        - in: path
-          name: id
-          schema:
-            type: string
-          required: true
-        - in: path
-          name: language
-          schema:
-            type: string
-      responses:
-        "200": # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema:
-                type: object
-                items:
-                  $ref: '#/components/schemas/category'
-      tags:
-        - Category
-    delete:
-      summary: Deleting category.
-      security:
-        - BearerAuth: [ ]
-      parameters:
-        - in: path
-          name: id
-          schema:
-            type: string
-          required: true
-      responses:
-        "200": # status code
-          description: Deleting category
-          content:
-            application/json:
-              schema:
-               $ref: '#/components/schemas/deleteModel'
-      tags:
-        - Category
-  /api/category/{id}/{status}:
-    get:
-      summary: bitta categoryni holatini tahrirlash.
-      security:
-        - BearerAuth: [ ]
-      parameters:
-        - in: path
-          name: id
-          schema:
-            type: string
-          required: true
-        - in: path
-          name: status
-          schema:
-            type: string
-          required: true
-      responses:
-        "200": # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema:
-                type: object
-              #   items:
-              #     $ref: '#/components/schemas/country'
-      tags:
-        - Category
 
+      delete:
+        summary: Deleting category.
+        security:
+          - BearerAuth: [ ]
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: string
+            required: true
+        responses:
+          "200": # status code
+            description: Deleting category
+            content:
+              application/json:
+                schema:
+                 $ref: '#/components/schemas/deleteModel'
+        tags:
+          - Category
+
+  /api/category/upload:
+            post:
+              summary: Uploading file and getting path
+              security:
+                - BearerAuth: [ ]
+              requestBody:
+                description: File must be sent
+                required: true
+                content:
+                  multipart/form-data:
+                    schema:
+                      type: object
+                      properties:
+                        file:
+                          type: string
+                          format: binary
+                          description: The file to upload.
+
+              responses:
+                "200": # status code
+                  description: File path
+                  content:
+                    application/json:
+                      schema:
+                        $ref: "#/components/schemas/uploadResponse"
+
+              tags:
+                - Category
+
+  /api/category/deleteFile:
+            delete:
+              summary: Deleting file and getting response
+              security:
+                - BearerAuth: [ ]
+              requestBody:
+                description: imagePath must be sent
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: "#/components/schemas/deleteFile"
+              tags:
+                  - Category
   ## News
   /api/news:
     get:
@@ -698,60 +669,10 @@ paths:
                 $ref: '#/components/schemas/addModel'
       tags:
         - News
-    put:
-      summary: Updating news.
-      security:
-        - BearerAuth: [ ]
-      requestBody:
-        description: Optional description in *Markdown*
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/news"
-      responses:
-        "200":
-          description: Updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/updateModel"
-      tags:
-        - News
-  /news/all:
-    get:
-      summary: barcha yangiliklarni til bo'yicha front uchun.
-      parameters:
-        - in: query
-          name: limit
-          schema:
-            type: string
-          required: false
-        - in: query
-          name: page
-          schema:
-            type: string
-          required: false
-        - in: query
-          name: language
-          schema:
-            type: string
-          required: true
-      responses:
-        "200": # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema:
-                type: object
-                items:
-                # $ref: "#/components/schemas/topsearch"
-      tags:
-        - News
+
   /news/{slug}:
     get:
       summary: bitta yangilikni olish front uchun.
-
       parameters:
         - in: path
           name: slug
@@ -797,6 +718,34 @@ paths:
                 type: object
                 items:
                   $ref: '#/components/schemas/category'
+      tags:
+        - News
+
+    put:
+      summary: Updating news.
+      security:
+        - BearerAuth: [ ]
+          parameters:
+            - in: path
+              name: id
+              schema:
+                type: string
+              required: true
+
+      requestBody:
+        description: Optional description in *Markdown*
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/news"
+      responses:
+        "200":
+          description: Updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/updateModel"
       tags:
         - News
     delete:
@@ -2626,8 +2575,6 @@ components:
         email:
           type: string
 
-
-
     ## Language
     language:
       type: object
@@ -2637,7 +2584,7 @@ components:
         isDefault:
           type: boolean
         img:
-          type: array
+          type: string
         slug:
           type: string
     languageGet:
@@ -2729,8 +2676,6 @@ components:
       properties:
         img:
           type: array
-        modelId:
-          type: string
         slug:
           type: string
         translate:
@@ -3595,7 +3540,7 @@ components:
     uploadFile:
       properties:
         file:
-          type: array
+          type: file
 
     uploadResponse:
       properties:

@@ -9,11 +9,11 @@ async function getPopulates(model, _id) {
         return {
             message: 'id is not valid'
         }
-    const data = await dynamicModel.findById(_id).select("name").lean() || {}
+    const data = await dynamicModel.findById(_id).select().lean() || {}
     if (Model[model].translate) {
         let transModel = TranslateModel[model].ref
         const dynamicTranslateModel = getModelsTranslateHelper(transModel)
-        data.translates = await dynamicTranslateModel.find({ [model]: _id }).select("name").lean()
+        data.translates = await dynamicTranslateModel.find({ [model]: _id }).select().lean()
     }
     return data
 }

@@ -1,6 +1,6 @@
 const { getModelsHelper, getModelsTranslateHelper, getModel } = require("../../helpers/get-models.helper");
 const { Model, TranslateModel } = require("../../common/constants/models.constants");
-const { populateGet } = require("../../helpers/get-populates.helper");
+const { getPopulates } = require("../../helpers/get-populates.helper");
 const { buildQuery } = require("../../helpers/filter.helper");
 
 class GetModelsService {
@@ -50,7 +50,7 @@ class GetModelsService {
             .lean() || [];
         const populatedData = await Promise.all(data.map(async el => {
             await Promise.all(populateOptions.map(async elem => {
-                el[elem] = await populateGet(elem, el[elem]);
+                el[elem] = await getPopulates(elem, el[elem]);
             }));
             el.translates = await dynamicTranslateModel.find({ [model]: el._id }).select(select.length ? select : []).lean();
             return el;

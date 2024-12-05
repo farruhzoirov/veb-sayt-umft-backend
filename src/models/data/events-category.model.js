@@ -1,8 +1,11 @@
-const { Schema, model } = require('mongoose')
+const { Schema } = require('mongoose')
 const mongoose = require("mongoose");
 
 const EventsCategorySchema = new Schema({
     img: [],
+    slug: {
+        type: String,
+    },
     status: {
         type: Number,
         default: 1

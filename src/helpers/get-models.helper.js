@@ -47,93 +47,94 @@ const messengerSchema = require('../models/data/messenger.model');
 const messengerTranslateSchema = require('../models/translate/messenger.model');
 
 
-const { Model, TranslateModel } = require("../common/constants/models.constants")
+const {Model, TranslateModel} = require("../common/constants/models.constants")
 
 
 function getModelsHelper(modelKey) {
-    switch (modelKey) {
-        case Model.university.ref:
-            return universitySchema;
-        case Model.category.ref:
-            return categorySchema;
-        // case Model.direction.ref:
-        //     return directionSchema;
-        case Model.events.ref:
-            return eventsSchema;
-        // case Model.faculty.ref:
-        //     return facultySchema;
-        case Model.news.ref:
-            return newsSchema;
-        case Model.page.ref:
-            return pageSchema;
-        case Model.partners.ref:
-            return partnerSchema;
-        case Model.specialistInfo.ref:
-            return specialistInfoSchema;
-        case Model.user.ref:
-            return userSchema;
-        case Model.language.ref:
-            return languageSchema;
-        case Model.degree.ref:
-            return degreeSchema;
-        case Model.level.ref:
-            return levelSchema;
-        case Model.format.ref:
-            return formatSchema;
-        case Model.topic.ref:
-            return topicSchema;
-        case Model.messenger.ref:
-            return messengerSchema;
-        default:
-            throw new Error(`Model "${modelKey}" not found.`);
-    }
+  switch (modelKey) {
+    case Model.university.ref:
+      return universitySchema;
+    case Model.category.ref:
+      return categorySchema;
+    // case Model.direction.ref:
+    //     return directionSchema;
+    case Model.events.ref:
+      return eventsSchema;
+    // case Model.faculty.ref:
+    //     return facultySchema;
+    case Model.news.ref:
+      return newsSchema;
+    case Model.page.ref:
+      return pageSchema;
+    case Model.partners.ref:
+      return partnerSchema;
+    case Model.specialistInfo.ref:
+      return specialistInfoSchema;
+    case Model.user.ref:
+      return userSchema;
+    case Model.language.ref:
+      return languageSchema;
+    case Model.degree.ref:
+      return degreeSchema;
+    case Model.level.ref:
+      return levelSchema;
+    case Model.format.ref:
+      return formatSchema;
+    case Model.topic.ref:
+      return topicSchema;
+    case Model.messenger.ref:
+      return messengerSchema;
+    default:
+      throw new Error(`Model "${modelKey}" not found.`);
+  }
 }
 
 function getModelsTranslateHelper(modelKey) {
-    switch (modelKey) {
-        case TranslateModel.university.ref:
-            return universityTranslateSchema;
-        case TranslateModel.category.ref:
-            return categoryTranslateSchema;
-        // case TranslateModel.direction.ref:
-        //     return directionTranslateSchema;
-        case TranslateModel.events.ref:
-            return eventsTranslateSchema;
-        // case TranslateModel.faculty.ref:
-        //     return facultyTranslateSchema;
-        case TranslateModel.news.ref:
-            return newsTranslateSchema;
-        case TranslateModel.page.ref:
-            return pageTranslateSchema;
-        case TranslateModel.partners.ref:
-            return partnerTranslateSchema;
-        case TranslateModel.specialistInfo.ref:
-            return specialistInfoTranslateSchema;
-        case TranslateModel.format.ref:
-            return formatTranslateSchema;
-        case TranslateModel.degree.ref:
-            return degreeTranslateSchema;
-        case TranslateModel.level.ref:
-            return levelTranslateSchema;
-        case TranslateModel.topic.ref:
-            return topicTranslateSchema;
-        case TranslateModel.messenger.ref:
-            return topicTranslateSchema;
-        default:
-            throw new Error(`Translation model "${modelKey}" not found.`);
-    }
+  switch (modelKey) {
+    case TranslateModel.university.ref:
+      return universityTranslateSchema;
+    case TranslateModel.category.ref:
+      return categoryTranslateSchema;
+    // case TranslateModel.direction.ref:
+    //     return directionTranslateSchema;
+    case TranslateModel.events.ref:
+      return eventsTranslateSchema;
+    // case TranslateModel.faculty.ref:
+    //     return facultyTranslateSchema;
+    case TranslateModel.news.ref:
+      return newsTranslateSchema;
+    case TranslateModel.page.ref:
+      return pageTranslateSchema;
+    case TranslateModel.partners.ref:
+      return partnerTranslateSchema;
+    case TranslateModel.specialistInfo.ref:
+      return specialistInfoTranslateSchema;
+    case TranslateModel.format.ref:
+      return formatTranslateSchema;
+    case TranslateModel.degree.ref:
+      return degreeTranslateSchema;
+    case TranslateModel.level.ref:
+      return levelTranslateSchema;
+    case TranslateModel.topic.ref:
+      return topicTranslateSchema;
+    case TranslateModel.messenger.ref:
+      return topicTranslateSchema;
+    default:
+      throw new Error(`Translation model "${modelKey}" not found.`);
+  }
 }
 
 async function getModel(req) {
-    const model = req.params ? req.params.model : {};
-    if (!Model.hasOwnProperty(model)) {
-       throw new Error('Model with that name"' + model + '" not found.');
-    }
-    return Model[model].ref;
+  const model = req.params ? req.params.model : {};
+  if (!Model.hasOwnProperty(model)) {
+    throw new Error('Model with that name"' + model + '" not found.');
+  }
+  return Model[model].ref;
 }
 
+
 module.exports = {
-    getModel,
-    getModelsHelper,
-    getModelsTranslateHelper,
+  getModel,
+  getModelsHelper,
+  getModelsTranslateHelper,
 };
