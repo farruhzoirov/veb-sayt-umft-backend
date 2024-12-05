@@ -5,31 +5,32 @@ const mongoose = require("mongoose");
 
 
 class patchModelService {
-    constructor() {
-        this.Model = Model
-    }
-    async patchModel(modelName, modelId, patchModelData) {
-        const dynamicModel = getModelsHelper(modelName);
+  constructor() {
+    this.Model = Model
+  }
 
-        if (!mongoose.Types.ObjectId.isValid(modelId)) {
-            throw BaseError.BadRequest('Invalid modelId');
-        }
-        const patchData = await dynamicModel.findOneAndUpdate(
-            {
-                _id: modelId
-            }, {
-                $set: {
-                    status: patchModelData.status
-                }
-            }, {
-                new: true
-            }
-        )
-        if (!patchData) {
-            throw BaseError.BadRequest(`Error in updating status for ${modelName} with ID ${modelId}`);
-        }
-        return patchData.toObject();
+  async patchModel(modelName, modelId, patchModelData) {
+    const dynamicModel = getModelsHelper(modelName);
+
+    if (!mongoose.Types.ObjectId.isValid(modelId)) {
+      throw BaseError.BadRequest('Invalid modelId');
     }
+    const patchData = await dynamicModel.findOneAndUpdate(
+      {
+        _id: modelId
+      }, {
+        $set: {
+          status: patchModelData.status
+        }
+      }, {
+        new: true
+      }
+    )
+    if (!patchData) {
+      throw BaseError.BadRequest(`Error in updating status for ${modelName} with ID ${modelId}`);
+    }
+    return patchData.toObject();
+  }
 }
 
 module.exports = patchModelService;
