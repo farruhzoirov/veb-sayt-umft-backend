@@ -48,7 +48,13 @@ const updateTranslations = async (modelName, modelId, translationData) => {
   const dynamicTranslateModel = getModelsTranslateHelper(forTranslateModel);
   const {language, ...translationFields} = translationData;
 
-  updatedData = await dynamicTranslateModel.findOneAndUpdate(
+  const isExistTranslation = await dynamicTranslateModel.findOne({language: language});
+
+  if (!isExistTranslation) {
+     throw BaseError.NotFound(`Translation  not found for this language ${language}`);
+  }
+
+  updatedData = await isExistTranslation.findOneAndUpdate(
     {
       [modelName]: modelId,
       language: language,

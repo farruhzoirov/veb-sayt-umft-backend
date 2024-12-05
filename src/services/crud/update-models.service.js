@@ -37,7 +37,6 @@ class UpdateModelsService {
         }
       }
     }
-
     newData = await dynamicModel.findOneAndUpdate({
         _id: modelId
       },

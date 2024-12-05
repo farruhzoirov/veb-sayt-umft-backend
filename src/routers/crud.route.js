@@ -9,31 +9,32 @@ const authMiddleware = require('../middlewares/auth.middleware');
 const upload = require('../utils/uploads/upload-models.util');
 // Validations
 const validateModel = require("../validators/crud/models/models.validator");
+const patchModelValidator = require("../validators/crud/patch-model.validator");
 const deletingFileValidator = require("../validators/files/delete-file.validator");
 
 
-router.get('/:model', authMiddleware.adminMiddleware, crudController.all);
+router.get('/:model', authMiddleware.adminMiddleware, crudController.getAllModels);
 
-router.get('/:model/:id',authMiddleware.adminMiddleware, crudController.get);
+router.get('/:model/:id',authMiddleware.adminMiddleware, crudController.getModelById);
 
-router.post('/:model',  authMiddleware.adminMiddleware, validateModel, crudController.add);
+router.post('/:model',  authMiddleware.adminMiddleware, validateModel, crudController.addModel);
 
 
 router.post('/:model/upload', authMiddleware.adminMiddleware, upload.fields([
     { name: 'file', maxCount: 1 },
-]), crudController.upload);
+]), crudController.uploadFile);
 
 
 router.put('/:model/:id', authMiddleware.adminMiddleware, validateModel, upload.fields([
     { name: 'file', maxCount: 1 },
-]),  crudController.put);
+]),  crudController.updateModel);
 
 
-router.patch('/:model/:modelId', authMiddleware.adminMiddleware,  crudController.patch);
+router.patch('/:model/:id', authMiddleware.adminMiddleware, patchModelValidator,   crudController.patchModel);
 
 router.delete('/:model/deleteFile', authMiddleware.adminMiddleware, deletingFileValidator, crudController.deleteFile);
 
-router.delete('/:model/:modelId', authMiddleware.adminMiddleware,  crudController.delete);
+router.delete('/:model/:id', authMiddleware.adminMiddleware,   crudController.deleteModel);
 
 
 

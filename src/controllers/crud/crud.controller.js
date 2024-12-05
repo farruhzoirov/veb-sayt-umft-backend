@@ -6,7 +6,9 @@ const UpdateModelsService = require("../../services/crud/update-models.service")
 const DeleteModelsService = require("../../services/crud/delete-models.service");
 const UploadService = require("../../services/crud/upload.service");
 const DeleteFileService = require("../../services/crud/delete-file.service");
-const { getModel } = require("../../helpers/get-models.helper");
+const PatchModelsService = require("../../services/crud/patch-models.service");
+
+const {getModel} = require("../../helpers/get-models.helper");
 
 class DefaultController {
     constructor() {
@@ -18,15 +20,16 @@ class DefaultController {
         this.deleteModelsService = new DeleteModelsService();
         this.uploadService = new UploadService();
         this.deleteFileService = new DeleteFileService();
+        this.patchModelsService = new PatchModelsService();
 
         // Bind
         this.getAllModels = this.getAllModels.bind(this);
-        this.add = this.add.bind(this);
+        this.addModel = this.addModel.bind(this);
         this.getModelById = this.getModelById.bind(this);
-        this.put = this.put.bind(this);
-        this.patch = this.patch.bind(this);
-        this.delete = this.delete.bind(this);
-        this.upload = this.upload.bind(this);
+        this.updateModel = this.updateModel.bind(this);
+        this.patchModel = this.patchModel.bind(this);
+        this.deleteModel = this.deleteModel.bind(this);
+        this.uploadFile = this.uploadFile.bind(this);
         this.deleteFile = this.deleteFile.bind(this);
     }
 
@@ -38,19 +41,19 @@ class DefaultController {
         await this.getModelService.getModelById(req, res);
     }
 
-    async add(req, res, next) {
+    async addModel(req, res, next) {
         try {
             const modelData = req.body;
             const modelName = await getModel(req);
             const newData = await this.addModelsService.addModel(modelName, modelData);
-            console.log("New data",newData);
+            console.log("New data", newData);
             return res.status(201).json(newData);
         } catch (err) {
             next(err);
         }
     }
 
-    async put(req, res, next) {
+    async updateModel(req, res, next) {
         try {
             const updateData = req.body;
             const modelName = await getModel(req);
@@ -61,12 +64,22 @@ class DefaultController {
             next(err);
         }
     }
-    async patch(req, res) {
-        // await this.updateModelsService.patchModel(req, res);
-    }
-    async delete(req, res, next) {
+
+    async patchModel(req, res, next) {
         try {
-            const modelId = req.params.modelId;
+            const modelName = req.params.model;
+            const modelId = req.params.id;
+            const modelData = req.body;
+            const patchedData = await this.patchModelsService.patchModel(modelName, modelId, modelData);
+            return res.status(200).json(patchedData);
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    async deleteModel(req, res, next) {
+        try {
+            const modelId = req.params.id;
             const modelName = await getModel(req);
             await this.deleteModelsService.deleteModel(modelId, modelName);
             return res.status(200).json({
@@ -78,7 +91,7 @@ class DefaultController {
         }
     }
 
-    async upload(req, res) {
+    async uploadFile(req, res) {
         await this.uploadService.uploadFile(req, res);
     }
 

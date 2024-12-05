@@ -4,8 +4,8 @@ info:
   description: Optional multiline or single-line description in HTML.
   version: 0.1.9
 servers:
-  - url: http://95.130.227.52:4131
-  #- url: http://localhost:4131
+  #- url: http://95.130.227.52:4131
+  - url: http://localhost:4131
     description: Optional server description, e.g. Main (production) server
 tags:
   - name: Auth
@@ -545,7 +545,7 @@ paths:
       tags:
         - Category
 
-      delete:
+    delete:
         summary: Deleting category.
         security:
           - BearerAuth: [ ]
@@ -564,6 +564,35 @@ paths:
                  $ref: '#/components/schemas/deleteModel'
         tags:
           - Category
+    patch:
+        summary: Updating status
+        security:
+          - BearerAuth: [ ]
+        parameters:
+          - in: path
+            name: id
+            required: true
+            description: ID of the category to be updated
+        requestBody:
+          description: to update model status
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+        responses:
+          "201": # status code
+            description: Patched model will come
+            content:
+              application/json:
+                schema:
+                  type: object
+        tags:
+            - Category
+
 
   /api/category/upload:
             post:
