@@ -4,9 +4,10 @@ info:
   description: Optional multiline or single-line description in HTML.
   version: 0.1.9
 servers:
-  #- url: http://95.130.227.52:4131
-  - url: http://localhost:4131
-    description: Optional server description, e.g. Main (production) server
+  - url: http://95.130.227.52:4131
+  #- url: http://localhost:4131
+    description: Department, Specialty, SpecialistsInfo, Eventslar jarayonda. Deparment, Specialty va SpecialistsInfo hemis api bilan integratsiya qilinadi. Eventsda ba'zi fieldlari hali yozilishi kerak.
+
 tags:
   - name: Auth
     description: Endpoints related to authentication
