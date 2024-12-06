@@ -1,12 +1,12 @@
 openapi: 3.1.0
 info:
   title: NEW UMFT SITE  API
-  description: Optional multiline or single-line description in HTML.
+  description: Department, Specialty, SpecialistsInfo, Eventslar jarayonda. Deparment, Specialty va SpecialistsInfo hemis api bilan integratsiya qilinadi. Eventsda ba'zi fieldlari hali yozilishi kerak.
   version: 0.1.9
 servers:
   - url: http://95.130.227.52:4131
   #- url: http://localhost:4131
-    description: Department, Specialty, SpecialistsInfo, Eventslar jarayonda. Deparment, Specialty va SpecialistsInfo hemis api bilan integratsiya qilinadi. Eventsda ba'zi fieldlari hali yozilishi kerak.
+    description:
 
 tags:
   - name: Auth
