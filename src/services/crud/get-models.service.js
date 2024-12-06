@@ -42,6 +42,7 @@ class GetModelsService {
     const dynamicModel = getModelsHelper(model);
     const matchingTranslates = await dynamicTranslateModel.find(query).lean();
     const matchingIds = matchingTranslates.map(t => t[model]);
+
     const data = await dynamicModel
       .find({_id: {$in: matchingIds}})
       .select(select.toString())
@@ -49,6 +50,7 @@ class GetModelsService {
       .limit(limit)
       .sort(sort)
       .lean() || [];
+
     const populatedData = await Promise.all(data.map(async el => {
       await Promise.all(populateOptions.map(async elem => {
         el[elem] = await getPopulates(elem, el[elem]);

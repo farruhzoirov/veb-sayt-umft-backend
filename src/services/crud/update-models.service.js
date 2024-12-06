@@ -50,7 +50,7 @@ class UpdateModelsService {
     newData = newData.toObject();
     // Update translations
     if (updateData.translate) {
-      newData.translates = await updateTranslations(modelName, modelId, updateData.translate);
+      newData.translates = [await updateTranslations(modelName, modelId, updateData.translate)];
     }
 
     if (this.Model[modelName].populate) {
