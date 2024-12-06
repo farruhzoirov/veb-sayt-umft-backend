@@ -22,23 +22,14 @@ class AddModelsService {
         throw BaseError.BadRequest('Slug already exists');
       }
 
-      const languageExists = await dynamicModel.findOne();
+      const isLanguageExists = await dynamicModel.find().lean();
 
-      if (modelName.trim() === 'language' && !modelData.isDefault) {
-        if (!languageExists.length) {
+      if (modelName.trim() === 'language') {
+        if (!isLanguageExists.length) {
           newData = await this.addingModelData(dynamicModel, modelData, true);
           return newData;
         }
-        const isDefaultLanguageExists = await dynamicModel.findOne({isDefault: true}).lean();
-        if (isDefaultLanguageExists && modelData.isDefault) {
-          throw BaseError.BadRequest('Default language already exists.');
-        }
         newData = await this.addingModelData(dynamicModel, modelData);
-        return newData;
-      }
-
-      if (modelName.trim() === 'language' && !languageExists.length && modelData.isDefault) {
-        newData = await this.addingModelData(dynamicModel, modelData, true);
         return newData;
       }
 
@@ -64,7 +55,8 @@ class AddModelsService {
     if (!existingModel) {
       throw BaseError.NotFound("Model doesn't exist");
     }
-    newData = existingModel;
+
+    newData = existingModel.toObject();
 
     if (this.Model[modelName].translate) {
       newData.translates = [await addTranslations(modelName, modelData.modelId, modelData.translate)];
@@ -80,7 +72,7 @@ class AddModelsService {
   async addingModelData(dynamicModel, modelData, isDefault = false) {
     const savedDocument = await new dynamicModel({
       ...modelData,
-      isDefault: isDefault,
+      ...(typeof isDefault !== 'undefined' && { isDefault }),
       img: modelData.img ? [modelData.img] : [],
     }).save();
     return savedDocument.toObject();

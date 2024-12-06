@@ -3,6 +3,11 @@ const {getModelsTranslateHelper} = require("./get-models.helper");
 const BaseError = require('../errors/base.error');
 const Language = require('../models/settings/language.model');
 
+
+const getTranslations  = async () => {
+
+}
+
 const addTranslations = async (modelName, modelId, translationData) => {
   const forTranslateModel = TranslateModel[modelName]?.ref;
 
