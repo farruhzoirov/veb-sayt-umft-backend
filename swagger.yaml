@@ -4,8 +4,8 @@ info:
   description: Optional multiline or single-line description in HTML.
   version: 0.1.9
 servers:
-  - url: http://95.130.227.52:4131
-  #- url: http://localhost:4131
+  #- url: http://95.130.227.52:4131
+  - url: http://localhost:4131
     description: Optional server description, e.g. Main (production) server
 tags:
   - name: Auth
@@ -699,31 +699,31 @@ paths:
       tags:
         - News
 
-  /news/{slug}:
-    get:
-      summary: bitta yangilikni olish front uchun.
-      parameters:
-        - in: path
-          name: slug
-          schema:
-            type: string
-          required: true
-        - in: query
-          name: language
-          schema:
-            type: string
-          required: true
-      responses:
-        "200": # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema:
-                type: object
-                items:
-                  $ref: '#/components/schemas/category'
-      tags:
-        - News
+#  /news/{slug}:
+#    get:
+#      summary: bitta yangilikni olish front uchun.
+#      parameters:
+#        - in: path
+#          name: slug
+#          schema:
+#            type: string
+#          required: true
+#        - in: query
+#          name: language
+#          schema:
+#            type: string
+#          required: true
+#      responses:
+#        "200": # status code
+#          description: A JSON array of user names
+#          content:
+#            application/json:
+#              schema:
+#                type: object
+#                items:
+#                  $ref: '#/components/schemas/category'
+#      tags:
+#        - News
   /api/news/{id}:
     get:
       summary: Getting one news.
@@ -796,22 +796,21 @@ paths:
                 $ref: "#/components/schemas/deleteModel"
       tags:
         - News
-  /api/news/{id}/{status}:
-    get:
+
+    patch:
       summary: bitta yangiliklarni holatini tahrirlash.
       security:
         - BearerAuth: [ ]
-      parameters:
-        - in: path
-          name: id
-          schema:
-            type: string
-          required: true
-        - in: path
-          name: status
-          schema:
-            type: string
-          required: true
+      requestBody:
+        description: to update model status
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
       responses:
         "200": # status code
           description: A JSON array of user names
@@ -824,6 +823,49 @@ paths:
       tags:
         - News
 
+  /api/news/upload:
+    post:
+      summary: Uploading file and getting path
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: File must be sent
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload.
+
+      responses:
+        "200": # status code
+          description: File path
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/uploadResponse"
+
+      tags:
+        - News
+
+  /api/news/deleteFile:
+    delete:
+      summary: Deleting file and getting response
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: imagePath must be sent
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/deleteFile"
+      tags:
+        - News
 
 
   ## Page
@@ -889,82 +931,63 @@ paths:
                 $ref: '#/components/schemas/addModel'
       tags:
         - Page
-    put:
-      summary: Updating pages.
-      security:
-        - BearerAuth: [ ]
-      requestBody:
-        description: Optional description in *Markdown*
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/pageUp"
-      responses:
-        "201": # status code
-          description: Updating page
-          content:
-            application/json:
-              schema:
-               $ref: '#/components/schemas/updateModel'
-      tags:
-        - Page
-  /page/all:
-    get:
-      summary: barcha pageni til bo'yicha front uchun.
-      parameters:
-        - in: query
-          name: limit
-          schema:
-            type: string
-          required: false
-        - in: query
-          name: page
-          schema:
-            type: string
-          required: false
-        - in: query
-          name: language
-          schema:
-            type: string
-          required: true
-      responses:
-        "200": # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema:
-                type: object
-                items:
-                # $ref: "#/components/schemas/topsearch"
-      tags:
-        - Page
-  /page/{slug}:
-    get:
-      summary: bitta pageni olish front uchun.
 
-      parameters:
-        - in: path
-          name: slug
-          schema:
-            type: string
-          required: true
-        - in: query
-          name: language
-          schema:
-            type: string
-          required: true
-      responses:
-        "200": # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema:
-                type: object
-                items:
-                  $ref: '#/components/schemas/page'
-      tags:
-        - Page
+#  /page/all:
+#    get:
+#      summary: barcha pageni til bo'yicha front uchun.
+#      parameters:
+#        - in: query
+#          name: limit
+#          schema:
+#            type: string
+#          required: false
+#        - in: query
+#          name: page
+#          schema:
+#            type: string
+#          required: false
+#        - in: query
+#          name: language
+#          schema:
+#            type: string
+#          required: true
+#      responses:
+#        "200": # status code
+#          description: A JSON array of user names
+#          content:
+#            application/json:
+#              schema:
+#                type: object
+#                items:
+#                # $ref: "#/components/schemas/topsearch"
+#      tags:
+#        - Page
+#  /page/{slug}:
+#    get:
+#      summary: bitta pageni olish front uchun.
+#
+#      parameters:
+#        - in: path
+#          name: slug
+#          schema:
+#            type: string
+#          required: true
+#        - in: query
+#          name: language
+#          schema:
+#            type: string
+#          required: true
+#      responses:
+#        "200": # status code
+#          description: A JSON array of user names
+#          content:
+#            application/json:
+#              schema:
+#                type: object
+#                items:
+#                  $ref: '#/components/schemas/page'
+#      tags:
+#        - Page
   /api/page/{id}:
     get:
       summary: Getting one page.
@@ -991,6 +1014,28 @@ paths:
                   $ref: '#/components/schemas/category'
       tags:
         - Page
+
+    put:
+      summary: Updating pages.
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: Optional description in *Markdown*
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/pageUp"
+      responses:
+        "201": # status code
+          description: Updating page
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updateModel'
+      tags:
+        - Page
+
     delete:
       summary: Deleting page by id
       security:
@@ -1012,22 +1057,20 @@ paths:
               #     $ref: '#/components/schemas/country'
       tags:
         - Page
-  /api/page/{id}/{status}:
-    get:
-      summary: bitta yangiliklarni holatini tahrirlash.
+    patch:
+      summary: Updating status of model.
       security:
         - BearerAuth: [ ]
-      parameters:
-        - in: path
-          name: id
-          schema:
-            type: string
-          required: true
-        - in: path
-          name: status
-          schema:
-            type: string
-          required: true
+      requestBody:
+        description: to update model status
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
       responses:
         "200": # status code
           description: A JSON array of user names
@@ -1039,8 +1082,49 @@ paths:
               #     $ref: '#/components/schemas/country'
       tags:
         - Page
+  /api/page/upload:
+    post:
+      summary: Uploading file and getting path
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: File must be sent
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload.
 
+      responses:
+        "200": # status code
+          description: File path
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/uploadResponse"
 
+      tags:
+        - Page
+
+  /api/page/deleteFile:
+    delete:
+      summary: Deleting file and getting response
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: imagePath must be sent
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/deleteFile"
+      tags:
+        - Page
 
 
 ##Degree
@@ -1173,11 +1257,76 @@ paths:
                   $ref: "#/components/schemas/deleteModel"
         tags:
           - Degree
+      patch:
+        summary: Updating status of model.
+        security:
+          - BearerAuth: [ ]
+        requestBody:
+          description: to update model status
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+        responses:
+          "200": # status code
+            description: A JSON array of user names
+            content:
+              application/json:
+                schema:
+                  type: object
+                #   items:
+                #     $ref: '#/components/schemas/country'
+        tags:
+          - Degree
 
 
+  /api/degree/upload:
+    post:
+      summary: Uploading file and getting path
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: File must be sent
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload.
 
+      responses:
+        "200": # status code
+          description: File path
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/uploadResponse"
 
+      tags:
+        - Degree
 
+  /api/degree/deleteFile:
+    delete:
+      summary: Deleting file and getting response
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: imagePath must be sent
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/deleteFile"
+      tags:
+        - Degree
 
 ##Specialty
 
@@ -1307,10 +1456,81 @@ paths:
                 tags:
                   - Specialty
 
-    ##Department
-  /api/faculty:
+              patch:
+                summary: Updating status of model.
+                security:
+                  - BearerAuth: [ ]
+                requestBody:
+                  description: to update model status
+                  required: true
+                  content:
+                    application/json:
+                      schema:
+                        type: object
+                        properties:
+                          status:
+                            type: number
+                responses:
+                  "200": # status code
+                    description: A JSON array of user names
+                    content:
+                      application/json:
+                        schema:
+                          type: object
+                        #   items:
+                        #     $ref: '#/components/schemas/country'
+                tags:
+                  - Specialty
+
+  /api/specialty/upload:
+    post:
+      summary: Uploading file and getting path
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: File must be sent
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload.
+
+      responses:
+        "200": # status code
+          description: File path
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/uploadResponse"
+
+      tags:
+        - Specialty
+
+  /api/specialty/deleteFile:
+    delete:
+      summary: Deleting file and getting response
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: imagePath must be sent
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/deleteFile"
+      tags:
+        - Specialty
+
+
+  ##Department
+  /api/department:
                 get:
-                  summary: Get all faculties
+                  summary: Get all departments
                   security:
                     - BearerAuth: [ ]
                   parameters:
@@ -1333,20 +1553,20 @@ paths:
                       name: search
                   responses:
                     "200":
-                      description: List of faculties
+                      description: List of departments
                       content:
                         application/json:
                           schema:
                               $ref: "#/components/schemas/faculty"
                   tags:
-                    - Faculty
+                    - Department
 
                 post:
-                  summary: Create a faculty
+                  summary: Create a department
                   security:
                     - BearerAuth: []
                   requestBody:
-                    description: Faculty creation payload
+                    description: Department creation payload
                     required: true
                     content:
                       application/json:
@@ -1360,11 +1580,11 @@ paths:
                           schema:
                             $ref: "#/components/schemas/addModel"
                   tags:
-                    - Faculty
+                    - Department
 
-  /api/faculty/{id}:
+  /api/department/{id}:
                 get:
-                  summary: Get a single faculty by ID
+                  summary: Get a single department by ID
                   security:
                     - BearerAuth: [ ]
                   parameters:
@@ -1375,15 +1595,15 @@ paths:
                       required: true
                   responses:
                     "200":
-                      description: Single degree
+                      description: Single department
                       content:
                         application/json:
                           schema:
                             $ref: "#/components/schemas/faculty"
                   tags:
-                    - Faculty
+                    - Department
                 put:
-                  summary: Update a faculty by ID
+                  summary: Update a department by ID
                   security:
                     - BearerAuth: [ ]
                   parameters:
@@ -1393,7 +1613,7 @@ paths:
                         type: string
                       required: true
                   requestBody:
-                    description: Faculty update payload
+                    description: Department update payload
                     required: true
                     content:
                       application/json:
@@ -1407,10 +1627,10 @@ paths:
                           schema:
                             $ref: "#/components/schemas/updateModel"
                   tags:
-                    - Faculty
+                    - Department
 
                 delete:
-                  summary: Delete a faculty by ID
+                  summary: Delete a department by ID
                   security:
                     - BearerAuth: [ ]
                   parameters:
@@ -1428,9 +1648,76 @@ paths:
                             schema:
                               $ref: "#/components/schemas/deleteModel"
                   tags:
-                    - Faculty
+                    - Department
+                patch:
+                  summary: Updating status of model.
+                  security:
+                    - BearerAuth: [ ]
+                  requestBody:
+                    description: to update model status
+                    required: true
+                    content:
+                      application/json:
+                        schema:
+                          type: object
+                          properties:
+                            status:
+                              type: number
+                  responses:
+                    "200": # status code
+                      description: A JSON array of user names
+                      content:
+                        application/json:
+                          schema:
+                            type: object
+                          #   items:
+                          #     $ref: '#/components/schemas/country'
+                  tags:
+                    - Department
 
+  /api/department/upload:
+    post:
+      summary: Uploading file and getting path
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: File must be sent
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload.
 
+      responses:
+        "200": # status code
+          description: File path
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/uploadResponse"
+
+      tags:
+        - Department
+
+  /api/department/deleteFile:
+    delete:
+      summary: Deleting file and getting response
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: imagePath must be sent
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/deleteFile"
+      tags:
+        - Department
 
 
 
@@ -1558,14 +1845,74 @@ paths:
                               $ref: "#/components/schemas/deleteModel"
                     tags:
                       - Format
+                patch:
+                  summary: Updating status of model.
+                  security:
+                    - BearerAuth: [ ]
+                  requestBody:
+                    description: to update model status
+                    required: true
+                    content:
+                      application/json:
+                        schema:
+                          type: object
+                          properties:
+                            status:
+                              type: number
+                  responses:
+                    "200": # status code
+                      description: A JSON array of user names
+                      content:
+                        application/json:
+                          schema:
+                            type: object
+                          #   items:
+                          #     $ref: '#/components/schemas/country'
+                  tags:
+                    - Format
+  /api/format/upload:
+    post:
+      summary: Uploading file and getting path
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: File must be sent
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload.
 
+      responses:
+        "200": # status code
+          description: File path
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/uploadResponse"
 
+      tags:
+        - Format
 
-
-
-
-
-
+  /api/format/deleteFile:
+    delete:
+      summary: Deleting file and getting response
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: imagePath must be sent
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/deleteFile"
+      tags:
+        - Format
     ##Level
   /api/level:
                 get:
@@ -1687,6 +2034,74 @@ paths:
                     tags:
                       - Level
 
+              patch:
+                summary: Updating status of model.
+                security:
+                  - BearerAuth: [ ]
+                requestBody:
+                  description: to update model status
+                  required: true
+                  content:
+                    application/json:
+                      schema:
+                        type: object
+                        properties:
+                          status:
+                            type: number
+                responses:
+                  "200": # status code
+                    description: A JSON array of user names
+                    content:
+                      application/json:
+                        schema:
+                          type: object
+                        #   items:
+                        #     $ref: '#/components/schemas/country'
+                tags:
+                  - Level
+  /api/level/upload:
+    post:
+      summary: Uploading file and getting path
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: File must be sent
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload.
+
+      responses:
+        "200": # status code
+          description: File path
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/uploadResponse"
+
+      tags:
+        - Level
+
+  /api/level/deleteFile:
+    delete:
+      summary: Deleting file and getting response
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: imagePath must be sent
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/deleteFile"
+      tags:
+        - Level
 
 
 
@@ -1745,6 +2160,8 @@ paths:
                             $ref: "#/components/schemas/addModel"
                   tags:
                     - Partner
+
+
 
   /api/partner/{id}:
                 get:
@@ -1811,7 +2228,75 @@ paths:
                             $ref: "#/components/schemas/deleteModel"
                   tags:
                     - Partner
+                patch:
+                  summary: Updating status of model.
+                  security:
+                    - BearerAuth: [ ]
+                  requestBody:
+                    description: to update model status
+                    required: true
+                    content:
+                      application/json:
+                        schema:
+                          type: object
+                          properties:
+                            status:
+                              type: number
+                  responses:
+                    "200": # status code
+                      description: A JSON array of user names
+                      content:
+                        application/json:
+                          schema:
+                            type: object
+                          #   items:
+                          #     $ref: '#/components/schemas/country'
+                  tags:
+                    - Partner
 
+  /api/partner/upload:
+    post:
+      summary: Uploading file and getting path
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: File must be sent
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload.
+
+      responses:
+        "200": # status code
+          description: File path
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/uploadResponse"
+
+      tags:
+        - Partner
+
+  /api/partner/deleteFile:
+    delete:
+      summary: Deleting file and getting response
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: imagePath must be sent
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/deleteFile"
+      tags:
+        - Partner
 
 
 
@@ -1944,6 +2429,75 @@ paths:
                 $ref: "#/components/schemas/deleteModel"
       tags:
         - Topic
+    patch:
+      summary: Updating status of model.
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: to update model status
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+              #   items:
+              #     $ref: '#/components/schemas/country'
+      tags:
+        - Topic
+
+  /api/topic/upload:
+    post:
+      summary: Uploading file and getting path
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: File must be sent
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload.
+
+      responses:
+        "200": # status code
+          description: File path
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/uploadResponse"
+
+      tags:
+        - Topic
+
+  /api/topic/deleteFile:
+    delete:
+      summary: Deleting file and getting response
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: imagePath must be sent
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/deleteFile"
+      tags:
+        - Topic
 
   ##EventsCategory
   /api/eventsCategory:
@@ -2066,14 +2620,75 @@ paths:
           - EventsCategory
 
 
+      patch:
+          summary: Updating status of model.
+          security:
+            - BearerAuth: [ ]
+          requestBody:
+            description: to update model status
+            required: true
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    status:
+                      type: number
+          responses:
+            "200": # status code
+              description: A JSON array of user names
+              content:
+                application/json:
+                  schema:
+                    type: object
+                  #   items:
+                  #     $ref: '#/components/schemas/country'
+          tags:
+            - EventsCategory
 
+  /api/eventsCategory/upload:
+    post:
+      summary: Uploading file and getting path
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: File must be sent
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload.
 
+      responses:
+        "200": # status code
+          description: File path
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/uploadResponse"
 
+      tags:
+        - EventsCategory
 
-
-
-
-
+  /api/eventsCategory/deleteFile:
+    delete:
+      summary: Deleting file and getting response
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: imagePath must be sent
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/deleteFile"
+      tags:
+        - EventsCategory
 
 
 
@@ -2202,12 +2817,75 @@ paths:
       tags:
         - Events
 
+    patch:
+      summary: Updating status of model.
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: to update model status
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+              #   items:
+              #     $ref: '#/components/schemas/country'
+      tags:
+        - Events
 
+  /api/events/upload:
+    post:
+      summary: Uploading file and getting path
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: File must be sent
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload.
 
+      responses:
+        "200": # status code
+          description: File path
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/uploadResponse"
 
+      tags:
+        - Events
 
-
-
+  /api/events/deleteFile:
+    delete:
+      summary: Deleting file and getting response
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: imagePath must be sent
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/deleteFile"
+      tags:
+        - Events
 
   ##SpecialistsInfo
   /api/specialistInfo:
@@ -2452,6 +3130,74 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/deleteModel"
+      tags:
+        - University
+    patch:
+      summary: Updating status of model.
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: to update model status
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+              #   items:
+              #     $ref: '#/components/schemas/country'
+      tags:
+        - University
+  /api/university/upload:
+    post:
+      summary: Uploading file and getting path
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: File must be sent
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload.
+
+      responses:
+        "200": # status code
+          description: File path
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/uploadResponse"
+
+      tags:
+        - University
+
+  /api/university/deleteFile:
+    delete:
+      summary: Deleting file and getting response
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: imagePath must be sent
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/deleteFile"
       tags:
         - University
 
@@ -2724,6 +3470,7 @@ components:
           type: string
         language:
           type: string
+
     ## News
     news:
       type: object
