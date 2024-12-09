@@ -71,7 +71,7 @@ class GetModelsService {
   }
 
   async getAllWithoutTranslate(dynamicModel, page, query, select, skip, limit, sort, populateOptions, res) {
-    const data = await dynamicModel
+    const modelData = await dynamicModel
       .find(query)
       .select(select.toString())
       .populate(populateOptions)
@@ -82,7 +82,7 @@ class GetModelsService {
 
     const count = await dynamicModel.countDocuments(query);
     return res.json({
-      data,
+      modelData,
       count,
       page: Number(page),
       limit: Number(limit)
