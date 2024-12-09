@@ -88,10 +88,11 @@ const facultySchema = Joi.object({
 const formatsSchema = Joi.object({
     modelId: Joi.string().optional(),
     status: Joi.number().optional(),
+    slug: Joi.string().required(),
     translate: Joi.object({
         name: Joi.string().required(),
         text: Joi.string().optional(),
-        description: Joi.string().required(),
+        description: Joi.string().optional(),
         language: Joi.string().required(),
     }).required()
 })
@@ -99,6 +100,7 @@ const formatsSchema = Joi.object({
 
 const levelSchema = Joi.object({
     modelId: Joi.string().optional(),
+    slug: Joi.string().required(),
     translate: Joi.object({
         name: Joi.string().required(),
         text: Joi.string().optional(),

@@ -12,6 +12,7 @@ const FormatsSchema = new Schema({
     },
     slug: {
         type: String,
+        required: [true, "slug is required"]
     }
 });
 
