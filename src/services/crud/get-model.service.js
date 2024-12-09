@@ -27,7 +27,7 @@ class GetModelService {
         message: 'id is not valid'
       });
     }
-    const data = await dynamicModel.findById(_id).lean() || {}
+    const data = await dynamicModel.findById(_id).select("-createdAt -updatedAt -__v").lean() || {}
     if (this.Model[model].translate) {
       let transModel = this.TranslateModel[model].ref
       const dynamicTranslateModel = getModelsTranslateHelper(transModel);
@@ -36,12 +36,12 @@ class GetModelService {
           el[elem] = await getPopulates(elem, el[elem]);
         }));
         el.translates = await dynamicTranslateModel.find({
-          [model]: el._id,
-        }).lean();
-        return el;
+          [model]: el._id
+        })
+          .select("-createdAt -updatedAt -__v")
+          .lean();
       }));
     }
-
     return res.status(200).json(data);
   }
 }

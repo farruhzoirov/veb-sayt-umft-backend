@@ -9,7 +9,7 @@ class GetModelsService {
     this.TranslateModel = TranslateModel;
   }
 
-  async getAll(req,res,model) {
+  async getAll(req, res, model) {
     const dynamicModel = getModelsHelper(model);
 
     let page = req.query.page || 1;
@@ -42,23 +42,26 @@ class GetModelsService {
     const matchingIds = await dynamicTranslateModel.distinct(model, query);
     console.timeEnd("matching")
 
-    console.log(matchingIds);
-    const data = await dynamicModel
+    const modelDatas = await dynamicModel
       .find({_id: {$in: matchingIds}})
-      .select(select.toString())
+      .select(select.toString() + " -createdAt -updatedAt -__v")
       .skip(skip)
       .limit(limit)
       .sort(sort)
       .lean() || [];
 
-    const populatedData = await Promise.all(data.map(async el => {
+    const populatedData = await Promise.all(modelDatas.map(async data => {
       await Promise.all(populateOptions.map(async elem => {
-        el[elem] = await getPopulates(elem, el[elem]);
+        data[elem] = await getPopulates(elem, data[elem]);
       }));
-      el.translates = await dynamicTranslateModel.find({[model]: el._id}).select(select.length ? select : []).lean();
-      return el;
+      data.translates = await dynamicTranslateModel.find({
+        [model]: data._id
+      })
+        .select(select.length ? select + " -createdAt -updatedAt -__v" : [] + " -createdAt -updatedAt -__v")
+        .lean();
+      return data;
     }));
-    const count = await dynamicModel.countDocuments({_id: {$in: matchingIds}});
+    const count = populatedData.length;
     return res.json({
       data: populatedData,
       count,
@@ -68,7 +71,7 @@ class GetModelsService {
   }
 
   async getAllWithoutTranslate(dynamicModel, page, query, select, skip, limit, sort, populateOptions, res) {
-    const data = await dynamicModel
+    const modelData = await dynamicModel
       .find(query)
       .select(select.toString())
       .populate(populateOptions)
@@ -79,7 +82,7 @@ class GetModelsService {
 
     const count = await dynamicModel.countDocuments(query);
     return res.json({
-      data,
+      modelData,
       count,
       page: Number(page),
       limit: Number(limit)

@@ -33,10 +33,14 @@ class DefaultController {
     this.deleteFile = this.deleteFile.bind(this);
   }
 
-  async getAllModels(req, res) {
-    await this.getAllService.getAll(req, res);
+  async getAllModels(req, res, next) {
+    try {
+      const modelName = await getModel(req);
+      await this.getAllService.getAll(req,res, modelName);
+   } catch (err) {
+      next(err);
+    }
   }
-
   async getModelById(req, res) {
     await this.getModelService.getModelById(req, res);
   }
@@ -46,7 +50,6 @@ class DefaultController {
       const modelData = req.body;
       const modelName = await getModel(req);
       const newData = await this.addModelsService.addModel(modelName, modelData);
-      console.log("New data", newData);
       return res.status(201).json(newData);
     } catch (err) {
       next(err);

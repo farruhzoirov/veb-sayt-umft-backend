@@ -65,17 +65,21 @@ class AddModelsService {
     if (this.Model[modelName].populate) {
       newData = await populateModelData(modelName, modelData.modelId, this.Model[modelName].populate);
     }
-
     return newData;
   }
 
   async addingModelData(dynamicModel, modelData, isDefault = false) {
     const savedDocument = await new dynamicModel({
       ...modelData,
-      ...(typeof isDefault !== 'undefined' && { isDefault }),
+      ...(typeof isDefault !== 'undefined' && {isDefault}),
       img: modelData.img ? [modelData.img] : [],
-    }).save();
-    return savedDocument.toObject();
+    });
+    await savedDocument.save();
+    const savedDocumentObject = savedDocument.toObject();
+    delete savedDocumentObject.createdAt;
+    delete savedDocumentObject.updatedAt;
+    delete savedDocumentObject.__v;
+    return savedDocumentObject;
   }
 }
 

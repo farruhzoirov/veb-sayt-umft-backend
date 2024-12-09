@@ -19,4 +19,7 @@ const CategoryTranslateSchema = new Schema({
 
 }, { timestamps: true })
 
+
+CategoryTranslateSchema.index({ title: 1 });
+
 module.exports = model("categoryTranslate", CategoryTranslateSchema);

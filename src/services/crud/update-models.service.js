@@ -48,6 +48,9 @@ class UpdateModelsService {
       }
     );
     newData = newData.toObject();
+    delete newData.createdAt;
+    delete newData.updatedAt;
+    delete newData.__v;
     // Update translations
     if (updateData.translate) {
       newData.translates = [await updateTranslations(modelName, modelId, updateData.translate)];
