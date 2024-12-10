@@ -66,18 +66,15 @@ const updateTranslations = async (modelName, modelId, translationData) => {
   const isExistTranslation = await dynamicTranslateModel.find({[modelName]: modelId, language: language});
 
   if (!isExistTranslation.length) {
-     const newData = await new dynamicTranslateModel({
-       [modelName]: modelId,
-       language: language,
-       ...translationFields,
-     });
+    const newData = await new dynamicTranslateModel({
+      [modelName]: modelId,
+      language: language,
+      ...translationFields,
+    });
 
     await newData.save();
-    const newTranslationObject = newData.toObject();
-    delete newTranslationObject.createdAt;
-    delete newTranslationObject.updatedAt;
-    delete newTranslationObject.__v;
-    return newTranslationObject;
+    const allTranslationsData = await dynamicTranslateModel.find({[modelName]: modelId}).select("-createdAt -updatedAt -__v");
+    return allTranslationsData;
   }
 
   updatedData = await dynamicTranslateModel.findOneAndUpdate(
