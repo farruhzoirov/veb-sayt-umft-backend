@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 
 const EventsSchema = new Schema({
     img: [],
-    time: String,
+    from: String,
+    to: String,
     eventsCategory: [{
         type: Schema.Types.ObjectId,
         ref: 'eventsCategory',

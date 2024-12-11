@@ -62,8 +62,9 @@ const eventsCategorySchema = Joi.object({
 
 const eventsSchema = Joi.object({
     modelId: Joi.string().optional(),
-    time: Joi.string().required(),
-    eventsCategory: Joi.string().required(),
+    from: Joi.string().required(),
+    to: Joi.string().required(),
+    eventsCategory: Joi.array().required(),
     translate: Joi.object({
         name: Joi.string().required(),
         text: Joi.string().optional(),

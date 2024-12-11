@@ -11,7 +11,8 @@ const ContactsSchema = new mongoose.Schema({
     },
     slug: {
         type: String,
-    }
+        required: [true, "Slug is required"]
+    },
 })
 
 module.exports = mongoose.model('contact', ContactsSchema);

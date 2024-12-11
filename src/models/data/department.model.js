@@ -17,6 +17,7 @@ const DepartmentSchema = new Schema({
     },
     slug: {
         type: String,
+        required: [true, "Slug is required"]
     },
     img: [],
     structureType: StructureType,

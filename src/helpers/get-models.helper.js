@@ -4,8 +4,7 @@ const universityTranslateSchema = require('../models/translate/university.model'
 const categorySchema = require('../models/data/category.model');
 const categoryTranslateSchema = require('../models/translate/category.model');
 
-const directionSchema = require('../models/data/directions.model');
-const directionTranslateSchema = require('../models/translate/directions.model');
+
 
 const eventsSchema = require('../models/data/events.model');
 const eventsTranslateSchema = require('../models/translate/events.model');

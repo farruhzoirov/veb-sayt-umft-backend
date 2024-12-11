@@ -5,6 +5,7 @@ const EventsCategorySchema = new Schema({
     img: [],
     slug: {
         type: String,
+        required: [true, "Slug is required"]
     },
     status: {
         type: Number,
