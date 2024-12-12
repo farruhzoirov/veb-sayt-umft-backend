@@ -96,7 +96,7 @@ const updateTranslations = async (modelName, modelId, translationData) => {
   delete updatedTranslationObject.updatedAt;
   delete updatedTranslationObject.__v;
 
-  return updatedTranslationObject;
+  return [updatedTranslationObject];
 }
 
 module.exports = {

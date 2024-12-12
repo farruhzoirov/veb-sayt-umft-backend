@@ -53,7 +53,7 @@ class UpdateModelsService {
     delete newData.__v;
     // Update translations
     if (updateData.translate) {
-      newData.translates = [await updateTranslations(modelName, modelId, updateData.translate)];
+      newData.translates = await updateTranslations(modelName, modelId, updateData.translate);
     }
 
     if (this.Model[modelName].populate) {
