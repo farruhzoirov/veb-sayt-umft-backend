@@ -14,7 +14,7 @@ const PartnerTranslateSchema = new Schema({
         type: String,
         required: true,
     },
-    partners: {
+    partner: {
         type: Schema.Types.ObjectId,
         ref: "partners",
         required: true,
