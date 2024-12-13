@@ -1,11 +1,11 @@
 openapi: 3.1.0
 info:
   title: NEW UMFT SITE  API
-  description: Optional multiline or single-line description in HTML.
+  description: Specialty, Department va Topic ga tegmay turasiz.
   version: 0.1.9
 servers:
   - url: http://95.130.227.52:4131
- # - url: http://localhost:4131
+  #- url: http://localhost:4131
     description: Optional server description, e.g. Main (production) server
 tags:
   - name: Auth
@@ -4136,7 +4136,7 @@ components:
             properties:
               _id:
                 type: string
-              direction:
+              specialty:
                 type: string
               level:
                 type: string
@@ -4156,7 +4156,7 @@ components:
         properties:
             modelId?:
               type: string
-            direction:
+            specialty:
               type: string
             level:
               type: string
@@ -4173,7 +4173,7 @@ components:
     topicsPut:
       type: object
       properties:
-        direction:
+        specialty:
           type: string
         level:
           type: string
