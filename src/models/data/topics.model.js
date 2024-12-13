@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 const {Schema} = require("mongoose");
 
 const TopicSchema = new Schema({
-    direction: {
+    specialty: {
         type: Schema.Types.ObjectId,
-        ref: "direction",
+        ref: "specialty",
         required: true,
     },
     level: {
