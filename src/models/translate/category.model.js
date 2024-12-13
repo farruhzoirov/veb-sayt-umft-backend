@@ -11,10 +11,12 @@ const CategoryTranslateSchema = new Schema({
     category: {
         type: Schema.Types.ObjectId,
         ref: 'category',
+        required: true
     },
     language: {
         type: Schema.Types.ObjectId,
         ref: 'language',
+        required: true,
     },
 
 }, { timestamps: true })

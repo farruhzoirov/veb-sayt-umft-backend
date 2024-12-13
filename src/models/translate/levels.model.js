@@ -4,7 +4,7 @@ const {Schema} = require("mongoose");
 // Namely course  1, 2, 3, 4
 const LevelTranslateSchema = new Schema({
     name: {
-        type: String,
+        type: Number,
         required: true,
     },
     text: {

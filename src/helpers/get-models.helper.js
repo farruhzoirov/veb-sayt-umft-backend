@@ -46,6 +46,10 @@ const messengerSchema = require('../models/data/messenger.model');
 const messengerTranslateSchema = require('../models/translate/messenger.model');
 
 
+const eventsCategorySchema = require('../models/data/events-category.model');
+const eventsCategoryTranslateSchema = require('../models/translate/events-category.model');
+
+
 const {Model, TranslateModel} = require("../common/constants/models.constants")
 
 
@@ -83,6 +87,8 @@ function getModelsHelper(modelKey) {
       return topicSchema;
     case Model.messenger.ref:
       return messengerSchema;
+    case Model.eventsCategory.ref:
+      return eventsCategorySchema;
     default:
       throw new Error(`Model "${modelKey}" not found.`);
   }
@@ -118,6 +124,8 @@ function getModelsTranslateHelper(modelKey) {
       return topicTranslateSchema;
     case TranslateModel.messenger.ref:
       return topicTranslateSchema;
+    case TranslateModel.eventsCategory.ref:
+      return eventsTranslateSchema;
     default:
       throw new Error(`Translation model "${modelKey}" not found.`);
   }

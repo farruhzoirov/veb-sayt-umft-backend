@@ -1366,7 +1366,7 @@ paths:
                   content:
                     application/json:
                       schema:
-                        $ref: "#/components/schemas/direction"
+                        $ref: "#/components/schemas/specialty"
                 responses:
                   "201":
                     description: Specialty created successfully
@@ -3549,10 +3549,14 @@ components:
           type: array
         slug:
           type: string
+        status:
+          type: string
         translate:
           type: object
           properties:
             title:
+              type: string
+            text?:
               type: string
             language:
               type: string
@@ -3580,6 +3584,8 @@ components:
                   properties:
                       title:
                         type: string
+                      text?:
+                        type: string
                       language:
                         type: string
 
@@ -3595,6 +3601,8 @@ components:
           properties:
             title:
               type: string
+            text?:
+              type: string
             language:
               type: string
 
@@ -3604,6 +3612,8 @@ components:
         _id:
           type: string
         title:
+          type: string
+        text?:
           type: string
         language:
           type: string
@@ -3696,7 +3706,7 @@ components:
           properties:
             title:
               type: string
-            text:
+            text?:
               type: string
             description:
               type: string
@@ -3729,6 +3739,10 @@ components:
       properties:
         modelId?:
           type: string | null
+        slug:
+          type: string
+        status?:
+          type: Number
         translate:
           type: object
           properties:
@@ -3746,10 +3760,16 @@ components:
             properties:
                 _id:
                   type: string
+                slug:
+                  type: string
+                status:
+                  type: Number
                 translate:
                     type: object
                     properties:
                       name:
+                        type: string
+                      text?:
                         type: string
                       language:
                         type: string
@@ -3757,6 +3777,10 @@ components:
     degreePut:
       type: object
       properties:
+          slug:
+            type: string
+          status:
+            type: Number
           translate:
             type: object
             properties:
@@ -3765,8 +3789,8 @@ components:
               language:
                 type: string
 
-    ## Directions
-    direction:
+    ## Specialties
+    specialty:
       type: object
       properties:
         modelId?:
@@ -3870,15 +3894,15 @@ components:
           properties:
             _id:
               type: string
-            translates:
-              type: array
-              items:
-                type: object
-                properties:
-                  _id:
-                    type: string
-                  name:
-                    type: string
+              translates:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                    name:
+                      type: string
         translate:
           type: object
           properties:
@@ -3959,17 +3983,16 @@ components:
           items:
             type: object
             properties:
-              _id:
-                type: string
-              translates:
-                  type: array
-                  items: object
-                  properties:
-                      name:
-                        type: string
-                      language:
-                        type: string
-
+                  _id:
+                    type: string
+                  translates:
+                      type: array
+                      items: object
+                      properties:
+                          name:
+                            type: string
+                          language:
+                            type: string
 
     formatPost:
         type: object
@@ -3997,21 +4020,23 @@ components:
                 type: string
 
     format:
-      type: object
-      properties:
-        data:
-          type: array
           items:
             type: object
           properties:
             _id:
               type: string
+            slug:
+              type: string
+            status:
+              type: number
               translates:
                 type: array
                 items:
                   type: object
                   properties:
                     name:
+                      type: string
+                    text?:
                       type: string
                     language:
                       type: string
@@ -4019,22 +4044,28 @@ components:
     levelGet:
       type: object
       properties:
-        data:
-          type: array
-          items:
-            type: object
-            properties:
-              _id:
-                type: string
-              translates:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    language:
-                      type: string
+          data:
+            type: array
+            items:
+              type: object
+              properties:
+                _id:
+                  type: string
+                slug:
+                  type: string
+                status:
+                  type: number
+                translates:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: number
+                      text?:
+                        type: string
+                      language:
+                        type: string
 
 
     levelPost:
@@ -4042,23 +4073,32 @@ components:
       properties:
           modelId?:
             type: string
+          slug:
+            type: string
+          status:
+            type: number
           translate:
             type: object
             properties:
                 name:
-                  type: string
+                  type: number
                 language:
                   type: string
 
     levelPut:
       type: object
+      slug:
+        type: string
+      status:
+        type: number
       properties:
         translate:
-          type: array
           items:
             type: object
             properties:
               name:
+                type: number
+              text?:
                 type: string
               language:
                 type: string
@@ -4410,8 +4450,6 @@ components:
                           type: string
                         language:
                           type: string
-
-
 
     universityPost:
           type: object

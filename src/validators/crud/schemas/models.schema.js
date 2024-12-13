@@ -103,7 +103,7 @@ const levelSchema = Joi.object({
     modelId: Joi.string().optional(),
     slug: Joi.string().required(),
     translate: Joi.object({
-        name: Joi.string().required(),
+        name: Joi.number().required().max(1),
         text: Joi.string().optional(),
         language: Joi.string().required(),
     }).required()
