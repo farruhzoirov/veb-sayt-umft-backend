@@ -4113,6 +4113,9 @@ components:
             properties:
               _id:
                 type: string
+              slug:
+                type: string
+
               img:
                 type: array
               status:
@@ -4136,6 +4139,8 @@ components:
               type: string
             img:
               type: array
+            slug:
+              type: string
             status:
               type: number
             translate:
@@ -4153,6 +4158,8 @@ components:
       properties:
         img:
           type: array
+        slug:
+          type: string
         status:
           type: number
         translate:

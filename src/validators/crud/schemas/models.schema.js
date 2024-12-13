@@ -121,6 +121,7 @@ const newsSchema = Joi.object({
 const partnersSchema = Joi.object({
     modelId: Joi.string().optional(),
     status: Joi.number().optional(),
+    slug: Joi.string().required(),
     translate: Joi.object({
         name: Joi.string().required(),
         text: Joi.string().optional(),
