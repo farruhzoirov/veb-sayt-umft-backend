@@ -197,7 +197,7 @@ module.exports = {
     format: formatsSchema,
     level: levelSchema,
     news: newsSchema,
-    partners: partnersSchema,
+    partner: partnersSchema,
     specialistInfo: specialistsInfoSchema,
     topics: topicsSchema,
     page: pagesSchema,
