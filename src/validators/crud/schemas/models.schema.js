@@ -147,7 +147,6 @@ const specialistsInfoSchema = Joi.object({
 
 const topicsSchema = Joi.object({
     modelId: Joi.string().optional(),
-    user: Joi.string().required(),
     direction: Joi.string().required(),
     level: Joi.string().required(),
     translate: Joi.object({
@@ -203,7 +202,7 @@ module.exports = {
     news: newsSchema,
     partners: partnersSchema,
     specialistInfo: specialistsInfoSchema,
-    topics: topicsSchema,
+    topic: topicsSchema,
     page: pagesSchema,
     language: languagesSchema,
     messenger: messengerSchema,
