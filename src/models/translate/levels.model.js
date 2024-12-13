@@ -3,12 +3,9 @@ const {Schema} = require("mongoose");
 
 // Namely course  1, 2, 3, 4
 const LevelTranslateSchema = new Schema({
-    name: {
+    course: {
         type: Number,
         required: true,
-    },
-    text: {
-        type: String
     },
     level: {
         type: Schema.Types.ObjectId,

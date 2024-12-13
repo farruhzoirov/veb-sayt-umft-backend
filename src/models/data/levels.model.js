@@ -12,7 +12,14 @@ const LevelSchema = new Schema({
         type: Number,
         default: 1
     },
-
+    course: {
+        type: Number,
+        required: true,
+    },
+    level: {
+        type: Schema.Types.ObjectId,
+        ref: "level",
+    },
 });
 
 

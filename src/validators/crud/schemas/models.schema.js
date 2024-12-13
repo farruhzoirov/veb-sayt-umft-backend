@@ -102,11 +102,7 @@ const formatsSchema = Joi.object({
 const levelSchema = Joi.object({
     modelId: Joi.string().optional(),
     slug: Joi.string().required(),
-    translate: Joi.object({
-        name: Joi.number().required().max(1),
-        text: Joi.string().optional(),
-        language: Joi.string().required(),
-    }).required()
+    course: Joi.number().min(0).max(6).required(),
 })
 
 const newsSchema = Joi.object({
@@ -147,6 +143,7 @@ const specialistsInfoSchema = Joi.object({
 
 const topicsSchema = Joi.object({
     modelId: Joi.string().optional(),
+    user: Joi.string().required(),
     direction: Joi.string().required(),
     level: Joi.string().required(),
     translate: Joi.object({
@@ -202,7 +199,7 @@ module.exports = {
     news: newsSchema,
     partners: partnersSchema,
     specialistInfo: specialistsInfoSchema,
-    topic: topicsSchema,
+    topics: topicsSchema,
     page: pagesSchema,
     language: languagesSchema,
     messenger: messengerSchema,

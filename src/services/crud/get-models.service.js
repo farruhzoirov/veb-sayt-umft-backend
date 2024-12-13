@@ -37,10 +37,8 @@ class GetModelsService {
     const dynamicModel = getModelsHelper(model);
 
     //const matchingTranslates = await dynamicTranslateModel.find(query);
-    console.time("matching")
     //const matchingIds = await matchingTranslates.map((t) => t[model]);
     const matchingIds = await dynamicTranslateModel.distinct(model, query);
-    console.timeEnd("matching")
 
     const modelDatas = await dynamicModel
       .find({_id: {$in: matchingIds}})

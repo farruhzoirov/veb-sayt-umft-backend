@@ -118,8 +118,8 @@ function getModelsTranslateHelper(modelKey) {
       return formatTranslateSchema;
     case TranslateModel.degree.ref:
       return degreeTranslateSchema;
-    case TranslateModel.level.ref:
-      return levelTranslateSchema;
+    // case TranslateModel.level.ref:
+    //   return levelTranslateSchema;
     case TranslateModel.topic.ref:
       return topicTranslateSchema;
     case TranslateModel.messenger.ref:

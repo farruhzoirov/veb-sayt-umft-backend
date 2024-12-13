@@ -33,6 +33,11 @@ class AddModelsService {
         return newData;
       }
 
+      if (modelName.trim() === 'level') {
+        newData = await this.addingModelData(dynamicModel, modelData, true);
+        return newData;
+      }
+
       newData = await this.addingModelData(dynamicModel, modelData);
 
       if (this.Model[modelName].translate) {

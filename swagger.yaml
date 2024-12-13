@@ -4060,7 +4060,7 @@ components:
                   items:
                     type: object
                     properties:
-                      name:
+                      course:
                         type: number
                       text?:
                         type: string
@@ -4080,7 +4080,7 @@ components:
           translate:
             type: object
             properties:
-                name:
+                course:
                   type: number
                 language:
                   type: string
@@ -4096,7 +4096,7 @@ components:
           items:
             type: object
             properties:
-              name:
+              course:
                 type: number
               text?:
                 type: string
