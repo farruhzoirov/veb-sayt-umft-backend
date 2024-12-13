@@ -125,7 +125,7 @@ function getModelsTranslateHelper(modelKey) {
     case TranslateModel.messenger.ref:
       return topicTranslateSchema;
     case TranslateModel.eventsCategory.ref:
-      return eventsTranslateSchema;
+      return eventsCategoryTranslateSchema;
     default:
       throw new Error(`Translation model "${modelKey}" not found.`);
   }

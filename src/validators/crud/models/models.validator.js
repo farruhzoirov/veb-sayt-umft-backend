@@ -13,6 +13,7 @@ const validateModel = async (req, res, next) => {
         }
         // 2. Get and validate schema exists
         const schema = modelSchemas[model];
+        console.log(schema)
         if (!schema) {
             return res.status(400).json({
                 ok: false,

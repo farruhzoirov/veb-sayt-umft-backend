@@ -4238,12 +4238,18 @@ components:
             properties:
               _id:
                 type: string
+              slug:
+                type: string
+              status?:
+                type: number
               translates:
                 type: array
                 items:
                   type: object
                   properties:
                     name:
+                      type: string
+                    text?:
                       type: string
                     language:
                       type: string
@@ -4253,10 +4259,16 @@ components:
         properties:
             modelId?:
               type: string
+            slug:
+              type: string
+            status?:
+              type: number
             translate:
                 type: object
                 properties:
                   name:
+                    type: string
+                  text?:
                     type: string
                   language:
                     type: string
@@ -4264,8 +4276,11 @@ components:
     eventsCategoryPut:
       type: object
       properties:
+        slug:
+          type: string
+        status?:
+          type: number
         translate:
-          type: array
           items:
             type: object
             properties:
@@ -4284,6 +4299,10 @@ components:
             properties:
               _id:
                 type: string
+              slug:
+                type: string
+              status?:
+                type: number
               eventsCategory:
                 type: array
                 items: object
