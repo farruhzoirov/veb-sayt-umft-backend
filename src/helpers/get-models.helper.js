@@ -69,7 +69,7 @@ function getModelsHelper(modelKey) {
       return newsSchema;
     case Model.page.ref:
       return pageSchema;
-    case Model.partners.ref:
+    case Model.partner.ref:
       return partnerSchema;
     case Model.specialistInfo.ref:
       return specialistInfoSchema;
@@ -110,7 +110,7 @@ function getModelsTranslateHelper(modelKey) {
       return newsTranslateSchema;
     case TranslateModel.page.ref:
       return pageTranslateSchema;
-    case TranslateModel.partners.ref:
+    case TranslateModel.partner.ref:
       return partnerTranslateSchema;
     case TranslateModel.specialistInfo.ref:
       return specialistInfoTranslateSchema;
