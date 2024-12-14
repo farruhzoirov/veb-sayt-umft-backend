@@ -52,7 +52,6 @@ class DefaultController {
       const newData = await this.addModelsService.addModel(modelName, modelData);
       return res.status(201).json(newData);
     } catch (err) {
-      console.log(err.message)
       next(err);
     }
   }

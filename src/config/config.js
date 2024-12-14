@@ -8,6 +8,7 @@ const config = {
     JWT_SECRET_KEY: process.env.JWT_SECRET_KEY,
     ADMIN_USERNAME: process.env.ADMIN_USERNAME,
     ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
+    HEMIS_API_TOKEN: process.env.HEMIS_API_TOKEN
 }
 
 

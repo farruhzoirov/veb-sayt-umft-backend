@@ -3,110 +3,45 @@ const Language = require('../../models/settings/language.model');
 const Department = require('../../models/data/department.model');
 const DepartmentTranslate = require('../../models/translate/department.model');
 const cron = require('node-cron');
+const config = require('../../config/config');
 
-class FetchDepartmentsService {
+const integrationDepartmentSchedule = cron.schedule('* * * * *', async () => {
+  let limit = 200;
+  let page = 0;
+  let pageCount = 0;
 
+  const fetchDepartments = async () => {
+    try {
 
-  async fetchDepartments() {
-      cron.schedule("1, ***** 17", async () => {
+      const response = await axios.get(`https://hemisapi.umft.uz/department-list?page=${page}&limit=${limit}`, {
+        headers: {
+          Authorization: `Bearer ${config.HEMIS_API_TOKEN}`
+        }
+      });
 
-      })
-  }
+      const data = response.data;
 
-  // async fetchDepartments(req, res) {
-  //   try {
-  //     const defaultLanguage = await Language.findOne({isDefault: true}).lean();
-  //     const languageId = defaultLanguage ? defaultLanguage._id : null;
-  //
-  //     const response = await axios.get('', {
-  //       headers: {
-  //         'Accept': 'application/json',
-  //       }
-  //     });  // Replace with actual API URL
-  //     const departments = response.data;
-  //
-  //     if (!Array.isArray(departments)) {
-  //       new Error('Departments must be an array');
-  //     }
-  //
-  //     if (!departments.translate || !departments.translate.name) {
-  //       new Error('For translate fields are requred');
-  //     }
-  //
-  //     const existingDepartments = await Department.find().lean();
-  //     const existingIds = existingDepartments.map(dep => dep.hemisId);
-  //     const updatedDepartments = departments.filter((dep) => dep.updatedAt !== existingDepartments.updatedAt);
-  //     const removedDepartmentIds = existingDepartments.filter((dep) => !departments.some(d => dep.hemisId === d.id)).map(dep => dep.id);
-  //     const newDepartments = departments.filter(dep => !existingIds.includes(dep.id));
-  //
-  //     const newDepartmentPromises = newDepartments.map(async (department) => {
-  //       const savedDepartment = await new Department({
-  //         code: department.code,
-  //         hemisId: department.id,
-  //         structureType: department.structureType,
-  //         active: department.active,
-  //         createdAt: department.createdAt,
-  //         updatedAt: department.updatedAt
-  //       }).save()
-  //       await new DepartmentTranslate({
-  //         name: department.translate.name,
-  //         department: savedDepartment._id,
-  //         language: languageId
-  //       }).save()
-  //     });
-  //
-  //     const updateDepartmentPromises = updatedDepartments.map(async (department) => {
-  //       const updatedDepartment = Department.findOneAndUpdate(
-  //         {
-  //           hemisId: department.id
-  //         },
-  //         {
-  //           set: {
-  //             code: department.code,
-  //             structureType: department.structureType,
-  //             active: department.active,
-  //             updatedAt: department.updatedAt,
-  //           }
-  //         },
-  //         {new: true}
-  //       );
-  //       await DepartmentTranslate.findOneAndUpdate(
-  //         {
-  //           department: updatedDepartment._id
-  //         },
-  //         {
-  //           $set: {
-  //             name: department.translate.name
-  //           }
-  //         },
-  //         {
-  //           upsert: true, new: true
-  //         }
-  //       );
-  //     });
-  //     const deleteDepartmentPromises = removedDepartmentIds.map(async id => {
-  //       await Department.findByIdAndDelete(id);
-  //       await DepartmentTranslate.deleteMany({departmentId: id});
-  //     });
-  //
-  //     await Promise.all([
-  //       ...newDepartmentPromises,
-  //       ...updateDepartmentPromises,
-  //       ...deleteDepartmentPromises
-  //     ]);
-  //     return res.status(200).json({
-  //       success: true,
-  //       message: 'Departments synchronized successfully'
-  //     });
-  //   } catch (error) {
-  //     console.error('Error in getDepartments:', error);
-  //     return res.status(500).json({
-  //       ok: false,
-  //       message: 'Failed to synchronize departments',
-  //       error: error.message
-  //     });
-  //   }
-  // }
-}
+      for (let department of data.data) {
+        if (department) {
+          // Here we can add logic to save the department in the database
+        }
+      }
+      console.log('Page count', data.pagination.pageCount);
+      pageCount = data.pagination.pageCount || 1;
+      console.log(`Processed page ${page + 1} of ${pageCount}`);
 
-module.exports = FetchDepartmentsService;
+      page++;
+      if (page < pageCount) {
+        setTimeout(fetchDepartments, 1000); // Delay next page fetch by 1 second
+      } else {
+        console.log('Sync departments finished');
+      }
+    } catch (err) {
+      console.error(`Error fetching departments on page ${page}:`, err.message);
+    }
+  };
+
+  await fetchDepartments();
+});
+
+integrationDepartmentSchedule.start();

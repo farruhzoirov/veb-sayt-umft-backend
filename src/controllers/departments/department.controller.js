@@ -8,7 +8,7 @@ const UpdateDepartmentsService = require('../../services/departments/update-depa
 class DepartmentController {
     constructor() {
         this.getAllDepartmentsService = new GetAllDepartmentsService();
-        this.fetchDepartmentsService = new FetchDepartmentsService();
+        // this.fetchDepartmentsService = new FetchDepartmentsService();
         this.getDepartmentService = new GetDepartmentService();
         this.updateDepartmentsService = new UpdateDepartmentsService();
 
@@ -20,7 +20,7 @@ class DepartmentController {
     }
 
     async fetchDepartments(req, res) {
-        await this.fetchDepartmentsService.fetchDepartments(req, res);
+        // await this.fetchDepartmentsService.fetchDepartments(req, res);
     }
 
     async getAllDepartment(req, res) {
