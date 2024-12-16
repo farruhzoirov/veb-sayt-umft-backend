@@ -69,7 +69,7 @@ const eventsSchema = Joi.object({
         name: Joi.string().required(),
         text: Joi.string().optional(),
         description: Joi.string().required(),
-        location: Joi.string().required(),
+        address: Joi.string().required(),
         language: Joi.string().required(),
     }).required()
 })

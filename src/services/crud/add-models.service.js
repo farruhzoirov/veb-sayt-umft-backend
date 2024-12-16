@@ -39,13 +39,15 @@ class AddModelsService {
       }
 
       newData = await this.addingModelData(dynamicModel, modelData);
+      console.log(newData)
 
       if (this.Model[modelName].translate) {
         newData.translates = [await addTranslations(modelName, newData._id, modelData.translate)];
       }
 
       if (this.Model[modelName].populate) {
-        newData = await populateModelData(dynamicModel, newData._id, this.Model[modelName].populate);
+        // newData = await dynamicModel.find().populate('eventsCategory', 'name slug')
+        // newData = await populateModelData(dynamicModel, newData._id, this.Model[modelName].populate);
       }
 
       return newData;

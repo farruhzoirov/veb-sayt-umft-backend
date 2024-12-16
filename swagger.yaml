@@ -18,7 +18,7 @@ paths:
       summary: Creating admin.
       description: Optional extended description in CommonMark or HTML.
       responses:
-        "200": # status code
+        "200": # status codep
           description: Adding admin
           content:
             application/json:
@@ -4335,12 +4335,25 @@ components:
       properties:
             modelId?:
               type: string
+            from:
+              type: string
+            to:
+              type: string
+            img: []
+            slug:
+              type: string
+            status:
+              type: number
             eventsCategory:
               type: array
-              items:
-                type: object
-                properties:
-
+              properties:
+                id:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - '3234243234'
+                    - '234242342'
             translate:
                 type: object
                 properties:
@@ -4348,26 +4361,45 @@ components:
                     type: string
                   description:
                     type: string
-                  location:
+                  text?:
+                    type: string
+                  address:
                     type: string
                   language:
                     type: string
 
     eventsPut:
-        type: object
-        properties:
-          eventsCategory:
-            type: string
-          translate:
-            type: array
-            items:
+      type: object
+      properties:
+            from:
+              type: string
+            to:
+              type: string
+            img: [ ]
+            slug:
+              type: string
+            status:
+              type: number
+            eventsCategory:
+              type: array
+              properties:
+                id:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - '3234243234'
+                    - '234242342'
+            translate:
               type: object
               properties:
                 name:
                   type: string
                 description:
                   type: string
-                location:
+                text?:
+                  type: string
+                address:
                   type: string
                 language:
                   type: string
