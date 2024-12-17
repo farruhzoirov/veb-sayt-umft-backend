@@ -59,7 +59,8 @@ class GetModelsService {
         .lean();
       return data;
     }));
-    const count = modelDatas.length;
+
+    const count = await dynamicModel.countDocuments();
     return res.json({
       data: populatedData,
       count,
