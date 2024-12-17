@@ -59,7 +59,7 @@ class GetModelsService {
         .lean();
       return data;
     }));
-    const count = populatedData.length;
+    const count = modelDatas.length;
     return res.json({
       data: populatedData,
       count,
@@ -78,7 +78,7 @@ class GetModelsService {
       .sort(sort)
       .lean() || [];
 
-    const count = await dynamicModel.countDocuments(query);
+    const count = await dynamicModel.countDocuments();
     return res.json({
       modelData,
       count,
