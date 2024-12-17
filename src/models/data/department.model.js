@@ -9,7 +9,7 @@ const StructureType =  new Schema({
 // hemisId is departmentId in the hemis.
 const DepartmentSchema = new Schema({
     code: {
-        type: Number,
+        type: String,
         required: true,
     },
     hemisId: {
@@ -17,7 +17,6 @@ const DepartmentSchema = new Schema({
     },
     slug: {
         type: String,
-        required: [true, "Slug is required"]
     },
     img: [],
     structureType: StructureType,

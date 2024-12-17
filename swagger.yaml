@@ -18,7 +18,7 @@ paths:
       summary: Creating admin.
       description: Optional extended description in CommonMark or HTML.
       responses:
-        "200": # status codep
+        "200": # status code
           description: Adding admin
           content:
             application/json:
@@ -1521,9 +1521,9 @@ paths:
 
 
   ##Department
-  /api/department:
+  /department/fetch-departments:
                 get:
-                  summary: Get all faculties
+                  summary: Sync all departments from hemis api.
                   security:
                     - BearerAuth: [ ]
                   parameters:
