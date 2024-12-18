@@ -40,7 +40,7 @@ class FetchSpecialtiesService {
     const limit = 100;
     const page = 0;
     const response = await axios.get(
-      `https://hemisapi.umft.uz/specialty-list?page=${page}&limit=${limit}`,
+      `${config.HEMIS_API_URL}/specialty-list?page=${page}&limit=${limit}`,
       { headers: { Authorization: `Bearer ${config.HEMIS_API_TOKEN}` } }
     );
     return response.data.data;
