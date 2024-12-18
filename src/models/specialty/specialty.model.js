@@ -29,18 +29,20 @@ const SpecialtySchema = new Schema({
     degree: {
         type: Schema.Types.ObjectId,
         ref: 'degree',
+        required: true,
     },
     department: {
         type: Schema.Types.ObjectId,
         ref: 'department',
+        required: true,
     },
-    prices: [PricesSchema],
     from: {
         type: String,
     },
     to: {
         type: String,
     },
+    prices: [PricesSchema],
     active: {
         type: Boolean,
         default: true,
@@ -48,6 +50,12 @@ const SpecialtySchema = new Schema({
     status: {
         type: Number,
         default: 1
+    },
+    createdAt: {
+        type: Date,
+    },
+    updatedAt: {
+        type: Date,
     }
 })
 

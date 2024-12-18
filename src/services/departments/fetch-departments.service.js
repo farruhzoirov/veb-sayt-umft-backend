@@ -6,6 +6,7 @@ const config = require('../../config/config');
 
 class FetchDepartmentsService {
   async fetchDepartments() {
+    const defaultLanguage = await Language.findOne({isDefault: true});
     const limit = 100;
     let page = 0;
     const response = await axios.get(`https://hemisapi.umft.uz/department-list?page=${page}&limit=${limit}`, {
@@ -13,6 +14,7 @@ class FetchDepartmentsService {
         Authorization: `Bearer ${config.HEMIS_API_TOKEN}`
       }
     });
+
     const data = response.data;
     const existingDepartment = await Department.find();
 
@@ -28,7 +30,7 @@ class FetchDepartmentsService {
         }).save();
         await new DepartmentTranslate({
           name: department.name,
-          language: await Language.findOne({isDefault: true}),
+          language: defaultLanguage._id,
           department: newDepartment._id
         }).save();
       }

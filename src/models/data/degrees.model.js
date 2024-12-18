@@ -3,9 +3,12 @@ const {Schema} = require("mongoose");
 
 const DegreeSchema = new Schema({
     img: [],
+    code: {
+        type: String,
+        required: [true, "code is required"]
+    },
     slug: {
         type: String,
-        required: [true, "Slug is required"]
     },
     status: {
         type: Number,

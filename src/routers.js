@@ -18,6 +18,8 @@ router.use('/submit', require("./routers/applicants.route"));
 // Departments
 router.use('/department', require("./routers/departments.route"));
 
+// Specialties
+router.use('/specialty', require("./routers/specialties.route"));
 
 module.exports = router;
 

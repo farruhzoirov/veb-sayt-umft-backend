@@ -7,6 +7,7 @@ class GetDepartmentsService {
       let limit = req.query.limit || 20;
       let select = req.query.select || [];
       const skip = (page - 1) * limit;
+
       const allDepartments = await DepartmentTranslate.find()
         .select(select.toString())
         .skip(skip)

@@ -13,6 +13,7 @@ const DegreeTranslateSchema = new Schema({
     degree: {
         type: Schema.Types.ObjectId,
         ref: "degree",
+        required: true,
     },
     language : {
         type: Schema.Types.ObjectId,
