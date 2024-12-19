@@ -1,14 +1,14 @@
 const axios = require('axios');
 
 // --- Models --- //
-const Specialty = require('../../models/specialty/specialty.model');
-const SpecialtyTranslate = require('../../models/translate/specialty.model');
-const Degree = require('../../models/data/degrees.model');
-const DegreeTranslate = require('../../models/translate/degrees.model');
-const Department = require('../../models/data/department.model');
-const Language = require('../../models/settings/language.model');
+const Specialty = require('../../../models/specialty/specialty.model');
+const SpecialtyTranslate = require('../../../models/translate/specialty.model');
+const Degree = require('../../../models/data/degrees.model');
+const DegreeTranslate = require('../../../models/translate/degrees.model');
+const Department = require('../../../models/data/department.model');
+const Language = require('../../../models/settings/language.model');
 const {default: mongoose} = require("mongoose");
-const DepartmentTranslate = require("../../models/translate/department.model");
+const DepartmentTranslate = require("../../../models/translate/department.model");
 
 class UpdateSpecialtiesService {
     async updateSpecialties(req, res) {

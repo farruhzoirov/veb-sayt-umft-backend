@@ -1,4 +1,4 @@
-const DepartmentTranslate = require('../../models/translate/department.model');
+const DepartmentTranslate = require('../../../models/translate/department.model');
 
 class GetDepartmentsService {
   async getDepartments(req, res) {

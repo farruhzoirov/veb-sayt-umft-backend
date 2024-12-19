@@ -1,8 +1,8 @@
 const axios = require('axios');
-const Language = require('../../models/settings/language.model');
-const Department = require('../../models/data/department.model');
-const DepartmentTranslate = require('../../models/translate/department.model');
-const config = require('../../config/config');
+const Language = require('../../../models/settings/language.model');
+const Department = require('../../../models/data/department.model');
+const DepartmentTranslate = require('../../../models/translate/department.model');
+const config = require('../../../config/config');
 
 class FetchDepartmentsService {
   async fetchDepartments() {
@@ -24,7 +24,7 @@ class FetchDepartmentsService {
   }
 
   async getDefaultLanguage() {
-    return await Language.findOne({ isDefault: true });
+    return Language.findOne({ isDefault: true });
   }
 
   async fetchDepartmentsData() {
@@ -119,5 +119,7 @@ class FetchDepartmentsService {
     }
   }
 }
+
+
 
 module.exports = FetchDepartmentsService;

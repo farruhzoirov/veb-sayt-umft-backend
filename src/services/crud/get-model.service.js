@@ -3,6 +3,7 @@ const {getModelsHelper, getModelsTranslateHelper, getModel} = require("../../hel
 
 const {Model, TranslateModel} = require("../../common/constants/models.constants");
 const {getPopulates} = require("../../helpers/get-populates.helper");
+const BaseError = require("../../errors/base.error");
 
 class GetModelService {
   constructor() {
@@ -20,14 +21,23 @@ class GetModelService {
     }
     const dynamicModel = getModelsHelper(model);
     const _id = req.params.id || null
-    const populateOptions = this.Model[model].populate || [];
+    if (!_id) {
+      throw BaseError.BadRequest('Id is required');
+    }
     if (!mongoose.Types.ObjectId.isValid(_id)) {
       return res.status(500).json({
         ok: false,
         message: 'id is not valid'
       });
     }
+
+    const populateOptions = this.Model[model].populate || [];
     const data = await dynamicModel.findById(_id).select("-createdAt -updatedAt -__v").lean() || {}
+
+    if (!data.length) {
+      throw BaseError.NotFound('model not found');
+    }
+
     if (this.Model[model].translate) {
       let transModel = this.TranslateModel[model].ref
       const dynamicTranslateModel = getModelsTranslateHelper(transModel);

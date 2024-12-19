@@ -1,0 +1,8 @@
+
+class EmployeeController {
+
+  async fetchEmployee() {
+
+  }
+
+}

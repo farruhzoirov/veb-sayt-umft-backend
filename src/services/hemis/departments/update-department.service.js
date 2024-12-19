@@ -1,6 +1,6 @@
-const Language = require('../../models/settings/language.model');
-const Department = require('../../models/data/department.model');
-const DepartmentTranslate = require('../../models/translate/department.model');
+const Language = require('../../../models/settings/language.model');
+const Department = require('../../../models/data/department.model');
+const DepartmentTranslate = require('../../../models/translate/department.model');
 const {default: mongoose} = require('mongoose');
 
 class UpdateDepartmentsService {

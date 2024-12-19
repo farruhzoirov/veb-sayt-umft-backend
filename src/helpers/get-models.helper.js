@@ -9,8 +9,8 @@ const categoryTranslateSchema = require('../models/translate/category.model');
 const eventsSchema = require('../models/data/events.model');
 const eventsTranslateSchema = require('../models/translate/events.model');
 
-const facultySchema = require('../models/data/faculty.model');
-const facultyTranslateSchema = require('../models/translate/faculty.model');
+const departmentSchema = require('../models/data/department.model');
+const departmentTranslateSchema = require('../models/translate/department.model');
 
 const newsSchema = require('../models/data/news.model');
 const newsTranslateSchema = require('../models/translate/news.model');
@@ -89,6 +89,8 @@ function getModelsHelper(modelKey) {
       return messengerSchema;
     case Model.eventsCategory.ref:
       return eventsCategorySchema;
+    case Model.department.ref:
+      return departmentSchema;
     default:
       throw new Error(`Model "${modelKey}" not found.`);
   }
@@ -126,6 +128,8 @@ function getModelsTranslateHelper(modelKey) {
       return topicTranslateSchema;
     case TranslateModel.eventsCategory.ref:
       return eventsCategoryTranslateSchema;
+    case TranslateModel.department.ref:
+      return departmentTranslateSchema;
     default:
       throw new Error(`Translation model "${modelKey}" not found.`);
   }

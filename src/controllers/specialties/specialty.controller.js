@@ -1,4 +1,4 @@
-const FetchSpecialtiesService = require('../../services/specialties/fetch-specialties.service')
+const FetchSpecialtiesService = require('../../services/hemis/specialties/fetch-specialties.service')
 
 
 class SpecialtyController {

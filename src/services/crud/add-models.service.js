@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const BaseError = require('../../errors/base.error');
-const {Model} = require("../../common/constants/models.constants");
-const {getModelsHelper} = require("../../helpers/get-models.helper");
-const {addTranslations} = require("../../helpers/translate.helper");
+const { Model } = require("../../common/constants/models.constants");
+const { getModelsHelper } = require("../../helpers/get-models.helper");
+const { addTranslations } = require("../../helpers/translate.helper");
 const populateModelData = require("../../helpers/populate.helper");
 
 class AddModelsService {
@@ -16,7 +16,7 @@ class AddModelsService {
     let newData;
 
     if (!modelData.modelId) {
-      const isSlugExists = await dynamicModel.findOne({slug: modelData.slug}).lean();
+      const isSlugExists = await dynamicModel.findOne({ slug: modelData.slug }).lean();
 
       if (isSlugExists) {
         throw BaseError.BadRequest('Slug already exists');
@@ -78,7 +78,7 @@ class AddModelsService {
   async addingModelData(dynamicModel, modelData, isDefault = false) {
     const savedDocument = await new dynamicModel({
       ...modelData,
-      ...(typeof isDefault !== 'undefined' && {isDefault}),
+      ...(typeof isDefault !== 'undefined' && { isDefault }),
       img: modelData.img ? [modelData.img] : [],
     });
     await savedDocument.save();

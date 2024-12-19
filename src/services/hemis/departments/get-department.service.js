@@ -1,10 +1,12 @@
-const DepartmentTranslate = require('../../models/translate/department.model');
+const DepartmentTranslate = require('../../../models/translate/department.model');
 
 class GetDepartmentService {
   async getDepartment(req, res) {
     try {
-      const departmentId = req.params.departmentId;
-      const allDepartments = await DepartmentTranslate.findOne({_id: departmentId});
+      const departmentId = req.params.id;
+      const allDepartments = await DepartmentTranslate.findOne({_id: id});
+
+
       return res.status(200).json({
         ok: true,
         data: allDepartments
@@ -19,5 +21,7 @@ class GetDepartmentService {
     }
   }
 }
+
+
 
 module.exports = GetDepartmentService;

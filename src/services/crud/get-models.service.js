@@ -60,6 +60,8 @@ class GetModelsService {
       return data;
     }));
 
+    console.log(populatedData[0].translates)
+
     const count = await dynamicModel.countDocuments();
     return res.json({
       data: populatedData,

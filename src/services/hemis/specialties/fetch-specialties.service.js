@@ -1,11 +1,11 @@
 const axios = require('axios');
-const Specialty = require('../../models/specialty/specialty.model');
-const SpecialtyTranslate = require('../../models/translate/specialty.model');
-const Degree = require('../../models/data/degrees.model');
-const DegreeTranslate = require('../../models/translate/degrees.model');
-const Department = require('../../models/data/department.model');
-const Language = require('../../models/settings/language.model');
-const config = require('../../config/config');
+const Specialty = require('../../../models/specialty/specialty.model');
+const SpecialtyTranslate = require('../../../models/translate/specialty.model');
+const Degree = require('../../../models/data/degrees.model');
+const DegreeTranslate = require('../../../models/translate/degrees.model');
+const Department = require('../../../models/data/department.model');
+const Language = require('../../../models/settings/language.model');
+const config = require('../../../config/config');
 
 class FetchSpecialtiesService {
   async fetchSpecialties() {
@@ -31,7 +31,7 @@ class FetchSpecialtiesService {
   }
 
   async getDefaultLanguage() {
-    const language = await Language.findOne({ isDefault: true });
+    const language = await Language.findOne({isDefault: true});
     if (!language) throw new Error('Default language not found');
     return language;
   }
@@ -41,7 +41,7 @@ class FetchSpecialtiesService {
     const page = 0;
     const response = await axios.get(
       `${config.HEMIS_API_URL}/specialty-list?page=${page}&limit=${limit}`,
-      { headers: { Authorization: `Bearer ${config.HEMIS_API_TOKEN}` } }
+      {headers: {Authorization: `Bearer ${config.HEMIS_API_TOKEN}`}}
     );
     return response.data.data;
   }
@@ -76,9 +76,9 @@ class FetchSpecialtiesService {
     const specialtiesToDelete = existingSpecialtyIds.filter(id => !apiSpecialtyIds.includes(id));
 
     for (const hemisId of specialtiesToDelete) {
-      const specialtyToDelete = await Specialty.findOne({ hemisId });
+      const specialtyToDelete = await Specialty.findOne({hemisId});
       if (specialtyToDelete) {
-        await SpecialtyTranslate.deleteMany({ specialty: specialtyToDelete._id });
+        await SpecialtyTranslate.deleteMany({specialty: specialtyToDelete._id});
         await specialtyToDelete.deleteOne();
         console.log(`Deleted specialty with hemisId: ${hemisId}`);
       }
@@ -115,7 +115,7 @@ class FetchSpecialtiesService {
       updatedAt: specialty.updatedAt
     });
 
-    const existingTranslate = await SpecialtyTranslate.findOne({ specialty: existingSpecialty._id });
+    const existingTranslate = await SpecialtyTranslate.findOne({specialty: existingSpecialty._id});
     if (existingTranslate) {
       await existingTranslate.updateOne({
         name: specialty.name,
@@ -128,15 +128,15 @@ class FetchSpecialtiesService {
   }
 
   async findDepartment(hemisId) {
-    const department = await Department.findOne({ hemisId });
+    const department = await Department.findOne({hemisId});
     if (!department) throw new Error(`Department not found for hemisId: ${hemisId}`);
     return department;
   }
 
   async getOrCreateDegree(educationType, defaultLanguage) {
-    let degree = await Degree.findOne({ code: educationType.code });
+    let degree = await Degree.findOne({code: educationType.code});
     if (!degree) {
-      degree = await new Degree({ code: educationType.code }).save();
+      degree = await new Degree({code: educationType.code}).save();
       await new DegreeTranslate({
         name: educationType.name,
         language: defaultLanguage._id,
@@ -146,5 +146,6 @@ class FetchSpecialtiesService {
     return degree;
   }
 }
+
 
 module.exports = FetchSpecialtiesService;

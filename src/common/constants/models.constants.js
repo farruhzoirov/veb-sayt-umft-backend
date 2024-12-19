@@ -16,6 +16,7 @@ const Model = {
   'messenger': {ref: 'messenger', translate: true},
   'user': {ref: 'user', translate: true},
   'language': {ref: 'language', translate: false},
+  'contacts': {ref: 'contacts', translate: false},
 };
 
 

@@ -4,8 +4,8 @@ info:
   description: Specialty, Department va Topic ga tegmay turasiz.
   version: 0.1.9
 servers:
-  - url: http://95.130.227.52:4131
-  #- url: http://localhost:4131
+  #- url: http://95.130.227.52:4131
+  - url: http://localhost:4131
     description: Optional server description, e.g. Main (production) server
 tags:
   - name: Auth
@@ -1320,7 +1320,7 @@ paths:
 
   /api/specialty:
               get:
-                summary: Get all specialty
+                summary: Get all specialties
                 security:
                   - BearerAuth: [ ]
                 parameters:
@@ -1357,7 +1357,7 @@ paths:
                   - Specialty
 
               post:
-                summary: Create a specialty
+                summary: Create a specialties
                 security:
                   - BearerAuth: []
                 requestBody:
@@ -1452,7 +1452,7 @@ paths:
                   - in: path
                     name: id
                     required: true
-                    description: ID of the specialty to be updated
+                    description: ID of the specialties to be updated
                 requestBody:
                   description: to update model status
                   required: true
@@ -1572,6 +1572,39 @@ paths:
                         application/json:
                           schema:
                             $ref: "#/components/schemas/addModel"
+                  tags:
+                    - Department
+
+  /api/department:
+                get:
+                  summary: Get all departments
+                  security:
+                    - BearerAuth: [ ]
+                  parameters:
+                    - in: query
+                      name: limit
+                      schema:
+                        type: string
+                      required: false
+                    - in: query
+                      name: page
+                      schema:
+                        type: string
+                      required: false
+                    - in: query
+                      name: select
+                      schema:
+                        type: string
+                      required: false
+                    - in: query
+                      name: search
+                  responses:
+                    "200":
+                      description: List of faculties
+                      content:
+                        application/json:
+                          schema:
+                            $ref: "#/components/schemas/faculty"
                   tags:
                     - Department
 

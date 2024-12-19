@@ -1,8 +1,8 @@
 // Services
-const FetchDepartmentsService = require('../../services/departments/fetch-departments.service');
-const GetAllDepartmentsService = require('../../services/departments/get-departments.service');
-const GetDepartmentService = require('../../services/departments/get-department.service');
-const UpdateDepartmentsService = require('../../services/departments/update-department.service');
+const FetchDepartmentsService = require('../../services/hemis/departments/fetch-departments.service');
+const GetAllDepartmentsService = require('../../services/hemis/departments/get-departments.service');
+const GetDepartmentService = require('../../services/hemis/departments/get-department.service');
+const UpdateDepartmentsService = require('../../services/hemis/departments/update-department.service');
 
 
 class DepartmentController {
