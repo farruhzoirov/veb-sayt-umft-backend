@@ -48,7 +48,6 @@ class UpdateModelsService {
       }
     );
     newData = newData.toObject();
-    delete newData.createdAt;
     delete newData.updatedAt;
     delete newData.__v;
     // Update translations

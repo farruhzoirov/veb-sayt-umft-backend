@@ -25,7 +25,6 @@ const addTranslations = async (modelName, modelId, translationData) => {
     });
     await newTranslationRecord.save();
     const addedTranslationObject = newTranslationRecord.toObject();
-    delete addedTranslationObject.createdAt;
     delete addedTranslationObject.updatedAt;
     delete addedTranslationObject.__v;
     return addedTranslationObject;
@@ -43,7 +42,6 @@ const addTranslations = async (modelName, modelId, translationData) => {
     });
     await newTranslationRecord.save();
     const addedTranslationObject = newTranslationRecord.toObject();
-    delete addedTranslationObject.createdAt;
     delete addedTranslationObject.updatedAt;
     delete addedTranslationObject.__v;
     return addedTranslationObject;
@@ -73,7 +71,7 @@ const updateTranslations = async (modelName, modelId, translationData) => {
     });
 
     await newData.save();
-    const allTranslationsData = await dynamicTranslateModel.find({[modelName]: modelId}).select("-createdAt -updatedAt -__v");
+    const allTranslationsData = await dynamicTranslateModel.find({[modelName]: modelId}).select(" -updatedAt -__v");
     return allTranslationsData;
   }
 
@@ -92,7 +90,6 @@ const updateTranslations = async (modelName, modelId, translationData) => {
     }
   );
   const updatedTranslationObject = updatedData.toObject();
-  delete updatedTranslationObject.createdAt;
   delete updatedTranslationObject.updatedAt;
   delete updatedTranslationObject.__v;
 

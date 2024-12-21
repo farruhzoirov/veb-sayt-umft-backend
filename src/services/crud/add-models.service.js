@@ -83,7 +83,6 @@ class AddModelsService {
     });
     await savedDocument.save();
     const savedDocumentObject = savedDocument.toObject();
-    delete savedDocumentObject.createdAt;
     delete savedDocumentObject.updatedAt;
     delete savedDocumentObject.__v;
     return savedDocumentObject;

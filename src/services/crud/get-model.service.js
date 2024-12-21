@@ -32,7 +32,7 @@ class GetModelService {
     }
 
     const populateOptions = this.Model[model].populate || [];
-    const data = await dynamicModel.findById(_id).select("-createdAt -updatedAt -__v").lean() || {}
+    const data = await dynamicModel.findById(_id).select("-updatedAt -__v").lean() || {}
 
     if (!data.length) {
       throw BaseError.NotFound('model not found');
@@ -48,7 +48,7 @@ class GetModelService {
         el.translates = await dynamicTranslateModel.find({
           [model]: el._id
         })
-          .select("-createdAt -updatedAt -__v")
+          .select("-updatedAt -__v")
           .lean();
       }));
     }

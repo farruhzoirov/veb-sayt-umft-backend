@@ -42,7 +42,7 @@ class GetModelsService {
 
     const modelDatas = await dynamicModel
       .find({_id: {$in: matchingIds}})
-      .select(select.toString() + " -createdAt -updatedAt -__v")
+      .select(select.toString() + "-updatedAt -__v")
       .skip(skip)
       .limit(limit)
       .sort(sort)
@@ -55,7 +55,7 @@ class GetModelsService {
       data.translates = await dynamicTranslateModel.find({
         [model]: data._id
       })
-        .select(select.length ? select + " -createdAt -updatedAt -__v" : [] + " -createdAt -updatedAt -__v")
+        .select(select.length ? select + "-updatedAt -__v" : [] + "-updatedAt -__v")
         .lean();
       return data;
     }));
