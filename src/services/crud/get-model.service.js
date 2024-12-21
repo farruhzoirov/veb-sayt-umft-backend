@@ -21,6 +21,7 @@ class GetModelService {
     }
     const dynamicModel = getModelsHelper(model);
     const _id = req.params.id || null
+    console.log(_id)
     if (!_id) {
       throw BaseError.BadRequest('Id is required');
     }
@@ -33,8 +34,8 @@ class GetModelService {
 
     const populateOptions = this.Model[model].populate || [];
     const data = await dynamicModel.findById(_id).select("-updatedAt -__v").lean() || {}
-
-    if (!data.length) {
+    console.log(data)
+    if (!Object.keys(data).length) {
       throw BaseError.NotFound('model not found');
     }
 
