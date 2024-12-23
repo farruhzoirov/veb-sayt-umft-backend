@@ -1,7 +1,7 @@
 const Model = {
   'university': {ref: 'university', translate: true},
   'category': {ref: 'category', translate: true},
-  'specialty': {ref: 'specialty', translate: true, populate: ['department', 'degree', 'format']},
+  'specialty': {ref: 'specialty', translate: true, populate: ['department', 'degree']},
   'department': {ref: 'department', translate: true},
   'events': {ref: 'events', translate: true, populate: ['eventsCategory']},
   'eventsCategory': {ref: 'eventsCategory', translate: true},

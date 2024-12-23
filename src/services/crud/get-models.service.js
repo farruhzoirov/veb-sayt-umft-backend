@@ -39,7 +39,6 @@ class GetModelsService {
     //const matchingTranslates = await dynamicTranslateModel.find(query);
     //const matchingIds = await matchingTranslates.map((t) => t[model]);
     const matchingIds = await dynamicTranslateModel.distinct(model, query);
-
     const modelDatas = await dynamicModel
       .find({_id: {$in: matchingIds}})
       .select(select.toString() + "-updatedAt -__v")
@@ -47,6 +46,8 @@ class GetModelsService {
       .limit(limit)
       .sort(sort)
       .lean() || [];
+
+    console.log(modelDatas)
 
     const populatedData = await Promise.all(modelDatas.map(async data => {
       await Promise.all(populateOptions.map(async elem => {
@@ -60,7 +61,6 @@ class GetModelsService {
       return data;
     }));
 
-    console.log(populatedData[0].translates)
 
     const count = await dynamicModel.countDocuments();
     return res.json({

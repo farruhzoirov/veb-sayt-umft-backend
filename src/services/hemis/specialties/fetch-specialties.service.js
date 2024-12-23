@@ -59,6 +59,7 @@ class FetchSpecialtiesService {
         structureType: specialty.structureType,
         active: specialty.active,
         prices: [],
+        duration:[],
         createdAt: specialty.createdAt,
         updatedAt: specialty.updatedAt
       }).save();
@@ -66,7 +67,7 @@ class FetchSpecialtiesService {
       await new SpecialtyTranslate({
         name: specialty.name,
         language: defaultLanguage._id,
-        department: newSpecialty._id
+        specialty: newSpecialty._id,
       }).save();
     }
   }
@@ -111,6 +112,7 @@ class FetchSpecialtiesService {
       structureType: specialty.structureType,
       active: specialty.active,
       prices: [],
+      duration: [],
       createdAt: specialty.createdAt,
       updatedAt: specialty.updatedAt
     });

@@ -4,8 +4,6 @@ const universityTranslateSchema = require('../models/translate/university.model'
 const categorySchema = require('../models/data/category.model');
 const categoryTranslateSchema = require('../models/translate/category.model');
 
-
-
 const eventsSchema = require('../models/data/events.model');
 const eventsTranslateSchema = require('../models/translate/events.model');
 
@@ -49,6 +47,8 @@ const messengerTranslateSchema = require('../models/translate/messenger.model');
 const eventsCategorySchema = require('../models/data/events-category.model');
 const eventsCategoryTranslateSchema = require('../models/translate/events-category.model');
 
+const specialtySchema = require('../models/specialty/specialty.model');
+const specialtyTranslateSchema = require('../models/translate/specialty.model');
 
 const {Model, TranslateModel} = require("../common/constants/models.constants")
 
@@ -91,6 +91,9 @@ function getModelsHelper(modelKey) {
       return eventsCategorySchema;
     case Model.department.ref:
       return departmentSchema;
+    case Model.specialty.ref:
+      return specialtySchema
+  
     default:
       throw new Error(`Model "${modelKey}" not found.`);
   }
@@ -130,6 +133,8 @@ function getModelsTranslateHelper(modelKey) {
       return eventsCategoryTranslateSchema;
     case TranslateModel.department.ref:
       return departmentTranslateSchema;
+    case TranslateModel.specialty.ref:
+      return specialtyTranslateSchema;
     default:
       throw new Error(`Translation model "${modelKey}" not found.`);
   }
@@ -140,6 +145,7 @@ async function getModel(req) {
   if (!Model.hasOwnProperty(model)) {
     throw new Error('Model with that name"' + model + '" not found.');
   }
+  console.log(model)
   return Model[model].ref;
 }
 

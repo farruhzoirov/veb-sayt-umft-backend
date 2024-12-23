@@ -5,6 +5,7 @@ const { getModelsHelper } = require("../../helpers/get-models.helper");
 const { addTranslations } = require("../../helpers/translate.helper");
 const populateModelData = require("../../helpers/populate.helper");
 
+
 class AddModelsService {
   constructor() {
     this.Model = Model
@@ -88,6 +89,7 @@ class AddModelsService {
     return savedDocumentObject;
   }
 }
+
 
 module.exports = AddModelsService;
 

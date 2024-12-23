@@ -16,6 +16,20 @@ const PricesSchema = new Schema({
     }
 })
 
+
+
+const DurationSchema = new Schema({
+    format: {
+        type: Schema.Types.ObjectId,
+        ref: 'format'
+    },
+    year: {
+        type: Number,
+        required: true
+    }
+})
+
+
 const SpecialtySchema = new Schema({
     img: [],
     hemisId: {
@@ -43,6 +57,7 @@ const SpecialtySchema = new Schema({
         type: String,
     },
     prices: [PricesSchema],
+    duration: [DurationSchema],
     active: {
         type: Boolean,
         default: true,

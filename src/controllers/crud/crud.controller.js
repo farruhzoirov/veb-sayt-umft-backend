@@ -60,6 +60,7 @@ class DefaultController {
     try {
       const updateData = req.body;
       const modelName = await getModel(req);
+      console.log(req.params);
       const modelId = req.params.id;
       const newData = await this.updateModelsService.updateModel(modelName, modelId, updateData);
       return res.status(200).json(newData);
