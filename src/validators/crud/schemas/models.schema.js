@@ -74,10 +74,10 @@ const eventsSchema = Joi.object({
 })
 
 // it must be changed
-
 const departmentSchema = Joi.object({
     modelId: Joi.string().optional(),
     status: Joi.number().optional(),
+    slug: Joi.number().optional(),
     translate: Joi.object({
         name: Joi.string().required(),
         description: Joi.string().required(),

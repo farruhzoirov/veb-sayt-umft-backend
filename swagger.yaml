@@ -1368,7 +1368,7 @@ paths:
                   - Specialty
 
               post:
-                summary: Create a specialties
+                summary: Add a specialties translate.
                 security:
                   - BearerAuth: []
                 requestBody:
@@ -1566,26 +1566,6 @@ paths:
                   tags:
                     - Department
 
-                post:
-                  summary: Create a faculty
-                  security:
-                    - BearerAuth: []
-                  requestBody:
-                    description: Faculty creation payload
-                    required: true
-                    content:
-                      application/json:
-                        schema:
-                          $ref: "#/components/schemas/facultyPost"
-                  responses:
-                    "201":
-                      description: Created successfully
-                      content:
-                        application/json:
-                          schema:
-                            $ref: "#/components/schemas/addModel"
-                  tags:
-                    - Department
 
   /api/department:
                 get:
@@ -1616,7 +1596,29 @@ paths:
                       content:
                         application/json:
                           schema:
-                            $ref: "#/components/schemas/faculty"
+                            $ref: "#/components/schemas/department"
+                  tags:
+                    - Department
+
+
+                post:
+                  summary: Add a department translates.
+                  security:
+                    - BearerAuth: []
+                  requestBody:
+                    description: Faculty creation payload
+                    required: true
+                    content:
+                      application/json:
+                        schema:
+                          $ref: "#/components/schemas/departmentPost"
+                  responses:
+                    "201":
+                      description: Created successfully
+                      content:
+                        application/json:
+                          schema:
+                            $ref: "#/components/schemas/addModel"
                   tags:
                     - Department
 
@@ -1656,7 +1658,7 @@ paths:
                     content:
                       application/json:
                         schema:
-                          $ref: "#/components/schemas/facultyPut"
+                          $ref: "#/components/schemas/departmentPut"
                   responses:
                     "200":
                       description: Updated successfully
@@ -3999,7 +4001,7 @@ components:
               type: string
             language:
               type: string
-    faculty:
+    department:
         type: object
         properties:
             data:
@@ -4022,15 +4024,28 @@ components:
                         type: string
                       language:
                         type: string
-    facultyPost:
-      type: object
-      properties:
-            modelId?:
-              type: string
+    departmentPost:
+          type: object
+          properties:
+                modelId:
+                  type: string
+                translate:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    language:
+                      type: string
+
+    departmentPut:
+          type: object
+          properties:
             img:
               type: array
-            status:
-              type: number
+            slug: 
+              type: string
             translate:
               type: object
               properties:
@@ -4040,23 +4055,6 @@ components:
                   type: string
                 language:
                   type: string
-
-    facultyPut:
-        type: object
-        properties:
-          img:
-            type: array
-          status:
-            type: number
-          translate:
-            type: object
-            properties:
-              name:
-                type: string
-              description:
-                type: string
-              language:
-                type: string
 
     formatGet:
       type: object
