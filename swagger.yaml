@@ -1361,9 +1361,9 @@ paths:
                     content:
                       application/json:
                         schema:
-                          type: array
-                          items:
-                            $ref: "#/components/schemas/directionAll"
+                          type: object
+                        #   items:
+                        #     $ref: "#/components/schemas/directionAll"
                 tags:
                   - Specialty
 
@@ -1377,14 +1377,14 @@ paths:
                   content:
                     application/json:
                       schema:
-                        $ref: "#/components/schemas/specialty"
+                        $ref: "#/components/schemas/specialtyPost"
                 responses:
                   "201":
                     description: Specialty created successfully
                     content:
                       application/json:
-                        schema:
-                          $ref: "#/components/schemas/addModel"
+                        # schema:
+                        #   $ref: "#/components/schemas/addModel"
                 tags:
                   - Specialty
 
@@ -1404,8 +1404,8 @@ paths:
                     description: Single Specialty
                     content:
                       application/json:
-                        schema:
-                          $ref: "#/components/schemas/directionAll"
+                        # schema:
+                        #   $ref: "#/components/schemas/directionAll"
                 tags:
                   - Specialty
               put:
@@ -1414,7 +1414,7 @@ paths:
                   - BearerAuth: [ ]
                 parameters:
                   - in: path
-                    name: modelId
+                    name: id
                     schema:
                       type: string
                     required: true
@@ -1424,14 +1424,15 @@ paths:
                   content:
                     application/json:
                       schema:
-                        $ref: "#/components/schemas/directionPut"
+                        $ref: "#/components/schemas/specialtyPut"
                 responses:
                   "200":
                     description: Updated successfully
                     content:
                       application/json:
                         schema:
-                          $ref: "#/components/schemas/updateModel"
+                        type: object
+                          # $ref: "#/components/schemas/updateModel"
                 tags:
                   - Specialty
 
@@ -1475,7 +1476,7 @@ paths:
                           status:
                             type: number
                 responses:
-                  "201": # status code
+                  "200": # status code
                     description: Patched model will come
                     content:
                       application/json:
@@ -3865,20 +3866,10 @@ components:
             language:
               type: string
 
-    directionPut:
+    specialtyPost:
       type: object
       properties:
-        code:
-          type: number
-        views?:
-          type: number
-        image:
-          type: file
-        faculty:
-          type: string
-        degree:
-          type: string
-        format:
+        modelId:
           type: string
         translate:
           type: object
@@ -3887,13 +3878,61 @@ components:
               type: string
             description:
               type: string
-            price:
-              type: string
-            duration:
-              type: string
             language:
               type: string
 
+    specialtyPut:
+      type: object
+      properties:
+        prices:
+          type: array
+          items:
+            type: object
+            properties:
+              price:
+                type: integer
+                example: 10000
+              format:
+                type: string
+                example: "675fbdf0f95bd5f2820f27c6"
+              degree:
+                type: string
+                example: "67629e38ca926b3989082423"
+        duration:
+          type: array
+          items:
+            type: object
+            properties:
+              format:
+                type: string
+                example: "675fbdf0f95bd5f2820f27c6"
+              year:
+                type: integer
+                example: 4
+        img:
+          type: string
+          example: "uploads/specialty/1734947793513-615959758_photo_2024-12-23_12-25-03.jpg"
+        slug:
+          type: string
+        translate:
+          type: object
+          properties:
+            name:
+              type: string
+              example: "Telecommunications Engineering (Information Transmission Systems)"
+            description:
+              type: string
+              example: "specialty"
+            language:
+              type: string
+              example: "674eb6cd002ef5fcf663c897"
+
+      required:
+        - prices
+        - duration
+        - translate
+
+      
     directionAll:
       type: object
       properties:

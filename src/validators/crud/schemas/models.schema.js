@@ -33,18 +33,17 @@ const degreesSchema = Joi.object({
 });
 
 // This must be changed
-const directionSchema = Joi.object({
+const specialtySchema = Joi.object({
     modelId: Joi.string().optional(),
-    code: Joi.number().required(),
     views: Joi.number().optional(),
-    faculty: Joi.string().required(),
-    degree: Joi.string().required(),
-    format: Joi.string().required(),
+    department: Joi.string().optional(),
+    price: Joi.array().optional(),
+    duration: Joi.array().optional(),
+    slug: Joi.string().optional(),
     translate: Joi.object({
         name: Joi.string().required(),
-        description: Joi.string().required(),
-        price: Joi.string().required(),
-        duration: Joi.string().required(),
+        text: Joi.string().optional(),
+        description: Joi.string().optional(),
         language: Joi.string().required(),
     }).required()
 });
@@ -76,7 +75,7 @@ const eventsSchema = Joi.object({
 
 // it must be changed
 
-const facultySchema = Joi.object({
+const departmentSchema = Joi.object({
     modelId: Joi.string().optional(),
     status: Joi.number().optional(),
     translate: Joi.object({
@@ -191,10 +190,10 @@ module.exports = {
     category: categorySchema,
     university: universitySchema,
     degree: degreesSchema,
-    direction: directionSchema,
+    specialty: specialtySchema,
     events: eventsSchema,
     eventsCategory: eventsCategorySchema,
-    faculty: facultySchema,
+    department: departmentSchema,
     format: formatsSchema,
     level: levelSchema,
     news: newsSchema,

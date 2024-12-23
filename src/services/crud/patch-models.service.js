@@ -26,9 +26,11 @@ class patchModelService {
         new: true
       }
     )
+
     if (!patchData) {
-      throw BaseError.BadRequest(`Error in updating status for ${modelName} with ID ${modelId}`);
+      throw BaseError.BadRequest(`${modelName} not found with this id:  ${modelId}`);
     }
+    
     return patchData.toObject();
   }
 }
