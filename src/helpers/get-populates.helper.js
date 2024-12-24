@@ -6,18 +6,19 @@ const BaseError = require("../errors/base.error");
 async function getPopulates(model, _id) {
   let modelForPopulate = Model[model].ref
   const dynamicModel = getModelsHelper(modelForPopulate);
-  let data;
+  let data = [];
   if (Array.isArray(_id)) {
     for (const id of _id) {
       if (!mongoose.Types.ObjectId.isValid(id)) {
         throw BaseError.BadRequest("Model id is not valid. in getting populates");
       }
-      data = await dynamicModel.findById(id).select("-createdAt -updatedAt -__v").lean() || {}
+      const newData = await dynamicModel.findById(id).select("-updatedAt -__v").lean() || {};
       if (Model[model].translate) {
         let transModel = TranslateModel[model].ref
         const dynamicTranslateModel = getModelsTranslateHelper(transModel)
-        data.translates = await dynamicTranslateModel.find({[model]: [id]}).select("-createdAt -updatedAt -__v").lean()
+        newData.translates = await dynamicTranslateModel.find({[model]: [id]}).select("-updatedAt -__v").lean()
       }
+      data.push(newData);
     }
     return data
   }
