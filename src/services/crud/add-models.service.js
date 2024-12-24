@@ -78,7 +78,18 @@ class AddModelsService {
 
   async addingModelData(dynamicModel, modelData, isDefault = false) {
     if (modelData.img && !Array.isArray(modelData.img)) {
-      modelData.img = [modelData.img];
+      if (fs.existSync(modelData.img)) {
+        modelData.img = [modelData.img];
+      }
+      throw BaseError.BadRequest("Image doesn't exist");
+    }
+
+    if (modelData.img.length && Array.isArray(modelData.img)) {
+      for (const imgPath of modelData.img) {
+        if (!fs.existSync(imgPath)) {
+          throw BaseError.BadRequest("Image doesn't exist");
+        }
+      }
     }
 
     const savedDocument = await new dynamicModel({
