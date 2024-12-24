@@ -4,6 +4,7 @@ class UploadService {
   async uploadFile(req, res) {
     try {
       let files = req.files.file || [];
+      console.log(files);
       const filePaths = []
       if (!files.length) {
         throw BaseError.BadRequest('No file uploaded');
