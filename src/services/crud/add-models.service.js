@@ -77,10 +77,14 @@ class AddModelsService {
   }
 
   async addingModelData(dynamicModel, modelData, isDefault = false) {
+    if (modelData.img && !Array.isArray(modelData.img)) {
+      modelData.img = [modelData.img];
+    }
+
     const savedDocument = await new dynamicModel({
       ...modelData,
       ...(typeof isDefault !== 'undefined' && { isDefault }),
-      img: modelData.img ? [modelData.img] : [],
+      img: modelData.img ? modelData.img : [],
     });
     await savedDocument.save();
     const savedDocumentObject = savedDocument.toObject();

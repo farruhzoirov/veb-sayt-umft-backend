@@ -4,8 +4,11 @@ class UploadService {
   async uploadFile(req, res) {
     try {
       let files = req.files.file || [];
-      console.log(files);
-      const filePaths = []
+      if (!Array.isArray(files)) {
+        files = [files];
+      }
+      console.log(req.files);
+      const filePaths = [];
       if (!files.length) {
         throw BaseError.BadRequest('No file uploaded');
       }
@@ -13,7 +16,7 @@ class UploadService {
         filePaths.push(file.path);
       });
       return res.status(200).json({
-        files: filePaths,
+        files: filePaths.length === 1 ? filePaths[0] : filePaths,
       });
     } catch (error) {
       console.error("Upload Error:", error);
