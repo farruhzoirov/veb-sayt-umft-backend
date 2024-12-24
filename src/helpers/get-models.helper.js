@@ -59,12 +59,8 @@ function getModelsHelper(modelKey) {
       return universitySchema;
     case Model.category.ref:
       return categorySchema;
-    // case Model.direction.ref:
-    //     return directionSchema;
     case Model.events.ref:
       return eventsSchema;
-    // case Model.faculty.ref:
-    //     return facultySchema;
     case Model.news.ref:
       return newsSchema;
     case Model.page.ref:
@@ -105,12 +101,9 @@ function getModelsTranslateHelper(modelKey) {
       return universityTranslateSchema;
     case TranslateModel.category.ref:
       return categoryTranslateSchema;
-    // case TranslateModel.direction.ref:
-    //     return directionTranslateSchema;
+
     case TranslateModel.events.ref:
       return eventsTranslateSchema;
-    // case TranslateModel.faculty.ref:
-    //     return facultyTranslateSchema;
     case TranslateModel.news.ref:
       return newsTranslateSchema;
     case TranslateModel.page.ref:
@@ -135,6 +128,8 @@ function getModelsTranslateHelper(modelKey) {
       return departmentTranslateSchema;
     case TranslateModel.specialty.ref:
       return specialtyTranslateSchema;
+    case TranslateModel.messenger.ref:
+      return messengerTranslateSchema;
     default:
       throw new Error(`Translation model "${modelKey}" not found.`);
   }

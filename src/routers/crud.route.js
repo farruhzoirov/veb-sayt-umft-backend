@@ -25,7 +25,7 @@ router.post('/:model',  authMiddleware.adminMiddleware, validateModel, crudContr
 
 
 router.post('/:model/upload', authMiddleware.adminMiddleware, upload.fields([
-    { name: 'file', maxCount: 1 },
+    { name: 'file', maxCount: 10 },
 ]), crudController.uploadFile);
 
 

@@ -14,6 +14,7 @@ const Model = {
   'format': {ref: 'format', translate: true},
   'topic': {ref: 'topic', translate: true},
   'messenger': {ref: 'messenger', translate: true},
+  'contact': {ref: 'contact', translate: false},
   'user': {ref: 'user', translate: true},
   'language': {ref: 'language', translate: false},
   'contacts': {ref: 'contacts', translate: false},

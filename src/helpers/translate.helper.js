@@ -10,15 +10,17 @@ const getTranslations = async () => {
 
 const addTranslations = async (modelName, modelId, translationData) => {
   const forTranslateModel = TranslateModel[modelName]?.ref;
+  console.log(forTranslateModel)
 
   const dynamicTranslateModel = getModelsTranslateHelper(forTranslateModel);
 
   const isModelTranslateEmpty = await dynamicTranslateModel.countDocuments();
+  console.log(isModelTranslateEmpty)
   let newTranslationRecord;
 
   if (!isModelTranslateEmpty.length && !translationData.language) {
     const defaultLanguage = await Language.findOne({isDefault: true});
-    newTranslationRecord = await new dynamicTranslateModel({
+    newTranslationRecord = new dynamicTranslateModel({
       [modelName]: modelId,
       language: defaultLanguage._id,
       ...translationData,
