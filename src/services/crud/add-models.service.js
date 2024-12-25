@@ -4,7 +4,7 @@ const { Model } = require("../../common/constants/models.constants");
 const { getModelsHelper } = require("../../helpers/get-models.helper");
 const { addTranslations } = require("../../helpers/translate.helper");
 const populateModelData = require("../../helpers/populate.helper");
-
+const fs  = require('fs');
 
 class AddModelsService {
   constructor() {
