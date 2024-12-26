@@ -1,7 +1,6 @@
 const { Schema } = require('mongoose')
 const mongoose = require("mongoose");
 
-// It may be Online, Offline or remote study.
 
 // It may be Online, Offline or remote study.
 const FormatsSchema = new Schema({
@@ -14,6 +13,8 @@ const FormatsSchema = new Schema({
         type: String,
         required: [true, "slug is required"]
     }
+}, {
+    timestamps: true
 });
 
 

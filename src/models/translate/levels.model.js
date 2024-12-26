@@ -16,6 +16,8 @@ const LevelTranslateSchema = new Schema({
         ref: "language",
         required: true,
     }
+}, {
+    timestamps: true
 });
 
 

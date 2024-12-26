@@ -27,6 +27,8 @@ const EventsTranslateSchema = new Schema({
         ref: "language",
         required: true,
     }
+}, {
+    timestamps: true
 });
 
 module.exports = mongoose.model('eventsTranslate', EventsTranslateSchema);

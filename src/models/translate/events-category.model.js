@@ -18,6 +18,8 @@ const EventsCategoryTranslateSchema = new Schema({
         ref: "language",
         required: true,
     }
+}, {
+    timestamps: true
 });
 
 

@@ -18,6 +18,8 @@ const DepartmentTranslateSchema = new Schema({
        type: Schema.Types.ObjectId,
         ref: "language",
     }
+}, {
+    timestamps: true
 });
 
 

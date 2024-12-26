@@ -26,6 +26,8 @@ const SpecialistInfoTranslateSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Language'
     }
+}, {
+    timestamps: true
 });
 
 module.exports = mongoose.model('specialistInfoTranslate', SpecialistInfoTranslateSchema);

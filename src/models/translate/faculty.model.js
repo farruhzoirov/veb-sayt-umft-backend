@@ -21,6 +21,8 @@ const FacultySchemaTranslate = new Schema({
       ref: 'language',
       default:null,
    }
+}, {
+   timestamps: true
 });
       
 

@@ -19,6 +19,8 @@ const UniversityTranslateSchema = new Schema({
         ref: "university",
         required: true,
     }
+}, {
+    timestamps: true
 })
 
 

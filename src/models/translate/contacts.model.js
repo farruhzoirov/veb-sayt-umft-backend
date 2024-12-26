@@ -16,6 +16,8 @@ const ContactsTranslateSchema = new mongoose.Schema({
         ref: 'language',
         required: true,
     }
+}, {
+    timestamps: true
 })
 
 

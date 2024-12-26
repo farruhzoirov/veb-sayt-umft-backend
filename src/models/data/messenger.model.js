@@ -10,6 +10,8 @@ const MessengerSchema = new Schema({
     slug: {
         type: String,
     }
+}, {
+    timestamps: true
 })
 
 module.exports = mongoose.model('messenger', MessengerSchema);

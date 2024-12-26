@@ -10,6 +10,8 @@ const PartnerSchema = new Schema({
     slug: {
         type: String,
     }
+}, {
+    timestamps: true
 })
 
 

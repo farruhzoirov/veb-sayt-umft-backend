@@ -19,6 +19,8 @@ const FormatsTranslateSchema = new Schema({
         ref: "language",
         required: true,
     }
+}, {
+    timestamps: true
 });
 
 

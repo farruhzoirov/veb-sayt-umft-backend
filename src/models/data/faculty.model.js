@@ -11,6 +11,8 @@ const FacultySchema = new Schema({
     slug: {
         type: String,
     }
+}, {
+    timestamps: true
 });
 
 

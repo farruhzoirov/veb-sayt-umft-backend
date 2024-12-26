@@ -11,6 +11,8 @@ const EventsCategorySchema = new Schema({
         type: Number,
         default: 1
     },
+}, {
+    timestamps: true
 });
 
 

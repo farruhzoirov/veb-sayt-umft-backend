@@ -10,6 +10,8 @@ const PageModel = new Schema({
         type: Number,
         default: 1
     },
+}, {
+    timestamps: true
 })
 
 module.exports = model("page", PageModel)

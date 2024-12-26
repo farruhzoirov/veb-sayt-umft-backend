@@ -20,6 +20,8 @@ const LevelSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "level",
     },
+}, {
+    timestamps: true
 });
 
 

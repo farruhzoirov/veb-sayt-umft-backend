@@ -48,15 +48,16 @@ class UpdateModelsService {
       }
     );
     newData = newData.toObject();
-    delete newData.updatedAt;
     delete newData.__v;
     // Update translations
-    if (updateData.translate) {
-      newData.translates = await updateTranslations(modelName, modelId, updateData.translate);
-    }
-
     if (this.Model[modelName].populate) {
       newData = await populateModelData(dynamicModel, modelId, this.Model[modelName].populate);
+    }
+
+    if (updateData.translate) {
+      const translations = await updateTranslations(modelName, modelId, updateData.translate);
+      newData.translates = translations;
+  
     }
     return newData;
   }

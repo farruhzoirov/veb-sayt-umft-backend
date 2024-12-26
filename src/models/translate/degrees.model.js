@@ -20,6 +20,8 @@ const DegreeTranslateSchema = new Schema({
         ref: "language",
         required: true,
     }
+}, {
+    timestamps: true
 });
 
 module.exports = mongoose.model("degreeTranslate", DegreeTranslateSchema);

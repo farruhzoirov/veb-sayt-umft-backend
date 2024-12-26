@@ -10,7 +10,6 @@ const getTranslations = async () => {
 
 const addTranslations = async (modelName, modelId, translationData) => {
   const forTranslateModel = TranslateModel[modelName]?.ref;
-  console.log(forTranslateModel)
 
   const dynamicTranslateModel = getModelsTranslateHelper(forTranslateModel);
 
@@ -27,7 +26,6 @@ const addTranslations = async (modelName, modelId, translationData) => {
     });
     await newTranslationRecord.save();
     const addedTranslationObject = newTranslationRecord.toObject();
-    delete addedTranslationObject.updatedAt;
     delete addedTranslationObject.__v;
     return addedTranslationObject;
   }
@@ -44,7 +42,6 @@ const addTranslations = async (modelName, modelId, translationData) => {
     });
     await newTranslationRecord.save();
     const addedTranslationObject = newTranslationRecord.toObject();
-    delete addedTranslationObject.updatedAt;
     delete addedTranslationObject.__v;
     return addedTranslationObject;
   }
@@ -73,7 +70,7 @@ const updateTranslations = async (modelName, modelId, translationData) => {
     });
 
     await newData.save();
-    const allTranslationsData = await dynamicTranslateModel.find({[modelName]: modelId}).select(" -updatedAt -__v");
+    const allTranslationsData = await dynamicTranslateModel.find({[modelName]: modelId}).select("-__v");
     return allTranslationsData;
   }
 
@@ -92,7 +89,6 @@ const updateTranslations = async (modelName, modelId, translationData) => {
     }
   );
   const updatedTranslationObject = updatedData.toObject();
-  delete updatedTranslationObject.updatedAt;
   delete updatedTranslationObject.__v;
 
   return [updatedTranslationObject];

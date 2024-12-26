@@ -2802,7 +2802,7 @@ paths:
         - BearerAuth: []
       parameters:
         - in: path
-          name: modelId
+          name: id
           schema:
             type: string
           required: true

@@ -14,6 +14,8 @@ const DegreeSchema = new Schema({
         type: Number,
         default: 1
     },
+}, {
+    timestamps: true
 });
 
 
