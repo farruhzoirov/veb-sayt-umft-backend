@@ -12,7 +12,7 @@ const NewsModel = new Schema({
     },
     slug: {
         type: String,
-        required: [true, 'Link is required']
+        required: [true, 'slug is required']
     },
     status: {
         type: Number,
