@@ -1,14 +1,14 @@
 const mongoose = require("mongoose");
-const BaseError = require('../../errors/base.error');
+const BaseError = require("../../errors/base.error");
 const { Model } = require("../../common/constants/models.constants");
 const { getModelsHelper } = require("../../helpers/get-models.helper");
 const { addTranslations } = require("../../helpers/translate.helper");
 const populateModelData = require("../../helpers/populate.helper");
-const fs  = require('fs');
+const fs = require("fs");
 
 class AddModelsService {
   constructor() {
-    this.Model = Model
+    this.Model = Model;
   }
 
   async addModel(modelName, modelData) {
@@ -17,15 +17,17 @@ class AddModelsService {
     let newData;
 
     if (!modelData.modelId) {
-      const isSlugExists = await dynamicModel.findOne({ slug: modelData.slug }).lean();
+      const isSlugExists = await dynamicModel
+        .findOne({ slug: modelData.slug })
+        .lean();
 
       if (isSlugExists) {
-        throw BaseError.BadRequest('Slug already exists');
+        throw BaseError.BadRequest("Slug already exists");
       }
 
       const isLanguageExists = await dynamicModel.find().lean();
 
-      if (modelName.trim() === 'language') {
+      if (modelName.trim() === "language") {
         if (!isLanguageExists.length) {
           newData = await this.addingModelData(dynamicModel, modelData, true);
           return newData;
@@ -34,16 +36,18 @@ class AddModelsService {
         return newData;
       }
 
-      if (modelName.trim() === 'level') {
+      if (modelName.trim() === "level") {
         newData = await this.addingModelData(dynamicModel, modelData, true);
         return newData;
       }
 
       newData = await this.addingModelData(dynamicModel, modelData);
-      console.log(newData)
+      console.log(newData);
 
       if (this.Model[modelName].translate) {
-        newData.translates = [await addTranslations(modelName, newData._id, modelData.translate)];
+        newData.translates = [
+          await addTranslations(modelName, newData._id, modelData.translate),
+        ];
       }
 
       if (this.Model[modelName].populate) {
@@ -55,7 +59,7 @@ class AddModelsService {
     }
 
     if (!mongoose.Types.ObjectId.isValid(modelData.modelId)) {
-      throw BaseError.BadRequest('Invalid modelId');
+      throw BaseError.BadRequest("Invalid modelId");
     }
 
     const existingModel = await dynamicModel.findById(modelData.modelId);
@@ -67,11 +71,21 @@ class AddModelsService {
     newData = existingModel.toObject();
 
     if (this.Model[modelName].translate) {
-      newData.translates = [await addTranslations(modelName, modelData.modelId, modelData.translate)];
+      newData.translates = [
+        await addTranslations(
+          modelName,
+          modelData.modelId,
+          modelData.translate
+        ),
+      ];
     }
 
     if (this.Model[modelName].populate) {
-      newData = await populateModelData(modelName, modelData.modelId, this.Model[modelName].populate);
+      newData = await populateModelData(
+        dynamicModel,
+        modelData.modelId,
+        this.Model[modelName].populate
+      );
     }
     return newData;
   }
@@ -85,7 +99,7 @@ class AddModelsService {
           throw BaseError.BadRequest("Image doesn't exist");
         }
       }
-  
+
       if (Array.isArray(modelData.img) && modelData.img.length) {
         for (const imgPath of modelData.img) {
           if (!fs.existsSync(imgPath)) {
@@ -93,26 +107,23 @@ class AddModelsService {
           }
         }
       }
-  
+
       const savedDocument = new dynamicModel({
         ...modelData,
-        ...(typeof isDefault !== 'undefined' && { isDefault }),
+        ...(typeof isDefault !== "undefined" && { isDefault }),
         img: modelData.img || [],
       });
-  
+
       await savedDocument.save();
       const savedDocumentObject = savedDocument.toObject();
       delete savedDocumentObject.updatedAt;
       delete savedDocumentObject.__v;
-  
+
       return savedDocumentObject;
     } catch (error) {
       throw error;
     }
   }
-  
 }
 
-
 module.exports = AddModelsService;
-
