@@ -70,6 +70,14 @@ class AddModelsService {
 
     newData = existingModel.toObject();
 
+    if (this.Model[modelName].populate) {
+      newData = await populateModelData(
+        dynamicModel,
+        modelData.modelId,
+        this.Model[modelName].populate
+      );
+    }
+
     if (this.Model[modelName].translate) {
       newData.translates = [
         await addTranslations(
@@ -80,13 +88,6 @@ class AddModelsService {
       ];
     }
 
-    if (this.Model[modelName].populate) {
-      newData = await populateModelData(
-        dynamicModel,
-        modelData.modelId,
-        this.Model[modelName].populate
-      );
-    }
     return newData;
   }
 
