@@ -141,13 +141,13 @@ const specialistsInfoSchema = Joi.object({
 
 const topicsSchema = Joi.object({
   modelId: Joi.string().optional(),
-  user: Joi.string().required(),
-  direction: Joi.string().required(),
+  specialty: Joi.string().optional(),
+  slug: Joi.string().optional(),
   level: Joi.string().required(),
   translate: Joi.object({
     name: Joi.string().required(),
     text: Joi.string().optional(),
-    description: Joi.string().required(),
+    description: Joi.string().optional(),
     language: Joi.string().required(),
   }).required(),
 });
