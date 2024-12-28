@@ -2,8 +2,6 @@ const jwt = require('jsonwebtoken');
 
 const config = require('../config/config');
 
-
-
 class AuthMiddleware {
     async adminMiddleware(req, res, next) {
         try {
@@ -34,7 +32,6 @@ class AuthMiddleware {
                     message: "Forbidden,you don't have access"
                 })
             }
-            req.user = decoded;
             next();
         } catch (e) {
             console.error(e);

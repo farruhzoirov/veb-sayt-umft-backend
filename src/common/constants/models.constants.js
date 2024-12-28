@@ -20,7 +20,7 @@ const Model = {
   degree: { ref: "degree", translate: true },
   level: { ref: "level", translate: false },
   format: { ref: "format", translate: true },
-  topic: { ref: "topic", translate: true },
+  topic: { ref: "topic", translate: true, populate: ["specialty", "level"]},
   messenger: { ref: "messenger", translate: true },
   contact: { ref: "contact", translate: false },
   user: { ref: "user", translate: true },
