@@ -1,57 +1,57 @@
-const universitySchema = require('../models/data/university.model');
-const universityTranslateSchema = require('../models/translate/university.model');
+const universitySchema = require("../models/data/university.model");
+const universityTranslateSchema = require("../models/translate/university.model");
 
-const categorySchema = require('../models/data/category.model');
-const categoryTranslateSchema = require('../models/translate/category.model');
+const categorySchema = require("../models/data/category.model");
+const categoryTranslateSchema = require("../models/translate/category.model");
 
-const eventsSchema = require('../models/data/events.model');
-const eventsTranslateSchema = require('../models/translate/events.model');
+const eventsSchema = require("../models/data/events.model");
+const eventsTranslateSchema = require("../models/translate/events.model");
 
-const departmentSchema = require('../models/data/department.model');
-const departmentTranslateSchema = require('../models/translate/department.model');
+const departmentSchema = require("../models/data/department.model");
+const departmentTranslateSchema = require("../models/translate/department.model");
 
-const newsSchema = require('../models/data/news.model');
-const newsTranslateSchema = require('../models/translate/news.model');
+const newsSchema = require("../models/data/news.model");
+const newsTranslateSchema = require("../models/translate/news.model");
 
-const pageSchema = require('../models/data/page.model');
-const pageTranslateSchema = require('../models/translate/page.model');
+const pageSchema = require("../models/data/page.model");
+const pageTranslateSchema = require("../models/translate/page.model");
 
-const partnerSchema = require('../models/data/partners.model');
-const partnerTranslateSchema = require('../models/translate/partners.model');
+const partnerSchema = require("../models/data/partners.model");
+const partnerTranslateSchema = require("../models/translate/partners.model");
 
-const specialistInfoSchema = require('../models/data/specialists-info.model');
-const specialistInfoTranslateSchema = require('../models/translate/specialists-info.model');
+const specialistInfoSchema = require("../models/data/specialists-info.model");
+const specialistInfoTranslateSchema = require("../models/translate/specialists-info.model");
 
-const userSchema = require('../models/user/user.model');
+const userSchema = require("../models/user/user.model");
 
-const languageSchema = require('../models/settings/language.model');
+const languageSchema = require("../models/settings/language.model");
 
-const degreeTranslateSchema = require('../models/translate/degrees.model');
-const degreeSchema = require('../models/data/degrees.model');
+const degreeTranslateSchema = require("../models/translate/degrees.model");
+const degreeSchema = require("../models/data/degrees.model");
 
-const levelSchema = require('../models/data/levels.model');
-const levelTranslateSchema = require('../models/translate/levels.model');
+const levelSchema = require("../models/data/levels.model");
 
 // Formats
-const formatSchema = require('../models/data/format.model');
-const formatTranslateSchema = require('../models/translate/formats.model');
+const formatSchema = require("../models/data/format.model");
+const formatTranslateSchema = require("../models/translate/formats.model");
 
 // Topics
-const topicSchema = require('../models/data/topics.model');
-const topicTranslateSchema = require('../models/translate/topics.model');
+const topicSchema = require("../models/data/topics.model");
+const topicTranslateSchema = require("../models/translate/topics.model");
 
-const messengerSchema = require('../models/data/messenger.model');
-const messengerTranslateSchema = require('../models/translate/messenger.model');
+const messengerSchema = require("../models/data/messenger.model");
+const messengerTranslateSchema = require("../models/translate/messenger.model");
 
+const eventsCategorySchema = require("../models/data/events-category.model");
+const eventsCategoryTranslateSchema = require("../models/translate/events-category.model");
 
-const eventsCategorySchema = require('../models/data/events-category.model');
-const eventsCategoryTranslateSchema = require('../models/translate/events-category.model');
+const specialtySchema = require("../models/specialty/specialty.model");
+const specialtyTranslateSchema = require("../models/translate/specialty.model");
 
-const specialtySchema = require('../models/specialty/specialty.model');
-const specialtyTranslateSchema = require('../models/translate/specialty.model');
-
-const {Model, TranslateModel} = require("../common/constants/models.constants")
-
+const {
+  Model,
+  TranslateModel,
+} = require("../common/constants/models.constants");
 
 function getModelsHelper(modelKey) {
   switch (modelKey) {
@@ -88,8 +88,8 @@ function getModelsHelper(modelKey) {
     case Model.department.ref:
       return departmentSchema;
     case Model.specialty.ref:
-      return specialtySchema
-  
+      return specialtySchema;
+
     default:
       throw new Error(`Model "${modelKey}" not found.`);
   }
@@ -116,11 +116,7 @@ function getModelsTranslateHelper(modelKey) {
       return formatTranslateSchema;
     case TranslateModel.degree.ref:
       return degreeTranslateSchema;
-    // case TranslateModel.level.ref:
-    //   return levelTranslateSchema;
     case TranslateModel.topic.ref:
-      return topicTranslateSchema;
-    case TranslateModel.messenger.ref:
       return topicTranslateSchema;
     case TranslateModel.eventsCategory.ref:
       return eventsCategoryTranslateSchema;
@@ -140,10 +136,8 @@ async function getModel(req) {
   if (!Model.hasOwnProperty(model)) {
     throw new Error('Model with that name"' + model + '" not found.');
   }
-  console.log(model)
   return Model[model].ref;
 }
-
 
 module.exports = {
   getModel,

@@ -8,7 +8,7 @@ const UploadService = require("../../services/crud/upload.service");
 const DeleteFileService = require("../../services/crud/delete-file.service");
 const PatchModelsService = require("../../services/crud/patch-models.service");
 
-const {getModel} = require("../../helpers/get-models.helper");
+const { getModel } = require("../../helpers/get-models.helper");
 
 class DefaultController {
   constructor() {
@@ -36,8 +36,8 @@ class DefaultController {
   async getAllModels(req, res, next) {
     try {
       const modelName = await getModel(req);
-      await this.getAllService.getAll(req,res, modelName);
-   } catch (err) {
+      await this.getAllService.getAll(req, res, modelName);
+    } catch (err) {
       next(err);
     }
   }
@@ -49,7 +49,10 @@ class DefaultController {
     try {
       const modelData = req.body;
       const modelName = await getModel(req);
-      const newData = await this.addModelsService.addModel(modelName, modelData);
+      const newData = await this.addModelsService.addModel(
+        modelName,
+        modelData
+      );
       return res.status(201).json(newData);
     } catch (err) {
       next(err);
@@ -62,7 +65,11 @@ class DefaultController {
       const modelName = await getModel(req);
       console.log(req.params);
       const modelId = req.params.id;
-      const newData = await this.updateModelsService.updateModel(modelName, modelId, updateData);
+      const newData = await this.updateModelsService.updateModel(
+        modelName,
+        modelId,
+        updateData
+      );
       return res.status(200).json(newData);
     } catch (err) {
       next(err);
@@ -74,7 +81,11 @@ class DefaultController {
       const modelName = req.params.model;
       const modelId = req.params.id;
       const modelData = req.body;
-      const patchedData = await this.patchModelsService.patchModel(modelName, modelId, modelData);
+      const patchedData = await this.patchModelsService.patchModel(
+        modelName,
+        modelId,
+        modelData
+      );
       return res.status(200).json(patchedData);
     } catch (err) {
       next(err);
@@ -88,7 +99,7 @@ class DefaultController {
       await this.deleteModelsService.deleteModel(modelId, modelName);
       return res.status(200).json({
         ok: true,
-        message: "Model deleted successfully."
+        message: "Model deleted successfully.",
       });
     } catch (err) {
       next(err);
@@ -105,7 +116,7 @@ class DefaultController {
       await this.deleteFileService.deleteFile(filePath);
       return res.status(200).json({
         ok: true,
-        message: "File deleted"
+        message: "File deleted",
       });
     } catch (err) {
       next(err);
@@ -113,4 +124,4 @@ class DefaultController {
   }
 }
 
-module.exports = DefaultController
+module.exports = DefaultController;

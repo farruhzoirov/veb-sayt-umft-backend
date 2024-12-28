@@ -5,6 +5,7 @@ const { getModelsHelper } = require("../../helpers/get-models.helper");
 const { addTranslations } = require("../../helpers/translate.helper");
 const populateModelData = require("../../helpers/populate.helper");
 const fs = require("fs");
+const { log } = require("console");
 
 class AddModelsService {
   constructor() {
@@ -53,6 +54,7 @@ class AddModelsService {
       }
 
       if (this.Model[modelName].translate) {
+        console.log("adding translates");
         newData.translates = [
           await addTranslations(modelName, newData._id, modelData.translate),
         ];

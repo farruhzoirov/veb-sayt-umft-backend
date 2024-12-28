@@ -196,7 +196,7 @@ module.exports = {
   news: newsSchema,
   partner: partnersSchema,
   specialistInfo: specialistsInfoSchema,
-  topics: topicsSchema,
+  topic: topicsSchema,
   page: pagesSchema,
   language: languagesSchema,
   messenger: messengerSchema,
