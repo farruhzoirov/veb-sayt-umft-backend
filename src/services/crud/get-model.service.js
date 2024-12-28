@@ -28,7 +28,6 @@ class GetModelService {
     }
     const dynamicModel = getModelsHelper(model);
     const _id = req.params.id || null;
-    console.log(_id);
     if (!_id) {
       throw BaseError.BadRequest("Id is required");
     }

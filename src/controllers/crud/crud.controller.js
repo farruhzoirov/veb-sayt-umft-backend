@@ -9,12 +9,14 @@ const DeleteFileService = require("../../services/crud/delete-file.service");
 const PatchModelsService = require("../../services/crud/patch-models.service");
 
 const { getModel } = require("../../helpers/get-models.helper");
+const CheckIsSlugExistsService = require("../../services/crud/check-slug.service");
 
 class DefaultController {
   constructor() {
     // Services
     this.getAllService = new GetAllService();
     this.getModelService = new GetModelService();
+    this.checkIsSlugExistsService = new CheckIsSlugExistsService();
     this.addModelsService = new AddModelsService();
     this.updateModelsService = new UpdateModelsService();
     this.deleteModelsService = new DeleteModelsService();
@@ -24,8 +26,9 @@ class DefaultController {
 
     // Bind
     this.getAllModels = this.getAllModels.bind(this);
-    this.addModel = this.addModel.bind(this);
     this.getModelById = this.getModelById.bind(this);
+    this.checkSlugExists = this.checkSlugExists.bind(this);
+    this.addModel = this.addModel.bind(this);
     this.updateModel = this.updateModel.bind(this);
     this.patchModel = this.patchModel.bind(this);
     this.deleteModel = this.deleteModel.bind(this);
@@ -43,6 +46,19 @@ class DefaultController {
   }
   async getModelById(req, res) {
     await this.getModelService.getModelById(req, res);
+  }
+
+  async checkSlugExists(req, res, next) {
+    try {
+        const model = await getModel(req);
+        const slug = req.params.slug;
+        const isSlugExists = await this.checkIsSlugExistsService.checkIsSlugExists(model, slug);
+        res.status(200).json({
+            isSlugExists: isSlugExists,
+        })
+    } catch (err) {
+      next(err);
+    }
   }
 
   async addModel(req, res, next) {

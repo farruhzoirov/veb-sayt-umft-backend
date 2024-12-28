@@ -5,7 +5,7 @@ info:
   version: 0.1.9
 servers:
   - url: http://95.130.227.52:4131
-    #- url: http://localhost:4131
+  #- url: http://localhost:4131
     description: Optional server description, e.g. Main (production) server
 tags:
   - name: Auth
@@ -634,6 +634,30 @@ paths:
               $ref: "#/components/schemas/deleteFile"
       tags:
         - Category
+  /api/category/check/{slug}:
+    get:
+      summary: check slug exists or don't.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: slug
+          schema:
+            type: string
+          required: true
+      responses:
+        "200": # status code
+          description: Object
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  isSlugExists:
+                    type: Number
+      tags:
+        - Category
+
   ## News
   /api/news:
     get:

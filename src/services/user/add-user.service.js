@@ -4,7 +4,7 @@ const UserTranslate = require("../../models/translate/user.model");
 class CreateUserService {
     async addUser(req, res) {
         try {
-            const { userId } = req.body;
+            const {userId} = req.body;
             if (!userId) {
                 let files = req.files || [];
                 let imagePaths;

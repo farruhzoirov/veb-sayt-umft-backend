@@ -21,6 +21,8 @@ router.get('/:model', authMiddleware.adminMiddleware, crudController.getAllModel
 
 router.get('/:model/:id',authMiddleware.adminMiddleware, crudController.getModelById);
 
+router.get('/:model/check/:slug', authMiddleware.adminMiddleware, crudController.checkSlugExists);
+
 router.post('/:model',  authMiddleware.adminMiddleware, validateModel, crudController.addModel);
 
 
