@@ -34,11 +34,9 @@ const SpecialtySchema = new Schema({
     img: [],
     hemisId: {
         type: Number,
-        required: true,
     },
     code: {
         type: String,
-        required: true,
     },
     degree: {
         type: Schema.Types.ObjectId,

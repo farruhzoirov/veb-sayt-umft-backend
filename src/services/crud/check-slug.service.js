@@ -1,6 +1,5 @@
 const {getModelsHelper} = require("../../helpers/get-models.helper");
 
-
 class CheckIsSlugExistsService {
     async checkIsSlugExists(model,slug) {
         const dynamicModel = await getModelsHelper(model);

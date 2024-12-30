@@ -5,31 +5,17 @@ const UserModel = new Schema({
         type: String,
         unique: true,
     },
-    phone: {
-        type: String,
-        required: [true, 'Phone number is required'],
-        unique: true
-    },
     password: {
         type: String,
     },
-    telegramId: {
-        type: Number,
-    },
     role: {
         type: String,
-        enum: ['admin', 'teacher', 'support', 'user'],
-        default: 'user'
+        enum: ['admin', 'manager'],
+        default: 'admin'
     },
-    language: String,
     status: {
         type: Number,
         default: 1
-    },
-    action: {
-        type: String,
-        enum: ["active", "inactive"],
-        default: "active"
     },
     img: []
 }, {

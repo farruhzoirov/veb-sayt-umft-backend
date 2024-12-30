@@ -1,16 +1,15 @@
 const mongoose = require("mongoose");
 const {Schema} = require("mongoose");
 
-const StructureType =  new Schema({
-        code: String,
-        name: String,
+const StructureType = new Schema({
+    code: String,
+    name: String,
 })
 
 // hemisId is departmentId in the hemis.
 const DepartmentSchema = new Schema({
     code: {
         type: String,
-        required: true,
     },
     hemisId: {
         type: Number,
@@ -30,9 +29,11 @@ const DepartmentSchema = new Schema({
     },
     createdAt: {
         type: Date,
+        default: Date.now,
     },
     updatedAt: {
         type: Date,
+        default: Date.now,
     }
 });
 
