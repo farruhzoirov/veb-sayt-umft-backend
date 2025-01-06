@@ -21,6 +21,9 @@ router.use('/department', require("./routers/departments.route"));
 // Specialties
 router.use('/specialty', require("./routers/specialties.route"));
 
+// Classifiers
+router.use('/classifiers', require("./routers/classifiers.route"));
+
 module.exports = router;
 
 

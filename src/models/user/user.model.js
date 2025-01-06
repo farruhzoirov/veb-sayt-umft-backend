@@ -1,6 +1,9 @@
 const {Schema, model, Mongoose} = require('mongoose');
 
 const UserModel = new Schema({
+    name: {
+        type: String,
+    },
     login: {
         type: String,
         unique: true,

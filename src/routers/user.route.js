@@ -3,33 +3,17 @@ const router = require('express').Router()
 const UserController = require('../controllers/user/user.controller')
 const authMiddleware = require('../middlewares/auth.middleware');
 
-const upload = require("../utils/uploads/upload-users.util");
-
 const userController = new UserController();
 
-router.get('get/:userId', userController.get);
+router.get('get/:userId', authMiddleware.adminMiddleware, userController.get);
 
+router.get('/get-all', authMiddleware.adminMiddleware, userController.all);
 
-router.get('/get-all', userController.all);
+router.post('/add-manager', authMiddleware.adminMiddleware,  userController.create);
 
-router.post('/add', upload.fields(
-    [
-        {
-            name: 'image', maxCount: 5
-        },
-    ]
-), userController.create);
+router.put('/:userId', authMiddleware.adminMiddleware,  userController.update)
 
-
-router.put('/:userId', upload.fields(
-    [
-        {
-            name: 'image', maxCount: 5
-        },
-    ]
-), userController.update)
-
-router.delete('/delete', userController.delete);
+router.delete('/delete', authMiddleware.adminMiddleware, userController.delete);
 
 
 module.exports = router;

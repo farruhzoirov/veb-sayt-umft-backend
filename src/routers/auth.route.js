@@ -12,8 +12,13 @@ const userValidator = require("../validators/user.validator");
 const authController = new AuthController();
 
 // Routers
-router.get('/login/addAdmin',  authController.addAdmin);
+
+// GET
+router.get('/add-first-admin',  authController.addFirstAdmin);
+
+// POST
 router.post('/login', userValidator, authController.login);
+
 router.get('/check-user', adminMiddleware, authController.checkUser);
 
 

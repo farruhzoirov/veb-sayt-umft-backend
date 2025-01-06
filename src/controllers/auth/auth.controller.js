@@ -5,9 +5,9 @@ const CheckUserService = require('../../services/auth/check-user.service');
 
 
 class AuthController {
-  async addAdmin(req, res) {
+  async addFirstAdmin(req, res) {
     const addAdminService = new AddAdminService();
-    await addAdminService.addAdmin(req, res);
+    await addAdminService.addFirstAdmin(req, res);
   }
 
   async login(req, res) {

@@ -19,7 +19,8 @@ class UserController {
 
   async create(req, res) {
     const createUserService = new CreateUsersService();
-    await createUserService.addUser(req, res);
+    const newUser = await createUserService.addUser(req);
+    return res.status(201).json(newUser);
   }
 
   async update(req, res) {

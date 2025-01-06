@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs");
 const config = require("../../config/config");
 
 class AddAdminService {
-    async addAdmin(req, res) {
+    async addFirstAdmin(req, res) {
         try {
             let isAdmin = await User.findOne({ role: 'admin' });
             if (isAdmin) {
@@ -25,7 +25,6 @@ class AddAdminService {
                     password: hashPass,
                     role: 'admin',
                     name: 'Admin',
-                    phone: "+998974072204"
                 });
                 await admin.save();
                 res.status(201).json({

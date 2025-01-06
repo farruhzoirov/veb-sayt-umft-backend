@@ -32,6 +32,7 @@ class AuthMiddleware {
                     message: "Forbidden,you don't have access"
                 })
             }
+            req.user = decoded;
             next();
         } catch (e) {
             console.error(e);
