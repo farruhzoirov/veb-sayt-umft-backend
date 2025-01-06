@@ -7,31 +7,41 @@ const DeleteUserService = require('../../services/user/delete-user.service');
 
 
 class UserController {
-  async all(req, res) {
-    const getAllUsersService = new GetAllUsersService();
-    await getAllUsersService.getAllUsers(req, res);
-  }
+    async all(req, res) {
+        const getAllUsersService = new GetAllUsersService();
+        await getAllUsersService.getAllUsers(req, res);
+    }
 
-  async get(req, res) {
-    const getUserService = new GetUserService();
-    await getUserService.getUser(req, res);
-  }
+    async get(req, res, next) {
+        try {
+            const getUserService = new GetUserService();
+            const User = await getUserService.getUserById(req);
+            res.status(200).json(User);
+        } catch (err) {
+            next(err);
+        }
+    }
 
-  async create(req, res) {
-    const createUserService = new CreateUsersService();
-    const newUser = await createUserService.addUser(req);
-    return res.status(201).json(newUser);
-  }
+    async create(req, res, next) {
+        try {
+            const createUserService = new CreateUsersService();
+            const newUser = await createUserService.addUser(req);
+            return res.status(201).json(newUser);
+        } catch (err) {
+            next(err);
+        }
 
-  async update(req, res) {
-    const updateUserService = new UpdateUsersService();
-    await updateUserService.updateUserById(req, res);
-  }
+    }
 
-  async delete(req, res) {
-    const deleteUserService = new DeleteUserService();
-    await deleteUserService.deleteUserById(req, res);
-  }
+    async update(req, res) {
+        const updateUserService = new UpdateUsersService();
+        await updateUserService.updateUserById(req, res);
+    }
+
+    async delete(req, res) {
+        const deleteUserService = new DeleteUserService();
+        await deleteUserService.deleteUserById(req, res);
+    }
 }
 
 module.exports = UserController;

@@ -78,7 +78,7 @@ const eventsSchema = Joi.object({
 const departmentSchema = Joi.object({
     modelId: Joi.string().optional(),
     status: Joi.number().optional(),
-    slug: Joi.number().optional(),
+    slug: Joi.string().optional(),
     code: Joi.string().optional(),
     hemisId: Joi.number().optional(),
     structureType: Joi.object({

@@ -1,19 +1,19 @@
 const User = require("../../models/user/user.model");
+const mongoose = require("mongoose");
+const BaseError = require("../../errors/base.error");
 
 
 class GetUserService {
-    async getUser(req, res) {
-        try {
-            let userId = req.params.userId;
-            let getOne = await User.findOne({ _id: userId })
-            res.json({
-                ok: true,
-                data: getOne
-            });
-        } catch (error) {
-            console.log(error);
-            res.json({msg: 'xatolik mavjud...'})
-        }
+    async getUserById(req) {
+            const userId = req.params.userId;
+            if (!mongoose.Types.ObjectId.isValid(userId)) {
+                throw BaseError.BadRequest("Invalid user id");
+            }
+            const getOneUserById = await User.findOne({_id: userId})
+            if (!getOneUserById) {
+                throw BaseError.BadRequest("User does not exist");
+            }
+            return getOneUserById;
     }
 }
 

@@ -86,8 +86,6 @@ class GetModelsService {
                 .sort(sort)
                 .lean()) || [];
 
-        console.log(modelDatas);
-
         const populatedData = await Promise.all(
             modelDatas.map(async (data) => {
                 await Promise.all(

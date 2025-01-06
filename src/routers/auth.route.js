@@ -19,6 +19,7 @@ router.get('/add-first-admin',  authController.addFirstAdmin);
 // POST
 router.post('/login', userValidator, authController.login);
 
+
 router.get('/check-user', adminMiddleware, authController.checkUser);
 
 

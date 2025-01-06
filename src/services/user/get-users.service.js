@@ -19,7 +19,7 @@ class GetAllUsersService {
         }
         const skip = (page - 1) * limit
         let fil = this.shortFilter(req);
-        let data = await User.find({...fil, role: { $ne: 'admin' }})
+        let data = await User.find({...fil})
             .select(select.toString())
             .skip(skip)
             .limit(limit)
