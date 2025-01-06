@@ -1,4 +1,4 @@
-const GetClassifiersService  = require("../../services/hemis/classifiers/get-classifiers.service");
+const GetClassifiersService  = require("../../../services/hemis/classifiers/get-classifiers.service");
 
 class ClassifiersController {
     constructor() {

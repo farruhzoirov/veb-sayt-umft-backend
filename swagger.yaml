@@ -13,9 +13,9 @@ tags:
 
 paths:
   ## Auth
-  /auth/login/addAdmin:
+  /auth/add-first-admin:
     get:
-      summary: Creating admin.
+      summary: Creating or updating admin.
       description: Optional extended description in CommonMark or HTML.
       responses:
         "200": # status code
@@ -102,9 +102,11 @@ paths:
       tags:
         - Users
 
-  /user/add:
+  /user/add-user:
     post:
-      summary: Creating one user.
+      summary: Creating one user (it may be manager or admin ...).
+      security:
+        - BearerAuth: [ ]
       requestBody:
         description: Optional description in *Markdown*
         required: true
@@ -124,6 +126,11 @@ paths:
   /user/{userId}:
     put:
       summary: Update one user
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: userId
       requestBody:
         description: Optional description in *Markdown*
         required: true
@@ -141,9 +148,10 @@ paths:
 
       tags:
         - Users
-  /user/get/userId:
     get:
       summary: Getting one user by id.
+      security:
+        - BearerAuth: []
       parameters:
         - in: path
           name: userId
@@ -160,7 +168,6 @@ paths:
       tags:
         - Users
 
-  /user/delete:
     delete:
       summary: Deleting one user by id.
       parameters:
@@ -3595,18 +3602,13 @@ components:
         login:
           type: string
           example: johndoe
-        telegramId?:
+        role:
           type: string
-        phone:
-          type: string
-          example: "+1234567890"
+          example: manager
         password:
           type: string
           example: "strongPassword123"
-        language:
-          type: string
-          example: "324234234234234"
-        image:
+        img:
           type: array
           items:
             type: string

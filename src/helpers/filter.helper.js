@@ -11,17 +11,7 @@ const searchFields = {
   specialistInfo: ["user_id"],
   user: [
     "name",
-    "birthDay",
-    "passNumber",
-    "membership",
-    "login",
-    "phone",
-    "password",
-    "userId",
-    "role",
-    "language",
-    "status",
-    "action",
+    "role"
   ],
   language: ["title", "slug", "isDefault", "status"],
   degree: ["name"],

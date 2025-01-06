@@ -16,13 +16,13 @@ router.use('/api', require("./routers/crud.route"));
 router.use('/submit', require("./routers/applicants.route"));
 
 // Departments
-router.use('/department', require("./routers/departments.route"));
+router.use('/department', require("./routers/hemis/departments.route"));
 
 // Specialties
-router.use('/specialty', require("./routers/specialties.route"));
+router.use('/specialty', require("./routers/hemis/specialties.route"));
 
 // Classifiers
-router.use('/classifiers', require("./routers/classifiers.route"));
+router.use('/classifiers', require("./routers/hemis/classifiers.route"));
 
 module.exports = router;
 

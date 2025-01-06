@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const authMiddleware = require('../middlewares/auth.middleware');
+const authMiddleware = require('../../middlewares/auth.middleware');
 
-const DepartmentController = require('../controllers/departments/department.controller');
+const DepartmentController = require('../../controllers/hemis/departments/department.controller');
 
 const departmentsController = new DepartmentController();
 
