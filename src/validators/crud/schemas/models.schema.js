@@ -185,7 +185,6 @@ const messengerSchema = Joi.object({
     modelId: Joi.string().optional(),
     link: Joi.string().uri().optional(),
     slug: Joi.string().optional(),
-    img: Joi.string().optional(),
     translate: {
         name: Joi.string().required(),
         text: Joi.string().optional(),
