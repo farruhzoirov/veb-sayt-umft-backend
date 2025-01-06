@@ -48,7 +48,7 @@ const addTranslations = async (modelName, modelId, translationData) => {
 const updateTranslations = async (modelName, modelId, translationData) => {
   let updatedData;
   const forTranslateModel = TranslateModel[modelName]?.ref;
-
+  let allTranslationsData;
   if (!forTranslateModel && !translationData.language) {
     throw BaseError.NotFound("Translation model or language not found");
   }
@@ -69,7 +69,7 @@ const updateTranslations = async (modelName, modelId, translationData) => {
     });
 
     await newData.save();
-    const allTranslationsData = await dynamicTranslateModel
+    allTranslationsData = await dynamicTranslateModel
       .find({ [modelName]: modelId })
       .select("-__v");
     return allTranslationsData;
@@ -89,10 +89,10 @@ const updateTranslations = async (modelName, modelId, translationData) => {
       new: true,
     }
   );
-  const updatedTranslationObject = updatedData.toObject();
-  delete updatedTranslationObject.__v;
-
-  return [updatedTranslationObject];
+  allTranslationsData = await dynamicTranslateModel
+      .find({ [modelName]: modelId })
+      .select("-__v");
+  return allTranslationsData;
 };
 
 module.exports = {
