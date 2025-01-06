@@ -14,7 +14,7 @@ class FetchSpecialtiesService {
             const specialtiesData = await this.fetchSpecialtiesData();
 
             const existingSpecialties = await Specialty.find();
-            const existingSpecialtyIds = existingSpecialties.map(s => s.hemisId);
+            const existingSpecialtyIds = existingSpecialties.map(s => s.hemisId).filter(hemisId => hemisId !== undefined);
 
             if (!existingSpecialties.length) {
                 await this.addSpecialties(specialtiesData, defaultLanguage);

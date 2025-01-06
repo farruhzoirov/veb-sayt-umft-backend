@@ -5,7 +5,7 @@ const SpecialtyController = require('../controllers/specialties/specialty.contro
 
 const specialtiesController = new SpecialtyController();
 
-router.get('/fetch-specialty', authMiddleware.adminMiddleware, specialtiesController.fetchSpecialties);
+router.get('/fetch-specialty', authMiddleware.universalAccessMiddleware, specialtiesController.fetchSpecialties);
 
 
 module.exports = router;

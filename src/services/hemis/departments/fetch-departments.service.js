@@ -17,7 +17,7 @@ class FetchDepartmentsService {
     }
 
     const apiDepartmentsHemisIds = departmentsData.map(department => department.hemis_id);
-    const existingDepartmentsHemisIds = existingDepartments.map(department => department.hemisId);
+    const existingDepartmentsHemisIds = existingDepartments.map(department => department.hemisId).filter(hemisId => hemisId !== undefined);
 
     await this.deleteRemovedDepartments(existingDepartmentsHemisIds, apiDepartmentsHemisIds);
     await this.updateOrAddDepartments(departmentsData, defaultLanguage);

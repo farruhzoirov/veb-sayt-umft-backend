@@ -5,7 +5,7 @@ const DepartmentController = require('../controllers/departments/department.cont
 
 const departmentsController = new DepartmentController();
 
-router.get('/fetch-departments', authMiddleware.adminMiddleware, departmentsController.fetchDepartments);
+router.get('/fetch-departments', authMiddleware.universalAccessMiddleware, departmentsController.fetchDepartments);
 
 
 module.exports = router;

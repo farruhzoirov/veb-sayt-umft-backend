@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/config');
 
 const Roles = require('../common/constants/roles.constants')
+const {decode} = require("jsonwebtoken");
 
 class AuthMiddleware {
     async universalAccessMiddleware(req, res, next) {

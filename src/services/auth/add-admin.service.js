@@ -1,17 +1,17 @@
 const User = require("../../models/user/user.model");
 const bcrypt = require("bcryptjs");
-
+const Roles = require("../../common/constants/roles.constants");
 // Config
 const config = require("../../config/config");
 
 class AddAdminService {
     async addFirstAdmin(req, res) {
         try {
-            let isAdmin = await User.findOne({ role: 'admin' });
-            if (isAdmin) {
-                isAdmin.password = await bcrypt.hash(config.ADMIN_PASSWORD, 10);
-                let _id = isAdmin._id;
-                await User.findByIdAndUpdate(_id, isAdmin, {
+            let isExistsAdmin = await User.findOne({role: Roles.admin});
+            if (isExistsAdmin) {
+                isExistsAdmin.password = await bcrypt.hash(config.ADMIN_PASSWORD, 10);
+                let _id = isExistsAdmin._id;
+                await User.findByIdAndUpdate(_id, isExistsAdmin, {
                     new: true,
                 });
                 res.status(200).json({
@@ -23,7 +23,7 @@ class AddAdminService {
                 const admin = new User({
                     login: config.ADMIN_USERNAME,
                     password: hashPass,
-                    role: 'admin',
+                    role: Roles.admin,
                     name: 'Admin',
                 });
                 await admin.save();
