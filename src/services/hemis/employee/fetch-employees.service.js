@@ -1,64 +1,85 @@
-const config = require('../../../config/config');
-const Employee = require("../../../models/data/employee.model");
-const Language = require("../../../models/settings/language.model");
 const axios = require("axios");
-const DepartmentTranslate = require("../../../models/translate/department.model");
+
+const config = require('../../../config/config');
+
+const Employee = require("../../../models/data/employee.model");
+const EmployeeTranslate = require("../../../models/translate/employee.model");
+
+const Department = require("../../../models/data/department.model");
+
+const Language = require("../../../models/settings/language.model");
 
 
 class FetchEmployeesService {
     async fetchEmployees() {
-        const stuffPositionCodes = [15, 16, 17];
+        // const stuffPositionCodes = [12,13, 14, 15, 16, 17, 26,34, 61, 233];
         const defaultLanguage = await this.getDefaultLanguage();
-        const employeesData = await this.fetchEmployeesData(stuffPositionCodes);
+        const employeesData = await this.fetchEmployeesData();
 
-        // const existingEmployee = await Employee.find();
-        //
-        // if (!existingEmployee.length) {
-        //     await this.addNewEmployee(employeesData, defaultLanguage);
-        //     return;
-        // }
-        //
-        // const apiEmployeeHemisIds = employeesData.map(employee => employee.hemis_id);
-        // const existingEmployeeHemisIds = existingEmployee.map(employee => employee.hemisId).filter(hemisId => hemisId !== undefined);
-        //
-        // await this.deleteRemovedEmployee(existingEmployeeHemisIds, apiEmployeeHemisIds);
-        // await this.updateOrAddEmployee(employeesData, defaultLanguage);
+        const existingEmployee = await Employee.find();
+
+        if (!existingEmployee.length) {
+            await this.addNewEmployee(employeesData, defaultLanguage);
+            return;
+        }
+
+        const apiEmployeeHemisIds = employeesData.map(employee => employee.hemis_id);
+        const existingEmployeeHemisIds = existingEmployee.map(employee => employee.hemisId).filter(hemisId => hemisId !== undefined);
+
+        await this.deleteRemovedEmployee(existingEmployeeHemisIds, apiEmployeeHemisIds);
+        await this.updateOrAddEmployee(employeesData, defaultLanguage);
     }
 
     async getDefaultLanguage() {
         return Language.findOne({isDefault: true});
     }
 
-    async fetchEmployeesData(stuffPositionCodes) {
-        const limit = 100;
-        const page = 0;
-        const response = [];
-        for (const stuffPosition of stuffPositionCodes) {
-            const responseData = await axios.get(`${config.HEMIS_API_URL}/employee-list?page=${page}&_staff_position=${stuffPosition}&limit=${limit}`, {
-                headers: {
-                    Authorization: `Bearer ${config.HEMIS_API_TOKEN}`,
-                },
-            });
-            response.push(responseData);
+    async fetchEmployeesData(page = 1, limit = 30, response = []) {
+        const responseData = await axios.get(`${config.HEMIS_API_URL}/employee-list?page=${page}&limit=${limit}`, {
+            headers: {
+                Authorization: `Bearer ${config.HEMIS_API_TOKEN}`,
+            },
+        });
+
+        response.push(...responseData.data.data);
+
+        if (page <= responseData.data.pagination.pageCount) {
+            return this.fetchEmployeesData(page + 1, limit, response);
         }
-        console.log(response)
+
+        return response;
     }
 
     async addNewEmployee(employeesData, defaultLanguage) {
         for (const employee of employeesData) {
-            const newDepartment = await new Employee({
+            const matchDepartment = await Department.findOne({hemisId: employee.department.id});
+            const newEmployee = await new Employee({
                 hemisId: employee.hemis_id,
-                gender: employee.gender,
-                structureType: employee.structureType,
-                active: employee.active,
+                department: matchDepartment ? matchDepartment._id : null,
+                img: employee.image,
+                employeeId: employee.employee_id_number,
+                contractNumber: employee.contract_number,
+                decreeNumber: employee.decree_number,
+                contractDate: employee.contract_date,
+                birthDate: employee.birth_date,
+                decreeDate: employee.decree_date,
                 createdAt: employee.createdAt,
                 updatedAt: employee.updatedAt,
             }).save();
 
-            await new DepartmentTranslate({
-                name: department.name,
+            await new EmployeeTranslate({
+                fullName: employee.full_name,
+                shortName: employee.short_name,
+                firstName: employee.first_name,
+                secondName: employee.second_name,
+                thirdName: employee.third_name,
+                gender: employee.gender,
+                academicRank: employee.academicRank,
+                staffPosition: employee.staffPosition,
+                employeeType: employee.employeeType,
+                employeeStatus: employee.employeeStatus,
                 language: defaultLanguage._id,
-                department: newDepartment._id,
+                employee: newEmployee._id,
             }).save();
         }
     }
@@ -68,9 +89,9 @@ class FetchEmployeesService {
             if (!apiEmployeeHemisIds.includes(existingEmployeeHemisId)) {
                 const employeeToDelete = await Employee.findOne({hemisId: existingEmployeeHemisId});
                 if (employeeToDelete) {
-                    await DepartmentTranslate.deleteMany({department: employeeToDelete._id});
+                    await Employee.deleteMany({employee: employeeToDelete._id});
                     await employeeToDelete.deleteOne();
-                    console.log(`Deleted department with hemisId: ${existingEmployeeHemisId}`);
+                    console.log(`Deleted employee with hemisId: ${existingEmployeeHemisId}`);
                 }
             }
         }
@@ -79,49 +100,79 @@ class FetchEmployeesService {
     async updateOrAddEmployee(employeesData, defaultLanguage) {
         for (const employee of employeesData) {
             const existingEmployee = await Employee.findOne({hemisId: employee.hemis_id});
-
+            const matchDepartment = await Department.findOne({hemisId: employee.department.id});
             if (existingEmployee) {
                 if (existingEmployee.updatedAt.toISOString() !== employee.updatedAt) {
                     await existingEmployee.updateOne({
                         $set: {
                             hemisId: employee.hemis_id,
-                            code: employee.code,
-                            structureType: employee.structureType,
-                            active: employee.active,
+                            department: matchDepartment ? matchDepartment._id : null,
+                            img: employee.image,
+                            employeeId: employee.employee_id_number,
+                            contractNumber: employee.contract_number,
+                            decreeNumber: employee.decree_number,
+                            contractDate: employee.contract_date,
+                            birthDate: employee.birth_date,
+                            decreeDate: employee.decree_date,
                             createdAt: employee.createdAt,
                             updatedAt: employee.updatedAt,
                         },
                     });
-                    console.log(`Updated department with hemisId: ${employee.hemis_id}`);
+                    console.log(`Updated employee with hemisId: ${employee.hemis_id}`);
 
-                    const existingTranslate = await DepartmentTranslate.findOne({department: existingEmployee._id});
+                    const existingTranslate = await EmployeeTranslate.findOne({employee: existingEmployee._id});
                     if (existingTranslate) {
                         await existingTranslate.updateOne({
                             $set: {
-                                name: employee.name,
+                                fullName: employee.full_name,
+                                shortName: employee.short_name,
+                                firstName: employee.first_name,
+                                secondName: employee.second_name,
+                                thirdName: employee.third_name,
+                                gender: employee.gender,
+                                academicRank: employee.academicRank,
+                                staffPosition: employee.staffPosition,
+                                employeeType: employee.employeeType,
+                                employeeStatus: employee.employeeStatus,
                                 language: defaultLanguage._id,
                                 employee: existingEmployee._id,
                             },
                         });
                     }
-                    console.log(`Updated translation for department with hemisId: ${employee.hemis_id}`);
+                    console.log(`Updated translation for employee with hemisId: ${employee.hemis_id}`);
                 }
             } else {
                 const newEmployee = await new Employee({
                     hemisId: employee.hemis_id,
-                    code: employee.code,
-                    structureType: employee.structureType,
-                    active: employee.active,
+                    department: matchDepartment ? matchDepartment._id : null,
+                    img: employee.image,
+                    employeeId: employee.employee_id_number,
+                    contractNumber: employee.contract_number,
+                    decreeNumber: employee.decree_number,
+                    contractDate: employee.contract_date,
+                    birthDate: employee.birth_date,
+                    decreeDate: employee.decree_date,
                     createdAt: employee.createdAt,
                     updatedAt: employee.updatedAt,
                 }).save();
 
-                await new DepartmentTranslate({
-                    name: employee.name,
+                await new EmployeeTranslate({
+                    fullName: employee.full_name,
+                    shortName: employee.short_name,
+                    firstName: employee.first_name,
+                    secondName: employee.second_name,
+                    thirdName: employee.third_name,
+                    gender: employee.gender,
+                    academicRank: employee.academicRank,
+                    staffPosition: employee.staffPosition,
+                    employeeType: employee.employeeType,
+                    employeeStatus: employee.employeeStatus,
                     language: defaultLanguage._id,
-                    department: newEmployee._id,
+                    employee: newEmployee._id,
                 }).save();
             }
         }
     }
 }
+
+module.exports = FetchEmployeesService

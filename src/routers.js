@@ -21,6 +21,8 @@ router.use('/department', require("./routers/hemis/departments.route"));
 // Specialties
 router.use('/specialty', require("./routers/hemis/specialties.route"));
 
+router.use('/employee', require("./routers/hemis/employees.route"));
+
 // Classifiers
 router.use('/classifiers', require("./routers/hemis/classifiers.route"));
 

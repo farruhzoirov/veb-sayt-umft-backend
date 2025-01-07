@@ -13,7 +13,6 @@ const populateModelData = async (dynamicModel, modelId, populateFields) => {
       })
     )
   }
-  console.log("Populated", newData);
   return newData;
 }
 

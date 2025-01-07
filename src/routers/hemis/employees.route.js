@@ -1,11 +1,11 @@
 const router = require('express').Router();
 const authMiddleware = require('../../middlewares/auth.middleware');
 
-const DepartmentController = require('../../controllers/hemis/departments/department.controller');
+const EmployeesController = require('../../controllers/hemis/employees/employee.controller');
 
-const departmentsController = new DepartmentController();
+const employeesController = new EmployeesController();
 
-router.get('/fetch-employees', authMiddleware.universalAccessMiddleware, departmentsController.fetchDepartments);
+router.get('/fetch-employees',  employeesController.fetchEmployee);
 
 
 module.exports = router;

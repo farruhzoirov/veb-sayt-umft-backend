@@ -48,12 +48,6 @@ const SpecialtySchema = new Schema({
         ref: 'department',
         required: true,
     },
-    from: {
-        type: String,
-    },
-    to: {
-        type: String,
-    },
     prices: [PricesSchema],
     duration: [DurationSchema],
     active: {
