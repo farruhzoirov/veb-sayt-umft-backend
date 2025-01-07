@@ -9,10 +9,6 @@ const PricesSchema = new Schema({
     format: {
         type: Schema.Types.ObjectId,
         ref: 'format',
-    },
-    degree: {
-        type: Schema.Types.ObjectId,
-        ref: 'degree',
     }
 })
 

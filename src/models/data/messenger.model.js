@@ -4,10 +4,6 @@ const {Schema} = require("mongoose");
 const MessengerSchema = new Schema(
     {
         img: [],
-        link: {
-            type: String,
-            required: true,
-        },
         slug: {
             type: String,
         },

@@ -183,7 +183,7 @@ const languagesSchema = Joi.object({
 
 const messengerSchema = Joi.object({
     modelId: Joi.string().optional(),
-    link: Joi.string().uri().optional(),
+    // link: Joi.string().uri().optional(),
     slug: Joi.string().optional(),
     translate: {
         name: Joi.string().required(),
