@@ -13,16 +13,16 @@ const PricesSchema = new Schema({
 })
 
 
-const DurationSchema = new Schema({
-    format: {
-        type: Schema.Types.ObjectId,
-        ref: 'format'
-    },
-    year: {
-        type: Number,
-        required: true
-    }
-})
+// const DurationSchema = new Schema({
+//     format: {
+//         type: Schema.Types.ObjectId,
+//         ref: 'format'
+//     },
+//     year: {
+//         type: Number,
+//         required: true
+//     }
+// })
 
 
 const SpecialtySchema = new Schema({
@@ -44,7 +44,10 @@ const SpecialtySchema = new Schema({
         required: true,
     },
     prices: [PricesSchema],
-    duration: [DurationSchema],
+    duration: {
+        type: String,
+        required: true
+    },
     active: {
         type: Boolean,
         default: true,
