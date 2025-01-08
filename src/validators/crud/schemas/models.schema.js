@@ -38,7 +38,11 @@ const specialtySchema = Joi.object({
     hemisId: Joi.number().optional(),
     code: Joi.string().optional(),
     department: Joi.string().optional(),
-    prices: Joi.array().optional(),
+    prices: Joi.array().items(
+        Joi.object({
+            price: Joi.number().required(),
+            format: Joi.string().optional()
+        })),
     duration: Joi.array().optional(),
     slug: Joi.string().optional(),
     translate: Joi.object({
