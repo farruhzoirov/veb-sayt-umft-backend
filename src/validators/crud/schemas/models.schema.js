@@ -242,12 +242,12 @@ const messengerSchema = Joi.object({
 const contactSchema = Joi.object({
     slug: Joi.string().optional(),
     email: Joi.string().required(),
-    phone: Joi.array().items(string()).required(),
+    phone: Joi.array().items(Joi.string()).required(),
     location: Joi.array().items({
         lang: Joi.string().required(),
         lat: Joi.string().required(),
     }).required(),
-    address: Joi.array().items(string()).required(),
+    address: Joi.array().items(Joi.string()).required(),
 });
 
 
