@@ -16,7 +16,7 @@ class GetModelsService {
         this.TranslateModel = TranslateModel;
     }
 
-    async getAll(req, res, model) {
+    async getAll(req, res, modelName) {
         const dynamicModel = getModelsHelper(model);
 
         let page = req.query.page || 1;
@@ -27,12 +27,12 @@ class GetModelsService {
 
         const skip = (page - 1) * limit;
 
-        const query = buildQuery(model, search);
-        const populateOptions = this.Model[model].populate || [];
+        const query = buildQuery(modelName, search);
+        const populateOptions = this.Model[modelName].populate || [];
 
-        if (this.Model[model].translate) {
+        if (this.Model[modelName].translate) {
             return this.getAllWithTranslate(
-                model,
+                modelName,
                 page,
                 query,
                 select,
@@ -58,7 +58,7 @@ class GetModelsService {
     }
 
     async getAllWithTranslate(
-        model,
+        modelName,
         page,
         query,
         select,
@@ -68,23 +68,21 @@ class GetModelsService {
         populateOptions,
         res
     ) {
-        const translateModel = this.TranslateModel[model].ref;
-        console.log(translateModel);
+        const translateModel = this.TranslateModel[modelName].ref;
         const dynamicTranslateModel = getModelsTranslateHelper(translateModel);
-        console.log(dynamicTranslateModel);
-        const dynamicModel = getModelsHelper(model);
+        const dynamicModel = getModelsHelper(modelName);
 
         //const matchingTranslates = await dynamicTranslateModel.find(query);
         //const matchingIds = await matchingTranslates.map((t) => t[model]);
-        const matchingIds = await dynamicTranslateModel.distinct(model, query);
+        const matchingIds = await dynamicTranslateModel.distinct(modelName, query);
         const modelDatas =
-            (await dynamicModel
+            await dynamicModel
                 .find({_id: {$in: matchingIds}})
                 .select(select.toString() + "-updatedAt -__v")
                 .skip(skip)
                 .limit(limit)
                 .sort(sort)
-                .lean()) || [];
+                .lean() || [];
 
         const populatedData = await Promise.all(
             modelDatas.map(async (data) => {
@@ -93,9 +91,18 @@ class GetModelsService {
                         data[elem] = await getPopulates(elem, data[elem]);
                     })
                 );
+
+                if (data.prices && Array.isArray(data.prices)) {
+                    for (const price of data.prices) {
+                        if (price.format) {
+                            price.format = await getPopulates('format', price.format);
+                        }
+                    }
+                }
+
                 data.translates = await dynamicTranslateModel
                     .find({
-                        [model]: data._id,
+                        [modelName]: data._id,
                     })
                     .select(
                         select.length ? select + "-updatedAt -__v" : [] + "-updatedAt -__v"

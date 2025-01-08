@@ -56,6 +56,13 @@ class GetModelService {
               el[elem] = await getPopulates(elem, el[elem]);
             })
           );
+          if (el.prices && Array.isArray(el.prices)) {
+            for (const price of data.prices) {
+              if (price.format) {
+                price.format = await getPopulates('format', price.format);
+              }
+            }
+          }
           el.translates = await dynamicTranslateModel
             .find({
               [model]: el._id,
