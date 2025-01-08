@@ -3923,6 +3923,198 @@ paths:
       tags:
         - Contact
 
+  ##Licence
+  /api/licence:
+    get:
+      summary: Get all licences
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: search
+          schema:
+            type: string
+          required: false
+      responses:
+        "200":
+          description: List of licences
+          content:
+            application/json:
+              schema:
+              # $ref: "#/components/schemas/messengers"
+      tags:
+        - Licence
+    post:
+      summary: Create a licence
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: Licence creation payload
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/licencePost"
+      responses:
+        "201":
+          description: Created successfully
+          content:
+            application/json:
+              schema:
+              # $ref: "#/components/schemas/addModel"
+      tags:
+        - Licence
+  /api/licence/{id}:
+    get:
+      summary: Get a single licence by ID
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Single licences
+          content:
+            application/json:
+              schema:
+              # $ref: "#/components/schemas/messengers"
+      tags:
+        - Licence
+    put:
+      summary: Update  licence by ID
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      requestBody:
+        description: Licence update payload
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/licencePost"
+      responses:
+        "200":
+          description: Updated successfully
+          content:
+            application/json:
+              schema:
+              # $ref: "#/components/schemas/updateModel"
+      tags:
+        - Licence
+    delete:
+      summary: Delete a licence by ID
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Deleted successfully
+          content:
+            application/json:
+              schema:
+              # $ref: "#/components/schemas/deleteModel"
+      tags:
+        - Licence
+
+    patch:
+      summary: Updating status
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID of the contact to be updated
+      requestBody:
+        description: to update model status
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+      responses:
+        "201": # status code
+          description: Patched model will come
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+        - Licence
+  /api/licence/upload:
+    post:
+      summary: Uploading file and getting path
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: File must be sent
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload.
+
+      responses:
+        "200": # status code
+          description: File path
+          content:
+            application/json:
+              schema:
+              # $ref: "#/components/schemas/uploadResponse"
+      tags:
+        - Licence
+  /api/licence/deleteFile:
+    delete:
+      summary: Deleting file and getting response
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: imagePath must be sent
+        required: true
+        content:
+          application/json:
+            schema:
+            # $ref: "#/components/schemas/deleteFile"
+      tags:
+        - Licence
+
 #Components
 components:
   securitySchemes:
@@ -5246,5 +5438,18 @@ components:
           type: string
         img:
           type: array
-
       required: [ ]
+    licencePost:
+      type: object
+      properties:
+        title:
+          type: string
+        text:
+          type: string
+        file:
+          type: array
+          items: string
+        slug:
+          type: string
+      required: [ ]
+

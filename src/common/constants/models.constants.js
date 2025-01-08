@@ -31,6 +31,7 @@ const Model = {
     user: {ref: "user", translate: true},
     language: {ref: "language", translate: false},
     contacts: {ref: "contacts", translate: false},
+    licence: {ref: "licence", translate: false},
 };
 
 const TranslateModel = {

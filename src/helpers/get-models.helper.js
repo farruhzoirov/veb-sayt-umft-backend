@@ -58,6 +58,8 @@ const contactsSchema = require("../models/data/contacts.model");
 const employeeSchema = require("../models/data/employee.model");
 const employeeTranslateSchema = require("../models/translate/employee.model");
 
+const licenceSchema  = require("../models/data/licence.model");
+
 const {
     Model,
     TranslateModel,
@@ -107,6 +109,8 @@ function getModelsHelper(modelKey) {
             return socialsSchema;
         case Model.contact.ref:
             return contactsSchema;
+        case Model.licence.ref:
+            return licenceSchema;
         default:
             throw new Error(`Model "${modelKey}" not found.`);
     }

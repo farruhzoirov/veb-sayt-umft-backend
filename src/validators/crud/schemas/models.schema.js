@@ -250,6 +250,13 @@ const contactSchema = Joi.object({
     address: Joi.array().items(Joi.string()).required(),
 });
 
+const licenceSchema = Joi.object({
+    title: Joi.string().optional(),
+    text: Joi.string().optional(),
+    file: Joi.array().items(Joi.string()).required(),
+    slug: Joi.string().optional(),
+});
+
 
 
 module.exports = {
@@ -271,4 +278,5 @@ module.exports = {
     language: languagesSchema,
     messenger: messengerSchema,
     contact: contactSchema,
+    licence: licenceSchema
 };
