@@ -16,6 +16,7 @@ const Model = {
         populate: ["user"],
     },
     topic: {ref: "topic", translate: true, populate: ["specialty", "level"]},
+    theme: {ref: "theme", translate: true, populate: ["topic"]},
     department: {ref: "department", translate: true},
     events: {ref: "events", translate: true, populate: ["eventsCategory"]},
     eventsCategory: {ref: "eventsCategory", translate: true},
@@ -47,6 +48,7 @@ const TranslateModel = {
     format: {ref: "formatTranslate"},
     degree: {ref: "degreeTranslate"},
     topic: {ref: "topicTranslate"},
+    theme: {ref: "themeTranslate"},
     messenger: {ref: "messengerTranslate"},
     user: {ref: "userTranslate"},
 };

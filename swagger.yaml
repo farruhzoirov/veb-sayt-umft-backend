@@ -2557,6 +2557,203 @@ paths:
       tags:
         - Topic
 
+
+  ##Theme
+  /api/theme:
+            get:
+              summary: Get all themes
+              security:
+                - BearerAuth: [ ]
+              parameters:
+                - in: query
+                  name: limit
+                  schema:
+                    type: string
+                  required: false
+                - in: query
+                  name: page
+                  schema:
+                    type: string
+                  required: false
+                - in: query
+                  name: select
+                  schema:
+                    type: string
+                  required: false
+                - in: query
+                  name: search
+                  schema:
+                    type: string
+                  required: false
+              responses:
+                "200":
+                  description: List of themes
+                  content:
+                    application/json:
+                      schema:
+#                        $ref: "#/components/schemas/topics"
+              tags:
+                - Theme
+            post:
+              summary: Create a theme
+              security:
+                - BearerAuth: [ ]
+              requestBody:
+                description: Themes belongs to topics.
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: "#/components/schemas/themePost"
+              responses:
+                "201":
+                  description: Created successfully
+                  content:
+                    application/json:
+                      schema:
+                        $ref: "#/components/schemas/addModel"
+              tags:
+                - Theme
+
+  /api/theme/{id}:
+            get:
+              summary: Get a single theme by ID
+              security:
+                - BearerAuth: [ ]
+              parameters:
+                - in: path
+                  name: id
+                  schema:
+                    type: string
+                  required: true
+              responses:
+                "200":
+                  description: Single theme
+                  content:
+                    application/json:
+                      schema:
+                        $ref: "#/components/schemas/topics"
+              tags:
+                - Theme
+            put:
+              summary: Update a theme by ID
+              security:
+                - BearerAuth: [ ]
+              parameters:
+                - in: path
+                  name: modelId
+                  schema:
+                    type: string
+                  required: true
+              requestBody:
+                description: Theme update payload
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: "#/components/schemas/themePut"
+              responses:
+                "200":
+                  description: Updated successfully
+                  content:
+                    application/json:
+                      schema:
+                        $ref: "#/components/schemas/updateModel"
+              tags:
+                - Theme
+            delete:
+              summary: Delete a theme by ID
+              security:
+                - BearerAuth: [ ]
+              parameters:
+                - in: path
+                  name: id
+                  schema:
+                    type: string
+                  required: true
+              responses:
+                "200":
+                  description: Deleted successfully
+                  content:
+                    application/json:
+                      schema:
+                        $ref: "#/components/schemas/deleteModel"
+              tags:
+                - Theme
+
+            patch:
+              summary: Updating status
+              security:
+                - BearerAuth: [ ]
+              parameters:
+                - in: path
+                  name: id
+                  required: true
+                  description: ID of the news to be updated
+              requestBody:
+                description: to update model status
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        status:
+                          type: number
+              responses:
+                "201": # status code
+                  description: Patched model will come
+                  content:
+                    application/json:
+                      schema:
+                        type: object
+              tags:
+                - Theme
+
+  /api/theme/upload:
+            post:
+              summary: Uploading file and getting path
+              security:
+                - BearerAuth: [ ]
+              requestBody:
+                description: File must be sent
+                required: true
+                content:
+                  multipart/form-data:
+                    schema:
+                      type: object
+                      properties:
+                        file:
+                          type: string
+                          format: binary
+                          description: The file to upload.
+
+              responses:
+                "200": # status code
+                  description: File path
+                  content:
+                    application/json:
+                      schema:
+                        $ref: "#/components/schemas/uploadResponse"
+
+              tags:
+                - Theme
+
+  /api/theme/deleteFile:
+            delete:
+              summary: Deleting file and getting response
+              security:
+                - BearerAuth: [ ]
+              requestBody:
+                description: imagePath must be sent
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: "#/components/schemas/deleteFile"
+              tags:
+                - Theme
+
   ##EventsCategory
   /api/eventsCategory:
     get:
@@ -4638,6 +4835,45 @@ components:
                 type: string
               language:
                 type: string
+    themePost:
+      type: object
+      properties:
+        modelId:
+          type: string
+          description: It is optional
+        topic:
+          type: string
+        slug:
+          type: string
+        translate:
+          type: object
+          properties:
+            title:
+              type: string
+            text:
+              type: string
+            description:
+              type: string
+            language:
+              type: string
+    themePut:
+      type: object
+      properties:
+        topic:
+          type: string
+        slug:
+          type: string
+        translate:
+          type: object
+          properties:
+            title:
+              type: string
+            text:
+              type: string
+            description:
+              type: string
+            language:
+              type: string
     eventsCategory:
       type: object
       properties:

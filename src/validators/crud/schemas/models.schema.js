@@ -191,9 +191,22 @@ const topicsSchema = Joi.object({
         name: Joi.string().required(),
         text: Joi.string().optional(),
         description: Joi.string().optional(),
-        language: Joi.string().required(),
+        language: Joi.string().optional(),
     }).required(),
 });
+
+const themeSchema = Joi.object({
+    modelId: Joi.string().optional(),
+    topic: Joi.string().optional(),
+    slug: Joi.string().optional(),
+    translate: Joi.object({
+        title: Joi.string().required(),
+        text: Joi.string().optional(),
+        description: Joi.string().optional(),
+        language: Joi.string().optional(),
+    }).required(),
+});
+
 
 const pagesSchema = Joi.object({
     modelId: Joi.string().optional(),
@@ -252,6 +265,7 @@ module.exports = {
     partner: partnersSchema,
     employee: employeeSchema,
     topic: topicsSchema,
+    theme: themeSchema,
     page: pagesSchema,
     language: languagesSchema,
     messenger: messengerSchema,
