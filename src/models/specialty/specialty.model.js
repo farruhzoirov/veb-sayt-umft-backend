@@ -48,10 +48,6 @@ const SpecialtySchema = new Schema({
         required: true,
     },
     prices: [PricesSchema],
-    duration: {
-        type: String,
-        required: true
-    },
     active: {
         type: Boolean,
         default: true,

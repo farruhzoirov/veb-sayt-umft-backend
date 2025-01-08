@@ -178,7 +178,7 @@ const employeeSchema = Joi.object({
             code: Joi.string().optional(),
             name: Joi.string().optional(),
         }).optional(),
-        language: Joi.string().required(),
+        language: Joi.string().optional(),
     }).required()
 });
 
