@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
 const BaseError = require("../../errors/base.error");
-const {Model} = require("../../common/constants/models.constants");
-const {getModelsHelper} = require("../../helpers/get-models.helper");
-const {addTranslations} = require("../../helpers/translate.helper");
+const { Model } = require("../../common/constants/models.constants");
+const { getModelsHelper } = require("../../helpers/get-models.helper");
+const { addTranslations } = require("../../helpers/translate.helper");
 const populateModelData = require("../../helpers/populate.helper");
 const fs = require("fs");
+const SocialSet = require("../../models/socialSet/socialSet.model");
 
 class AddModelsService {
     constructor() {
@@ -14,114 +15,109 @@ class AddModelsService {
     async addModel(modelName, modelData) {
         const dynamicModel = getModelsHelper(modelName);
 
-        let newData;
-
         if (!modelData.modelId) {
-            const isSlugExists = await dynamicModel
-                .findOne({slug: modelData.slug})
-                .lean();
-
-            if (isSlugExists) {
-                throw BaseError.BadRequest("Slug already exists");
-            }
-
-            const isLanguageExists = await dynamicModel.find().lean();
-
-            if (modelName.trim() === "language") {
-                if (!isLanguageExists.length) {
-                    newData = await this.addingModelData(dynamicModel, modelData, true);
-                    return newData;
-                }
-                newData = await this.addingModelData(dynamicModel, modelData);
-                return newData;
-            }
-
-            if (modelName.trim() === "level") {
-                newData = await this.addingModelData(dynamicModel, modelData, true);
-                return newData;
-            }
-
-            newData = await this.addingModelData(dynamicModel, modelData);
-
-            if (this.Model[modelName].populate) {
-                newData = await populateModelData(
-                    dynamicModel,
-                    newData._id,
-                    this.Model[modelName].populate
-                );
-            }
-
-            if (this.Model[modelName].translate) {
-                newData.translates = [
-                    await addTranslations(modelName, newData._id, modelData.translate),
-                ];
-            }
-
-            return newData;
+            await this.checkSlugExists(dynamicModel, modelData.slug);
+            return await this.handleNewModel(dynamicModel, modelName, modelData);
         }
 
+        return await this.handleExistingModel(dynamicModel, modelName, modelData);
+    }
+
+    async checkSlugExists(dynamicModel, slug) {
+        const isSlugExists = await dynamicModel.findOne({ slug }).lean();
+        if (isSlugExists) {
+            throw BaseError.BadRequest("Slug already exists");
+        }
+    }
+
+    async handleNewModel(dynamicModel, modelName, modelData) {
+        const isLanguageExists = await dynamicModel.find().lean();
+        const isDefault = modelName.trim() === "language" && !isLanguageExists.length;
+
+        let newData = await this.addingModelData(dynamicModel, modelData, isDefault);
+
+        if (this.Model[modelName].populate) {
+            newData = await populateModelData(dynamicModel, newData._id, this.Model[modelName].populate);
+        }
+
+        if (this.Model[modelName].translate) {
+            newData.translates = [await addTranslations(modelName, newData._id, modelData.translate)];
+        }
+
+        return newData;
+    }
+
+    async handleExistingModel(dynamicModel, modelName, modelData) {
         if (!mongoose.Types.ObjectId.isValid(modelData.modelId)) {
             throw BaseError.BadRequest("Invalid modelId");
         }
 
         const existingModel = await dynamicModel.findById(modelData.modelId);
-
         if (!existingModel) {
             throw BaseError.NotFound("Model doesn't exist");
         }
 
-        newData = existingModel.toObject();
+        let newData = existingModel.toObject();
 
         if (this.Model[modelName].populate) {
-            newData = await populateModelData(
-                dynamicModel,
-                modelData.modelId,
-                this.Model[modelName].populate
-            );
+            newData = await populateModelData(dynamicModel, modelData.modelId, this.Model[modelName].populate);
         }
 
         if (this.Model[modelName].translate) {
-            newData.translates = [
-                await addTranslations(
-                    modelName,
-                    modelData.modelId,
-                    modelData.translate
-                ),
-            ];
+            newData.translates = [await addTranslations(modelName, modelData.modelId, modelData.translate)];
         }
 
         return newData;
     }
 
     async addingModelData(dynamicModel, modelData, isDefault = false) {
-        if (modelData.img && !Array.isArray(modelData.img)) {
-            if (fs.existsSync(modelData.img)) {
-                modelData.img = [modelData.img];
+        modelData.img = await this.validateAndFormatImages(modelData.img);
+        modelData.socialLinks = await this.createSocialLinks(modelData.socials);
+
+        if (typeof isDefault !== "undefined") {
+            modelData.isDefault = isDefault;
+        }
+
+        const savedDocument = new dynamicModel({ ...modelData, img: modelData.img || [] });
+        await savedDocument.save();
+
+        const savedDocumentObject = savedDocument.toObject();
+        delete savedDocumentObject.updatedAt;
+        delete savedDocumentObject.__v;
+
+        return savedDocumentObject;
+    }
+
+    async validateAndFormatImages(img) {
+        if (img && !Array.isArray(img)) {
+            if (fs.existsSync(img)) {
+                return [img];
             } else {
                 throw BaseError.BadRequest("Image doesn't exist");
             }
         }
 
-        if (Array.isArray(modelData.img) && modelData.img.length) {
-            for (const imgPath of modelData.img) {
+        if (Array.isArray(img) && img.length) {
+            for (const imgPath of img) {
                 if (!fs.existsSync(imgPath)) {
                     throw BaseError.BadRequest(`Image doesn't exist: ${imgPath}`);
                 }
             }
         }
 
-        const savedDocument = new dynamicModel({
-            ...modelData,
-            ...(typeof isDefault !== "undefined" && {isDefault}),
-            img: modelData.img || [],
-        });
+        return img;
+    }
 
-        await savedDocument.save();
-        const savedDocumentObject = savedDocument.toObject();
-        delete savedDocumentObject.updatedAt;
-        delete savedDocumentObject.__v;
-
-        return savedDocumentObject;
+    async createSocialLinks(socials) {
+        const socialLinks = [];
+        if (Array.isArray(socials)) {
+            for (const social of socials) {
+                const newSocialSet = new SocialSet({ ...social, university: false });
+                await newSocialSet.save();
+                socialLinks.push(newSocialSet._id);
+            }
+        }
+        return socialLinks;
     }
 }
 

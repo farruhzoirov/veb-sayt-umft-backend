@@ -13,7 +13,6 @@ const PricesSchema = new Schema({
 })
 
 
-
 const DurationSchema = new Schema({
     format: {
         type: Schema.Types.ObjectId,

@@ -3,7 +3,7 @@
 const Model = {
     university: {ref: "university", translate: true},
     category: {ref: "category", translate: true},
-    employee: {ref: "employee", translate: true, populate: ["department"]},
+    employee: {ref: "employee", translate: true, populate: ["department, socialLinks"]},
     specialty: {
         ref: "specialty",
         translate: true,

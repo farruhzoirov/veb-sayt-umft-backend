@@ -15,12 +15,7 @@ const EmployeeSchema = new Schema({
     employeeId: {
         type: Number
     },
-    socialLinks: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "socialSet",
-        },
-    ],
+    socialLinks: [],
     contractNumber: {
         type: String
     },

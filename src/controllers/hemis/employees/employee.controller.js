@@ -10,8 +10,11 @@ class EmployeeController {
 
     async fetchEmployee(req, res, next) {
         try {
-            const employeesData = await this.fetchEmployeesService.fetchEmployees();
-            res.status(200).json(employeesData);
+            await this.fetchEmployeesService.fetchEmployees();
+            res.status(200).json({
+                ok: true,
+                message: "Employees fetched or synced successfully",
+            });
         } catch (err) {
             next(err);
         }

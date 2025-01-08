@@ -102,7 +102,9 @@ class FetchEmployeesService {
             const existingEmployee = await Employee.findOne({hemisId: employee.hemis_id});
             const matchDepartment = await Department.findOne({hemisId: employee.department.id});
             if (existingEmployee) {
+                console.log(existingEmployee.updatedAt.toISOString(), employee.updatedAt);
                 if (existingEmployee.updatedAt.toISOString() !== employee.updatedAt) {
+                    console.log('ok')
                     await existingEmployee.updateOne({
                         $set: {
                             hemisId: employee.hemis_id,
@@ -141,6 +143,7 @@ class FetchEmployeesService {
                     }
                     console.log(`Updated translation for employee with hemisId: ${employee.hemis_id}`);
                 }
+
             } else {
                 const newEmployee = await new Employee({
                     hemisId: employee.hemis_id,

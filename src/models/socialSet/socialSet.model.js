@@ -19,7 +19,7 @@ const SocialSetSchema = new Schema(
         },
         university: {
             type: Boolean,
-            default: false,
+            default: true,
         },
         status: {
             type: Number,
@@ -31,4 +31,4 @@ const SocialSetSchema = new Schema(
     }
 );
 
-module.exports = mongoose.model("socialSet", SocialSetSchema);
+module.exports = mongoose.model("employee", SocialSetSchema);
