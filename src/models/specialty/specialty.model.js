@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 
 const PricesSchema = new Schema({
     price: {
-        type: Number,
+        type: String,
         required: true
     },
     format: {
