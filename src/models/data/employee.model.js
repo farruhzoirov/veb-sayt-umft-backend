@@ -11,6 +11,9 @@ const EmployeeSchema = new Schema({
         ref: 'department',
         default: null
     },
+    slug: {
+        type: String
+    },
     img: [],
     employeeId: {
         type: Number

@@ -50,7 +50,7 @@ paths:
     get:
       summary: checking user exist or don't.
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       responses:
         "200": # status code
           description: A JSON array of user names
@@ -68,7 +68,7 @@ paths:
     get:
       summary: All users.
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: query
           name: limit
@@ -151,7 +151,7 @@ paths:
     get:
       summary: Getting one user by id.
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: userId
@@ -192,7 +192,7 @@ paths:
     get:
       summary: All applicants.
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: query
           name: limit
@@ -268,7 +268,7 @@ paths:
     get:
       summary: All languages
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: query
           name: limit
@@ -302,7 +302,7 @@ paths:
     post:
       summary: Creating language.
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: Optional description in *Markdown*
         required: true
@@ -324,7 +324,7 @@ paths:
     get:
       summary: Getting one language.
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -345,7 +345,7 @@ paths:
     put:
       summary: Update one language.
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -371,7 +371,7 @@ paths:
     delete:
       summary: Deleting one language.
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -394,7 +394,7 @@ paths:
     post:
       summary: Uploading file and getting path
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: File must be sent
         required: true
@@ -425,7 +425,7 @@ paths:
     delete:
       summary: Deleting file and getting response
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: imagePath must be sent
         required: true
@@ -450,7 +450,7 @@ paths:
     get:
       summary: All categories.
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: query
           name: limit
@@ -485,7 +485,7 @@ paths:
     post:
       summary: Creating one category.
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: Birinchi model qo´shganda bodyda modelId kelmaydi translatelari uchun esa bo'lishi kerak.
         required: true
@@ -506,7 +506,7 @@ paths:
     put:
       summary: Updating one category
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -531,7 +531,7 @@ paths:
     get:
       summary: Getting one category by id.
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -553,7 +553,7 @@ paths:
     delete:
       summary: Deleting category.
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -572,7 +572,7 @@ paths:
     patch:
       summary: Updating status
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -602,7 +602,7 @@ paths:
     post:
       summary: Uploading file and getting path
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: File must be sent
         required: true
@@ -631,7 +631,7 @@ paths:
     delete:
       summary: Deleting file and getting response
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: imagePath must be sent
         required: true
@@ -670,7 +670,7 @@ paths:
     get:
       summary: All news.
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: query
           name: limit
@@ -709,7 +709,7 @@ paths:
     post:
       summary: Creating news.
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: Optional description in *Markdown*
         required: true
@@ -731,7 +731,7 @@ paths:
     get:
       summary: Getting one news.
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -756,7 +756,7 @@ paths:
     put:
       summary: Updating news.
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
           parameters:
             - in: path
               name: id
@@ -783,7 +783,7 @@ paths:
     delete:
       summary: Deleting news.
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -802,7 +802,7 @@ paths:
     patch:
       summary: Updating status
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -832,7 +832,7 @@ paths:
     post:
       summary: Uploading file and getting path
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: File must be sent
         required: true
@@ -861,7 +861,7 @@ paths:
     delete:
       summary: Deleting file and getting response
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: imagePath must be sent
         required: true
@@ -877,7 +877,7 @@ paths:
     get:
       summary: All pages.
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: query
           name: limit
@@ -918,7 +918,7 @@ paths:
     post:
       summary: Creating one page.
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: Optional description in *Markdown*
         required: true
@@ -938,7 +938,7 @@ paths:
     put:
       summary: Updating pages.
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: Optional description in *Markdown*
         required: true
@@ -1015,7 +1015,7 @@ paths:
     get:
       summary: Getting one page.
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -1040,7 +1040,7 @@ paths:
     delete:
       summary: Deleting page by id
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -1062,7 +1062,7 @@ paths:
     patch:
       summary: Updating status
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -1092,7 +1092,7 @@ paths:
     post:
       summary: Uploading file and getting path
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: File must be sent
         required: true
@@ -1121,7 +1121,7 @@ paths:
     delete:
       summary: Deleting file and getting response
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: imagePath must be sent
         required: true
@@ -1136,7 +1136,7 @@ paths:
     get:
       summary: Get all degrees
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: query
           name: limit
@@ -1173,7 +1173,7 @@ paths:
     post:
       summary: Create a degree
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: Degree creation payload
         required: true
@@ -1195,7 +1195,7 @@ paths:
     get:
       summary: Get a single degree by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -1215,7 +1215,7 @@ paths:
     put:
       summary: Update a degree by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -1242,7 +1242,7 @@ paths:
     delete:
       summary: Delete a degree by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -1265,7 +1265,7 @@ paths:
     patch:
       summary: Updating status
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -1295,7 +1295,7 @@ paths:
     post:
       summary: Uploading file and getting path
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: File must be sent
         required: true
@@ -1324,7 +1324,7 @@ paths:
     delete:
       summary: Deleting file and getting response
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: imagePath must be sent
         required: true
@@ -1341,7 +1341,7 @@ paths:
     get:
       summary: Fetch or sync all specialties
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       responses:
         "200":
           description: For sync specialties
@@ -1352,7 +1352,7 @@ paths:
     get:
       summary: Get all specialties
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: query
           name: limit
@@ -1389,7 +1389,7 @@ paths:
     post:
       summary: Add a specialties translate.
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: Specialty creation payload
         required: true
@@ -1402,8 +1402,8 @@ paths:
           description: Specialty created successfully
           content:
             application/json:
-              # schema:
-              #   $ref: "#/components/schemas/addModel"
+            # schema:
+            #   $ref: "#/components/schemas/addModel"
       tags:
         - Specialty
 
@@ -1411,7 +1411,7 @@ paths:
     get:
       summary: Get a single Specialty by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -1423,14 +1423,14 @@ paths:
           description: Single Specialty
           content:
             application/json:
-              # schema:
-              #   $ref: "#/components/schemas/directionAll"
+            # schema:
+            #   $ref: "#/components/schemas/directionAll"
       tags:
         - Specialty
     put:
       summary: Update a Specialty by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -1452,14 +1452,14 @@ paths:
               schema:
               type:
                 object
-                # $ref: "#/components/schemas/updateModel"
+              # $ref: "#/components/schemas/updateModel"
       tags:
         - Specialty
 
     delete:
       summary: Delete a Specialty by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -1479,7 +1479,7 @@ paths:
     patch:
       summary: Updating status
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -1509,7 +1509,7 @@ paths:
     post:
       summary: Uploading file and getting path
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: File must be sent
         required: true
@@ -1538,7 +1538,7 @@ paths:
     delete:
       summary: Deleting file and getting response
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: imagePath must be sent
         required: true
@@ -1554,7 +1554,7 @@ paths:
     get:
       summary: Sync all departments from hemis api.
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: query
           name: limit
@@ -1587,7 +1587,7 @@ paths:
     get:
       summary: Get all departments
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: query
           name: limit
@@ -1619,7 +1619,7 @@ paths:
     post:
       summary: Add a department translates.
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: Faculty creation payload
         required: true
@@ -1641,7 +1641,7 @@ paths:
     get:
       summary: Get a single department by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -1660,7 +1660,7 @@ paths:
     put:
       summary: Update a department by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: modelId
@@ -1687,7 +1687,7 @@ paths:
     delete:
       summary: Delete a department by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -1708,7 +1708,7 @@ paths:
     patch:
       summary: Updating status
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -1738,7 +1738,7 @@ paths:
     post:
       summary: Uploading file and getting path
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: File must be sent
         required: true
@@ -1767,7 +1767,7 @@ paths:
     delete:
       summary: Deleting file and getting response
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: imagePath must be sent
         required: true
@@ -1783,7 +1783,7 @@ paths:
     get:
       summary: Get all formats
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: query
           name: limit
@@ -1815,7 +1815,7 @@ paths:
     post:
       summary: Create a format
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: Formats creation payload
         required: true
@@ -1837,7 +1837,7 @@ paths:
     get:
       summary: Get a single format by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -1856,7 +1856,7 @@ paths:
     put:
       summary: Update a format by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: modelId
@@ -1883,7 +1883,7 @@ paths:
     delete:
       summary: Delete a format by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -1904,7 +1904,7 @@ paths:
     patch:
       summary: Updating status
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -1934,7 +1934,7 @@ paths:
     post:
       summary: Uploading file and getting path
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: File must be sent
         required: true
@@ -1963,7 +1963,7 @@ paths:
     delete:
       summary: Deleting file and getting response
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: imagePath must be sent
         required: true
@@ -1979,7 +1979,7 @@ paths:
     get:
       summary: Get all levels
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: query
           name: limit
@@ -2010,7 +2010,7 @@ paths:
     post:
       summary: Create a level
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: Levels creation payload
         required: true
@@ -2032,7 +2032,7 @@ paths:
     get:
       summary: Get a single level by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -2051,7 +2051,7 @@ paths:
     put:
       summary: Update a level by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: modelId
@@ -2078,7 +2078,7 @@ paths:
     delete:
       summary: Delete a level by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -2098,7 +2098,7 @@ paths:
     patch:
       summary: Updating status
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -2128,7 +2128,7 @@ paths:
     post:
       summary: Uploading file and getting path
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: File must be sent
         required: true
@@ -2157,7 +2157,7 @@ paths:
     delete:
       summary: Deleting file and getting response
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: imagePath must be sent
         required: true
@@ -2173,7 +2173,7 @@ paths:
     get:
       summary: Get all partners
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: query
           name: limit
@@ -2204,7 +2204,7 @@ paths:
     post:
       summary: Create a partners
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: Partners creation payload
         required: true
@@ -2226,7 +2226,7 @@ paths:
     get:
       summary: Get a single partner by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -2245,7 +2245,7 @@ paths:
     put:
       summary: Update a partner by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: modelId
@@ -2271,7 +2271,7 @@ paths:
     delete:
       summary: Delete a partner by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -2291,7 +2291,7 @@ paths:
     patch:
       summary: Updating status
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -2321,7 +2321,7 @@ paths:
     post:
       summary: Uploading file and getting path
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: File must be sent
         required: true
@@ -2350,7 +2350,7 @@ paths:
     delete:
       summary: Deleting file and getting response
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: imagePath must be sent
         required: true
@@ -2366,7 +2366,7 @@ paths:
     get:
       summary: Get all topics
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: query
           name: limit
@@ -2400,7 +2400,7 @@ paths:
     post:
       summary: Create a topic
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: Topics creation payload (direction and level they are Ids)
         required: true
@@ -2422,7 +2422,7 @@ paths:
     get:
       summary: Get a single topic by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -2441,7 +2441,7 @@ paths:
     put:
       summary: Update a topic by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: modelId
@@ -2467,7 +2467,7 @@ paths:
     delete:
       summary: Delete a topic by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -2487,7 +2487,7 @@ paths:
     patch:
       summary: Updating status
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -2517,7 +2517,7 @@ paths:
     post:
       summary: Uploading file and getting path
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: File must be sent
         required: true
@@ -2546,7 +2546,7 @@ paths:
     delete:
       summary: Deleting file and getting response
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: imagePath must be sent
         required: true
@@ -2562,7 +2562,7 @@ paths:
     get:
       summary: Get all eventsCategory
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: query
           name: limit
@@ -2593,7 +2593,7 @@ paths:
     post:
       summary: Create a eventsCategory
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: eventsCategory creation payload
         required: true
@@ -2615,7 +2615,7 @@ paths:
     get:
       summary: Get a single eventsCategory by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -2634,7 +2634,7 @@ paths:
     put:
       summary: EventsCategory a eventsCategory by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: modelId
@@ -2660,7 +2660,7 @@ paths:
     delete:
       summary: Delete a eventsCategory by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -2680,7 +2680,7 @@ paths:
     patch:
       summary: Updating status
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -2710,7 +2710,7 @@ paths:
     post:
       summary: Uploading file and getting path
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: File must be sent
         required: true
@@ -2739,7 +2739,7 @@ paths:
     delete:
       summary: Deleting file and getting response
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: imagePath must be sent
         required: true
@@ -2755,7 +2755,7 @@ paths:
     get:
       summary: Get all events
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: query
           name: limit
@@ -2789,7 +2789,7 @@ paths:
     post:
       summary: Create a events
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: event creation payload
         required: true
@@ -2811,7 +2811,7 @@ paths:
     get:
       summary: Get a single event by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -2830,7 +2830,7 @@ paths:
     put:
       summary: Update  events by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -2856,7 +2856,7 @@ paths:
     delete:
       summary: Delete a events by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -2876,7 +2876,7 @@ paths:
     patch:
       summary: Updating status
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -2906,7 +2906,7 @@ paths:
     post:
       summary: Uploading file and getting path
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: File must be sent
         required: true
@@ -2937,7 +2937,7 @@ paths:
     delete:
       summary: Deleting file and getting response
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: imagePath must be sent
         required: true
@@ -2948,12 +2948,12 @@ paths:
       tags:
         - Events
 
-  ##SpecialistsInfo
-  /api/specialistInfo:
+  ##Employee
+  /api/employee:
     get:
-      summary: Get all specialistsInfo
+      summary: Get all Employees
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: query
           name: limit
@@ -2977,19 +2977,19 @@ paths:
           required: false
       responses:
         "200":
-          description: List of specialistsInfo
+          description: List of Employees
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/specialistsInfo"
       tags:
-        - SpecialistsInfo
+        - Employee
     post:
-      summary: Create a specialistInfo
+      summary: Create a employee
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
-        description: specialistInfo creation payload
+        description: employee creation payload
         required: true
         content:
           application/json:
@@ -3003,13 +3003,13 @@ paths:
               schema:
                 $ref: "#/components/schemas/addModel"
       tags:
-        - SpecialistsInfo
+        - Employee
 
-  /api/specialistInfo/{id}:
+  /api/employee/{id}:
     get:
-      summary: Get a single specialistInfo by ID
+      summary: Get a single employee by id
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -3018,17 +3018,17 @@ paths:
           required: true
       responses:
         "200":
-          description: Single specialistInfo
+          description: Single employee
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/specialistsInfo"
       tags:
-        - SpecialistsInfo
+        - Employee
     put:
-      summary: Update  specialistInfo by ID
+      summary: Update  employee by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: modelId
@@ -3036,7 +3036,7 @@ paths:
             type: string
           required: true
       requestBody:
-        description: specialistInfo update payload
+        description: Employee update payload
         required: true
         content:
           application/json:
@@ -3050,11 +3050,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/updateModel"
       tags:
-        - SpecialistsInfo
+        - Employee
     delete:
-      summary: Delete a specialistInfo by ID
+      summary: Delete a employee by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -3069,17 +3069,17 @@ paths:
               schema:
                 $ref: "#/components/schemas/deleteModel"
       tags:
-        - SpecialistsInfo
+        - Employee
 
     patch:
       summary: Updating status
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
           required: true
-          description: ID of the specialistsInfo to be updated
+          description: ID of the employee to be updated
       requestBody:
         description: to update model status
         required: true
@@ -3098,13 +3098,13 @@ paths:
               schema:
                 type: object
       tags:
-        - SpecialistsInfo
+        - Employee
 
-  /api/specialistsInfo/upload:
+  /api/employee/upload:
     post:
       summary: Uploading file and getting path
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: File must be sent
         required: true
@@ -3127,13 +3127,13 @@ paths:
                 $ref: "#/components/schemas/uploadResponse"
 
       tags:
-        - SpecialistsInfo
+        - Employee
 
-  /api/specialistsInfo/deleteFile:
+  /api/employee/deleteFile:
     delete:
       summary: Deleting file and getting response
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: imagePath must be sent
         required: true
@@ -3142,14 +3142,14 @@ paths:
             schema:
               $ref: "#/components/schemas/deleteFile"
       tags:
-        - SpecialistsInfo
+        - Employee
 
   ##University
   /api/university:
     get:
       summary: Get all university
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: query
           name: limit
@@ -3183,7 +3183,7 @@ paths:
     post:
       summary: Create a university
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: specialistInfo creation payload
         required: true
@@ -3205,7 +3205,7 @@ paths:
     get:
       summary: Get a single university by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -3224,7 +3224,7 @@ paths:
     put:
       summary: Update  university by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: modelId
@@ -3250,7 +3250,7 @@ paths:
     delete:
       summary: Delete a university by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -3270,7 +3270,7 @@ paths:
     patch:
       summary: Updating status
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -3300,7 +3300,7 @@ paths:
     post:
       summary: Uploading file and getting path
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: File must be sent
         required: true
@@ -3329,7 +3329,7 @@ paths:
     delete:
       summary: Deleting file and getting response
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: imagePath must be sent
         required: true
@@ -3345,7 +3345,7 @@ paths:
     get:
       summary: Get all messengers
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: query
           name: limit
@@ -3373,13 +3373,13 @@ paths:
           content:
             application/json:
               schema:
-                # $ref: "#/components/schemas/messengers"
+              # $ref: "#/components/schemas/messengers"
       tags:
         - Messenger
     post:
       summary: Create a messenger
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: messengers creation payload
         required: true
@@ -3393,14 +3393,14 @@ paths:
           content:
             application/json:
               schema:
-                # $ref: "#/components/schemas/addModel"
+              # $ref: "#/components/schemas/addModel"
       tags:
         - Messenger
   /api/messenger/{id}:
     get:
       summary: Get a single messengers by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -3413,13 +3413,13 @@ paths:
           content:
             application/json:
               schema:
-                # $ref: "#/components/schemas/messengers"
+              # $ref: "#/components/schemas/messengers"
       tags:
         - Messenger
     put:
       summary: Update  messenger by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: modelId
@@ -3439,13 +3439,13 @@ paths:
           content:
             application/json:
               schema:
-                # $ref: "#/components/schemas/updateModel"
+              # $ref: "#/components/schemas/updateModel"
       tags:
         - Messenger
     delete:
       summary: Delete a messenger by ID
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -3458,14 +3458,14 @@ paths:
           content:
             application/json:
               schema:
-                # $ref: "#/components/schemas/deleteModel"
+              # $ref: "#/components/schemas/deleteModel"
       tags:
         - Messenger
 
     patch:
       summary: Updating status
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -3494,7 +3494,7 @@ paths:
     post:
       summary: Uploading file and getting path
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: File must be sent
         required: true
@@ -3514,7 +3514,7 @@ paths:
           content:
             application/json:
               schema:
-                # $ref: "#/components/schemas/uploadResponse"
+              # $ref: "#/components/schemas/uploadResponse"
 
       tags:
         - Messenger
@@ -3522,16 +3522,209 @@ paths:
     delete:
       summary: Deleting file and getting response
       security:
-        - BearerAuth: []
+        - BearerAuth: [ ]
       requestBody:
         description: imagePath must be sent
         required: true
         content:
           application/json:
             schema:
-              # $ref: "#/components/schemas/deleteFile"
+            # $ref: "#/components/schemas/deleteFile"
       tags:
         - Messenger
+
+
+  ##Contact
+  /api/contact:
+    get:
+      summary: Get all contacts
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: search
+          schema:
+            type: string
+          required: false
+      responses:
+        "200":
+          description: List of contacts
+          content:
+            application/json:
+              schema:
+              # $ref: "#/components/schemas/messengers"
+      tags:
+        - Contact
+    post:
+      summary: Create a contact
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: Contacts creation payload
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/contactPost"
+      responses:
+        "201":
+          description: Created successfully
+          content:
+            application/json:
+              schema:
+              # $ref: "#/components/schemas/addModel"
+      tags:
+        - Contact
+  /api/contact/{id}:
+    get:
+      summary: Get a single contact by ID
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Single contacts
+          content:
+            application/json:
+              schema:
+              # $ref: "#/components/schemas/messengers"
+      tags:
+        - Contact
+    put:
+      summary: Update  contact by ID
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      requestBody:
+        description: Contacts update payload
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/contactPost"
+      responses:
+        "200":
+          description: Updated successfully
+          content:
+            application/json:
+              schema:
+              # $ref: "#/components/schemas/updateModel"
+      tags:
+        - Contact
+    delete:
+      summary: Delete a contact by ID
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Deleted successfully
+          content:
+            application/json:
+              schema:
+              # $ref: "#/components/schemas/deleteModel"
+      tags:
+        - Contact
+
+    patch:
+      summary: Updating status
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID of the contact to be updated
+      requestBody:
+        description: to update model status
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+      responses:
+        "201": # status code
+          description: Patched model will come
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+        - Contact
+  /api/contact/upload:
+    post:
+      summary: Uploading file and getting path
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: File must be sent
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload.
+
+      responses:
+        "200": # status code
+          description: File path
+          content:
+            application/json:
+              schema:
+              # $ref: "#/components/schemas/uploadResponse"
+      tags:
+        - Contact
+  /api/contact/deleteFile:
+    delete:
+      summary: Deleting file and getting response
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: imagePath must be sent
+        required: true
+        content:
+          application/json:
+            schema:
+            # $ref: "#/components/schemas/deleteFile"
+      tags:
+        - Contact
 
 #Components
 components:
@@ -4549,7 +4742,7 @@ components:
           type: string
         to:
           type: string
-        img: []
+        img: [ ]
         slug:
           type: string
         status:
@@ -4585,7 +4778,7 @@ components:
           type: string
         to:
           type: string
-        img: []
+        img: [ ]
         slug:
           type: string
         status:
@@ -4775,9 +4968,6 @@ components:
       properties:
         modelId:
           type: string
-        link:
-          type: string
-          format: uri
         slug:
           type: string
         img:
@@ -4794,4 +4984,21 @@ components:
           required:
             - name
             - language
-      required: []
+      required: [ ]
+    contactPost:
+      type: object
+      properties:
+        email:
+          type: string
+        phone:
+          type: string
+        location:
+            type: string
+        address:
+            type: string
+        slug:
+          type: string
+        img:
+          type: array
+
+      required: [ ]

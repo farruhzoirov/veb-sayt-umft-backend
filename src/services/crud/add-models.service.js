@@ -5,7 +5,7 @@ const { getModelsHelper } = require("../../helpers/get-models.helper");
 const { addTranslations } = require("../../helpers/translate.helper");
 const populateModelData = require("../../helpers/populate.helper");
 const fs = require("fs");
-const SocialSet = require("../../models/socialSet/socialSet.model");
+const Socials = require("../../models/socials/socials.model");
 
 class AddModelsService {
     constructor() {
@@ -34,7 +34,7 @@ class AddModelsService {
         const isLanguageExists = await dynamicModel.find().lean();
         const isDefault = modelName.trim() === "language" && !isLanguageExists.length;
 
-        let newData = await this.addingModelData(dynamicModel, modelData, isDefault);
+        let newData = await this.addingModelData(dynamicModel, modelData, modelName, isDefault);
 
         if (this.Model[modelName].populate) {
             newData = await populateModelData(dynamicModel, newData._id, this.Model[modelName].populate);
@@ -70,10 +70,11 @@ class AddModelsService {
         return newData;
     }
 
-    async addingModelData(dynamicModel, modelData, isDefault = false) {
+    async addingModelData(dynamicModel, modelData, modelName, isDefault = false) {
         modelData.img = await this.validateAndFormatImages(modelData.img);
-        modelData.socialLinks = await this.createSocialLinks(modelData.socials);
-
+        if (modelName.trim() === "employee") {
+            modelData.socialLinks = await this.createSocialLinks(modelData.socials);
+        }
         if (typeof isDefault !== "undefined") {
             modelData.isDefault = isDefault;
         }
@@ -112,7 +113,7 @@ class AddModelsService {
         const socialLinks = [];
         if (Array.isArray(socials)) {
             for (const social of socials) {
-                const newSocialSet = new SocialSet({ ...social, university: false });
+                const newSocialSet = new Socials({ ...social, university: false });
                 await newSocialSet.save();
                 socialLinks.push(newSocialSet._id);
             }

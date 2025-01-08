@@ -13,7 +13,13 @@ const ContactsSchema = new mongoose.Schema({
         type: String,
         required: [true, "Slug is required"]
     },
-    
+    location: {
+        type: String,
+    },
+    address: {
+        type: String,
+    },
+    img: []
 }, {
     timestamps: true
 }

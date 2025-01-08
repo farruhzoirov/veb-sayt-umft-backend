@@ -48,6 +48,10 @@ const eventsCategoryTranslateSchema = require("../models/translate/events-catego
 const specialtySchema = require("../models/specialty/specialty.model");
 const specialtyTranslateSchema = require("../models/translate/specialty.model");
 
+const socialsSchema = require("../models/socials/socials.model");
+
+const contactsSchema = require("../models/data/contacts.model");
+
 const employeeSchema = require("../models/data/employee.model");
 const employeeTranslateSchema = require("../models/translate/employee.model");
 
@@ -94,6 +98,10 @@ function getModelsHelper(modelKey) {
       return specialtySchema;
     case Model.employee.ref:
       return employeeSchema
+    case Model.socials.ref:
+      return socialsSchema;
+    case Model.contact.ref:
+      return contactsSchema;
     default:
       throw new Error(`Model "${modelKey}" not found.`);
   }
@@ -105,7 +113,6 @@ function getModelsTranslateHelper(modelKey) {
       return universityTranslateSchema;
     case TranslateModel.category.ref:
       return categoryTranslateSchema;
-
     case TranslateModel.events.ref:
       return eventsTranslateSchema;
     case TranslateModel.news.ref:

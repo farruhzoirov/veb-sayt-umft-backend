@@ -137,16 +137,45 @@ const partnersSchema = Joi.object({
     }).required(),
 });
 
-const specialistsInfoSchema = Joi.object({
-    modelId: Joi.string().optional(),
-    user: Joi.string().required(),
+const employeeSchema = Joi.object({
+    hemisId: Joi.number().required(),
+    department: Joi.string().optional(),
+    img: Joi.array().items(Joi.string()).optional(),
+    employeeId: Joi.number().optional(),
+    socialLinks: Joi.array().items(Joi.string()).optional(),
+    contractNumber: Joi.string().optional(),
+    decreeNumber: Joi.string().optional(),
+    contractDate: Joi.date().optional(),
+    birthDate: Joi.date().optional(),
+    decreeDate: Joi.date().optional(),
     translate: Joi.object({
-        completed_university: Joi.string().required(),
-        text: Joi.string().optional(),
-        study_duration: Joi.string().required(),
-        description: Joi.string().required(),
+        fullName: Joi.string().required(),
+        shortName: Joi.string().optional(),
+        firstName: Joi.string().optional(),
+        secondName: Joi.string().optional(),
+        thirdName: Joi.string().optional(),
+        gender: Joi.object({
+            code: Joi.string().optional(),
+            name: Joi.string().optional(),
+        }).optional(),
+        academicRank: Joi.object({
+            code: Joi.string().optional(),
+            name: Joi.string().optional(),
+        }).optional(),
+        staffPosition: Joi.object({
+            code: Joi.string().optional(),
+            name: Joi.string().optional(),
+        }).optional(),
+        employeeType: Joi.object({
+            code: Joi.string().optional(),
+            name: Joi.string().optional(),
+        }).optional(),
+        employeeStatus: Joi.object({
+            code: Joi.string().optional(),
+            name: Joi.string().optional(),
+        }).optional(),
         language: Joi.string().required(),
-    }).required(),
+    }).required()
 });
 
 const topicsSchema = Joi.object({
@@ -192,6 +221,16 @@ const messengerSchema = Joi.object({
     },
 });
 
+const contactSchema = Joi.object({
+    slug: Joi.string().optional(),
+    email: Joi.string().required(),
+    phone: Joi.string().required(),
+    location: Joi.string().required(),
+    address: Joi.string().required(),
+});
+
+
+
 module.exports = {
     category: categorySchema,
     university: universitySchema,
@@ -204,9 +243,10 @@ module.exports = {
     level: levelSchema,
     news: newsSchema,
     partner: partnersSchema,
-    specialistInfo: specialistsInfoSchema,
+    employee: employeeSchema,
     topic: topicsSchema,
     page: pagesSchema,
     language: languagesSchema,
     messenger: messengerSchema,
+    contact: contactSchema,
 };

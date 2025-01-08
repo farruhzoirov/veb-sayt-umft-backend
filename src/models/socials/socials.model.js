@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const {Schema} = require("mongoose");
 
-const SocialSetSchema = new Schema(
+const SocialsSchema = new Schema(
     {
         messenger: {
             type: Schema.Types.ObjectId,
@@ -11,11 +11,6 @@ const SocialSetSchema = new Schema(
         link: {
             type: String,
             required: true,
-        },
-        employee: {
-            type: Schema.Types.ObjectId,
-            ref: 'employee',
-            default: null,
         },
         university: {
             type: Boolean,
@@ -31,4 +26,4 @@ const SocialSetSchema = new Schema(
     }
 );
 
-module.exports = mongoose.model("employee", SocialSetSchema);
+module.exports = mongoose.model("socials", SocialsSchema);
