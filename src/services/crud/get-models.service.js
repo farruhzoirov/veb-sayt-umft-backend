@@ -17,7 +17,7 @@ class GetModelsService {
     }
 
     async getAll(req, res, modelName) {
-        const dynamicModel = getModelsHelper(model);
+        const dynamicModel = getModelsHelper(modelName);
 
         let page = req.query.page || 1;
         let limit = req.query.limit || 20;
@@ -96,6 +96,7 @@ class GetModelsService {
                     for (const price of data.prices) {
                         if (price.format) {
                             price.format = await getPopulates('format', price.format);
+                            console.log(price.format)
                         }
                     }
                 }
