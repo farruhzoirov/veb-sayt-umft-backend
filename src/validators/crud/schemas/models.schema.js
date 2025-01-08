@@ -229,7 +229,10 @@ const contactSchema = Joi.object({
     slug: Joi.string().optional(),
     email: Joi.string().required(),
     phone: Joi.string().required(),
-    location: Joi.string().required(),
+    location: Joi.object({
+        lang: Joi.string().required(),
+        lat: Joi.string().required(),
+    }).required(),
     address: Joi.string().required(),
 });
 

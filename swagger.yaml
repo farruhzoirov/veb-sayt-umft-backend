@@ -4993,7 +4993,12 @@ components:
         phone:
           type: string
         location:
-            type: string
+            type: object
+            properties:
+                lang:
+                    type: string
+                lat:
+                    type: string
         address:
             type: string
         slug:
