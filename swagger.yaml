@@ -5227,16 +5227,21 @@ components:
         email:
           type: string
         phone:
-          type: string
-        location:
-            type: object
-            properties:
-                lang:
-                    type: string
-                lat:
-                    type: string
-        address:
+          type: array
+          items:
             type: string
+        location:
+            type: array
+            items:
+              type: object
+              properties:
+                  lang:
+                      type: string
+                  lat:
+                      type: string
+        address:
+            type: array
+            items: string
         slug:
           type: string
         img:

@@ -5,21 +5,16 @@ const ContactsSchema = new mongoose.Schema({
             type: String,
             required: true,
         },
-        phone: {
-            type: String,
-            required: true,
-        },
+        phone: [],
         slug: {
             type: String,
             required: [true, "Slug is required"]
         },
-        location: {
+        location: [{
             lang: String,
             lat: String
-        },
-        address: {
-            type: String,
-        },
+        }],
+        address: [],
         img: []
     }, {
         timestamps: true

@@ -1,4 +1,5 @@
 const Joi = require("joi");
+const {string} = require("joi");
 
 const universitySchema = Joi.object({
     modelId: Joi.string().optional(),
@@ -241,12 +242,12 @@ const messengerSchema = Joi.object({
 const contactSchema = Joi.object({
     slug: Joi.string().optional(),
     email: Joi.string().required(),
-    phone: Joi.string().required(),
-    location: Joi.object({
+    phone: Joi.array().items(string()).required(),
+    location: Joi.array().items({
         lang: Joi.string().required(),
         lat: Joi.string().required(),
     }).required(),
-    address: Joi.string().required(),
+    address: Joi.array().items(string()).required(),
 });
 
 
