@@ -41,9 +41,9 @@ const specialtySchema = Joi.object({
     prices: Joi.array().items(
         Joi.object({
             price: Joi.string().required(),
-            format: Joi.string().optional()
+            format: Joi.string().optional(),
+            duration: Joi.string().required()
         })),
-    duration: Joi.string().optional(),
     slug: Joi.string().optional(),
     translate: Joi.object({
         name: Joi.string().required(),

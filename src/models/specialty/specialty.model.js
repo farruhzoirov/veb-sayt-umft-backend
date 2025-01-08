@@ -9,6 +9,10 @@ const PricesSchema = new Schema({
     format: {
         type: Schema.Types.ObjectId,
         ref: 'format',
+    },
+    duration: {
+        type: String,
+        required: true
     }
 })
 
