@@ -26,15 +26,12 @@ async function getPopulates(model, _id) {
     }
 
     data = await dynamicModel.findById(_id).select("-__v").lean() || {}
-    console.log(model)
     if (Model[model].translate) {
         let transModel = TranslateModel[model].ref
         const dynamicTranslateModel = getModelsTranslateHelper(transModel);
         console.log("dynamicTranslateModel",dynamicTranslateModel)
         data.translates = await dynamicTranslateModel.find({[model]: _id}).select("-__v").lean()
-        console.log(data.translates)
     }
-    console.log("data",data)
     return data
 }
 
