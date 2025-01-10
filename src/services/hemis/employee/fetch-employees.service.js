@@ -57,7 +57,7 @@ class FetchEmployeesService {
                 hemisId: employee.hemis_id,
                 department: matchDepartment ? matchDepartment._id : null,
                 img: employee.image,
-                socials: [],
+                socialLinks: [],
                 slug: "",
                 employeeId: employee.employee_id_number,
                 contractNumber: employee.contract_number,
@@ -104,9 +104,7 @@ class FetchEmployeesService {
             const existingEmployee = await Employee.findOne({hemisId: employee.hemis_id});
             const matchDepartment = await Department.findOne({hemisId: employee.department.id});
             if (existingEmployee) {
-                console.log(existingEmployee.updatedAt.toISOString(), employee.updatedAt);
                 if (existingEmployee.updatedAt.toISOString() !== employee.updatedAt) {
-                    console.log('ok')
                     await existingEmployee.updateOne({
                         $set: {
                             hemisId: employee.hemis_id,
@@ -151,7 +149,7 @@ class FetchEmployeesService {
                     hemisId: employee.hemis_id,
                     department: matchDepartment ? matchDepartment._id : null,
                     img: employee.image,
-                    socials: [],
+                    socialLinks: [],
                     slug: "",
                     employeeId: employee.employee_id_number,
                     contractNumber: employee.contract_number,

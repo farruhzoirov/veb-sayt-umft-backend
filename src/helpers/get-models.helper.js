@@ -60,6 +60,8 @@ const employeeTranslateSchema = require("../models/translate/employee.model");
 
 const licenceSchema  = require("../models/data/licence.model");
 
+const socialSchema = require("../models/socials/socials.model");
+
 const {
     Model,
     TranslateModel,
@@ -111,6 +113,8 @@ function getModelsHelper(modelKey) {
             return contactsSchema;
         case Model.licence.ref:
             return licenceSchema;
+        case Model.social.ref:
+            return socialSchema;
         default:
             throw new Error(`Model "${modelKey}" not found.`);
     }
@@ -158,7 +162,7 @@ function getModelsTranslateHelper(modelKey) {
 async function getModel(req) {
     const model = req.params ? req.params.model : {};
     if (!Model.hasOwnProperty(model)) {
-        throw new Error('Model with that name"' + model + '" not found.');
+        throw new Error('Model with that name" ' + model + '" not found.');
     }
     return Model[model].ref;
 }

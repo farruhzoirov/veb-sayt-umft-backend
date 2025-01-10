@@ -1579,7 +1579,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/faculty"
+      #                $ref: "#/components/schemas/faculty"
       tags:
         - Department
 
@@ -2560,199 +2560,199 @@ paths:
 
   ##Theme
   /api/theme:
-            get:
-              summary: Get all themes
-              security:
-                - BearerAuth: [ ]
-              parameters:
-                - in: query
-                  name: limit
-                  schema:
-                    type: string
-                  required: false
-                - in: query
-                  name: page
-                  schema:
-                    type: string
-                  required: false
-                - in: query
-                  name: select
-                  schema:
-                    type: string
-                  required: false
-                - in: query
-                  name: search
-                  schema:
-                    type: string
-                  required: false
-              responses:
-                "200":
-                  description: List of themes
-                  content:
-                    application/json:
-                      schema:
-#                        $ref: "#/components/schemas/topics"
-              tags:
-                - Theme
-            post:
-              summary: Create a theme
-              security:
-                - BearerAuth: [ ]
-              requestBody:
-                description: Themes belongs to topics.
-                required: true
-                content:
-                  application/json:
-                    schema:
-                      $ref: "#/components/schemas/themePost"
-              responses:
-                "201":
-                  description: Created successfully
-                  content:
-                    application/json:
-                      schema:
-                        $ref: "#/components/schemas/addModel"
-              tags:
-                - Theme
+    get:
+      summary: Get all themes
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: search
+          schema:
+            type: string
+          required: false
+      responses:
+        "200":
+          description: List of themes
+          content:
+            application/json:
+              schema:
+      #                        $ref: "#/components/schemas/topics"
+      tags:
+        - Theme
+    post:
+      summary: Create a theme
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: Themes belongs to topics.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/themePost"
+      responses:
+        "201":
+          description: Created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/addModel"
+      tags:
+        - Theme
 
   /api/theme/{id}:
-            get:
-              summary: Get a single theme by ID
-              security:
-                - BearerAuth: [ ]
-              parameters:
-                - in: path
-                  name: id
-                  schema:
-                    type: string
-                  required: true
-              responses:
-                "200":
-                  description: Single theme
-                  content:
-                    application/json:
-                      schema:
-                        $ref: "#/components/schemas/topics"
-              tags:
-                - Theme
-            put:
-              summary: Update a theme by ID
-              security:
-                - BearerAuth: [ ]
-              parameters:
-                - in: path
-                  name: id
-                  schema:
-                    type: string
-                  required: true
-              requestBody:
-                description: Theme update payload
-                required: true
-                content:
-                  application/json:
-                    schema:
-                      $ref: "#/components/schemas/themePut"
-              responses:
-                "200":
-                  description: Updated successfully
-                  content:
-                    application/json:
-                      schema:
-                        $ref: "#/components/schemas/updateModel"
-              tags:
-                - Theme
-            delete:
-              summary: Delete a theme by ID
-              security:
-                - BearerAuth: [ ]
-              parameters:
-                - in: path
-                  name: id
-                  schema:
-                    type: string
-                  required: true
-              responses:
-                "200":
-                  description: Deleted successfully
-                  content:
-                    application/json:
-                      schema:
-                        $ref: "#/components/schemas/deleteModel"
-              tags:
-                - Theme
+    get:
+      summary: Get a single theme by ID
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Single theme
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/topics"
+      tags:
+        - Theme
+    put:
+      summary: Update a theme by ID
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      requestBody:
+        description: Theme update payload
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/themePut"
+      responses:
+        "200":
+          description: Updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/updateModel"
+      tags:
+        - Theme
+    delete:
+      summary: Delete a theme by ID
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/deleteModel"
+      tags:
+        - Theme
 
-            patch:
-              summary: Updating status
-              security:
-                - BearerAuth: [ ]
-              parameters:
-                - in: path
-                  name: id
-                  required: true
-                  description: ID of the news to be updated
-              requestBody:
-                description: to update model status
-                required: true
-                content:
-                  application/json:
-                    schema:
-                      type: object
-                      properties:
-                        status:
-                          type: number
-              responses:
-                "201": # status code
-                  description: Patched model will come
-                  content:
-                    application/json:
-                      schema:
-                        type: object
-              tags:
-                - Theme
+    patch:
+      summary: Updating status
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID of the news to be updated
+      requestBody:
+        description: to update model status
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+      responses:
+        "201": # status code
+          description: Patched model will come
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+        - Theme
 
   /api/theme/upload:
-            post:
-              summary: Uploading file and getting path
-              security:
-                - BearerAuth: [ ]
-              requestBody:
-                description: File must be sent
-                required: true
-                content:
-                  multipart/form-data:
-                    schema:
-                      type: object
-                      properties:
-                        file:
-                          type: string
-                          format: binary
-                          description: The file to upload.
+    post:
+      summary: Uploading file and getting path
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: File must be sent
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload.
 
-              responses:
-                "200": # status code
-                  description: File path
-                  content:
-                    application/json:
-                      schema:
-                        $ref: "#/components/schemas/uploadResponse"
+      responses:
+        "200": # status code
+          description: File path
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/uploadResponse"
 
-              tags:
-                - Theme
+      tags:
+        - Theme
 
   /api/theme/deleteFile:
-            delete:
-              summary: Deleting file and getting response
-              security:
-                - BearerAuth: [ ]
-              requestBody:
-                description: imagePath must be sent
-                required: true
-                content:
-                  application/json:
-                    schema:
-                      $ref: "#/components/schemas/deleteFile"
-              tags:
-                - Theme
+    delete:
+      summary: Deleting file and getting response
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: imagePath must be sent
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/deleteFile"
+      tags:
+        - Theme
 
   ##EventsCategory
   /api/eventsCategory:
@@ -3146,6 +3146,38 @@ paths:
         - Events
 
   ##Employee
+  /employee/fetch-employees:
+    get:
+      summary: Sync all employees from hemis api.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: search
+      responses:
+        "200":
+          description: List of faculties
+          content:
+            application/json:
+              schema:
+      #                $ref: "#/components/schemas/faculty"
+      tags:
+        - Employee
   /api/employee:
     get:
       summary: Get all Employees
@@ -3191,7 +3223,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/specialistsInfoPost"
+              $ref: "#/components/schemas/employeePost"
       responses:
         "201":
           description: Created successfully
@@ -3228,7 +3260,7 @@ paths:
         - BearerAuth: [ ]
       parameters:
         - in: path
-          name: modelId
+          name: id
           schema:
             type: string
           required: true
@@ -3238,7 +3270,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/specialistsInfoPut"
+              $ref: "#/components/schemas/employeePut"
       responses:
         "200":
           description: Updated successfully
@@ -4114,6 +4146,199 @@ paths:
             # $ref: "#/components/schemas/deleteFile"
       tags:
         - Licence
+
+  ##Social
+  /api/social:
+    get:
+      summary: Get all socials
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: search
+          schema:
+            type: string
+          required: false
+      responses:
+        "200":
+          description: List of contacts
+          content:
+            application/json:
+              schema:
+              # $ref: "#/components/schemas/messengers"
+      tags:
+        - Social
+    post:
+      summary: Create a social
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: Socials creation payload
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/socials"
+      responses:
+        "201":
+          description: Created successfully
+          content:
+            application/json:
+              schema:
+              # $ref: "#/components/schemas/addModel"
+      tags:
+        - Social
+  /api/social/{id}:
+    get:
+      summary: Get a single social by ID
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Single social
+          content:
+            application/json:
+              schema:
+              # $ref: "#/components/schemas/messengers"
+      tags:
+        - Social
+    put:
+      summary: Update  social by ID
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      requestBody:
+        description: Socials update payload
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/socials"
+      responses:
+        "200":
+          description: Updated successfully
+          content:
+            application/json:
+              schema:
+              # $ref: "#/components/schemas/updateModel"
+      tags:
+        - Social
+    delete:
+      summary: Delete a social by ID
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Deleted successfully
+          content:
+            application/json:
+              schema:
+              # $ref: "#/components/schemas/deleteModel"
+      tags:
+        - Social
+
+    patch:
+      summary: Updating status
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID of the contact to be updated
+      requestBody:
+        description: to update model status
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+      responses:
+        "201": # status code
+          description: Patched model will come
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+        - Social
+  /api/social/upload:
+    post:
+      summary: Uploading file and getting path
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: File must be sent
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload.
+
+      responses:
+        "200": # status code
+          description: File path
+          content:
+            application/json:
+              schema:
+              # $ref: "#/components/schemas/uploadResponse"
+      tags:
+        - Social
+  /api/social/deleteFile:
+    delete:
+      summary: Deleting file and getting response
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: imagePath must be sent
+        required: true
+        content:
+          application/json:
+            schema:
+            # $ref: "#/components/schemas/deleteFile"
+      tags:
+        - Social
+
 
 #Components
 components:
@@ -5267,54 +5492,181 @@ components:
                     language:
                       type: string
 
-    specialistsInfoPost:
+    employeePost:
       type: object
       properties:
-        modelId?:
+        modelId:
           type: string
-        user:
+        hemisId:
           type: string
-        files:
-          type: file
-        articles:
+        department:
+          type: string
+        slug:
           type: string
         img:
           type: array
-        translate:
-          type: object
+        employeeId:
+          type: number
+        socialLinks:
+          type: array
+          items: object
           properties:
-            completed_university:
+            messenger:
               type: string
-            study_duration:
+            link:
               type: string
-            description:
-              type: string
-            language:
-              type: string
-
-    specialistsInfoPut:
-      type: object
-      properties:
-        user:
+        contractNumber:
           type: string
-        files:
-          type: file
-        articles:
+        decreeNumber:
           type: string
-        img:
-          type: array
+        contractDate:
+          type: Date
+        birthDate:
+          type: Date
+        decreeDate:
+          type: Date
         translate:
           type: array
           items:
             type: object
             properties:
-              completed_university:
+              fullName:
                 type: string
-              study_duration:
+              shortName:
                 type: string
-              description:
+              firstName:
                 type: string
+              secondName:
+                type: string
+              thirdName:
+                type: string
+              gender:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  code:
+                    type: string
+              academicRank:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  code:
+                    type: string
+              staffPosition:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  code:
+                    type: string
+              employeeType:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  code:
+                    type: string
+              employeeStatus:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  code:
+                    type: string
               language:
+                type: string
+
+
+    employeePut:
+      type: object
+      properties:
+        hemisId:
+          type: string
+        department:
+          type: string
+        slug:
+          type: string
+        img:
+          type: array
+        employeeId:
+          type: number
+        socialLinks:
+          type: array
+          items:
+            type: object
+            properties:
+              messenger:
+                type: string
+              link:
+                type: string
+        contractNumber:
+          type: string
+        decreeNumber:
+          type: string
+        contractDate:
+          type: Date
+        birthDate:
+          type: Date
+        decreeDate:
+          type: Date
+
+
+
+        translate:
+          type: array
+          items:
+            type: object
+            properties:
+              fullName:
+                type: string
+              shortName:
+                type: string
+              firstName:
+                type: string
+              secondName:
+                type: string
+              thirdName:
+                type: string
+              gender:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  code:
+                    type: string
+              academicRank:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  code:
+                    type: string
+              staffPosition:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  code:
+                    type: string
+              employeeType:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  code:
+                    type: string
+              employeeStatus:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  code:
+                    type: string
+              language:
+                type: string
+              employee:
                 type: string
 
     university:
@@ -5419,21 +5771,19 @@ components:
         email:
           type: string
         phone:
+          type: string
+        location:
           type: array
           items:
-            type: string
-        location:
-            type: array
-            items:
-              type: object
-              properties:
-                  lang:
-                      type: string
-                  lat:
-                      type: string
+            type: object
+            properties:
+              lang:
+                type: string
+              lat:
+                type: string
         address:
-            type: array
-            items: string
+          type: array
+          items: string
         slug:
           type: string
         img:
@@ -5453,3 +5803,16 @@ components:
           type: string
       required: [ ]
 
+    socials:
+      type: object
+      properties:
+        messenger:
+          type: string
+          description: It is optional
+        link:
+          type: string
+        slug:
+          type: string
+        status:
+          type: number
+      required: [ ]

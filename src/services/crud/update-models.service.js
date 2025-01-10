@@ -12,7 +12,7 @@ class UpdateModelsService {
 
     async updateModel(modelName, modelId, updateData) {
         this.validateObjectId(modelId);
-
+        console.log("updateData", updateData);
         const dynamicModel = getModelsHelper(modelName);
         const existingModel = await this.findModelById(dynamicModel, modelId);
 
@@ -23,9 +23,9 @@ class UpdateModelsService {
         if (modelName.trim() === "specialty") {
             this.validateSpecialtyPrices(existingModel.prices, updateData.prices);
         }
-        if (modelName.trim() === "employee") {
-            updateData.socialLinks = await this.createSocialLinks(updateData.socials);
-        }
+        // if (modelName.trim() === "employee") {
+        //     updateData.socialLinks = await this.createSocialLinks(updateData.socials);
+        // }
         let updatedModel = await this.updateModelHelper(dynamicModel, modelId, updateData);
         updatedModel = await this.prepareFinalModelData(
             updatedModel,
@@ -107,17 +107,17 @@ class UpdateModelsService {
     }
 
 
-    async createSocialLinks(socials) {
-        const socialLinks = [];
-        if (Array.isArray(socials)) {
-            for (const social of socials) {
-                const newSocialSet = new SocialSet({...social, university: false});
-                await newSocialSet.save();
-                socialLinks.push(newSocialSet._id);
-            }
-        }
-        return socialLinks;
-    }
+    // async createSocialLinks(socials) {
+    //     const socialLinks = [];
+    //     if (Array.isArray(socials)) {
+    //         for (const social of socials) {
+    //             const newSocialSet = new SocialSet({...social, university: false});
+    //             await newSocialSet.save();
+    //             socialLinks.push(newSocialSet._id);
+    //         }
+    //     }
+    //     return socialLinks;
+    // }
 
 }
 

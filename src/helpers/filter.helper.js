@@ -1,5 +1,4 @@
 const searchFields = {
-  university: ["description"],
   category: ["title"],
   specialty: ["name"],
   events: ["name"],
@@ -8,15 +7,13 @@ const searchFields = {
   news: ["title"],
   page: ["title"],
   partner: ["name"],
-  specialistInfo: ["user_id"],
-  user: [
-    "name",
-    "role"
-  ],
-  language: ["title", "slug", "isDefault", "status"],
+  employee: ["name"],
+  user: ["name", "role"],
+  language: ["title"],
   degree: ["name"],
   level: ["name"],
 };
+
 
 function buildQuery(model, search) {
   let query = {};
@@ -32,7 +29,7 @@ function buildTextSearchQuery(model, searchText) {
   }
   return searchFields[model].map((field) => {
     return {
-      [field]: { $regex: new RegExp(searchText.trim(), "i") },
+      [field]: {$regex: new RegExp(searchText.trim(), "i")},
     };
   });
 }
