@@ -22,10 +22,9 @@ class DeleteModelsService {
         }
         if (data.img && Array.isArray(data.img)) {
             await deleteFilesHelper(data.img);
-        } else if (data.file && Array.isArray(data.file)) {
+        }
+        if (data.file && Array.isArray(data.file)) {
             await deleteFilesHelper(data.file);
-        } else {
-            throw BaseError.BadRequest('No images found to delete for model:', modelId);
         }
         await dynamicModel.findByIdAndDelete(modelId);
         if (this.Model[modelName].translate) {

@@ -135,10 +135,22 @@ class GetModelsService {
       populateOptions,
       res
   ) {
-    const modelData = await dynamicModel.find(query).select(select.toString()).populate(populateOptions).skip(skip).limit(limit).sort(sort).lean() || [];
+    const modelData = await dynamicModel.find(query).select(select.toString()).skip(skip).limit(limit).sort(sort).lean() || [];
+
+    const populatedData = await Promise.all(
+        modelData.map(async (data) => {
+          await Promise.all(
+              populateOptions.map(async (elem) => {
+                data[elem] = await getPopulates(elem, data[elem]);
+              })
+          );
+          return data;
+        })
+    );
+    console.log(populatedData)
     const count = await dynamicModel.countDocuments();
     return res.json({
-      modelData,
+      modelData: populatedData,
       count,
       page: Number(page),
       limit: Number(limit),
