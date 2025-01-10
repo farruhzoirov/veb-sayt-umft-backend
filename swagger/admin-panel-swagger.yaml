@@ -5515,25 +5515,13 @@ components:
               type: string
             link:
               type: string
-        contractNumber:
-          type: string
-        decreeNumber:
-          type: string
-        contractDate:
-          type: Date
         birthDate:
-          type: Date
-        decreeDate:
           type: Date
         translate:
           type: array
           items:
             type: object
             properties:
-              fullName:
-                type: string
-              shortName:
-                type: string
               firstName:
                 type: string
               secondName:
@@ -5601,28 +5589,13 @@ components:
                 type: string
               link:
                 type: string
-        contractNumber:
-          type: string
-        decreeNumber:
-          type: string
-        contractDate:
-          type: Date
         birthDate:
           type: Date
-        decreeDate:
-          type: Date
-
-
-
         translate:
           type: array
           items:
             type: object
             properties:
-              fullName:
-                type: string
-              shortName:
-                type: string
               firstName:
                 type: string
               secondName:
