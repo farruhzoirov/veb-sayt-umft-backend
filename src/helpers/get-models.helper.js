@@ -19,8 +19,6 @@ const pageTranslateSchema = require("../models/translate/page.model");
 const partnerSchema = require("../models/data/partners.model");
 const partnerTranslateSchema = require("../models/translate/partners.model");
 
-const specialistInfoSchema = require("../models/data/specialists-info.model");
-const specialistInfoTranslateSchema = require("../models/translate/specialists-info.model");
 
 const userSchema = require("../models/user/user.model");
 
@@ -81,8 +79,6 @@ function getModelsHelper(modelKey) {
             return pageSchema;
         case Model.partner.ref:
             return partnerSchema;
-        case Model.specialistInfo.ref:
-            return specialistInfoSchema;
         case Model.user.ref:
             return userSchema;
         case Model.language.ref:
@@ -134,8 +130,6 @@ function getModelsTranslateHelper(modelKey) {
             return pageTranslateSchema;
         case TranslateModel.partner.ref:
             return partnerTranslateSchema;
-        case TranslateModel.specialistInfo.ref:
-            return specialistInfoTranslateSchema;
         case TranslateModel.format.ref:
             return formatTranslateSchema;
         case TranslateModel.degree.ref:

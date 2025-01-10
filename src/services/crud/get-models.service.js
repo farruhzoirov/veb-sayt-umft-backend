@@ -76,12 +76,12 @@ class GetModelsService {
     //const matchingIds = await matchingTranslates.map((t) => t[model]);
     const matchingIds = await dynamicTranslateModel.distinct(modelName, query);
     const modelDatas = await dynamicModel
-            .find({_id: {$in: matchingIds}})
-            .select(select.toString() + "-updatedAt -__v")
-            .skip(skip)
-            .limit(limit)
-            .sort(sort)
-            .lean() || [];
+        .find({_id: {$in: matchingIds}})
+        .select(select.toString() + "-updatedAt -__v")
+        .skip(skip)
+        .limit(limit)
+        .sort(sort)
+        .lean() || [];
 
     const populatedData = await Promise.all(
         modelDatas.map(async (data) => {

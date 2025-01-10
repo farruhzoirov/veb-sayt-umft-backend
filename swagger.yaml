@@ -3210,7 +3210,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/specialistsInfo"
+#                $ref: "#/components/schemas/specialistsInfo"
       tags:
         - Employee
     post:
@@ -3251,7 +3251,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/specialistsInfo"
+#                $ref: "#/components/schemas/specialistsInfo"
       tags:
         - Employee
     put:
