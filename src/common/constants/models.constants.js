@@ -3,7 +3,7 @@
 const Model = {
     university: {ref: "university", translate: true},
     category: {ref: "category", translate: true},
-    employee: {ref: "employee", translate: true, populate: ["department", "socials"]},
+    employee: {ref: "employee", translate: true, populate: ["department"]},
     socials: {ref: "socials", translate: false},
     specialty: {
         ref: "specialty",
@@ -32,7 +32,7 @@ const Model = {
     language: {ref: "language", translate: false},
     contacts: {ref: "contacts", translate: false},
     licence: {ref: "licence", translate: false},
-    social: {ref: "social", translate: false, populate: ["employee", "messenger"]}
+    social: {ref: "social", translate: false, populate: ["messenger"]}
 };
 
 const TranslateModel = {

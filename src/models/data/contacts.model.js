@@ -5,7 +5,9 @@ const ContactsSchema = new mongoose.Schema({
             type: String,
             required: true,
         },
-        phone: [],
+        phone: {
+          type: String
+        },
         slug: {
             type: String,
             required: [true, "Slug is required"]

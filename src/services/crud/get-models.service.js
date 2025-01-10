@@ -98,7 +98,11 @@ class GetModelsService {
               }
             }
           }
-
+          if (modelName === "employee") {
+            for (const socialLink of data.socialLinks) {
+              socialLink.messenger = await getPopulates("messenger", socialLink.messenger);
+            }
+          }
           data.translates = await dynamicTranslateModel
               .find({
                 [modelName]: data._id,

@@ -1,8 +1,8 @@
 openapi: 3.1.0
 info:
   title: NEW UMFT SITE  API
-  description: Specialty, Department va Topic ga tegmay turasiz.
-  version: 0.1.9
+  description: GREAT PROJECT
+  version: 1.0.0
 servers:
   - url: http://95.130.227.52:4131
   #- url: http://localhost:4131
