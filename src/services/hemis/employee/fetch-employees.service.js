@@ -60,18 +60,12 @@ class FetchEmployeesService {
                 socialLinks: [],
                 slug: "",
                 employeeId: employee.employee_id_number,
-                contractNumber: employee.contract_number,
-                decreeNumber: employee.decree_number,
-                contractDate: employee.contract_date,
                 birthDate: employee.birth_date,
-                decreeDate: employee.decree_date,
                 createdAt: employee.createdAt,
                 updatedAt: employee.updatedAt,
             }).save();
 
             await new EmployeeTranslate({
-                fullName: employee.full_name,
-                shortName: employee.short_name,
                 firstName: employee.first_name,
                 secondName: employee.second_name,
                 thirdName: employee.third_name,

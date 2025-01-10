@@ -30,19 +30,7 @@ const EmployeeSchema = new Schema({
       required: true
     }
   }],
-  contractNumber: {
-    type: String
-  },
-  decreeNumber: {
-    type: String
-  },
-  contractDate: {
-    type: Date
-  },
   birthDate: {
-    type: Date
-  },
-  decreeDate: {
     type: Date
   },
   createdAt: {

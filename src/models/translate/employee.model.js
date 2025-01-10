@@ -3,8 +3,6 @@ const {Schema} = require("mongoose");
 
 
 const EmployeeTranslateSchema = new Schema({
-    fullName: { type: String, required: true },
-    shortName: { type: String },
     firstName: { type: String },
     secondName: { type: String },
     thirdName: { type: String },
