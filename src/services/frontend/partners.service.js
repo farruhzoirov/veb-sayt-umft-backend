@@ -13,9 +13,9 @@ class PartnersService {
          const defaultLanguage = await getDefaultLanguageHelper();
          // Payload
          const payload = {
-             limit: req.query.limit || undefined,
-             page: req.query.page || 1,
-             skip: (req.query.limit || 10) * ((req.query.page || 1) - 1),
+             limit: req.query.limit ? parseInt(req.query.limit, 10) : 30,
+             page: req.query.page ? parseInt(req.query.page, 10) : 1,
+             skip: (req.query.limit ? parseInt(req.query.limit, 10) : 10) * ((req.query.page ? parseInt(req.query.page, 10) : 1) - 1),
              select: req.query.select || '',
              language: req.query.language || defaultLanguage.slug
          };
@@ -53,8 +53,8 @@ class PartnersService {
 
          const pagination = {
              total: count,
-             limit: Number(payload.limit),
-             page: Number(payload.page),
+             limit: payload.limit,
+             page: payload.page,
              pages: Math.ceil(count / payload.limit)
          }
          return {partnersList, pagination, language: findLanguageBySlug._id};
