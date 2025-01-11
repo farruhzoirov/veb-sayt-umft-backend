@@ -13,7 +13,7 @@ class PartnersService {
          const defaultLanguage = await getDefaultLanguageHelper();
          // Payload
          const payload = {
-             limit: req.query.limit || 10,
+             limit: req.query.limit || undefined,
              page: req.query.page || 1,
              skip: (req.query.limit || 10) * ((req.query.page || 1) - 1),
              select: req.query.select || '',
