@@ -11,8 +11,7 @@ class ClassifiersController {
 
     async getClassifiers(req, res, next) {
         try {
-            const classifier = req.params.classifier;
-            const filteredClassifiersData = await this.getClassifiersService.getClassifier(classifier);
+            const filteredClassifiersData = await this.getClassifiersService.getClassifier(req);
             res.status(200).json({
                 data: filteredClassifiersData,
             });
