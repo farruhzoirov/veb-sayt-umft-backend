@@ -10,8 +10,6 @@ const BaseError = require("../../errors/base.error");
 class NewsService {
     constructor() {
         this.Model = Model
-
-
     }
 
     async getNewsForFront(req) {
