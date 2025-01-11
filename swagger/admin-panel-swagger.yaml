@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-  title: NEW UMFT SITE  API
+  title: NEW UMFT SITE  ADMIN PANEL API
   description: GREAT PROJECT
   version: 1.0.0
 servers:

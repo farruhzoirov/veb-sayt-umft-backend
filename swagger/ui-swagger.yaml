@@ -1,0 +1,110 @@
+openapi: 3.1.0
+info:
+  title: NEW UMFT SITE FRONTEND API
+  description: GREAT PROJECT
+  version: 1.0.0
+servers:
+  #- url: http://95.130.227.52:4131
+  - url: http://localhost:4131
+    description: Optional server description, e.g. Main (production) server
+
+
+paths:
+  ## News
+  /front/news:
+    get:
+      summary: Getting news for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+      responses:
+        "200": # status code
+          description: Getting news for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - News
+
+  /front/news/{slug}:
+    get:
+      summary: Getting news for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: path
+          name: slug
+      responses:
+        "200": # status code
+          description: Getting one news for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - News
+  ## Partner
+  /front/partner:
+    get:
+      summary: Getting partners for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+      responses:
+        "200": # status code
+          description: Getting partners for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - Partner
+
+  /front/partner/{slug}:
+    get:
+      summary: Getting partner for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: path
+          name: slug
+      responses:
+        "200": # status code
+          description: Getting one partner for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - Partner
