@@ -59,6 +59,7 @@ const employeeTranslateSchema = require("../models/translate/employee.model");
 const licenceSchema  = require("../models/data/licence.model");
 
 const socialSchema = require("../models/socials/socials.model");
+const socialTranslateSchema = require("../models/translate/socials.model");
 
 const {
     Model,
@@ -148,6 +149,8 @@ function getModelsTranslateHelper(modelKey) {
             return messengerTranslateSchema;
         case TranslateModel.employee.ref:
             return employeeTranslateSchema;
+        case TranslateModel.social.ref:
+            return socialTranslateSchema
         default:
             throw new Error(`Translation model "${modelKey}" not found.`);
     }

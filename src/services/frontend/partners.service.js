@@ -5,8 +5,7 @@ const Partners = require("../../models/data/partners.model");
 const PartnersTranslate = require("../../models/translate/partners.model");
 const {Model} = require("../../common/constants/models.constants");
 const BaseError = require("../../errors/base.error");
-const News = require("../../models/data/news.model");
-const NewsTranslate = require("../../models/translate/news.model");
+
 
 class PartnersService {
     constructor() {
@@ -87,12 +86,12 @@ class PartnersService {
             slug: payload.language
         }).lean();
 
-        const oneNewsTranslate = await PartnersTranslate.findOne({
+        const onePartnerTranslate = await PartnersTranslate.findOne({
             [this.Model.partner.ref]: findPartnerBySlug._id,
             [this.Model.language.ref]: findLanguageBySlug._id
         }).select(payload.select ? payload.select : "-partner -__v -language").lean();
 
-        return {...findPartnerBySlug, ...oneNewsTranslate || {}};
+        return {...findPartnerBySlug, ...onePartnerTranslate || {}};
     }
 }
 
