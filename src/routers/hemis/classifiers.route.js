@@ -8,7 +8,7 @@ const classifierController = new ClassifiersController();
 // Middleware
 const authMiddleware = require('../../middlewares/auth.middleware');
 
-router.get('/', authMiddleware.universalAccessMiddleware, classifierController.getClassifiers);
+router.get('/:classifier', classifierController.getClassifiers);
 
 
 module.exports = router;

@@ -5,6 +5,7 @@ class PartnersController {
           this.partnersService = new PartnersService();
 
           this.getPartnersForFront = this.getPartnersForFront.bind(this);
+          this.getOnePartnerForFront = this.getOnePartnerForFront.bind(this);
      }
 
      async getPartnersForFront(req, res, next) {
@@ -18,7 +19,7 @@ class PartnersController {
 
      async getOnePartnerForFront(req, res, next) {
           try {
-               const partner = await this.partnersService.getOnePartner(req);
+               const partner = await this.partnersService.getOnePartnerForFront(req);
                res.status(200).json(partner);
           } catch (err) {
                next(err)

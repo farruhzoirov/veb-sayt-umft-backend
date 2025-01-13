@@ -7,6 +7,8 @@ const partnersController = new PartnersController();
 
 router.get('/partner', partnersController.getPartnersForFront);
 
+router.get('/partner/:slug', partnersController.getOnePartnerForFront)
+
 
 module.exports = router;
 

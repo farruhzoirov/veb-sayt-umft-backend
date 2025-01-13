@@ -4,6 +4,9 @@ const Language = require("../../models/settings/language.model");
 const Partners = require("../../models/data/partners.model");
 const PartnersTranslate = require("../../models/translate/partners.model");
 const {Model} = require("../../common/constants/models.constants");
+const BaseError = require("../../errors/base.error");
+const News = require("../../models/data/news.model");
+const NewsTranslate = require("../../models/translate/news.model");
 
 class PartnersService {
     constructor() {
@@ -59,6 +62,38 @@ class PartnersService {
          }
          return {partnersList, pagination, language: findLanguageBySlug._id};
      }
+
+
+
+    async getOnePartnerForFront(req) {
+        const defaultLanguage = await getDefaultLanguageHelper();
+
+        const payload = {
+            slug: req.params.slug,
+            language: req.query.language || defaultLanguage.slug
+        }
+
+        if (!payload.slug) {
+            throw BaseError.BadRequest('Slug is required');
+        }
+
+        const findPartnerBySlug = await News.findOne({slug: payload.slug}).lean();
+
+        if (!findPartnerBySlug) {
+            throw BaseError.NotFound('News not found');
+        }
+
+        const findLanguageBySlug = await Language.findOne({
+            slug: payload.language
+        }).lean();
+
+        const oneNewsTranslate = await NewsTranslate.findOne({
+            [this.Model.news.ref]: findPartnerBySlug._id,
+            [this.Model.language.ref]: findLanguageBySlug._id
+        }).select(payload.select ? payload.select : "-partner -__v -language").lean();
+
+        return {...findPartnerBySlug, ...oneNewsTranslate || {}};
+    }
 }
 
 module.exports = PartnersService;
