@@ -77,7 +77,7 @@ class PartnersService {
             throw BaseError.BadRequest('Slug is required');
         }
 
-        const findPartnerBySlug = await News.findOne({slug: payload.slug}).lean();
+        const findPartnerBySlug = await Partners.findOne({slug: payload.slug}).lean();
 
         if (!findPartnerBySlug) {
             throw BaseError.NotFound('News not found');
@@ -87,8 +87,8 @@ class PartnersService {
             slug: payload.language
         }).lean();
 
-        const oneNewsTranslate = await NewsTranslate.findOne({
-            [this.Model.news.ref]: findPartnerBySlug._id,
+        const oneNewsTranslate = await PartnersTranslate.findOne({
+            [this.Model.partner.ref]: findPartnerBySlug._id,
             [this.Model.language.ref]: findLanguageBySlug._id
         }).select(payload.select ? payload.select : "-partner -__v -language").lean();
 
