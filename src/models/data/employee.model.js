@@ -5,7 +5,6 @@ const EmployeeSchema = new Schema({
   hemisId: {
     type: Number,
     required: true,
-    unique: true
   },
   department: {
     type: mongoose.Schema.Types.ObjectId,
