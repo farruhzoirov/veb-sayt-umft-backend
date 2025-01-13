@@ -101,7 +101,6 @@ class GetModelsService {
             for (const socialLink of data.socialLinks) {
               socialLink.messenger = await getPopulates("messenger", socialLink.messenger);
             }
-            data.fullName = `${data?.firstName}  ${data?.lastName} ${data?.surName}`
           }
           data.translates = await dynamicTranslateModel
               .find({
