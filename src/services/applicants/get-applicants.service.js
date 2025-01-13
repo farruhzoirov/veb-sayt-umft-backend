@@ -31,7 +31,7 @@ class GetApplicantsService {
                 .limit(limit)
                 .skip(skip)
                 .lean();
-            const count = Applicants.countDocuments()
+            const count = Applicants.countDocuments();
             return res.status(200).json({
                 ok: true,
                 data: applicants,
