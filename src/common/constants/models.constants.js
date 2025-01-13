@@ -32,7 +32,7 @@ const Model = {
     language: {ref: "language", translate: false},
     contacts: {ref: "contacts", translate: false},
     licence: {ref: "licence", translate: false},
-    social: {ref: "social", translate: false, populate: ["messenger"]}
+    social: {ref: "social", translate: true, populate: ["messenger"]}
 };
 
 const TranslateModel = {
@@ -53,6 +53,7 @@ const TranslateModel = {
     theme: {ref: "themeTranslate"},
     messenger: {ref: "messengerTranslate"},
     user: {ref: "userTranslate"},
+    social: {ref: "socialTranslate"}
 };
 
 

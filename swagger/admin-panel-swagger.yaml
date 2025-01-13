@@ -3764,196 +3764,196 @@ paths:
 
 
   ##Contact
-  /api/contact:
-    get:
-      summary: Get all contacts
-      security:
-        - BearerAuth: [ ]
-      parameters:
-        - in: query
-          name: limit
-          schema:
-            type: string
-          required: false
-        - in: query
-          name: page
-          schema:
-            type: string
-          required: false
-        - in: query
-          name: select
-          schema:
-            type: string
-          required: false
-        - in: query
-          name: search
-          schema:
-            type: string
-          required: false
-      responses:
-        "200":
-          description: List of contacts
-          content:
-            application/json:
-              schema:
-              # $ref: "#/components/schemas/messengers"
-      tags:
-        - Contact
-    post:
-      summary: Create a contact
-      security:
-        - BearerAuth: [ ]
-      requestBody:
-        description: Contacts creation payload
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/contactPost"
-      responses:
-        "201":
-          description: Created successfully
-          content:
-            application/json:
-              schema:
-              # $ref: "#/components/schemas/addModel"
-      tags:
-        - Contact
-  /api/contact/{id}:
-    get:
-      summary: Get a single contact by ID
-      security:
-        - BearerAuth: [ ]
-      parameters:
-        - in: path
-          name: id
-          schema:
-            type: string
-          required: true
-      responses:
-        "200":
-          description: Single contacts
-          content:
-            application/json:
-              schema:
-              # $ref: "#/components/schemas/messengers"
-      tags:
-        - Contact
-    put:
-      summary: Update  contact by ID
-      security:
-        - BearerAuth: [ ]
-      parameters:
-        - in: path
-          name: id
-          schema:
-            type: string
-          required: true
-      requestBody:
-        description: Contacts update payload
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/contactPost"
-      responses:
-        "200":
-          description: Updated successfully
-          content:
-            application/json:
-              schema:
-              # $ref: "#/components/schemas/updateModel"
-      tags:
-        - Contact
-    delete:
-      summary: Delete a contact by ID
-      security:
-        - BearerAuth: [ ]
-      parameters:
-        - in: path
-          name: id
-          schema:
-            type: string
-          required: true
-      responses:
-        "200":
-          description: Deleted successfully
-          content:
-            application/json:
-              schema:
-              # $ref: "#/components/schemas/deleteModel"
-      tags:
-        - Contact
-
-    patch:
-      summary: Updating status
-      security:
-        - BearerAuth: [ ]
-      parameters:
-        - in: path
-          name: id
-          required: true
-          description: ID of the contact to be updated
-      requestBody:
-        description: to update model status
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                status:
-                  type: number
-      responses:
-        "201": # status code
-          description: Patched model will come
-          content:
-            application/json:
-              schema:
-                type: object
-      tags:
-        - Contact
-  /api/contact/upload:
-    post:
-      summary: Uploading file and getting path
-      security:
-        - BearerAuth: [ ]
-      requestBody:
-        description: File must be sent
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                file:
-                  type: string
-                  format: binary
-                  description: The file to upload.
-
-      responses:
-        "200": # status code
-          description: File path
-          content:
-            application/json:
-              schema:
-              # $ref: "#/components/schemas/uploadResponse"
-      tags:
-        - Contact
-  /api/contact/deleteFile:
-    delete:
-      summary: Deleting file and getting response
-      security:
-        - BearerAuth: [ ]
-      requestBody:
-        description: imagePath must be sent
-        required: true
-        content:
-          application/json:
-            schema:
-            # $ref: "#/components/schemas/deleteFile"
-      tags:
-        - Contact
+#  /api/contact:
+#    get:
+#      summary: Get all contacts
+#      security:
+#        - BearerAuth: [ ]
+#      parameters:
+#        - in: query
+#          name: limit
+#          schema:
+#            type: string
+#          required: false
+#        - in: query
+#          name: page
+#          schema:
+#            type: string
+#          required: false
+#        - in: query
+#          name: select
+#          schema:
+#            type: string
+#          required: false
+#        - in: query
+#          name: search
+#          schema:
+#            type: string
+#          required: false
+#      responses:
+#        "200":
+#          description: List of contacts
+#          content:
+#            application/json:
+#              schema:
+#              # $ref: "#/components/schemas/messengers"
+#      tags:
+#        - Contact
+#    post:
+#      summary: Create a contact
+#      security:
+#        - BearerAuth: [ ]
+#      requestBody:
+#        description: Contacts creation payload
+#        required: true
+#        content:
+#          application/json:
+#            schema:
+#              $ref: "#/components/schemas/contactPost"
+#      responses:
+#        "201":
+#          description: Created successfully
+#          content:
+#            application/json:
+#              schema:
+#              # $ref: "#/components/schemas/addModel"
+#      tags:
+#        - Contact
+#  /api/contact/{id}:
+#    get:
+#      summary: Get a single contact by ID
+#      security:
+#        - BearerAuth: [ ]
+#      parameters:
+#        - in: path
+#          name: id
+#          schema:
+#            type: string
+#          required: true
+#      responses:
+#        "200":
+#          description: Single contacts
+#          content:
+#            application/json:
+#              schema:
+#              # $ref: "#/components/schemas/messengers"
+#      tags:
+#        - Contact
+#    put:
+#      summary: Update  contact by ID
+#      security:
+#        - BearerAuth: [ ]
+#      parameters:
+#        - in: path
+#          name: id
+#          schema:
+#            type: string
+#          required: true
+#      requestBody:
+#        description: Contacts update payload
+#        required: true
+#        content:
+#          application/json:
+#            schema:
+#              $ref: "#/components/schemas/contactPost"
+#      responses:
+#        "200":
+#          description: Updated successfully
+#          content:
+#            application/json:
+#              schema:
+#              # $ref: "#/components/schemas/updateModel"
+#      tags:
+#        - Contact
+#    delete:
+#      summary: Delete a contact by ID
+#      security:
+#        - BearerAuth: [ ]
+#      parameters:
+#        - in: path
+#          name: id
+#          schema:
+#            type: string
+#          required: true
+#      responses:
+#        "200":
+#          description: Deleted successfully
+#          content:
+#            application/json:
+#              schema:
+#              # $ref: "#/components/schemas/deleteModel"
+#      tags:
+#        - Contact
+#
+#    patch:
+#      summary: Updating status
+#      security:
+#        - BearerAuth: [ ]
+#      parameters:
+#        - in: path
+#          name: id
+#          required: true
+#          description: ID of the contact to be updated
+#      requestBody:
+#        description: to update model status
+#        required: true
+#        content:
+#          application/json:
+#            schema:
+#              type: object
+#              properties:
+#                status:
+#                  type: number
+#      responses:
+#        "201": # status code
+#          description: Patched model will come
+#          content:
+#            application/json:
+#              schema:
+#                type: object
+#      tags:
+#        - Contact
+#  /api/contact/upload:
+#    post:
+#      summary: Uploading file and getting path
+#      security:
+#        - BearerAuth: [ ]
+#      requestBody:
+#        description: File must be sent
+#        required: true
+#        content:
+#          multipart/form-data:
+#            schema:
+#              type: object
+#              properties:
+#                file:
+#                  type: string
+#                  format: binary
+#                  description: The file to upload.
+#
+#      responses:
+#        "200": # status code
+#          description: File path
+#          content:
+#            application/json:
+#              schema:
+#              # $ref: "#/components/schemas/uploadResponse"
+#      tags:
+#        - Contact
+#  /api/contact/deleteFile:
+#    delete:
+#      summary: Deleting file and getting response
+#      security:
+#        - BearerAuth: [ ]
+#      requestBody:
+#        description: imagePath must be sent
+#        required: true
+#        content:
+#          application/json:
+#            schema:
+#            # $ref: "#/components/schemas/deleteFile"
+#      tags:
+#        - Contact
 
   ##Licence
   /api/licence:
@@ -5788,4 +5788,13 @@ components:
           type: string
         status:
           type: number
+        translate:
+          type: object
+          properties:
+            title:
+              type: string
+            text:
+              type: string
+            language:
+              type: string
       required: [ ]
