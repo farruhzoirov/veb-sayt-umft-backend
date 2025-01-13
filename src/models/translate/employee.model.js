@@ -4,8 +4,8 @@ const {Schema} = require("mongoose");
 
 const EmployeeTranslateSchema = new Schema({
     firstName: { type: String },
-    secondName: { type: String },
-    thirdName: { type: String },
+    lastName: { type: String },
+    surName: { type: String },
     gender: {
         code: { type: String },
         name: { type: String },

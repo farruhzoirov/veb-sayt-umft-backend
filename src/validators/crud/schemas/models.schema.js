@@ -154,8 +154,8 @@ const employeeSchema = Joi.object({
     slug: Joi.string().optional(),
     translate: Joi.object({
         firstName: Joi.string().optional(),
-        secondName: Joi.string().optional(),
-        thirdName: Joi.string().optional(),
+        lastName: Joi.string().optional(),
+        surName: Joi.string().optional(),
         gender: Joi.object({
             code: Joi.string().optional(),
             name: Joi.string().optional(),

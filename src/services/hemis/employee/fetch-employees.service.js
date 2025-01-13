@@ -67,8 +67,8 @@ class FetchEmployeesService {
 
             await new EmployeeTranslate({
                 firstName: employee.first_name,
-                secondName: employee.second_name,
-                thirdName: employee.third_name,
+                lastName: employee.second_name,
+                surName: employee.third_name,
                 gender: employee.gender,
                 academicRank: employee.academicRank,
                 staffPosition: employee.staffPosition,
@@ -120,11 +120,9 @@ class FetchEmployeesService {
                     if (existingTranslate) {
                         await existingTranslate.updateOne({
                             $set: {
-                                fullName: employee.full_name,
-                                shortName: employee.short_name,
                                 firstName: employee.first_name,
-                                secondName: employee.second_name,
-                                thirdName: employee.third_name,
+                                lastName: employee.second_name,
+                                surName: employee.third_name,
                                 gender: employee.gender,
                                 academicRank: employee.academicRank,
                                 staffPosition: employee.staffPosition,

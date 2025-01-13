@@ -29,7 +29,6 @@ class GetModelsService {
 
     const query = buildQuery(modelName, search);
     const populateOptions = this.Model[modelName].populate || [];
-    console.log(populateOptions)
     if (this.Model[modelName].translate) {
       return this.getAllWithTranslate(
           modelName,
@@ -102,6 +101,7 @@ class GetModelsService {
             for (const socialLink of data.socialLinks) {
               socialLink.messenger = await getPopulates("messenger", socialLink.messenger);
             }
+            data.fullName = `${data?.firstName}  ${data?.lastName} ${data?.surName}`
           }
           data.translates = await dynamicTranslateModel
               .find({
