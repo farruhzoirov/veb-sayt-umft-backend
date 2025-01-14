@@ -7,7 +7,7 @@ const {Model, TranslateModel} = require('../../common/constants/models.constants
 // For Getting default language helper
 const getDefaultLanguageHelper = require('../../helpers/frontend/get-default-language.helper');
 const BaseError = require("../../errors/base.error");
-const {getModel, getModelsHelper, getModelsTranslateHelper} = require("../../helpers/get-models.helper");
+const {getModel, getModelsHelper, getModelsTranslateHelper} = require("../../helpers/admin-panel/get-models.helper");
 
 class UniversalService {
     constructor() {
@@ -18,6 +18,7 @@ class UniversalService {
     async getModelsListForFront(req) {
         const defaultLanguage = await getDefaultLanguageHelper();
         const currentModel = await getModel(req);
+        console.log('currentModel', currentModel)
         const dynamicModel = getModelsHelper(currentModel);
 
         // Payload preparation

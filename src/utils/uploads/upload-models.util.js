@@ -1,7 +1,7 @@
 const multer = require('multer');
 const path = require('path');
 const fs = require("fs");
-const {getModel} = require("../../helpers/get-models.helper");
+const {getModel} = require("../../helpers/admin-panel/get-models.helper");
 
 const storage = multer.diskStorage({
     destination: async function (req, file, cb) {

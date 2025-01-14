@@ -4,8 +4,8 @@ info:
   description: GREAT PROJECT
   version: 1.0.0
 servers:
-  - url: http://95.130.227.52:4131
-  #- url: http://localhost:4131
+  #- url: http://95.130.227.52:4131
+  - url: http://localhost:4131
     description: Optional server description, e.g. Main (production) server
 
 
@@ -112,10 +112,11 @@ paths:
 
       tags:
         - Partner
+
   ## Social
   /front/social:
     get:
-      summary: Getting partners for frontend
+      summary: Getting socials for frontend
       description: You can filter which you want.
       parameters:
         - in: path
@@ -148,14 +149,14 @@ paths:
 
   /front/social/{slug}:
     get:
-      summary: Getting partner for frontend
+      summary: Getting social for frontend
       description: You can filter which you want.
       parameters:
         - in: path
           name: slug
       responses:
         "200": # status code
-          description: Getting one social for frontend
+          description: Getting one modelData for frontend
           content:
             application/json:
               schema:
@@ -163,3 +164,159 @@ paths:
 
       tags:
         - Social
+
+  ## Events
+  /front/events:
+    get:
+      summary: Getting events for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: path
+          name: language
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+      responses:
+        "200": # status code
+          description: Getting matches model for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - Events
+
+  /front/events/{slug}:
+    get:
+      summary: Getting events for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: path
+          name: slug
+      responses:
+        "200": # status code
+          description: Getting one modelData for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - Events
+
+  ## Licence
+  /front/licence:
+    get:
+      summary: Getting licence for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: path
+          name: language
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+      responses:
+        "200": # status code
+          description: Getting matches modelData for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - Licence
+
+  /front/licence/{slug}:
+    get:
+      summary: Getting licence for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: path
+          name: slug
+      responses:
+        "200": # status code
+          description: Getting one modelData for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - Licence
+
+  ## Employee
+  /front/employee:
+    get:
+      summary: Getting employee for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: path
+          name: language
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+      responses:
+        "200": # status code
+          description: Getting matches modelData for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - Employee
+
+  /front/employee/{slug}:
+    get:
+      summary: Getting employee for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: path
+          name: slug
+      responses:
+        "200": # status code
+          description: Getting one modelData for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - Employee
