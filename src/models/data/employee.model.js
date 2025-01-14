@@ -32,6 +32,10 @@ const EmployeeSchema = new Schema({
   birthDate: {
     type: Date
   },
+  status: {
+    type: Number,
+    default: 1
+  },
   createdAt: {
     type: Date,
     default: Date.now

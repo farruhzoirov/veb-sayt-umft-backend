@@ -61,6 +61,7 @@ class UniversalService {
         }
 
         // Filter models with a valid title or name
+        console.log(modelsList)
         modelsList = modelsList.filter(modelItem => modelItem.title || modelItem.name || modelItem.firstName);
 
         // Pagination data
