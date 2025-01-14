@@ -25,7 +25,7 @@ async function getPopulates(model, _id, language) {
         return data
     }
 
-    data = await dynamicModel.findById(_id).select("-__v").lean() || {}
+    data = await dynamicModel.findById(_id).select("-__v -createdAt -updatedAt").lean() || {}
     if (Model[model].translate) {
         let transModel = TranslateModel[model].ref
         const dynamicTranslateModel = getModelsTranslateHelper(transModel);
@@ -37,7 +37,7 @@ async function getPopulates(model, _id, language) {
             }).select(`-${model} -__v -createdAt -updatedAt -status -language`).lean();
             return {...data, ...modelTranslateByLanguage || {}}
         }
-        
+
         data.translates = await dynamicTranslateModel.find({
             [model]: _id,
         }).select("-__v").lean();
