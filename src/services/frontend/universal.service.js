@@ -61,7 +61,7 @@ class UniversalService {
         }
 
         // Filter models with a valid title or name
-        modelsList = modelsList.filter(modelItem => modelItem.title || modelItem.name);
+        modelsList = modelsList.filter(modelItem => modelItem.title || modelItem.name || modelItem.firstName);
 
         // Pagination data
         const totalModels = await dynamicModel.countDocuments({status: 1});
