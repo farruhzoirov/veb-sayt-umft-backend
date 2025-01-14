@@ -12,12 +12,12 @@ async function getPopulates(model, _id, language) {
             if (!mongoose.Types.ObjectId.isValid(id)) {
                 throw BaseError.BadRequest("Model id is not valid. in getting populates");
             }
-            const newData = await dynamicModel.findById(id).select("-__v").lean() || {};
+            const newData = await dynamicModel.findById(id).select("-__v -createdAt -updatedAt").lean() || {};
 
             if (Model[model].translate) {
                 let transModel = TranslateModel[model].ref
                 const dynamicTranslateModel = getModelsTranslateHelper(transModel)
-                newData.translates = await dynamicTranslateModel.find({[model]: [id]}).select("-__v").lean()
+                newData.translates = await dynamicTranslateModel.find({[model]: [id]}).select("-__v -createdAt -updatedAt").lean()
             }
             data.push(newData);
         }
