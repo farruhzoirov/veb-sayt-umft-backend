@@ -41,24 +41,24 @@ class UniversalService {
         let modelsList = await dynamicModel
             .find({status: 1})
             .sort({_id: -1})
-            .select(queryParameters.selectFields)
+            .select(queryParameters.selectFields ? queryParameters.selectFields : `-__v  -createAt -updatedAt -active -status`)
             .limit(queryParameters.limit)
             .skip(queryParameters.skip)
             .lean();
 
-        if (this.Model[currentModel].populate) {
-            const populateOptions  = this.Model[currentModel].populate;
-            modelsList = await Promise.all(
-                modelsList.map(async (data) => {
-                    await Promise.all(
-                        populateOptions.map(async (item) => {
-                            data[item] = await getPopulates(item, data[item], selectedLanguage);
-                        })
-                    );
-                    return data;
-                })
-            );
-        }
+        // if (this.Model[currentModel].populate) {
+        //     const populateOptions  = this.Model[currentModel].populate;
+        //     modelsList = await Promise.all(
+        //         modelsList.map(async (data) => {
+        //             await Promise.all(
+        //                 populateOptions.map(async (item) => {
+        //                     data[item] = await getPopulates(item, data[item], selectedLanguage);
+        //                 })
+        //             );
+        //             return data;
+        //         })
+        //     );
+        // }
 
         if (this.Model[currentModel].translate) {
             const translateModelName = this.TranslateModel[currentModel].ref;
@@ -71,7 +71,7 @@ class UniversalService {
                             [currentModel]: modelItem._id,
                             [this.Model.language.ref]: selectedLanguage._id,
                         })
-                        .select(queryParameters.selectFields ? queryParameters.selectFields : `-${currentModel} -__v -language`)
+                        .select(queryParameters.selectFields ? queryParameters.selectFields : `-${currentModel} -__v -language -createAt -updatedAt`)
                         .lean();
                     return {...modelItem, ...translationData || {}};
                 })
