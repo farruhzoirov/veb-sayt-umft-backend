@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const {getModelsTranslateHelper, getModelsHelper} = require("./get-models.helper");
 const BaseError = require("../../errors/base.error");
 
-async function getPopulates(model, _id) {
+async function getPopulates(model, _id, language) {
     let modelForPopulate = Model[model].ref
     const dynamicModel = getModelsHelper(modelForPopulate);
     let data = [];
@@ -29,8 +29,7 @@ async function getPopulates(model, _id) {
     if (Model[model].translate) {
         let transModel = TranslateModel[model].ref
         const dynamicTranslateModel = getModelsTranslateHelper(transModel);
-        console.log("dynamicTranslateModel",dynamicTranslateModel)
-        data.translates = await dynamicTranslateModel.find({[model]: _id}).select("-__v").lean()
+        data.translates = await dynamicTranslateModel.find({[model]: _id},  ...(language ? { language: language._id} : {})).select("-__v").lean()
     }
     return data
 }

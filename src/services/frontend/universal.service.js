@@ -8,6 +8,7 @@ const {Model, TranslateModel} = require('../../common/constants/models.constants
 const getDefaultLanguageHelper = require('../../helpers/frontend/get-default-language.helper');
 const BaseError = require("../../errors/base.error");
 const {getModel, getModelsHelper, getModelsTranslateHelper} = require("../../helpers/admin-panel/get-models.helper");
+const {getPopulates} = require("../../helpers/admin-panel/get-populates.helper");
 
 class UniversalService {
     constructor() {
@@ -18,7 +19,6 @@ class UniversalService {
     async getModelsListForFront(req) {
         const defaultLanguage = await getDefaultLanguageHelper();
         const currentModel = await getModel(req);
-        console.log('currentModel', currentModel)
         const dynamicModel = getModelsHelper(currentModel);
 
         // Payload preparation
@@ -34,6 +34,10 @@ class UniversalService {
             slug: queryParameters.requestedLanguage,
         }).lean();
 
+        if (!selectedLanguage) {
+            throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
+        }
+
         let modelsList = await dynamicModel
             .find({status: 1})
             .sort({_id: -1})
@@ -41,6 +45,20 @@ class UniversalService {
             .limit(queryParameters.limit)
             .skip(queryParameters.skip)
             .lean();
+
+        if (this.Model[currentModel].populate) {
+            const populateOptions  = this.Model[currentModel].populate;
+            modelsList = await Promise.all(
+                modelsList.map(async (data) => {
+                    await Promise.all(
+                        populateOptions.map(async (item) => {
+                            data[item] = await getPopulates(item, data[item], selectedLanguage);
+                        })
+                    );
+                    return data;
+                })
+            );
+        }
 
         if (this.Model[currentModel].translate) {
             const translateModelName = this.TranslateModel[currentModel].ref;
@@ -61,7 +79,6 @@ class UniversalService {
         }
 
         // Filter models with a valid title or name
-        console.log(modelsList)
         modelsList = modelsList.filter(modelItem => modelItem.title || modelItem.name || modelItem.firstName);
 
         // Pagination data
@@ -101,6 +118,10 @@ class UniversalService {
             slug: queryParameters.language
         }).lean();
 
+        if (!findDynamicModelBySlug) {
+            throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
+        }
+
         if (this.Model[currentModel].translate) {
             const translateModelName = this.TranslateModel[currentModel].ref;
             const dynamicTranslateModel = getModelsTranslateHelper(translateModelName);
@@ -109,6 +130,7 @@ class UniversalService {
                 [this.Model[currentModel].ref]: findDynamicModelBySlug._id,
                 [this.Model.language.ref]: findLanguageBySlug._id
             }).select(queryParameters.select ? queryParameters.select : `-${currentModel} -__v -language`).lean();
+
             return {...findDynamicModelBySlug, ...oneDynamicModelTranslate || {}};
         }
     }
