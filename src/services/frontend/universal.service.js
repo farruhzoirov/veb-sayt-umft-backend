@@ -66,8 +66,7 @@ class UniversalService {
 
             modelsList = await Promise.all(
                 modelsList.map(async modelItem => {
-                    const translationData = await dynamicTranslateModel
-                        .findOne({
+                    const translationData = await dynamicTranslateModel.findOne({
                             [currentModel]: modelItem._id,
                             [this.Model.language.ref]: selectedLanguage._id,
                         })
@@ -85,7 +84,6 @@ class UniversalService {
                 })
             );
         }
-
         // Filter models with a valid title or name
         modelsList = modelsList.filter(modelItem => modelItem.title || modelItem.name || modelItem.firstName);
 

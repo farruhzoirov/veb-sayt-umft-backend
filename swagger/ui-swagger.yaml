@@ -10,6 +10,58 @@ servers:
 
 
 paths:
+  ##Category
+  /front/category:
+    get:
+      summary: Getting category for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: path
+          name: language
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+      responses:
+        "200": # status code
+          description: Getting matches model for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - Category
+
+  /front/category/{slug}:
+    get:
+      summary: Getting category for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: path
+          name: slug
+      responses:
+        "200": # status code
+          description: Getting one modelData for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - Category
+
   ## News
   /front/news:
     get:
@@ -61,6 +113,7 @@ paths:
 
       tags:
         - News
+
   ## Partner
   /front/partner:
     get:
@@ -217,6 +270,58 @@ paths:
       tags:
         - Events
 
+  ## EventsCategory
+  /front/eventsCategory:
+    get:
+      summary: Getting eventsCategory for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: path
+          name: language
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+      responses:
+        "200": # status code
+          description: Getting matches model for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - EventsCategory
+
+  /front/eventsCategory/{slug}:
+    get:
+      summary: Getting eventsCategory for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: path
+          name: slug
+      responses:
+        "200": # status code
+          description: Getting one modelData for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - EventsCategory
+
   ## Licence
   /front/licence:
     get:
@@ -320,3 +425,211 @@ paths:
 
       tags:
         - Employee
+
+  ## Specialty
+  /front/specialty:
+    get:
+      summary: Getting specialty for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: path
+          name: language
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+      responses:
+        "200": # status code
+          description: Getting matches modelData for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - Specialty
+
+  /front/specialty/{slug}:
+    get:
+      summary: Getting specialty for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: path
+          name: slug
+      responses:
+        "200": # status code
+          description: Getting one modelData for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - Specialty
+
+  ## Format
+  /front/format:
+    get:
+      summary: Getting format for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: path
+          name: language
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+      responses:
+        "200": # status code
+          description: Getting matches modelData for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - Format
+
+  /front/format/{slug}:
+    get:
+      summary: Getting format for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: path
+          name: slug
+      responses:
+        "200": # status code
+          description: Getting one modelData for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - Format
+
+  ## Department
+  /front/department:
+    get:
+      summary: Getting department for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: path
+          name: language
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+      responses:
+        "200": # status code
+          description: Getting matches modelData for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - Department
+
+  /front/department/{slug}:
+    get:
+      summary: Getting department for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: path
+          name: slug
+      responses:
+        "200": # status code
+          description: Getting one modelData for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - Department
+
+  ## Degree
+  /front/degree:
+    get:
+      summary: Getting degree for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: path
+          name: language
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+      responses:
+        "200": # status code
+          description: Getting matches modelData for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - Degree
+
+  /front/degree/{slug}:
+    get:
+      summary: Getting degree for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: path
+          name: slug
+      responses:
+        "200": # status code
+          description: Getting one modelData for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - Degree
