@@ -12,7 +12,7 @@ const authMiddleware = require('../middlewares/auth.middleware');
 const upload = require('../utils/uploads/upload-models.util');
 
 // Validations
-const validateModel = require("../validators/crud/models/models.validator");
+const validateModel = require("../validators/crud/models.validator");
 const patchModelValidator = require("../validators/crud/patch-model.validator");
 const deletingFileValidator = require("../validators/files/delete-file.validator");
 

@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 // Controllers
-const NewsController = require('../../controllers/frontend/news.controller');
+const NewsController = require('../../controllers/frontend/universal.controller');
 const newsController = new NewsController();
 
 

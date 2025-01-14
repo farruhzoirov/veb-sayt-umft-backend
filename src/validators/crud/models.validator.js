@@ -1,4 +1,4 @@
-const modelSchemas = require("../schemas/models.schema");
+const modelSchemas = require("./schemas/models.schema");
 const {ValidationError} = require("joi");
 
 const validateModel = async (req, res, next) => {

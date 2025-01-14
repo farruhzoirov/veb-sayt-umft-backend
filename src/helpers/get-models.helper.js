@@ -67,6 +67,7 @@ const {
 } = require("../common/constants/models.constants");
 
 function getModelsHelper(modelKey) {
+    console.log(modelKey)
     switch (modelKey) {
         case Model.university.ref:
             return universitySchema;
