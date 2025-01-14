@@ -5,7 +5,7 @@ const EmployeesController = require('../../../controllers/admin-panel/hemis/empl
 
 const employeesController = new EmployeesController();
 
-router.get('/fetch-employees',  employeesController.fetchEmployee);
+router.get('/fetch-employees', authMiddleware.universalAccessMiddleware, employeesController.fetchEmployee);
 
 
 module.exports = router;

@@ -12,3 +12,4 @@ router.get('/:model/:slug', universalController.getOneModelDataBySlug);
 
 module.exports = router;
 
+

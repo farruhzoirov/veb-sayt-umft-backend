@@ -73,6 +73,14 @@ class UniversalService {
                         })
                         .select(queryParameters.selectFields ? queryParameters.selectFields : `-${currentModel} -__v -language -createdAt -updatedAt`)
                         .lean();
+
+                    if (modelItem.prices && Array.isArray(modelItem.prices)) {
+                        for (const price of modelItem.prices) {
+                            if (price.format) {
+                                price.format = await getPopulates('format', price.format, selectedLanguage);
+                            }
+                        }
+                    }
                     return {...modelItem, ...translationData || {}};
                 })
             );
@@ -90,7 +98,7 @@ class UniversalService {
             pages: Math.ceil(totalModels / queryParameters.limit),
         };
 
-        return {modelsList, pagination: paginationInfo, language: selectedLanguage._id};
+        return {data: modelsList, pagination: paginationInfo, language: selectedLanguage._id};
     }
 
 
