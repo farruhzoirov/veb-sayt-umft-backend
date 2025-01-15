@@ -130,8 +130,7 @@ class DefaultController {
 
     async deleteFile(req, res, next) {
         try {
-            const filePath = req.body.filePath;
-            await this.deleteFileService.deleteFile(filePath);
+            await this.deleteFileService.deleteFile(req);
             return res.status(200).json({
                 ok: true,
                 message: "File deleted",

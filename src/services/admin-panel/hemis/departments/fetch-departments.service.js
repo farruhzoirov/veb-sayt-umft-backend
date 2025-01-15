@@ -43,6 +43,7 @@ class FetchDepartmentsService {
             const newDepartment = await new Department({
                 hemisId: department.hemis_id,
                 code: department.code,
+                slug: "",
                 structureType: department.structureType,
                 active: department.active,
                 createdAt: department.createdAt,
@@ -104,6 +105,7 @@ class FetchDepartmentsService {
                 const newDepartment = await new Department({
                     hemisId: department.hemis_id,
                     code: department.code,
+                    slug: "",
                     structureType: department.structureType,
                     active: department.active,
                     createdAt: department.createdAt,
