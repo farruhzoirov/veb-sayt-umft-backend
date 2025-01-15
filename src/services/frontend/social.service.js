@@ -18,7 +18,7 @@ class SocialService {
         const defaultLanguage = await getDefaultLanguageHelper();
         const queryParameters = {
             selectFields: req.query.select || '',
-            language: req.query.language || defaultLanguage.slug
+            requestedLanguage: req.query.language || defaultLanguage.slug
         }
 
         if (!Array.isArray(slugs) || slugs.length === 0) {
