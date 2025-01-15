@@ -18,3 +18,5 @@ class SocialsController {
         }
     }
 }
+
+module.exports = SocialsController
