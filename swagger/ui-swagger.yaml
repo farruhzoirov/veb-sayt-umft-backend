@@ -189,6 +189,16 @@ paths:
           schema:
             type: string
           required: false
+      requestBody:
+        description: Optional description in *Markdown*
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                slugs:
+                  type: array
       responses:
         "200": # status code
           description: Getting partners for frontend
@@ -196,9 +206,7 @@ paths:
             application/json:
               schema:
                 type: object
-                properties:
-                  slugs:
-                    type: array
+
 
 
       tags:
