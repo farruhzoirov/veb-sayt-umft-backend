@@ -3,6 +3,7 @@ const ValidateError = require('joi').ValidationError;
 
 const FilePathSchema = Joi.object({
     filePath: Joi.string().required(),
+    modelId: Joi.string().optional()
 })
 
 module.exports = async (req, res, next) => {
