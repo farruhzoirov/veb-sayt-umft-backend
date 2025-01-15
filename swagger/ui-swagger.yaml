@@ -168,7 +168,7 @@ paths:
 
   ## Social
   /front/social:
-    get:
+    post:
       summary: Getting socials for frontend
       description: You can filter which you want.
       parameters:
