@@ -35,7 +35,7 @@ class SocialService {
         }
 
         console.log(slugs);
-        const messengers = await Messenger.find({slug: { $in: slugs }}, "_id");
+        const messengers = await Messenger.find({slug: { $in: slugs }}, "_id").lean();
 
         if (!messengers.length) {
             return []
@@ -43,7 +43,7 @@ class SocialService {
 
         const messengerIds = messengers.map((messenger) => messenger._id);
 
-        let socials = await Social.find({messenger: {$in: messengerIds}}).select("-__v -createdAt -updatedAt");
+        let socials = await Social.find({messenger: {$in: messengerIds}}).select("-__v -createdAt -updatedAt").lean();
 
         const populateOptions = this.Model.social.populate || []
         const SocialTranslate = getModelsTranslateHelper(this.TranslateModel.social.ref);
