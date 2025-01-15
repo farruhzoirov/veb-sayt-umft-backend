@@ -33,7 +33,8 @@ class SocialService {
             throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
         }
 
-        const messengers = Messenger.find({slug: {$in: slugs}}, "_id");
+        console.log(slugs);
+        const messengers = await Messenger.find({slug: { $in: slugs }}, "_id");
 
         if (!messengers.length) {
             return []
@@ -42,6 +43,7 @@ class SocialService {
         const messengerIds = messengers.map((messenger) => messenger._id);
 
         let socials = await Social.find({messenger: {$in: messengerIds}}).select("-__v -createdAt -updatedAt");
+
         const populateOptions = this.Model.social.populate || []
 
         socials = await Promise.all(
@@ -61,7 +63,6 @@ class SocialService {
                 return {...socialItem, ...translationData || {}};
             })
         );
-
         return {data: socials};
     }
 }
