@@ -7,7 +7,7 @@ const searchFields = {
     news: ["title"],
     page: ["title"],
     partner: ["name"],
-    employee: ["fullName"],
+    employee: ["firstName"],
     user: ["name"],
     language: ["title"],
     degree: ["name"],
