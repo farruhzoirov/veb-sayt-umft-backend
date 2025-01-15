@@ -34,7 +34,6 @@ class SocialService {
             throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
         }
 
-        console.log(slugs);
         const messengers = await Messenger.find({slug: { $in: slugs }}, "_id").lean();
 
         if (!messengers.length) {

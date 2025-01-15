@@ -9,6 +9,7 @@ class ProgramsService {
     constructor() {
         this.Model = Model
     }
+
     async filterAndGetPrograms(req) {
         const defaultLanguage = await Language.findOne({isDefault: true});
         const payload = {

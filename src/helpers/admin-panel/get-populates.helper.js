@@ -34,7 +34,7 @@ async function getPopulates(model, _id, language) {
             const modelTranslateByLanguage = await dynamicTranslateModel.findOne({
                 [model]: _id,
                 "language": language._id
-            }).select(`-${model} -__v -createdAt -updatedAt -status -language`).lean();
+            }).select(`-__v -createdAt -updatedAt -status -language`).lean();
             return {...data, ...modelTranslateByLanguage || {}}
         }
 
