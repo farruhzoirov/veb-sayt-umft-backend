@@ -6,6 +6,7 @@ const {getPopulates} = require("../../helpers/admin-panel/get-populates.helper")
 const {Model, TranslateModel} = require("../../common/constants/models.constants");
 const getDefaultLanguageHelper = require("../../helpers/frontend/get-default-language.helper");
 const Language = require("../../models/settings/language.model");
+const {getModelsTranslateHelper} = require("../../helpers/admin-panel/get-models.helper");
 
 class SocialService {
     constructor() {
@@ -45,10 +46,10 @@ class SocialService {
         let socials = await Social.find({messenger: {$in: messengerIds}}).select("-__v -createdAt -updatedAt");
 
         const populateOptions = this.Model.social.populate || []
-
+        const SocialTranslate = getModelsTranslateHelper(this.TranslateModel.social.ref);
         socials = await Promise.all(
             socials.map(async socialItem => {
-                const translationData = await this.TranslateModel.social.ref.findOne({
+                const translationData = await SocialTranslate.findOne({
                     [this.Model.social.ref]: socialItem._id,
                     [this.Model.language.ref]: selectedLanguage._id,
                 })
