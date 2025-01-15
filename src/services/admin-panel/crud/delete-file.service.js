@@ -11,7 +11,7 @@ class deleteFileService {
     async deleteFile(req) {
         const modelId = req.body.modelId || '';
         const filePath = req.body.filePath;
-        const modelName = req.body.modelName;
+        const modelName = req.params.model;
 
         if (!filePath || !modelName) {
             throw new Error('File path and model name are required.');
