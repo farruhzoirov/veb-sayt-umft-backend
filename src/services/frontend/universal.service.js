@@ -42,7 +42,7 @@ class UniversalService {
         let modelsList = await dynamicModel
             .find({status: 1})
             .sort({_id: -1})
-            .select(queryParameters.selectFields ? queryParameters.selectFields : `-__v  -createdAt -updatedAt -active -status`)
+            .select(queryParameters.selectFields ? queryParameters.selectFields : `-__v  -updatedAt -active -status`)
             .limit(queryParameters.limit)
             .skip(queryParameters.skip)
             .lean();
@@ -71,7 +71,7 @@ class UniversalService {
                         [currentModel]: modelItem._id,
                         [this.Model.language.ref]: selectedLanguage._id,
                     })
-                        .select(queryParameters.selectFields ? queryParameters.selectFields : `-${currentModel} -__v -language -createdAt -updatedAt`)
+                        .select(queryParameters.selectFields ? queryParameters.selectFields : `-${currentModel} -__v -language  -updatedAt`)
                         .lean();
 
                     if (modelItem.prices && Array.isArray(modelItem.prices)) {

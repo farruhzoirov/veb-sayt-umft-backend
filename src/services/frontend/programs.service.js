@@ -57,7 +57,7 @@ class ProgramsService {
                         [this.Model.specialty.ref]: programItem._id,
                         [this.Model.language.ref]: selectedLanguage._id
                     }).select(queryParameters.selectFields ? queryParameters.selectFields :
-                        `-${this.Model.specialty.ref} -__v -language -createdAt -updatedAt`)
+                        `-${this.Model.specialty.ref} -__v -language -updatedAt`)
                         .lean();
 
 

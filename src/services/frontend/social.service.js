@@ -42,7 +42,7 @@ class SocialService {
 
         const messengerIds = messengers.map((messenger) => messenger._id);
 
-        let socials = await Social.find({messenger: {$in: messengerIds}}).select("-__v -createdAt -updatedAt").lean();
+        let socials = await Social.find({messenger: {$in: messengerIds}}).select("-__v -updatedAt").lean();
 
         const populateOptions = this.Model.social.populate || []
         const SocialTranslate = getModelsTranslateHelper(this.TranslateModel.social.ref);
@@ -52,7 +52,7 @@ class SocialService {
                     [this.Model.social.ref]: socialItem._id,
                     [this.Model.language.ref]: selectedLanguage._id,
                 })
-                    .select(queryParameters.selectFields ? queryParameters.selectFields : `-${this.Model.social.ref} -__v -language -createdAt -updatedAt`)
+                    .select(queryParameters.selectFields ? queryParameters.selectFields : `-${this.Model.social.ref} -__v -language  -updatedAt`)
                     .lean();
 
                 await Promise.all(
