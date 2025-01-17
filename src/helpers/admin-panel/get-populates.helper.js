@@ -25,7 +25,7 @@ async function getPopulates(model, _id, language) {
     }
 
     if (modelForPopulate === "department") {
-        data = await dynamicModel.findById(hemisId).select("-__v -createdAt -updatedAt -status").lean() || {}
+        data = await dynamicModel.findById({hemisId: _id}).select("-__v -createdAt -updatedAt -status").lean() || {}
         if (Model[model].translate) {
             let transModel = TranslateModel[model].ref
             const dynamicTranslateModel = getModelsTranslateHelper(transModel);
