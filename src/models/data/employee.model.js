@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 const EmployeeSchema = new Schema({
   hemisId: {
     type: Number,
-    required: true,
   },
   department: {
     type: mongoose.Schema.Types.ObjectId,
