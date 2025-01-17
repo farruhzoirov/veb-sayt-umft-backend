@@ -102,7 +102,7 @@ class FetchEmployeesService {
                     await existingEmployee.updateOne({
                         $set: {
                             hemisId: employee.hemis_id,
-                            department: matchDepartment ? matchDepartment._id : null,
+                            department: matchDepartment ? matchDepartment.hemisId : null,
                             img: employee.image,
                             employeeId: employee.employee_id_number,
                             contractNumber: employee.contract_number,
