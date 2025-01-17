@@ -43,9 +43,7 @@ const SpecialtySchema = new Schema({
         required: true,
     },
     department: {
-        type: Schema.Types.ObjectId,
-        ref: 'department',
-        required: true,
+      type: Number
     },
     prices: [PricesSchema],
     active: {
