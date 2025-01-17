@@ -57,7 +57,7 @@ class GetModelService {
                         }
                     }
 
-                    if (modelName === this.Model.employee.ref) {
+                    if (model === this.Model.employee.ref) {
                         for (const socialLink of data.socialLinks) {
                             socialLink.messenger = await getPopulates("messenger", socialLink.messenger);
                         }
