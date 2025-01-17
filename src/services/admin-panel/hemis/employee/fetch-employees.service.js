@@ -55,7 +55,7 @@ class FetchEmployeesService {
             const matchDepartment = await Department.findOne({hemisId: employee.department.id});
             const newEmployee = await new Employee({
                 hemisId: employee.hemis_id,
-                department: matchDepartment ? matchDepartment._id : null,
+                department: matchDepartment.hemisId,
                 img: employee.image,
                 socialLinks: [],
                 slug: "",

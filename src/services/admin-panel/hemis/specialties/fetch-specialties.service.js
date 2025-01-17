@@ -56,7 +56,7 @@ class FetchSpecialtiesService {
                 code: specialty.code,
                 degree: degree._id,
                 slug: "",
-                department: department._id,
+                department: department.hemisId,
                 structureType: specialty.structureType,
                 active: specialty.active,
                 prices: [],
