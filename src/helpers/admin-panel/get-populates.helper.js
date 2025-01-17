@@ -24,28 +24,6 @@ async function getPopulates(model, _id, language) {
         return data
     }
 
-    if (modelForPopulate === "department") {
-        data = await dynamicModel.findOne({hemisId: _id}).select("-__v -createdAt -updatedAt -status").lean() || {}
-        if (Model[model].translate) {
-            let transModel = TranslateModel[model].ref
-            const dynamicTranslateModel = getModelsTranslateHelper(transModel);
-
-            if (language) {
-                const modelTranslateByLanguage = await dynamicTranslateModel.findOne({
-                    [model]: _id,
-                    "language": language._id
-                }).select(`-__v -createdAt -updatedAt -status -language`).lean();
-                return {...data, ...modelTranslateByLanguage || {}}
-            }
-
-            data.translates = await dynamicTranslateModel.find({
-                [model]: data._id,
-            }).select("-__v").lean();
-
-            return data
-        }
-    }
-
     data = await dynamicModel.findById(_id).select("-__v -createdAt -updatedAt -status").lean() || {}
 
     if (Model[model].translate) {

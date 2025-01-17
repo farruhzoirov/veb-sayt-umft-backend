@@ -5,14 +5,12 @@ const EmployeeSchema = new Schema({
     hemisId: {
         type: Number,
     },
-    // department: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'department',
-    //     default: null
-    // },
     department: {
-        type: Number
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'department',
+        default: null
     },
+
     slug: {
         type: String
     },
