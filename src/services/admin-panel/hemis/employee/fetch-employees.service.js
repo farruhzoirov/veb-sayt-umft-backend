@@ -54,9 +54,6 @@ class FetchEmployeesService {
     async addNewEmployee(employeesData, defaultLanguage) {
         for (const employee of employeesData) {
             const matchDepartment = await Department.findOne({hemisId: employee.department.id});
-            if (matchDepartment) {
-                throw BaseError.BadRequest(`Department not found for ${employee.department.id}`)
-            }
             const newEmployee = await new Employee({
                 hemisId: employee.hemis_id,
                 department: matchDepartment ? matchDepartment._id : null,

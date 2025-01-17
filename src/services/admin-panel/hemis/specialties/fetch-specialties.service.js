@@ -132,7 +132,6 @@ class FetchSpecialtiesService {
 
     async findDepartment(hemisId) {
         const department = await Department.findOne({hemisId}).lean();
-        if (!department) throw new Error(`Department not found for hemisId: ${hemisId}`);
         return department;
     }
 
