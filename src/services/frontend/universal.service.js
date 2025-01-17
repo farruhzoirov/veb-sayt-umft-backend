@@ -81,6 +81,7 @@ class UniversalService {
                             }
                         }
                     }
+
                     return {...modelItem, ...translationData || {}};
                 })
             );

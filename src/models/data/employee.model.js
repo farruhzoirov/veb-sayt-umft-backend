@@ -29,7 +29,7 @@ const EmployeeSchema = new Schema({
     }
   }],
   birthDate: {
-    type: Date
+    type: String
   },
   status: {
     type: Number,

@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
-const {getModelsHelper, getModelsTranslateHelper, getModel,} = require("../../../helpers/admin-panel/get-models.helper");
+const {
+    getModelsHelper,
+    getModelsTranslateHelper,
+    getModel,
+} = require("../../../helpers/admin-panel/get-models.helper");
 
 const {Model, TranslateModel} = require("../../../common/constants/models.constants");
 const {getPopulates} = require("../../../helpers/admin-panel/get-populates.helper");
@@ -30,11 +34,9 @@ class GetModelService {
                 message: "id is not valid",
             });
         }
-
         const populateOptions = this.Model[model].populate || [];
         const data =
             (await dynamicModel.findById(_id).select("-updatedAt -__v").lean()) || {};
-        console.log(data);
         if (!Object.keys(data).length) {
             throw BaseError.NotFound("model not found");
         }
@@ -63,10 +65,7 @@ class GetModelService {
                         }
                     }
 
-                    el.translates = await dynamicTranslateModel
-                        .find({
-                            [model]: el._id,
-                        })
+                    el.translates = await dynamicTranslateModel.find({[model]: el._id,})
                         .select("-updatedAt -__v")
                         .lean();
                 })

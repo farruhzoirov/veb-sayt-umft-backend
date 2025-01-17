@@ -20,7 +20,7 @@ class ProgramsService {
 
         const queryParameters = {
             requestedLanguage: req.query?.language || defaultLanguage.slug,
-            selectFields: req.query.select || ''
+            selectFields: req.query?.select || ''
         }
 
         const selectedLanguage = await Language.findOne({
