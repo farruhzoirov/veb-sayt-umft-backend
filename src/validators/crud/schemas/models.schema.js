@@ -150,7 +150,7 @@ const employeeSchema = Joi.object({
         messenger: Joi.string().required(),
         link: Joi.string().required(),
     }).required(),
-    birthDate: Joi.string().optional(),
+
     slug: Joi.string().optional(),
     translate: Joi.object({
         firstName: Joi.string().optional(),

@@ -13,12 +13,13 @@ class ProgramsService {
     async filterAndGetPrograms(req) {
         const defaultLanguage = await Language.findOne({isDefault: true});
         const payload = {
-            format: req.body.format || '',
-            degree: req.body.degree || '',
-            department: req.body.department || '',
+            format: req.body?.format || null,
+            degree: req.body?.degree || null,
+            department: req.body?.department || null,
         }
+
         const queryParameters = {
-            language: req.query.language || defaultLanguage.slug,
+            requestedLanguage: req.query?.language || defaultLanguage.slug,
             selectFields: req.query.select || ''
         }
 
@@ -47,7 +48,7 @@ class ProgramsService {
         if (payload.degree) query.degree = payload.degree;
         if (payload.format) query["prices.format"] = payload.format;
 
-        programsList = await Specialty.find(query);
+        programsList = await Specialty.find(query).lean();
 
         if (programsList.length) {
             programsList = await Promise.all(
@@ -55,13 +56,20 @@ class ProgramsService {
                     const translationData = await SpecialtyTranslate.findOne({
                         [this.Model.specialty.ref]: programItem._id,
                         [this.Model.language.ref]: selectedLanguage._id
-                    })
-                        .select(queryParameters.selectFields ? queryParameters.selectFields :
-                            `-${this.Model.specialty.ref} -__v -language -createdAt -updatedAt`)
+                    }).select(queryParameters.selectFields ? queryParameters.selectFields :
+                        `-${this.Model.specialty.ref} -__v -language -createdAt -updatedAt`)
                         .lean();
+
+
                     return {...programItem, ...translationData || {}};
                 })
             )
         }
+
+        programsList = programsList.filter((item) => item.name);
+
+        return {data: programsList};
     }
 }
+
+module.exports = ProgramsService;

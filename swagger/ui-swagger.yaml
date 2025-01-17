@@ -645,3 +645,54 @@ paths:
 
       tags:
         - Degree
+  ## Programs
+  /front/programs:
+    get:
+      summary: Getting specialties for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: path
+          name: language
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+      responses:
+        "200": # status code
+          description: Getting matches modelData for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - Programs
+
+  /front/programs/{slug}:
+    get:
+      summary: Getting specialty for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: path
+          name: slug
+      responses:
+        "200": # status code
+          description: Getting one modelData for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - Programs
