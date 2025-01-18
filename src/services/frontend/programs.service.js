@@ -65,7 +65,7 @@ class ProgramsService {
                     if (programItem.prices && Array.isArray(programItem.prices)) {
                         for (const price of programItem.prices) {
                             if (price.format) {
-                                price.format = await getPopulates('format', price.format);
+                                price.format = await getPopulates('format', price.format, selectedLanguage);
                             }
                         }
                     }
