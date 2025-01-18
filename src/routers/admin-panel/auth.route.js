@@ -13,14 +13,13 @@ const authController = new AuthController();
 
 // Routers
 // GET
-router.get('/add-first-admin',  authController.addFirstAdmin);
+router.get('/add-first-admin', authController.addFirstAdmin);
 
 // POST
 router.post('/login', userValidator, authController.login);
 
 
 router.get('/check-user', authMiddleware.universalAccessMiddleware, authController.checkUser);
-
 
 
 module.exports = router;

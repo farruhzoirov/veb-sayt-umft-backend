@@ -5,20 +5,20 @@ const CheckUserService = require('../../../services/admin-panel/auth/check-user.
 
 
 class AuthController {
-    async addFirstAdmin(req, res) {
-        const addAdminService = new AddAdminService();
-        await addAdminService.addFirstAdmin(req, res);
-    }
+  async addFirstAdmin(req, res) {
+    const addAdminService = new AddAdminService();
+    await addAdminService.addFirstAdmin(req, res);
+  }
 
-    async login(req, res) {
-        const loginService = new LoginService();
-        await loginService.login(req, res);
-    }
+  async login(req, res) {
+    const loginService = new LoginService();
+    await loginService.login(req, res);
+  }
 
-    async checkUser(req, res) {
-        const checkUserService = new CheckUserService();
-        await checkUserService.checkUser(req, res);
-    }
+  async checkUser(req, res) {
+    const checkUserService = new CheckUserService();
+    await checkUserService.checkUser(req, res);
+  }
 }
 
 

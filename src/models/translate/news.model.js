@@ -1,19 +1,19 @@
-const { Schema, model } = require("mongoose");
+const {Schema, model} = require("mongoose");
 
 const NewsTranslateSchema = new Schema({
-    title: String,
-    text: String,
-    description:String,
-    news: {
-        type: Schema.Types.ObjectId,
-        ref: 'news'
-    },
-    language: {
-        type: Schema.Types.ObjectId,
-        ref: 'language'
-    }
+  title: String,
+  text: String,
+  description: String,
+  news: {
+    type: Schema.Types.ObjectId,
+    ref: 'news'
+  },
+  language: {
+    type: Schema.Types.ObjectId,
+    ref: 'language'
+  }
 }, {
-    timestamps: true
+  timestamps: true
 })
 
-module.exports = model("newsTranslate",  NewsTranslateSchema);
+module.exports = model("newsTranslate", NewsTranslateSchema);

@@ -2,16 +2,16 @@ const {Schema} = require('mongoose')
 const mongoose = require("mongoose");
 
 const PartnerSchema = new Schema({
-    img: [],
-    status: {
-        type: Number,
-        default: 1
-    },
-    slug: {
-        type: String,
-    }
+  img: [],
+  status: {
+    type: Number,
+    default: 1
+  },
+  slug: {
+    type: String,
+  }
 }, {
-    timestamps: true
+  timestamps: true
 })
 
 

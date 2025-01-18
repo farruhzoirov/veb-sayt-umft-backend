@@ -3,17 +3,17 @@ const {Schema} = require("mongoose");
 
 const MessengerSchema = new Schema(
     {
-        img: [],
-        slug: {
-            type: String,
-        },
-        status: {
-            type: Number,
-            default: 1,
-        },
+      img: [],
+      slug: {
+        type: String,
+      },
+      status: {
+        type: Number,
+        default: 1,
+      },
     },
     {
-        timestamps: true,
+      timestamps: true,
     }
 );
 

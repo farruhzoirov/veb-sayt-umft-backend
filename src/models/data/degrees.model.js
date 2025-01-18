@@ -1,23 +1,23 @@
 const mongoose = require("mongoose");
-const { Schema } = require("mongoose");
+const {Schema} = require("mongoose");
 
 const DegreeSchema = new Schema(
-  {
-    img: [],
-    code: {
-      type: String,
+    {
+      img: [],
+      code: {
+        type: String,
+      },
+      slug: {
+        type: String,
+      },
+      status: {
+        type: Number,
+        default: 1,
+      },
     },
-    slug: {
-      type: String,
-    },
-    status: {
-      type: Number,
-      default: 1,
-    },
-  },
-  {
-    timestamps: true,
-  }
+    {
+      timestamps: true,
+    }
 );
 
 module.exports = mongoose.model("degree", DegreeSchema);

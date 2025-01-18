@@ -12,137 +12,137 @@ const {getModel, getModelsHelper, getModelsTranslateHelper} = require("../../hel
 const {getPopulates} = require("../../helpers/admin-panel/get-populates.helper");
 
 class UniversalService {
-    constructor() {
-        this.Model = Model
-        this.TranslateModel = TranslateModel
+  constructor() {
+    this.Model = Model
+    this.TranslateModel = TranslateModel
+  }
+
+  async getModelsListForFront(req) {
+    const defaultLanguage = await getDefaultLanguageHelper();
+    const currentModel = await getModel(req);
+    const dynamicModel = getModelsHelper(currentModel);
+
+    // Payload preparation
+    const queryParameters = {
+      limit: req.query.limit ? parseInt(req.query.limit, 10) : 30,
+      page: req.query.page ? parseInt(req.query.page, 10) : 1,
+      skip: (req.query.limit ? parseInt(req.query.limit, 10) : 10) * ((req.query.page ? parseInt(req.query.page, 10) : 1) - 1),
+      selectFields: req.query.select || '',
+      requestedLanguage: req.query.language || defaultLanguage.slug,
+    };
+
+    const selectedLanguage = await Language.findOne({
+      slug: queryParameters.requestedLanguage,
+    }).lean();
+
+    if (!selectedLanguage) {
+      throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
     }
 
-    async getModelsListForFront(req) {
-        const defaultLanguage = await getDefaultLanguageHelper();
-        const currentModel = await getModel(req);
-        const dynamicModel = getModelsHelper(currentModel);
+    let modelsList = await dynamicModel
+        .find({status: 1})
+        .sort({_id: -1})
+        .select(queryParameters.selectFields ? queryParameters.selectFields : `-__v  -updatedAt -active -status`)
+        .limit(queryParameters.limit)
+        .skip(queryParameters.skip)
+        .lean();
 
-        // Payload preparation
-        const queryParameters = {
-            limit: req.query.limit ? parseInt(req.query.limit, 10) : 30,
-            page: req.query.page ? parseInt(req.query.page, 10) : 1,
-            skip: (req.query.limit ? parseInt(req.query.limit, 10) : 10) * ((req.query.page ? parseInt(req.query.page, 10) : 1) - 1),
-            selectFields: req.query.select || '',
-            requestedLanguage: req.query.language || defaultLanguage.slug,
-        };
+    // if (this.Model[currentModel].populate) {
+    //     const populateOptions  = this.Model[currentModel].populate;
+    //     modelsList = await Promise.all(
+    //         modelsList.map(async (data) => {
+    //             await Promise.all(
+    //                 populateOptions.map(async (item) => {
+    //                     data[item] = await getPopulates(item, data[item], selectedLanguage);
+    //                 })
+    //             );
+    //             return data;
+    //         })
+    //     );
+    // }
 
-        const selectedLanguage = await Language.findOne({
-            slug: queryParameters.requestedLanguage,
-        }).lean();
+    if (this.Model[currentModel].translate) {
+      const translateModelName = this.TranslateModel[currentModel].ref;
+      const dynamicTranslateModel = getModelsTranslateHelper(translateModelName);
 
-        if (!selectedLanguage) {
-            throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
-        }
+      modelsList = await Promise.all(
+          modelsList.map(async modelItem => {
+            const translationData = await dynamicTranslateModel.findOne({
+              [currentModel]: modelItem._id,
+              [this.Model.language.ref]: selectedLanguage._id,
+            })
+                .select(queryParameters.selectFields ? queryParameters.selectFields : `-${currentModel} -__v -language  -updatedAt`)
+                .lean();
 
-        let modelsList = await dynamicModel
-            .find({status: 1})
-            .sort({_id: -1})
-            .select(queryParameters.selectFields ? queryParameters.selectFields : `-__v  -updatedAt -active -status`)
-            .limit(queryParameters.limit)
-            .skip(queryParameters.skip)
-            .lean();
+            if (modelItem.prices && Array.isArray(modelItem.prices)) {
+              for (const price of modelItem.prices) {
+                if (price.format) {
+                  price.format = await getPopulates('format', price.format, selectedLanguage);
+                }
+              }
+            }
 
-        // if (this.Model[currentModel].populate) {
-        //     const populateOptions  = this.Model[currentModel].populate;
-        //     modelsList = await Promise.all(
-        //         modelsList.map(async (data) => {
-        //             await Promise.all(
-        //                 populateOptions.map(async (item) => {
-        //                     data[item] = await getPopulates(item, data[item], selectedLanguage);
-        //                 })
-        //             );
-        //             return data;
-        //         })
-        //     );
-        // }
-
-        if (this.Model[currentModel].translate) {
-            const translateModelName = this.TranslateModel[currentModel].ref;
-            const dynamicTranslateModel = getModelsTranslateHelper(translateModelName);
-
-            modelsList = await Promise.all(
-                modelsList.map(async modelItem => {
-                    const translationData = await dynamicTranslateModel.findOne({
-                        [currentModel]: modelItem._id,
-                        [this.Model.language.ref]: selectedLanguage._id,
-                    })
-                        .select(queryParameters.selectFields ? queryParameters.selectFields : `-${currentModel} -__v -language  -updatedAt`)
-                        .lean();
-
-                    if (modelItem.prices && Array.isArray(modelItem.prices)) {
-                        for (const price of modelItem.prices) {
-                            if (price.format) {
-                                price.format = await getPopulates('format', price.format, selectedLanguage);
-                            }
-                        }
-                    }
-
-                    return {...modelItem, ...translationData || {}};
-                })
-            );
-        }
-
-        // Filter models with a valid title or name
-        modelsList = modelsList.filter(modelItem => modelItem.title || modelItem.name || modelItem.firstName);
-
-        // Pagination data
-        const totalModels = await dynamicModel.countDocuments({status: 1});
-        const paginationInfo = {
-            total: totalModels,
-            limit: queryParameters.limit,
-            page: queryParameters.page,
-            pages: Math.ceil(totalModels / queryParameters.limit),
-        };
-
-        return {data: modelsList, pagination: paginationInfo, language: selectedLanguage._id};
+            return {...modelItem, ...translationData || {}};
+          })
+      );
     }
 
+    // Filter models with a valid title or name
+    modelsList = modelsList.filter(modelItem => modelItem.title || modelItem.name || modelItem.firstName);
 
-    async getOneModelDataForFront(req) {
-        const defaultLanguage = await getDefaultLanguageHelper();
-        const currentModel = await getModel(req);
-        const dynamicModel = getModelsHelper(currentModel);
+    // Pagination data
+    const totalModels = await dynamicModel.countDocuments({status: 1});
+    const paginationInfo = {
+      total: totalModels,
+      limit: queryParameters.limit,
+      page: queryParameters.page,
+      pages: Math.ceil(totalModels / queryParameters.limit),
+    };
 
-        const queryParameters = {
-            slug: req.params.slug,
-            language: req.query.language || defaultLanguage.slug
-        }
+    return {data: modelsList, pagination: paginationInfo, language: selectedLanguage._id};
+  }
 
-        if (!queryParameters.slug) {
-            throw BaseError.BadRequest('Slug is required');
-        }
 
-        const findDynamicModelBySlug = await dynamicModel.findOne({slug: queryParameters.slug}).lean();
+  async getOneModelDataForFront(req) {
+    const defaultLanguage = await getDefaultLanguageHelper();
+    const currentModel = await getModel(req);
+    const dynamicModel = getModelsHelper(currentModel);
 
-        if (!findDynamicModelBySlug) {
-            throw BaseError.NotFound('News not found');
-        }
-
-        const findLanguageBySlug = await Language.findOne({
-            slug: queryParameters.language
-        }).lean();
-
-        if (!findDynamicModelBySlug) {
-            throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
-        }
-
-        if (this.Model[currentModel].translate) {
-            const translateModelName = this.TranslateModel[currentModel].ref;
-            const dynamicTranslateModel = getModelsTranslateHelper(translateModelName);
-
-            const oneDynamicModelTranslate = await dynamicTranslateModel.findOne({
-                [this.Model[currentModel].ref]: findDynamicModelBySlug._id,
-                [this.Model.language.ref]: findLanguageBySlug._id
-            }).select(queryParameters.select ? queryParameters.select : `-${currentModel} -__v -language`).lean();
-
-            return {...findDynamicModelBySlug, ...oneDynamicModelTranslate || {}};
-        }
+    const queryParameters = {
+      slug: req.params.slug,
+      language: req.query.language || defaultLanguage.slug
     }
+
+    if (!queryParameters.slug) {
+      throw BaseError.BadRequest('Slug is required');
+    }
+
+    const findDynamicModelBySlug = await dynamicModel.findOne({slug: queryParameters.slug}).lean();
+
+    if (!findDynamicModelBySlug) {
+      throw BaseError.NotFound('News not found');
+    }
+
+    const findLanguageBySlug = await Language.findOne({
+      slug: queryParameters.language
+    }).lean();
+
+    if (!findDynamicModelBySlug) {
+      throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
+    }
+
+    if (this.Model[currentModel].translate) {
+      const translateModelName = this.TranslateModel[currentModel].ref;
+      const dynamicTranslateModel = getModelsTranslateHelper(translateModelName);
+
+      const oneDynamicModelTranslate = await dynamicTranslateModel.findOne({
+        [this.Model[currentModel].ref]: findDynamicModelBySlug._id,
+        [this.Model.language.ref]: findLanguageBySlug._id
+      }).select(queryParameters.select ? queryParameters.select : `-${currentModel} -__v -language`).lean();
+
+      return {...findDynamicModelBySlug, ...oneDynamicModelTranslate || {}};
+    }
+  }
 }
 
 module.exports = UniversalService;

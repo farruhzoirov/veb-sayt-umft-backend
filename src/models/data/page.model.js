@@ -1,17 +1,17 @@
-const { Schema, model } = require("mongoose");
+const {Schema, model} = require("mongoose");
 
 const PageModel = new Schema({
-    img: [],
-    slug: {
-        type: String,
-        required: [true, 'Link is required'],
-    },
-    status: {
-        type: Number,
-        default: 1
-    },
+  img: [],
+  slug: {
+    type: String,
+    required: [true, 'Link is required'],
+  },
+  status: {
+    type: Number,
+    default: 1
+  },
 }, {
-    timestamps: true
+  timestamps: true
 })
 
 module.exports = model("page", PageModel)

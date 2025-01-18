@@ -1,18 +1,18 @@
-const { Schema } = require('mongoose')
+const {Schema} = require('mongoose')
 const mongoose = require("mongoose");
 
 const EventsCategorySchema = new Schema({
-    img: [],
-    slug: {
-        type: String,
-        required: [true, "Slug is required"]
-    },
-    status: {
-        type: Number,
-        default: 1
-    },
+  img: [],
+  slug: {
+    type: String,
+    required: [true, "Slug is required"]
+  },
+  status: {
+    type: Number,
+    default: 1
+  },
 }, {
-    timestamps: true
+  timestamps: true
 });
 
 

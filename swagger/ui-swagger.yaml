@@ -5,7 +5,7 @@ info:
   version: 1.0.0
 servers:
   - url: http://95.130.227.52:4131
-  #- url: http://localhost:4131
+    #- url: http://localhost:4131
     description: Optional server description, e.g. Main (production) server
 
 
@@ -647,7 +647,7 @@ paths:
         - Degree
   ## Programs
   /front/programs:
-    get:
+    post:
       summary: Getting specialties for frontend
       description: You can filter which you want.
       parameters:
@@ -668,6 +668,19 @@ paths:
           schema:
             type: string
           required: false
+      requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  department:
+                      type: string
+                  format:
+                      type: string
+                  degree:
+                      type: string
+
       responses:
         "200": # status code
           description: Getting matches modelData for frontend

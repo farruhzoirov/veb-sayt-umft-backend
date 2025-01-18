@@ -8,9 +8,9 @@ const populateModelData = async (dynamicModel, modelId, populateFields) => {
   }
   if (populateFields) {
     await Promise.all(
-      populateFields.map(async (field) => {
-        newData[field] = await getPopulates(field, newData[field]);
-      })
+        populateFields.map(async (field) => {
+          newData[field] = await getPopulates(field, newData[field]);
+        })
     )
   }
   return newData;
