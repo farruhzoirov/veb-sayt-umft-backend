@@ -4,6 +4,7 @@ const Language = require("../../models/settings/language.model");
 const mongoose = require("mongoose");
 const BaseError = require("../../errors/base.error");
 const {Model} = require("../../common/constants/models.constants");
+const {getPopulates} = require("../../helpers/admin-panel/get-populates.helper");
 
 class ProgramsService {
     constructor() {
@@ -49,6 +50,7 @@ class ProgramsService {
         if (payload.format) query["prices.format"] = payload.format;
 
         programsList = await Specialty.find(query).lean();
+        const populateOptions = this.Model.specialty.populate || [];
 
         if (programsList.length) {
             programsList = await Promise.all(
@@ -60,9 +62,21 @@ class ProgramsService {
                         `-${this.Model.specialty.ref} -__v -language -updatedAt`)
                         .lean();
 
+                    if (programItem.prices && Array.isArray(programItem.prices)) {
+                        for (const price of programItem.prices) {
+                            if (price.format) {
+                                price.format = await getPopulates('format', price.format);
+                            }
+                        }
+                    }
 
+                    await Promise.all(
+                        populateOptions.map(async (item) => {
+                            programItem[item] = await getPopulates(item, programItem[item], selectedLanguage);
+                        }));
                     return {...programItem, ...translationData || {}};
                 })
+
             )
         }
 
