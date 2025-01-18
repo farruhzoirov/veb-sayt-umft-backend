@@ -4,9 +4,10 @@ info:
   description: GREAT PROJECT
   version: 1.0.0
 servers:
-  #- url: http://95.130.227.52:4131
+  - url: http://95.130.227.52:4131
+    description: Production server
   - url: http://localhost:4131
-    description: Optional server description, e.g. Main (production) server
+    description: Local development server
 tags:
   - name: Auth
     description: Endpoints related to authentication

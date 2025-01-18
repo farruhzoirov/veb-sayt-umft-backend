@@ -69,10 +69,10 @@ class ProgramsService {
                 }
               }
             }
-            await Promise.all(
-                populateOptions.map(async (item) => {
-                  programItem[item] = await getPopulates(item, programItem[item], selectedLanguage);
-                }));
+
+            // await Promise.all(populateOptions.map(async (item) => {
+            //       programItem[item] = await getPopulates(item, programItem[item], selectedLanguage);
+            //     }));
             return {...programItem, ...translationData || {}};
           })
       )
