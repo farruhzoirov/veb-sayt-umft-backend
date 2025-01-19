@@ -27,6 +27,7 @@ class GetApplicantsService {
 
       let applicants;
       applicants = await Applicants.find(searchQuery)
+          .sort({_id: -1})
           .select(select.length > 0 ? select.join(' ') : "slug name email phone")
           .limit(limit)
           .skip(skip)
