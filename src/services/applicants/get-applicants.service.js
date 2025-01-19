@@ -6,7 +6,7 @@ class GetApplicantsService {
     try {
       const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 20;
-      const select = req.query.select ? req.query.select.split(',') : [];
+      const select = req.query.select ? req.query.select.split(',') : '';
       const search = req.query.search ? JSON.parse(req.query.search) : {};
 
       const skip = (page - 1) * limit;
@@ -28,7 +28,7 @@ class GetApplicantsService {
       let applicants;
       applicants = await Applicants.find(searchQuery)
           .sort({_id: -1})
-          .select(select.length > 0 ? select.join(' ') : "slug name email phone")
+          .select(select)
           .limit(limit)
           .skip(skip)
           .lean();
