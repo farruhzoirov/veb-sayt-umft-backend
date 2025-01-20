@@ -38,7 +38,7 @@ class NewsService {
       throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
     }
 
-    if (!payload.category) {
+    if (!payload.category.length) {
       newsList = await dynamicModel
           .find({status: 1})
           .sort({_id: -1})
@@ -47,19 +47,17 @@ class NewsService {
           .skip(queryParameters.skip)
           .lean();
     }
-    console.log(payload.category);
-    if (payload.category && !mongoose.Types.ObjectId.isValid(payload.category)) {
-      throw BaseError.BadRequest("CategoryId is invalid");
-    }
 
-    if (payload.category && mongoose.Types.ObjectId.isValid(payload.category)) {
+    if (payload.category.length && payload.category.every(mongoose.Types.ObjectId.isValid)) {
       newsList = await dynamicModel
-          .find({status: 1, "category": payload.category})
+          .find({status: 1, category: {$in: payload.category}})
           .sort({_id: -1})
           .select(queryParameters.selectFields ? queryParameters.selectFields : `-__v  -updatedAt -active -status`)
           .limit(queryParameters.limit)
           .skip(queryParameters.skip)
           .lean();
+    } else {
+      throw BaseError.BadRequest("Please check your categoryIds");
     }
 
     if (this.Model[currentModel].translate) {

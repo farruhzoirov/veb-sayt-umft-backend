@@ -93,7 +93,10 @@ paths:
                 type: object
                 properties:
                   category:
-                    type: string
+                    type: array
+                    items:
+                      type: string
+                      example: "764fdsfdt4353234dfs"
 
       responses:
         "200": # status code
