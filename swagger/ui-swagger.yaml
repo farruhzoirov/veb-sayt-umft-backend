@@ -65,7 +65,7 @@ paths:
 
   ## News
   /front/news:
-    get:
+    post:
       summary: Getting news for frontend
       description: You can filter which you want.
       parameters:
@@ -86,6 +86,15 @@ paths:
           schema:
             type: string
           required: false
+      requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  category:
+                    type: string
+
       responses:
         "200": # status code
           description: Getting news for frontend

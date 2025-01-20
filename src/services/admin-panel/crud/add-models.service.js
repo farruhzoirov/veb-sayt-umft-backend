@@ -73,10 +73,6 @@ class AddModelsService {
   async addingModelData(dynamicModel, modelData, modelName, isDefault = false) {
     modelData.img = await this.validateAndFormatImages(modelData.img);
 
-    // if (modelName.trim() === "employee") {
-    //   modelData.socialLinks = await this.createSocialLinks(modelData.socials);
-    // }
-
     if (typeof isDefault !== "undefined") {
       modelData.isDefault = isDefault;
     }
@@ -110,19 +106,6 @@ class AddModelsService {
     }
     return img;
   }
-
-  // async createSocialLinks(socials) {
-  //   const socialLinks = [];
-  //
-  //   if (Array.isArray(socials)) {
-  //     for (const social of socials) {
-  //       const newSocialSet = new Socials({...social, type: "employee"});
-  //       await newSocialSet.save();
-  //       socialLinks.push(newSocialSet._id);
-  //     }
-  //   }
-  //   return socialLinks;
-  // }
 }
 
 module.exports = AddModelsService;
