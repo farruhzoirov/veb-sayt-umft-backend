@@ -38,7 +38,7 @@ class NewsService {
       throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
     }
 
-    if (!payload.category.length) {
+    if (!payload.category?.length || !payload.category) {
       newsList = await dynamicModel
           .find({status: 1})
           .sort({_id: -1})
