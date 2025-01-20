@@ -56,8 +56,6 @@ class NewsService {
           .limit(queryParameters.limit)
           .skip(queryParameters.skip)
           .lean();
-    } else {
-      throw BaseError.BadRequest("Please check your categoryIds");
     }
 
     if (this.Model[currentModel].translate) {
