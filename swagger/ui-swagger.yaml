@@ -245,7 +245,7 @@ paths:
 
   ## Events
   /front/events:
-    get:
+    post:
       summary: Getting events for frontend
       description: You can filter which you want.
       parameters:
@@ -266,6 +266,17 @@ paths:
           schema:
             type: string
           required: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                eventsCategory:
+                  type: array
+                  items:
+                    type: string
+                    example: "764fdsfdt4353234dfs"
       responses:
         "200": # status code
           description: Getting matches model for frontend
