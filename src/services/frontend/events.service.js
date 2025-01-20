@@ -14,7 +14,7 @@ class EventsService {
 
   async getEventsForFront(req) {
     const defaultLanguage = await getDefaultLanguageHelper();
-    const currentModel = this.Model.event.ref;
+    const currentModel = this.Model.events.ref;
     const dynamicModel = getModelsHelper(currentModel);
     let eventsList;
 
