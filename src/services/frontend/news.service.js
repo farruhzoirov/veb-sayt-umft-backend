@@ -48,7 +48,7 @@ class NewsService {
           .lean();
     }
 
-    if (payload.category.length && payload.category.every(mongoose.Types.ObjectId.isValid)) {
+    if (Array.isArray(payload.category) && payload.category.length && payload.category.every(mongoose.Types.ObjectId.isValid)) {
       newsList = await dynamicModel
           .find({status: 1, category: {$in: payload.category}})
           .sort({_id: -1})
