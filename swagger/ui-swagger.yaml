@@ -87,7 +87,7 @@ paths:
             type: string
           required: false
         - in: query
-          name: categories_slug
+          name: category
           schema:
             type: array
             items:

@@ -26,7 +26,7 @@ class NewsService {
       skip: (req.query?.limit ? parseInt(req.query.limit, 10) : 10) * ((req.query.page ? parseInt(req.query.page, 10) : 1) - 1),
       selectFields: req.query?.select || '',
       requestedLanguage: req.query?.language || defaultLanguage.slug,
-      category: req.query?.category_slug,
+      category: req.query?.category,
     };
 
     const selectedLanguage = await Language.findOne({
@@ -48,7 +48,7 @@ class NewsService {
     }
 
     if (Array.isArray(queryParameters.category) && queryParameters.category.length && queryParameters.category.every(mongoose.Types.ObjectId.isValid)) {
-      const categoriesId = await Category.find({slug: {$in: queryParameters.category}}).distinct("_id");
+      const categoriesId = await Category.find({slug: {$in: queryParameters.category}}).distinct("_id").lean();
       newsList = await dynamicModel
           .find({status: 1, category: {$in: categoriesId}})
           .sort({_id: -1})
