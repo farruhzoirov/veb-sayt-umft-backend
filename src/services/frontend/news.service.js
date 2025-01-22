@@ -28,7 +28,7 @@ class NewsService {
       requestedLanguage: req.query?.language || defaultLanguage.slug,
       category: req.query?.category,
     };
-
+    console.log(queryParameters.category)
     const selectedLanguage = await Language.findOne({
       slug: queryParameters.requestedLanguage,
     }).lean();
@@ -47,7 +47,7 @@ class NewsService {
           .lean();
     }
 
-    if (Array.isArray(queryParameters.category) && queryParameters.category.length && queryParameters.category.every(mongoose.Types.ObjectId.isValid)) {
+    if (Array.isArray(queryParameters.category) && queryParameters.category.length || queryParameters.category?.length) {
       const categoriesId = await Category.find({slug: {$in: queryParameters.category}}).distinct("_id").lean();
       newsList = await dynamicModel
           .find({status: 1, category: {$in: categoriesId}})
@@ -57,7 +57,6 @@ class NewsService {
           .skip(queryParameters.skip)
           .lean();
     }
-
     if (this.Model[currentModel].translate) {
       const translateModelName = this.TranslateModel[currentModel].ref;
       const dynamicTranslateModel = getModelsTranslateHelper(translateModelName);
