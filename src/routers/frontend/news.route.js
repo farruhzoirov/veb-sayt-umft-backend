@@ -5,7 +5,7 @@ const NewsController = require('../../controllers/frontend/news.controller');
 const newsController = new NewsController();
 
 
-router.post('/news', newsController.getNewsList);
+router.get('/news', newsController.getNewsList);
 
 // router.get('/news/:slug', newsController.getOneModelDataBySlug);
 

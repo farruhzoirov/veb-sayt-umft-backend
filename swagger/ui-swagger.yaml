@@ -65,11 +65,11 @@ paths:
 
   ## News
   /front/news:
-    post:
+    get:
       summary: Getting news for frontend
       description: You can filter which you want.
       parameters:
-        - in: path
+        - in: query
           name: language
         - in: query
           name: limit
@@ -86,17 +86,12 @@ paths:
           schema:
             type: string
           required: false
-      requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  category:
-                    type: array
-                    items:
-                      type: string
-                      example: "764fdsfdt4353234dfs"
+        - in: query
+          name: categories_slug
+          schema:
+            type: array
+            items:
+              type: string
 
       responses:
         "200": # status code

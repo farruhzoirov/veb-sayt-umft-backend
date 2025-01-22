@@ -3,6 +3,8 @@ const {getModel, getModelsHelper, getModelsTranslateHelper} = require("../../hel
 const Language = require("../../models/settings/language.model");
 const BaseError = require("../../errors/base.error");
 const {Model, TranslateModel} = require("../../common/constants/models.constants");
+
+const Category = require("../../models/data/category.model");
 const mongoose = require("mongoose");
 
 class NewsService {
@@ -17,17 +19,14 @@ class NewsService {
     const dynamicModel = getModelsHelper(currentModel);
     let newsList;
 
-    // Payload preparation
-    const payload = {
-      category: req.body?.category
-    }
-
+    // Query preparation
     const queryParameters = {
       limit: req.query?.limit ? parseInt(req.query.limit, 10) : 30,
       page: req.query?.page ? parseInt(req.query.page, 10) : 1,
       skip: (req.query?.limit ? parseInt(req.query.limit, 10) : 10) * ((req.query.page ? parseInt(req.query.page, 10) : 1) - 1),
       selectFields: req.query?.select || '',
       requestedLanguage: req.query?.language || defaultLanguage.slug,
+      category: req.query?.category_slug,
     };
 
     const selectedLanguage = await Language.findOne({
@@ -38,7 +37,7 @@ class NewsService {
       throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
     }
 
-    if (!payload.category ||  Array.isArray(payload.category) && !payload.category?.length) {
+    if (!queryParameters.category ||  Array.isArray(queryParameters.category) && !queryParameters.category?.length) {
       newsList = await dynamicModel
           .find({status: 1})
           .sort({_id: -1})
@@ -48,9 +47,10 @@ class NewsService {
           .lean();
     }
 
-    if (Array.isArray(payload.category) && payload.category.length && payload.category.every(mongoose.Types.ObjectId.isValid)) {
+    if (Array.isArray(queryParameters.category) && queryParameters.category.length && queryParameters.category.every(mongoose.Types.ObjectId.isValid)) {
+      const categoriesId = await Category.find({slug: {$in: queryParameters.category}}).distinct("_id");
       newsList = await dynamicModel
-          .find({status: 1, category: {$in: payload.category}})
+          .find({status: 1, category: {$in: categoriesId}})
           .sort({_id: -1})
           .select(queryParameters.selectFields ? queryParameters.selectFields : `-__v  -updatedAt -active -status`)
           .limit(queryParameters.limit)

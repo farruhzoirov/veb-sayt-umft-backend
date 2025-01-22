@@ -1,5 +1,3 @@
-const News = require('../../models/data/news.model');
-const NewsTranslate = require('../../models/translate/news.model');
 const Language = require('../../models/settings/language.model');
 
 const {Model, TranslateModel} = require('../../common/constants/models.constants');
