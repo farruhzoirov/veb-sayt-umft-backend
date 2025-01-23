@@ -5,7 +5,7 @@ const ProgramsController = require('../../controllers/frontend/programs.controll
 const programsController = new ProgramsController();
 
 
-router.post('/programs', programsController.filterAndGetPrograms);
+router.get('/programs', programsController.filterAndGetPrograms);
 
 // router.get('/:model/:slug', universalController.getOneModelDataBySlug);
 

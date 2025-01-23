@@ -1,10 +1,14 @@
 const Specialty = require("../../models/specialty/specialty.model");
 const SpecialtyTranslate = require("../../models/translate/specialty.model");
 const Language = require("../../models/settings/language.model");
-const mongoose = require("mongoose");
 const BaseError = require("../../errors/base.error");
 const {Model} = require("../../common/constants/models.constants");
 const {getPopulates} = require("../../helpers/admin-panel/get-populates.helper");
+
+// For filtering
+const Department = require("../../models/data/department.model");
+const Degree = require("../../models/data/degrees.model");
+const Format = require("../../models/data/format.model");
 
 class ProgramsService {
   constructor() {
@@ -13,17 +17,19 @@ class ProgramsService {
 
   async filterAndGetPrograms(req) {
     const defaultLanguage = await Language.findOne({isDefault: true});
-    const payload = {
-      format: req.body?.format || null,
-      degree: req.body?.degree || null,
-      department: req.body?.department || null,
-    }
-
     const queryParameters = {
+      limit: req.query?.limit ? parseInt(req.query.limit, 10) : 30,
+      page: req.query?.page ? parseInt(req.query.page, 10) : 1,
+      skip: (req.query?.limit ? parseInt(req.query.limit, 10) : 10) * ((req.query.page ? parseInt(req.query.page, 10) : 1) - 1),
       requestedLanguage: req.query?.language || defaultLanguage.slug,
-      selectFields: req.query?.select || ''
+      selectFields: req.query?.select || '',
+      // For filtering
+      filters: {
+        department: req.query?.department || '',
+        degree: req.query?.degree || '',
+        format: req.query?.format || '',
+      }
     }
-
     const selectedLanguage = await Language.findOne({
       slug: queryParameters.requestedLanguage,
     }).lean();
@@ -34,33 +40,34 @@ class ProgramsService {
 
     let programsList;
 
-    // Validate ObjectId parameters
-    const invalidId =
-        (payload.department && !mongoose.Types.ObjectId.isValid(payload.department)) ||
-        (payload.degree && !mongoose.Types.ObjectId.isValid(payload.degree)) ||
-        (payload.format && !mongoose.Types.ObjectId.isValid(payload.format));
+    const query = {};
 
-    if (invalidId) {
-      throw BaseError.BadRequest("One of these IDs is not valid");
+    if (queryParameters.filters.department) {
+      const department = await Department.findOne({slug: queryParameters.filters.department}).lean();
+      query.department = department?._id;
     }
 
-    const query = {};
-    if (payload.department) query.department = payload.department;
-    if (payload.degree) query.degree = payload.degree;
-    if (payload.format) query["prices.format"] = payload.format;
+    if (queryParameters.filters.degree) {
+      const degree = await Degree.findOne({slug: queryParameters.filters.degree}).lean();
+      query.degree = degree?._id;
+    }
 
-    programsList = await Specialty.find(query).lean();
-    const populateOptions = this.Model.specialty.populate || [];
+    if (queryParameters.filters.format){
+      const format = await Format.findOne({slug: queryParameters.filters.format}).lean();
+      query["prices.format"] = format?._id;
+    }
+
+
+    programsList = await Specialty.find(query).select(queryParameters.select).limit(queryParameters.limit).skip(queryParameters.skip).lean();
 
     if (programsList.length) {
       programsList = await Promise.all(
           programsList.map(async programItem => {
+
             const translationData = await SpecialtyTranslate.findOne({
               [this.Model.specialty.ref]: programItem._id,
               [this.Model.language.ref]: selectedLanguage._id
-            }).select(queryParameters.selectFields ? queryParameters.selectFields :
-                `-${this.Model.specialty.ref} -__v -language -updatedAt`)
-                .lean();
+            }).select(queryParameters.selectFields ? queryParameters.selectFields : `-${this.Model.specialty.ref} -__v -language -updatedAt`).lean();
 
             if (programItem.prices && Array.isArray(programItem.prices)) {
               for (const price of programItem.prices) {
@@ -70,17 +77,22 @@ class ProgramsService {
               }
             }
 
-            // await Promise.all(populateOptions.map(async (item) => {
-            //       programItem[item] = await getPopulates(item, programItem[item], selectedLanguage);
-            //     }));
             return {...programItem, ...translationData || {}};
           })
       )
     }
 
     programsList = programsList.filter((item) => item.name);
+    const total = await Specialty.countDocuments({status: 1});
 
-    return {data: programsList};
+    const paginationInfo = {
+      total: total,
+      limit: queryParameters.limit,
+      page: queryParameters.page,
+      pages: Math.ceil(total / queryParameters.limit),
+    };
+
+    return {data: programsList, pagination: paginationInfo};
   }
 }
 
