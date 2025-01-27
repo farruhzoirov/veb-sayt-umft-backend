@@ -147,8 +147,8 @@ const employeeSchema = Joi.object({
   department: Joi.string().optional(),
   employeeId: Joi.number().optional(),
   socialLinks: Joi.array().items({
-    messenger: Joi.string().required(),
-    link: Joi.string().required(),
+    messenger: Joi.string().optional(),
+    link: Joi.string().optional(),
   }).optional(),
   birthDate: Joi.string().optional(),
   slug: Joi.string().optional(),

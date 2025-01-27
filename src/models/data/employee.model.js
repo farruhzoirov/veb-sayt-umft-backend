@@ -25,11 +25,9 @@ const EmployeeSchema = new Schema({
     messenger: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'messenger',
-      required: true
     },
     link: {
       type: String,
-      required: true
     }
   }],
   birthDate: {
