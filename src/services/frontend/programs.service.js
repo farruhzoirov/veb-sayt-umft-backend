@@ -172,18 +172,18 @@ class ProgramsService {
   }
 
   async getTranslatesAndPopulates(modelName, model, translateModel, language, select, populateOptions = []) {
-    await Promise.all(model.map(async (item) => {
-      item = await translateModel.findOne({
+    await Promise.all(model.map(async (data) => {
+      data = await translateModel.findOne({
         [modelName]: model._id,
         [this.Model.language.ref]: language._id
       }).select(select ? select : `-${modelName} -__v -language -updatedAt`).lean();
 
       if (populateOptions.length) {
         populateOptions.map(async (item) => {
-          model[item] = await getPopulates(item, model[item], language);
+          data[item] = await getPopulates(item, data[item], language);
         })
       }
-      return item;
+      return data;
     }));
 
     return model;
