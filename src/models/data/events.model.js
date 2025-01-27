@@ -10,6 +10,10 @@ const EventsSchema = new Schema({
     ref: 'eventsCategory',
     required: true,
   }],
+  views: {
+    type: Number,
+    default: 0
+  },
   slug: {
     type: String,
   },

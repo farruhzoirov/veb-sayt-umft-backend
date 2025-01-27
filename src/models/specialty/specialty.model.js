@@ -55,6 +55,10 @@ const SpecialtySchema = new Schema({
   slug: {
     type: String,
   },
+  views: {
+    type: Number,
+    default: 0
+  },
   status: {
     type: Number,
     default: 1

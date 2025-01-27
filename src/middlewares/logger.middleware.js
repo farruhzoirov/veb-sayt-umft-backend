@@ -3,6 +3,9 @@ const Logger = require("../models/logger/logger.model");
 const jwt = require("jsonwebtoken");
 const config = require("../config/config");
 
+const {Model} = require("../common/constants/models.constants")
+
+// const modelsForCalculatingViews = [Model.specialty.ref, Model.news.ref, Model.events.ref];
 
 function getMacAddress() {
   const networkInterfaces = os.networkInterfaces();
@@ -63,8 +66,9 @@ const logging = async (req, res, next) => {
       });
       try {
         await logger.save();
-      } catch (err) {
-        console.error('Error saving log:', err);
+
+      } catch (error) {
+        console.error('Error saving logger:', error);
       }
     }
   })
@@ -73,6 +77,5 @@ const logging = async (req, res, next) => {
 }
 
 module.exports = {
-  getMacAddress,
   logging
 }
