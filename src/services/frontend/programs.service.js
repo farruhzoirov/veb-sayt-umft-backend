@@ -148,14 +148,14 @@ class ProgramsService {
       findProgram = await this.getTranslatesAndPopulates(this.Model.specialty.ref, [findProgram], SpecialtyTranslate, selectedLanguage, queryParameters.selectFields);
     }
 
-    if (findTopics) {
+    if (findTopics.length) {
       console.log('topics')
       const populateOptions = this.Model.topic.populate || [];
       findTopics = await this.getTranslatesAndPopulates(this.Model.topic.ref, findTopics, TopicTranslate, selectedLanguage, '', populateOptions);
       findProgram.topics = findTopics;
     }
 
-    if (findEmployees) {
+    if (findEmployees.length) {
       console.log('employee')
       findEmployees = await this.getTranslatesAndPopulates(this.Model.employee.ref, findEmployees, TopicTranslate, selectedLanguage, '', []);
       await Promise.all(
@@ -166,12 +166,14 @@ class ProgramsService {
       findProgram.employees = findEmployees;
     }
 
-    if (findThemes) {
+    if (findThemes.length) {
       console.log('themes')
       const populateOptions = this.Model.theme.populate || [];
       findThemes = await this.getTranslatesAndPopulates(this.Model.employee.ref, findEmployees, TopicTranslate, selectedLanguage, '', populateOptions);
       findProgram.themes = findThemes;
     }
+
+
     return {data:findProgram};
   }
 
