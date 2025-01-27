@@ -149,7 +149,7 @@ const employeeSchema = Joi.object({
   socialLinks: Joi.array().items({
     messenger: Joi.string().required(),
     link: Joi.string().required(),
-  }).required(),
+  }).optional(),
   birthDate: Joi.string().optional(),
   slug: Joi.string().optional(),
   translate: Joi.object({
