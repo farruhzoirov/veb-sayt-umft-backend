@@ -159,7 +159,7 @@ class ProgramsService {
       findEmployees = await this.getTranslatesAndPopulates(this.Model.employee.ref, findEmployees, TopicTranslate, selectedLanguage, '', []);
       await Promise.all(
           findEmployees.map(async employee => {
-            employee.messenger = await getPopulates("messenger", employee.messenger, language);
+            employee.messenger = await getPopulates("messenger", employee.messenger, selectedLanguage);
           })
       );
       findProgram.employees = findEmployees;
