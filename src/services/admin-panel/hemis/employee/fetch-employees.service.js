@@ -158,11 +158,9 @@ class FetchEmployeesService {
         }).save();
 
         await new EmployeeTranslate({
-          fullName: employee.full_name,
-          shortName: employee.short_name,
           firstName: employee.first_name,
-          secondName: employee.second_name,
-          thirdName: employee.third_name,
+          lastName: employee.second_name,
+          surName: employee.third_name,
           gender: employee.gender,
           academicRank: employee.academicRank,
           staffPosition: employee.staffPosition,
