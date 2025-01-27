@@ -137,6 +137,7 @@ class ProgramsService {
     let findThemes = await Theme.find({[this.Model.topic.ref]: findTopics._id}).lean();
 
     if (findProgram) {
+      findProgram.toObject();
       if (findProgram.prices && Array.isArray(findProgram.prices)) {
         for (const price of findProgram.prices) {
           if (price.format) {
