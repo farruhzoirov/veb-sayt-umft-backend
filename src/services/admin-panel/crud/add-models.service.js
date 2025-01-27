@@ -15,7 +15,9 @@ class AddModelsService {
     const dynamicModel = getModelsHelper(modelName);
 
     if (!modelData.modelId) {
-      await this.checkSlugExists(dynamicModel, modelData.slug);
+      if(modelData?.slug) {
+        await this.checkSlugExists(dynamicModel, modelData.slug);
+      }
       return await this.handleNewModel(dynamicModel, modelName, modelData);
     }
 

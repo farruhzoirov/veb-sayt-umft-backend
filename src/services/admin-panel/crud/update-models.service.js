@@ -12,9 +12,12 @@ class UpdateModelsService {
 
   async updateModel(modelName, modelId, updateData) {
     this.validateObjectId(modelId);
-    console.log("updateData", updateData);
     const dynamicModel = getModelsHelper(modelName);
     const existingModel = await this.findModelById(dynamicModel, modelId);
+
+    if(updateData?.slug) {
+      await this.checkSlugExists(dynamicModel, updateData.slug);
+    }
 
     if (modelName.trim() === "language") {
       await this.handleDefaultLanguage(dynamicModel, updateData.isDefault);
@@ -35,6 +38,13 @@ class UpdateModelsService {
     );
 
     return updatedModel;
+  }
+
+  async checkSlugExists(dynamicModel, slug) {
+    const isSlugExists = await dynamicModel.findOne({slug}).lean();
+    if (isSlugExists) {
+      throw BaseError.BadRequest("Slug already exists");
+    }
   }
 
   validateObjectId(modelId) {
