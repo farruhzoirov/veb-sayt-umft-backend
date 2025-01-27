@@ -29,6 +29,7 @@ class GetModelsService {
 
     const query = buildQuery(modelName, search);
     const populateOptions = this.Model[modelName].populate || [];
+
     if (this.Model[modelName].translate) {
       return this.getAllWithTranslate(modelName, page, query, select, skip, limit, sort, populateOptions, res);
     } else {
@@ -41,8 +42,6 @@ class GetModelsService {
     const dynamicTranslateModel = getModelsTranslateHelper(translateModel);
     const dynamicModel = getModelsHelper(modelName);
 
-    //const matchingTranslates = await dynamicTranslateModel.find(query);
-    //const matchingIds = await matchingTranslates.map((t) => t[model]);
     const matchingIds = await dynamicTranslateModel.distinct(modelName, query);
     const modelDatas = await dynamicModel
         .find({_id: {$in: matchingIds}})

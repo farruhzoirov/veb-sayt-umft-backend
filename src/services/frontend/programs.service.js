@@ -9,6 +9,10 @@ const {getPopulates} = require("../../helpers/admin-panel/get-populates.helper")
 const Department = require("../../models/data/department.model");
 const Degree = require("../../models/data/degrees.model");
 const Format = require("../../models/data/format.model");
+const Topic = require("../../models/data/topics.model");
+const Theme = require("../../models/data/themes.model");
+const Employee = require("../../models/data/employee.model");
+
 
 class ProgramsService {
   constructor() {
@@ -52,7 +56,7 @@ class ProgramsService {
       query.degree = degree?._id;
     }
 
-    if (queryParameters.filters.format){
+    if (queryParameters.filters.format) {
       const format = await Format.findOne({slug: queryParameters.filters.format}).lean();
       query["prices.format"] = format?._id;
     }
@@ -63,7 +67,6 @@ class ProgramsService {
     if (programsList.length) {
       programsList = await Promise.all(
           programsList.map(async programItem => {
-
             const translationData = await SpecialtyTranslate.findOne({
               [this.Model.specialty.ref]: programItem._id,
               [this.Model.language.ref]: selectedLanguage._id
@@ -76,7 +79,6 @@ class ProgramsService {
                 }
               }
             }
-
             return {...programItem, ...translationData || {}};
           })
       )
@@ -93,6 +95,65 @@ class ProgramsService {
     };
 
     return {data: programsList, pagination: paginationInfo};
+  }
+
+
+  async getOneProgram(req) {
+    const defaultLanguage = await Language.findOne({isDefault: true});
+    const queryParameters = {
+      program: req.query.program,
+      requestedLanguage: req.query.language || defaultLanguage.slug,
+    }
+    let findProgram = await Specialty.findOne({slug: queryParameters.program}).lean();
+
+    if (!findProgram) {
+      throw BaseError.BadRequest("Program not found");
+    }
+
+    const selectedLanguage = await Language.findOne({
+      slug: queryParameters.requestedLanguage,
+    }).lean();
+
+    if (!selectedLanguage) {
+      throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
+    }
+    // Employees
+
+    const findEmployees = await Employee.find({[this.Model.department.ref]: findProgram.department}).lean();
+
+    // Level and topic based
+    const findTopics = await Topic.find({[this.Model.specialty.ref]: findProgram._id}).lean();
+
+    // Themes
+    const findThemes = await Theme.find({[this.Model.topic.ref]: findTopics._id}).lean();
+
+    if (findProgram) {
+      findProgram = await SpecialtyTranslate.findOne({
+        [this.Model.specialty.ref]: findProgram._id,
+        [this.Model.language.ref]: selectedLanguage._id
+      }).select(queryParameters.selectFields ? queryParameters.selectFields : `-${this.Model.specialty.ref} -__v -language -updatedAt`).lean();
+
+      if (findProgram.prices && Array.isArray(findProgram.prices)) {
+        for (const price of findProgram.prices) {
+          if (price.format) {
+            price.format = await getPopulates('format', price.format, selectedLanguage);
+          }
+        }
+      }
+    }
+
+    if (findTopics) {
+
+    }
+
+    if (findEmployees) {
+
+    }
+
+    if (findThemes) {
+
+    }
+
   }
 }
 

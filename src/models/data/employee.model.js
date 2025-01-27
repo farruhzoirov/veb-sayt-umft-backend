@@ -14,6 +14,9 @@ const EmployeeSchema = new Schema({
   slug: {
     type: String
   },
+  url: {
+    type: String,
+  },
   img: [],
   employeeId: {
     type: Number

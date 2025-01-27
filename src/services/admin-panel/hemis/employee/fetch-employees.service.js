@@ -57,7 +57,8 @@ class FetchEmployeesService {
       const newEmployee = await new Employee({
         hemisId: employee.hemis_id,
         department: matchDepartment ? matchDepartment._id : null,
-        img: employee.image,
+        url: employee.image,
+        img: [],
         socialLinks: [],
         slug: "",
         employeeId: employee.employee_id_number,
@@ -104,7 +105,8 @@ class FetchEmployeesService {
             $set: {
               hemisId: employee.hemis_id,
               department: matchDepartment ? matchDepartment._id : null,
-              img: employee.image,
+              url: employee.image,
+              img: [],
               employeeId: employee.employee_id_number,
               contractNumber: employee.contract_number,
               decreeNumber: employee.decree_number,
@@ -141,7 +143,8 @@ class FetchEmployeesService {
         const newEmployee = await new Employee({
           hemisId: employee.hemis_id,
           department: matchDepartment ? matchDepartment._id : null,
-          img: employee.image,
+          url: employee.image,
+          img: [],
           socialLinks: [],
           slug: "",
           employeeId: employee.employee_id_number,

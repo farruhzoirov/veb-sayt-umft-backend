@@ -5,7 +5,7 @@ const EventsController = require('../../controllers/frontend/events.controller')
 const eventsController = new EventsController();
 
 
-router.post('/events', eventsController.getEventsList);
+router.get('/events', eventsController.getEventsList);
 
 // router.get('/news/:slug', newsController.getOneModelDataBySlug);
 

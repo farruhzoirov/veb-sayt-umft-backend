@@ -1,11 +1,10 @@
 const getDefaultLanguageHelper = require("../../helpers/frontend/get-default-language.helper");
-const {getModel, getModelsHelper, getModelsTranslateHelper} = require("../../helpers/admin-panel/get-models.helper");
+const {getModelsHelper, getModelsTranslateHelper} = require("../../helpers/admin-panel/get-models.helper");
 const Language = require("../../models/settings/language.model");
 const BaseError = require("../../errors/base.error");
 const {Model, TranslateModel} = require("../../common/constants/models.constants");
 
 const Category = require("../../models/data/category.model");
-const mongoose = require("mongoose");
 
 class NewsService {
   constructor() {

@@ -176,7 +176,7 @@ paths:
 
   ## Social
   /front/social:
-    post:
+    get:
       summary: Getting socials for frontend
       description: You can filter which you want.
       parameters:
@@ -197,16 +197,12 @@ paths:
           schema:
             type: string
           required: false
-      requestBody:
-        description: Optional description in *Markdown*
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                slugs:
-                  type: array
+        - in: query
+          name: messenger
+          schema:
+            type: array
+            properties:
+              type: string
       responses:
         "200": # status code
           description: Getting partners for frontend
@@ -238,9 +234,69 @@ paths:
       tags:
         - Social
 
+  ## Messenger
+  /front/messenger:
+    get:
+      summary: Getting messenger for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: query
+          name: language
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: messenger
+          schema:
+            type: array
+            properties:
+              type: string
+      responses:
+        "200": # status code
+          description: Getting partners for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+
+
+      tags:
+        - Messenger
+
+  /front/messenger/{slug}:
+    get:
+      summary: Getting social for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: path
+          name: slug
+      responses:
+        "200": # status code
+          description: Getting one modelData for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - Messenger
+
   ## Events
   /front/events:
-    post:
+    get:
       summary: Getting events for frontend
       description: You can filter which you want.
       parameters:
@@ -261,17 +317,14 @@ paths:
           schema:
             type: string
           required: false
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                eventsCategory:
-                  type: array
-                  items:
-                    type: string
-                    example: "764fdsfdt4353234dfs"
+        - in: query
+          name: eventsCategory
+          schema:
+            type: array
+            properties:
+              type: string
+
+
       responses:
         "200": # status code
           description: Getting matches model for frontend
@@ -457,72 +510,72 @@ paths:
       tags:
         - Employee
 
-  ## Specialty
-  /front/specialty:
-    get:
-      summary: Getting specialty for frontend
-      description: You can filter which you want.
-      parameters:
-        - in: query
-          name: language
-        - in: query
-          name: limit
-          schema:
-            type: string
-          required: false
-        - in: query
-          name: page
-          schema:
-            type: string
-          required: false
-        - in: query
-          name: select
-          schema:
-            type: string
-          required: false
-        - in: query
-          name: department
-          schema:
-            type: string
-          required: false
-        - in: query
-          name: degree
-          schema:
-            type: string
-          required: false
-        - in: query
-          name: format
-          schema:
-            type: string
-          required: false
-      responses:
-        "200": # status code
-          description: Getting matches modelData for frontend
-          content:
-            application/json:
-              schema:
-                type: object
-
-      tags:
-        - Specialty
-
-  /front/specialty/{slug}:
-    get:
-      summary: Getting specialty for frontend
-      description: You can filter which you want.
-      parameters:
-        - in: path
-          name: slug
-      responses:
-        "200": # status code
-          description: Getting one modelData for frontend
-          content:
-            application/json:
-              schema:
-                type: object
-
-      tags:
-        - Specialty
+#  ## Specialty
+#  /front/specialty:
+#    get:
+#      summary: Getting specialty for frontend
+#      description: You can filter which you want.
+#      parameters:
+#        - in: query
+#          name: language
+#        - in: query
+#          name: limit
+#          schema:
+#            type: string
+#          required: false
+#        - in: query
+#          name: page
+#          schema:
+#            type: string
+#          required: false
+#        - in: query
+#          name: select
+#          schema:
+#            type: string
+#          required: false
+#        - in: query
+#          name: department
+#          schema:
+#            type: string
+#          required: false
+#        - in: query
+#          name: degree
+#          schema:
+#            type: string
+#          required: false
+#        - in: query
+#          name: format
+#          schema:
+#            type: string
+#          required: false
+#      responses:
+#        "200": # status code
+#          description: Getting matches modelData for frontend
+#          content:
+#            application/json:
+#              schema:
+#                type: object
+#
+#      tags:
+#        - Specialty
+#
+#  /front/specialty/{slug}:
+#    get:
+#      summary: Getting specialty for frontend
+#      description: You can filter which you want.
+#      parameters:
+#        - in: path
+#          name: slug
+#      responses:
+#        "200": # status code
+#          description: Getting one modelData for frontend
+#          content:
+#            application/json:
+#              schema:
+#                type: object
+#
+#      tags:
+#        - Specialty
 
   ## Format
   /front/format:

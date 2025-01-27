@@ -15,16 +15,13 @@ class SocialService {
   }
 
   async getSocialsForFront(req) {
-    const {slugs} = req.body;
     const defaultLanguage = await getDefaultLanguageHelper();
     const queryParameters = {
-      selectFields: req.query.select || '',
-      requestedLanguage: req.query.language || defaultLanguage.slug
+      selectFields: req.query?.select || '',
+      requestedLanguage: req.query?.language || defaultLanguage.slug,
+      messenger: req.query?.messenger
     }
 
-    if (!Array.isArray(slugs) || slugs.length === 0) {
-      throw BaseError.BadRequest("Slug must be an non-empty array");
-    }
 
     const selectedLanguage = await Language.findOne({
       slug: queryParameters.requestedLanguage,
@@ -33,16 +30,14 @@ class SocialService {
     if (!selectedLanguage) {
       throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
     }
+    const messengersSlug = Array.isArray(queryParameters.messenger) ? queryParameters.messenger : [queryParameters.messenger];
+    const messengersIds = await Messenger.find({slug: {$in: messengersSlug}}).distinct("_id").lean();
 
-    const messengers = await Messenger.find({slug: {$in: slugs}}, "_id").lean();
-
-    if (!messengers.length) {
+    if (!messengersIds.length) {
       return []
     }
 
-    const messengerIds = messengers.map((messenger) => messenger._id);
-
-    let socials = await Social.find({messenger: {$in: messengerIds}}).select("-__v -updatedAt").lean();
+    let socials = await Social.find({messenger: {$in: messengersIds}}).select("-__v -updatedAt").lean();
 
     const populateOptions = this.Model.social.populate || []
     const SocialTranslate = getModelsTranslateHelper(this.TranslateModel.social.ref);

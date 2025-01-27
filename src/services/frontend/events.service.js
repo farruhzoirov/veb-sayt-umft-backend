@@ -6,6 +6,8 @@ const mongoose = require("mongoose");
 const {Model, TranslateModel} = require("../../common/constants/models.constants");
 const {getPopulates} = require("../../helpers/admin-panel/get-populates.helper");
 
+const EventsCategory = require("../../models/data/events-category.model");
+
 class EventsService {
   constructor() {
     this.Model = Model
@@ -18,17 +20,13 @@ class EventsService {
     const dynamicModel = getModelsHelper(currentModel);
     let eventsList;
 
-    // Payload preparation
-    const payload = {
-      eventsCategory: req.body?.eventsCategory
-    }
-
     const queryParameters = {
       limit: req.query?.limit ? parseInt(req.query.limit, 10) : 30,
       page: req.query?.page ? parseInt(req.query.page, 10) : 1,
       skip: (req.query?.limit ? parseInt(req.query.limit, 10) : 10) * ((req.query.page ? parseInt(req.query.page, 10) : 1) - 1),
       selectFields: req.query?.select || '',
       requestedLanguage: req.query?.language || defaultLanguage.slug,
+      eventsCategory: req.query?.eventsCategory
     };
 
     const selectedLanguage = await Language.findOne({
@@ -39,7 +37,7 @@ class EventsService {
       throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
     }
 
-    if (!payload.eventsCategory || Array.isArray(payload.eventsCategory) && !payload.eventsCategory?.length) {
+    if (!queryParameters.eventsCategory || Array.isArray(queryParameters.eventsCategory) && !queryParameters.eventsCategory?.length) {
       eventsList = await dynamicModel
           .find({status: 1})
           .sort({_id: -1})
@@ -49,9 +47,11 @@ class EventsService {
           .lean();
     }
 
-    if (Array.isArray(payload.eventsCategory) && payload.eventsCategory.length && payload.eventsCategory.every(mongoose.Types.ObjectId.isValid)) {
+    if (Array.isArray(queryParameters.eventsCategory) || queryParameters.eventsCategory?.length) {
+      const eventsCategory = Array.isArray(queryParameters.eventsCategory) ? queryParameters.eventsCategory : [queryParameters.eventsCategory];
+      const eventsCategoryIds = await EventsCategory.find({slug: {$in: eventsCategory}}).distinct("_id");
       eventsList = await dynamicModel
-          .find({status: 1, eventsCategory: {$in: payload.eventsCategory}})
+          .find({status: 1, eventsCategory: {$in: eventsCategoryIds}})
           .sort({_id: -1})
           .select(queryParameters.selectFields ? queryParameters.selectFields : `-__v  -updatedAt -active -status`)
           .limit(queryParameters.limit)

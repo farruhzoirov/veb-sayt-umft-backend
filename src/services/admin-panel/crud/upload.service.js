@@ -7,7 +7,6 @@ class UploadService {
       if (!Array.isArray(files)) {
         files = [files];
       }
-      console.log(req.files);
       const filePaths = [];
       if (!files.length) {
         throw BaseError.BadRequest('No file uploaded');
