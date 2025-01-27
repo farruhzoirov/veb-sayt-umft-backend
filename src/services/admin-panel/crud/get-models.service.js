@@ -20,7 +20,7 @@ class GetModelsService {
     const dynamicModel = getModelsHelper(modelName);
 
     let page = req.query.page || 1;
-    let limit = req.query.limit || 20;
+    let limit = req.query.limit || null;
     let select = req.query.select || [];
     let sort = req.query.sort ? JSON.parse(req.query.sort) : {_id: -1};
     let search = req.query.search;
