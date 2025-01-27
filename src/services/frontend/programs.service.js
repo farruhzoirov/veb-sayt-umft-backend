@@ -144,7 +144,7 @@ class ProgramsService {
           }
         }
       }
-      findProgram = await this.getTranslatesAndPopulates(this.Model.specialty.ref, findProgram, SpecialtyTranslate, selectedLanguage, queryParameters.selectFields);
+      findProgram = await this.getTranslatesAndPopulates(this.Model.specialty.ref, [findProgram], SpecialtyTranslate, selectedLanguage, queryParameters.selectFields);
     }
 
     if (findTopics) {
