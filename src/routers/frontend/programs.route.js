@@ -7,7 +7,7 @@ const programsController = new ProgramsController();
 
 router.get('/programs', programsController.filterAndGetPrograms);
 
-// router.get('/:model/:slug', universalController.getOneModelDataBySlug);
+router.get('/programs/:slug', programsController.getOneProgram);
 
 
 module.exports = router;

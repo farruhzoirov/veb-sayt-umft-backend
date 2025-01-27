@@ -7,10 +7,16 @@ const {getPopulates} = require("../../helpers/admin-panel/get-populates.helper")
 
 // For filtering
 const Department = require("../../models/data/department.model");
+
 const Degree = require("../../models/data/degrees.model");
+
 const Format = require("../../models/data/format.model");
+
 const Topic = require("../../models/data/topics.model");
+const TopicTranslate = require("../../models/translate/topics.model");
+
 const Theme = require("../../models/data/themes.model");
+
 const Employee = require("../../models/data/employee.model");
 
 
@@ -27,6 +33,8 @@ class ProgramsService {
       skip: (req.query?.limit ? parseInt(req.query.limit, 10) : 10) * ((req.query.page ? parseInt(req.query.page, 10) : 1) - 1),
       requestedLanguage: req.query?.language || defaultLanguage.slug,
       selectFields: req.query?.select || '',
+
+
       // For filtering
       filters: {
         department: req.query?.department || '',
@@ -104,11 +112,6 @@ class ProgramsService {
       program: req.query.program,
       requestedLanguage: req.query.language || defaultLanguage.slug,
     }
-    let findProgram = await Specialty.findOne({slug: queryParameters.program}).lean();
-
-    if (!findProgram) {
-      throw BaseError.BadRequest("Program not found");
-    }
 
     const selectedLanguage = await Language.findOne({
       slug: queryParameters.requestedLanguage,
@@ -117,22 +120,23 @@ class ProgramsService {
     if (!selectedLanguage) {
       throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
     }
-    // Employees
 
-    const findEmployees = await Employee.find({[this.Model.department.ref]: findProgram.department}).lean();
+    let findProgram = await Specialty.findOne({slug: queryParameters.program}).lean();
+
+    if (!findProgram) {
+      throw BaseError.BadRequest("Program not found");
+    }
+
+    // Employees
+    let findEmployees = await Employee.find({[this.Model.department.ref]: findProgram.department}).lean();
 
     // Level and topic based
-    const findTopics = await Topic.find({[this.Model.specialty.ref]: findProgram._id}).lean();
+    let findTopics = await Topic.find({[this.Model.specialty.ref]: findProgram._id}).lean();
 
     // Themes
-    const findThemes = await Theme.find({[this.Model.topic.ref]: findTopics._id}).lean();
+    let findThemes = await Theme.find({[this.Model.topic.ref]: findTopics._id}).lean();
 
     if (findProgram) {
-      findProgram = await SpecialtyTranslate.findOne({
-        [this.Model.specialty.ref]: findProgram._id,
-        [this.Model.language.ref]: selectedLanguage._id
-      }).select(queryParameters.selectFields ? queryParameters.selectFields : `-${this.Model.specialty.ref} -__v -language -updatedAt`).lean();
-
       if (findProgram.prices && Array.isArray(findProgram.prices)) {
         for (const price of findProgram.prices) {
           if (price.format) {
@@ -140,20 +144,49 @@ class ProgramsService {
           }
         }
       }
+      findProgram = await this.getTranslatesAndPopulates(this.Model.specialty.ref, findProgram, SpecialtyTranslate, selectedLanguage, queryParameters.selectFields);
     }
 
     if (findTopics) {
-
+      const populateOptions = this.Model.topic.populate || [];
+      findTopics = await this.getTranslatesAndPopulates(this.Model.topic.ref, findTopics, TopicTranslate, selectedLanguage, '', populateOptions);
+      findProgram.topics = findTopics;
     }
 
     if (findEmployees) {
-
+      findEmployees = await this.getTranslatesAndPopulates(this.Model.employee.ref, findEmployees, TopicTranslate, selectedLanguage, '', []);
+      await Promise.all(
+          findEmployees.map(async employee => {
+            employee.messenger = await getPopulates("messenger", employee.messenger);
+          })
+      );
+      findProgram.employees = findEmployees;
     }
 
     if (findThemes) {
-
+      const populateOptions = this.Model.theme.populate || [];
+      findThemes = await this.getTranslatesAndPopulates(this.Model.employee.ref, findEmployees, TopicTranslate, selectedLanguage, '', populateOptions);
+      findProgram.themes = findThemes;
     }
+    return {data:findProgram};
+  }
 
+  async getTranslatesAndPopulates(modelName, model, translateModel, language, select, populateOptions = []) {
+    await Promise.all(model.map(async (item) => {
+      item = await translateModel.findOne({
+        [modelName]: model._id,
+        [this.Model.language.ref]: language._id
+      }).select(select ? select : `-${modelName} -__v -language -updatedAt`).lean();
+
+      if (populateOptions.length) {
+        populateOptions.map(async (item) => {
+          model[item] = await getPopulates(item, model[item], language);
+        })
+      }
+      return item;
+    }));
+
+    return model;
   }
 }
 
