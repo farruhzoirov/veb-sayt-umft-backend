@@ -12,13 +12,12 @@ async function getPopulates(model, _id, language) {
     const isArray = Array.isArray(_id);
 
     // Validate IDs
-    console.log(_id)
-    const ids = isArray ? _id : [_id];
-    ids.forEach(id => {
-      if (!mongoose.Types.ObjectId.isValid(id)) {
-        throw BaseError.BadRequest("Invalid model ID in getting populates.");
-      }
-    });
+    // const ids = isArray ? _id : [_id];
+    // ids.forEach(id => {
+    //   if (!mongoose.Types.ObjectId.isValid(id)) {
+    //     throw BaseError.BadRequest("Invalid model ID in getting populates.");
+    //   }
+    // });
 
     // Fetch data
     const fetchData = async (id) => {
