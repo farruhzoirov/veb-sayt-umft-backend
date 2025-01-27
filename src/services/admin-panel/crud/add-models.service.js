@@ -24,6 +24,7 @@ class AddModelsService {
 
   async checkSlugExists(dynamicModel, slug) {
     const isSlugExists = await dynamicModel.findOne({slug}).lean();
+    console.log(slug)
     console.log(isSlugExists);
     if (isSlugExists) {
       throw BaseError.BadRequest("Slug already exists");
