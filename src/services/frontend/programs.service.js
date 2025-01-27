@@ -145,7 +145,10 @@ class ProgramsService {
           }
         }
       }
-      findProgram = await this.getTranslatesAndPopulates(this.Model.specialty.ref, [findProgram], SpecialtyTranslate, selectedLanguage, queryParameters.selectFields);
+      findProgram = await SpecialtyTranslate.findOne({
+        [this.Model.specialty.ref]: findProgram._id,
+        [this.Model.language.ref]: selectedLanguage._id
+      }).select(queryParameters.selectFields ? queryParameters.selectFields : `-${this.Model.specialty.ref} -__v -language -updatedAt`).lean();
     }
 
     if (findTopics.length) {
@@ -169,7 +172,7 @@ class ProgramsService {
     if (findThemes.length) {
       console.log('themes')
       const populateOptions = this.Model.theme.populate || [];
-      findThemes = await this.getTranslatesAndPopulates(this.Model.employee.ref, findEmployees, TopicTranslate, selectedLanguage, '', populateOptions);
+      findThemes = await this.getTranslatesAndPopulates(this.Model.theme.ref, findEmployees, TopicTranslate, selectedLanguage, '', populateOptions);
       findProgram.themes = findThemes;
     }
 
