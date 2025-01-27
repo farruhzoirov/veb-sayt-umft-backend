@@ -5529,6 +5529,10 @@ components:
                 type: string
               thirdName:
                 type: string
+              receptionTime:
+                type: string
+              text:
+                type: string
               gender:
                 type: object
                 properties:

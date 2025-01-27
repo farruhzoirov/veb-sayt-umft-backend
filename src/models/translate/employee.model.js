@@ -6,6 +6,8 @@ const EmployeeTranslateSchema = new Schema({
   firstName: {type: String},
   lastName: {type: String},
   surName: {type: String},
+  receptionTime: {type: String},
+  text: {type: String},
   gender: {
     code: {type: String},
     name: {type: String},
