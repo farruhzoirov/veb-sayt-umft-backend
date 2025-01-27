@@ -148,22 +148,25 @@ class ProgramsService {
     }
 
     if (findTopics) {
+      console.log('topics')
       const populateOptions = this.Model.topic.populate || [];
       findTopics = await this.getTranslatesAndPopulates(this.Model.topic.ref, findTopics, TopicTranslate, selectedLanguage, '', populateOptions);
       findProgram.topics = findTopics;
     }
 
     if (findEmployees) {
+      console.log('employee')
       findEmployees = await this.getTranslatesAndPopulates(this.Model.employee.ref, findEmployees, TopicTranslate, selectedLanguage, '', []);
       await Promise.all(
           findEmployees.map(async employee => {
-            employee.messenger = await getPopulates("messenger", employee.messenger);
+            employee.messenger = await getPopulates("messenger", employee.messenger, language);
           })
       );
       findProgram.employees = findEmployees;
     }
 
     if (findThemes) {
+      console.log('themes')
       const populateOptions = this.Model.theme.populate || [];
       findThemes = await this.getTranslatesAndPopulates(this.Model.employee.ref, findEmployees, TopicTranslate, selectedLanguage, '', populateOptions);
       findProgram.themes = findThemes;
@@ -181,6 +184,7 @@ class ProgramsService {
       if (populateOptions.length) {
         populateOptions.map(async (item) => {
           data[item] = await getPopulates(item, data[item], language);
+          console.log(data[item]);
         })
       }
       return data;
