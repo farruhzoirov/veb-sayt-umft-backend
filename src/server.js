@@ -10,6 +10,7 @@ const routersList = require("./routers.js");
 const config = require("./config/config.js");
 
 const errorMiddleware = require("./middlewares/errors.middleware");
+const {logging} = require("./middlewares/logger.middleware");
 
 class Server {
   constructor() {
@@ -32,6 +33,8 @@ class Server {
   }
 
   addRoutes() {
+    app.use(logging);
+
     app.use(routersList);
     app.use(errorMiddleware);
     swagger(app);

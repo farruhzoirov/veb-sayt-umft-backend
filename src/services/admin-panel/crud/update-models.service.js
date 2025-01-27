@@ -26,9 +26,7 @@ class UpdateModelsService {
     if (modelName.trim() === "specialty") {
       this.validateSpecialtyPrices(existingModel.prices, updateData.prices);
     }
-    // if (modelName.trim() === "employee") {
-    //     updateData.socialLinks = await this.createSocialLinks(updateData.socials);
-    // }
+
     let updatedModel = await this.updateModelHelper(dynamicModel, modelId, updateData);
     updatedModel = await this.prepareFinalModelData(
         updatedModel,
