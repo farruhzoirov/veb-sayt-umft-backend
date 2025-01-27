@@ -109,7 +109,7 @@ class ProgramsService {
   async getOneProgram(req) {
     const defaultLanguage = await Language.findOne({isDefault: true});
     const queryParameters = {
-      program: req.query.program,
+      program: req.params.slug,
       requestedLanguage: req.query.language || defaultLanguage.slug,
     }
 
