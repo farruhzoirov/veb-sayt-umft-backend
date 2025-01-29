@@ -47,7 +47,7 @@ class NewsService {
       newsList = await dynamicModel
           .find({status: 1})
           .sort({_id: -1})
-          .select(queryParameters.selectFields ? queryParameters.selectFields : `-__v  -updatedAt -active -status`)
+          // .select(queryParameters.selectFields ? queryParameters.selectFields : `-__v  -updatedAt -active -status`)
           .limit(queryParameters.limit)
           .skip(queryParameters.skip)
           .lean();
@@ -63,7 +63,7 @@ class NewsService {
       newsList = await dynamicModel
           .find({status: 1, category: {$in: categoriesId}})
           .sort({_id: -1})
-          .select(queryParameters.selectFields ? queryParameters.selectFields : `-__v  -updatedAt -active -status`)
+          // .select(queryParameters.selectFields ? queryParameters.selectFields : `-__v  -updatedAt -active -status`)
           .limit(queryParameters.limit)
           .skip(queryParameters.skip)
           .lean();
@@ -78,7 +78,8 @@ class NewsService {
             const translationData = await dynamicTranslateModel.findOne({
               [currentModel]: modelItem._id,
               [this.Model.language.ref]: selectedLanguage._id,
-            }).select(queryParameters.selectFields ? queryParameters.selectFields : `-${currentModel} -__v -language  -updatedAt`).lean();
+            })
+                // .select(queryParameters.selectFields ? queryParameters.selectFields : `-${currentModel} -__v -language  -updatedAt`).lean();
 
             return {...modelItem, ...translationData || {}};
           })

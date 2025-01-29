@@ -47,7 +47,7 @@ class EventsService {
       eventsList = await dynamicModel
           .find({status: 1})
           .sort({_id: -1})
-          .select(queryParameters.selectFields ? queryParameters.selectFields : `-__v  -updatedAt -active -status`)
+          // .select(queryParameters.selectFields ? queryParameters.selectFields : `-__v  -updatedAt -active -status`)
           .limit(queryParameters.limit)
           .skip(queryParameters.skip)
           .lean();
@@ -59,7 +59,7 @@ class EventsService {
       eventsList = await dynamicModel
           .find({status: 1, eventsCategory: {$in: eventsCategoryIds}})
           .sort({_id: -1})
-          .select(queryParameters.selectFields ? queryParameters.selectFields : `-__v  -updatedAt -active -status`)
+          // .select(queryParameters.selectFields ? queryParameters.selectFields : `-__v  -updatedAt -active -status`)
           .limit(queryParameters.limit)
           .skip(queryParameters.skip)
           .lean();
@@ -74,7 +74,8 @@ class EventsService {
             const translationData = await dynamicTranslateModel.findOne({
               [currentModel]: modelItem._id,
               [this.Model.language.ref]: selectedLanguage._id,
-            }).select(queryParameters.selectFields ? queryParameters.selectFields : `-${currentModel} -__v -language  -updatedAt`).lean();
+            })
+                // .select(queryParameters.selectFields ? queryParameters.selectFields : `-${currentModel} -__v -language  -updatedAt`).lean();
 
             await Promise.all(populateOptions.map(async (item) => {
               modelItem[item] = await getPopulates(item, modelItem[item], selectedLanguage);
