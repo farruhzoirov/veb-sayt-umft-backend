@@ -36,9 +36,7 @@ class NewsService {
       throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
     }
     console.log(queryParameters.category);
-    if (queryParameters.category && typeof queryParameters.category !== 'string' ||
-        queryParameters.category && !Array.isArray(queryParameters.category)) {
-      console.log('Category not found');
+    if (queryParameters.category && !(typeof queryParameters.category !== 'string' || !Array.isArray(queryParameters.category))) {
       throw BaseError.BadRequest("Category must be string or an array");
     }
 
