@@ -78,7 +78,7 @@ const logging = async (req, res, next) => {
             if (model === Model.specialty.ref) modelToIncrementViews = getModelsHelper(Model.specialty.ref);
             if (model === Model.events.ref) modelToIncrementViews = getModelsHelper(Model.events.ref);
 
-            await modelToIncrementViews.findOne(
+            await modelToIncrementViews.findOneAndUpdate(
                 {slug},
                 {$inc: {views: 1}},
                 {new: true}
