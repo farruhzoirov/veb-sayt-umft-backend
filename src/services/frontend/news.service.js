@@ -36,7 +36,10 @@ class NewsService {
       throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
     }
 
-    if (typeof (queryParameters.category) !== 'string' || !Array.isArray(queryParameters.category)) {
+    if (queryParameters.category &&
+        typeof (queryParameters.category) !== 'string' ||
+        !Array.isArray(queryParameters.category)
+    ) {
       throw BaseError.BadRequest("Category must be string or an array");
     }
 
