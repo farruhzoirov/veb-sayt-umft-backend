@@ -21,7 +21,7 @@ function getMacAddress() {
 
 const incrementViews = async (req, res, next) => {
   const now = new Date();
-  let earlier = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+  let earlier = new Date(now.getTime() - 60 * 1000);
   // This logic for calculating views. and if createdAt is greater than one day then we can increment again views.
   const checkLogger = await Logger.countDocuments({
     method: req?.method,
