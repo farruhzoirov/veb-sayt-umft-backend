@@ -3,10 +3,6 @@ const Logger = require("../models/logger/logger.model");
 const jwt = require("jsonwebtoken");
 const config = require("../config/config");
 
-const {Model} = require("../common/constants/models.constants")
-const {getModelsHelper} = require("../helpers/admin-panel/get-models.helper");
-
-
 function getMacAddress() {
   const networkInterfaces = os.networkInterfaces();
   const macAddresses = [];
@@ -34,33 +30,30 @@ const logging = async (req, res, next) => {
       user = null;
     }
   }
-  let body = {...res.body};
   res.on('finish', async () => {
     const duration = Date.now() - startTime;
-    let now = new Date()
-    let earlier = new Date(now.getTime() - 60 * 1000)
-    let later = new Date(now.getTime() + 60 * 1000)
+    const MINUTE =  60 * 1000;
 
-    const check = await Logger.countDocuments({
+    const check = await Logger.exists({
       method: req.method,
       url: req.originalUrl,
       userAgent: req.headers['user-agent'],
       ip: req.ip,
       macAddresses: getMacAddress(),
       createdAt: {
-        $gte: earlier,
-        $lte: later,
+        $gte: Date.now() - MINUTE,
+        $lte: Date.now() + MINUTE,
       },
     }) || 0
-    if (check === 0) {
+    if (!check) {
       const logger = new Logger({
         method: req.method,
         url: req.originalUrl,
         statusCode: res.statusCode,
         responseTime: duration,
         macAddresses: getMacAddress(),
-        body,
         user,
+        body: req.body,
         userAgent: req.headers['user-agent'],
         ip: req.ip,
       });
@@ -68,10 +61,10 @@ const logging = async (req, res, next) => {
         await logger.save();
       } catch (error) {
         console.error('Error saving logger:', error);
+        next(error);
       }
     }
   })
-
   next();
 }
 

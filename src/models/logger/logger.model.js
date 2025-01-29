@@ -1,6 +1,5 @@
 const {Schema, model} = require("mongoose");
 
-
 const Logger = new Schema({
   method: { type: String, required: true },
   url: { type: String, required: true },
@@ -10,6 +9,8 @@ const Logger = new Schema({
   body: Object,
   ip: { type: String },
   macAddresses: Object
-},{timestamps:true})
+},{
+  timestamps:true
+})
 
 module.exports = model("logger", Logger);
