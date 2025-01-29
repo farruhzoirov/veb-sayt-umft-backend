@@ -34,7 +34,7 @@ class SocialService {
     if (queryParameters.messenger && typeof queryParameters.messenger !== 'string' && !Array.isArray(queryParameters.messenger)) {
       throw BaseError.BadRequest("Messenger must be string or an array");
     }
-    let messengerIds;
+    let messengerIds = [];
     if (queryParameters.messenger) {
       const messengersSlug = Array.isArray(queryParameters.messenger) ? queryParameters.messenger : [queryParameters.messenger];
       messengerIds = await Messenger.find({slug: {$in: messengersSlug}}).distinct("_id").lean();
