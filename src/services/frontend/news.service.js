@@ -35,15 +35,18 @@ class NewsService {
     if (!selectedLanguage) {
       throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
     }
-
+    console.log(queryParameters.category);
     if (queryParameters.category &&
         typeof (queryParameters.category) !== 'string' ||
         !Array.isArray(queryParameters.category)
     ) {
+      console.log('Category not found');
       throw BaseError.BadRequest("Category must be string or an array");
     }
 
-    if (!queryParameters.category.length && !Array.isArray(queryParameters.category)) {
+    if (!queryParameters.category && !Array.isArray(queryParameters?.category)) {
+      console.log('1');
+
       newsList = await dynamicModel
           .find({status: 1})
           .sort({_id: -1})
@@ -53,7 +56,9 @@ class NewsService {
           .lean();
     }
 
-    if (Array.isArray(queryParameters.category) || queryParameters.category?.length) {
+    if (Array.isArray(queryParameters.category) || queryParameters.category.length) {
+      console.log('2');
+
       const categories = Array.isArray(queryParameters.category)
           ? queryParameters.category
           : [queryParameters.category];
