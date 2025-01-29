@@ -20,8 +20,9 @@ function getMacAddress() {
 
 
 const incrementViews = async (req, res, next) => {
-  const now = new Date();
-  let earlier = new Date(now.getTime() - 60 * 1000);
+  const startTime = new Date();
+  let earlier = new Date(startTime.getTime() - 60 * 1000);
+
   // This logic for calculating views. and if createdAt is greater than one day then we can increment again views.
   const checkLogger = await Logger.countDocuments({
     method: req?.method,
@@ -33,39 +34,46 @@ const incrementViews = async (req, res, next) => {
       $gte: earlier, //1day
     },
   }) || 0
-  console.log('checkLogger', checkLogger)
-  if (checkLogger === 0) {
-    try {
-      for (const model of modelsForCalculatingViews) {
-        if (req?.originalUrl?.startsWith(`/front/${model}`)) {
-          const slug = req.params?.slug;
-          let modelToIncrementViews;
-          if (model === Model.news.ref) modelToIncrementViews = getModelsHelper(Model.news.ref);
-          if (model === Model.specialty.ref) modelToIncrementViews = getModelsHelper(Model.specialty.ref);
-          if (model === Model.events.ref) modelToIncrementViews = getModelsHelper(Model.events.ref);
 
-          await modelToIncrementViews.findOneAndUpdate(
-              {slug},
-              {$inc: {views: 1}},
-              {new: true}
-          )
-          const logger = new Logger({
-            method: req?.method,
-            url: req?.originalUrl,
-            userAgent: req?.headers["user-agent"],
-            ip: req?.ip,
-            macAddresses: getMacAddress(),
-            createdAt: Date.now(),
-          });
-          await logger.save();
-          break;
+  let body = {...res?.body};
+  res.on('finish', async () => {
+    console.log('checkLogger', checkLogger)
+    if (checkLogger === 0) {
+      try {
+        for (const model of modelsForCalculatingViews) {
+          if (req?.originalUrl?.startsWith(`/front/${model}`)) {
+            const slug = req.params?.slug;
+            const duration  = Date.now() - startTime;
+            let modelToIncrementViews;
+            if (model === Model.news.ref) modelToIncrementViews = getModelsHelper(Model.news.ref);
+            if (model === Model.specialty.ref) modelToIncrementViews = getModelsHelper(Model.specialty.ref);
+            if (model === Model.events.ref) modelToIncrementViews = getModelsHelper(Model.events.ref);
+
+            await modelToIncrementViews.findOneAndUpdate(
+                {slug},
+                {$inc: {views: 1}},
+                {new: true}
+            )
+            const logger = new Logger({
+              method: req?.method,
+              url: req?.originalUrl,
+              userAgent: req?.headers["user-agent"],
+              ip: req?.ip,
+              statusCode: res.statusCode,
+              responseTime: duration,
+              body,
+              macAddresses: getMacAddress(),
+              createdAt: Date.now(),
+            });
+            await logger.save();
+            break;
+          }
         }
+      } catch (error) {
+        next(error);
       }
-    } catch (error) {
-      next(error);
     }
-  }
-
+  })
   next();
 }
 
