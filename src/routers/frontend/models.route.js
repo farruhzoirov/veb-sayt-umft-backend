@@ -8,7 +8,7 @@ const universalController = new UniversalController();
 
 router.get('/:model', universalController.getModelsDataForFront);
 
-router.get('/:model/:slug', incrementViews, universalController.getOneModelDataBySlug);
+router.get('/:model/:slug', universalController.getOneModelDataBySlug);
 
 
 module.exports = router;

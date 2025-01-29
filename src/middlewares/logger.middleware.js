@@ -4,8 +4,9 @@ const jwt = require("jsonwebtoken");
 const config = require("../config/config");
 
 const {Model} = require("../common/constants/models.constants")
+const {getModelsHelper} = require("../helpers/admin-panel/get-models.helper");
 
-// const modelsForCalculatingViews = [Model.specialty.ref, Model.news.ref, Model.events.ref];
+const modelsForCalculatingViews = ['program', Model.news.ref, Model.events.ref];
 
 function getMacAddress() {
   const networkInterfaces = os.networkInterfaces();
@@ -52,6 +53,7 @@ const logging = async (req, res, next) => {
         $lte: later,
       },
     }) || 0
+    console.log('check', check)
     if (check === 0) {
       const logger = new Logger({
         method: req.method,
@@ -66,7 +68,23 @@ const logging = async (req, res, next) => {
       });
       try {
         await logger.save();
+        for (const model of modelsForCalculatingViews) {
+          if (req?.originalUrl?.startsWith(`/front/${model}`)) {
+            console.log(model)
+            const slug = req.params?.slug;
+            console.log("Slug", slug)
+            let modelToIncrementViews;
+            if (model === Model.news.ref) modelToIncrementViews = getModelsHelper(Model.news.ref);
+            if (model === Model.specialty.ref) modelToIncrementViews = getModelsHelper(Model.specialty.ref);
+            if (model === Model.events.ref) modelToIncrementViews = getModelsHelper(Model.events.ref);
 
+            await modelToIncrementViews.findOne(
+                {slug},
+                {$inc: {views: 1}},
+                {new: true}
+            )
+          }
+        }
       } catch (error) {
         console.error('Error saving logger:', error);
       }
