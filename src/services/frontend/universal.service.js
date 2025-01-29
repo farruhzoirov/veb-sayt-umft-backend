@@ -62,7 +62,6 @@ class UniversalService {
     if (this.Model[currentModel].translate) {
       const translateModelName = this.TranslateModel[currentModel].ref;
       const dynamicTranslateModel = getModelsTranslateHelper(translateModelName);
-
       modelsList = await Promise.all(
           modelsList.map(async modelItem => {
             const translationData = await dynamicTranslateModel.findOne({
@@ -79,8 +78,7 @@ class UniversalService {
                 }
               }
             }
-
-            return {...modelItem, ...translationData || {}};
+            return {...modelItem, ...(translationData || {})};
           })
       );
     }

@@ -34,7 +34,6 @@ class Server {
 
   addRoutes() {
     app.use(logging);
-
     app.use(routersList);
     app.use(errorMiddleware);
     swagger(app);

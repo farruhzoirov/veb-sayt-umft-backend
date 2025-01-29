@@ -26,6 +26,8 @@ router.use('/employee', require("./routers/admin-panel/hemis/employees.route"));
 // Classifiers
 router.use('/classifiers', require("./routers/admin-panel/hemis/classifiers.route"));
 
+router.use('/logger', require('./routers/admin-panel/logger/logger.route'));
+
 
 // Routers for the frontend
 
