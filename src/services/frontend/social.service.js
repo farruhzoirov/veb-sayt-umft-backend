@@ -30,14 +30,21 @@ class SocialService {
     if (!selectedLanguage) {
       throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
     }
-    const messengersSlug = Array.isArray(queryParameters.messenger) ? queryParameters.messenger : [queryParameters.messenger];
-    const messengersIds = await Messenger.find({slug: {$in: messengersSlug}}).distinct("_id").lean();
 
-    if (!messengersIds.length) {
-      return []
+    if (queryParameters.messenger && typeof queryParameters.messenger !== 'string' && !Array.isArray(queryParameters.messenger)) {
+      throw BaseError.BadRequest("Messenger must be string or an array");
+    }
+    let messengerIds;
+    if (queryParameters.messenger) {
+      const messengersSlug = Array.isArray(queryParameters.messenger) ? queryParameters.messenger : [queryParameters.messenger];
+      messengerIds = await Messenger.find({slug: {$in: messengersSlug}}).distinct("_id").lean();
+    }
+    const filter = {status: 1};
+    if (messengerIds.length) {
+      filter.messenger = {$in:messengerIds};
     }
 
-    let socials = await Social.find({messenger: {$in: messengersIds}}).select("-__v -updatedAt").lean();
+    let socials = await Social.find(filter).select("-__v -updatedAt").lean();
 
     const populateOptions = this.Model.social.populate || []
     const SocialTranslate = getModelsTranslateHelper(this.TranslateModel.social.ref);
