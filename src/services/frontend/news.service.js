@@ -19,8 +19,8 @@ class NewsService {
     let newsList;
 
     const queryParameters = {
-      limit: req.query?.limit ? parseInt(req.query.limit, 10) : 30,
-      page: req.query?.page ? parseInt(req.query.page, 10) : 1,
+      limit: Math.max(1, parseInt(req.query?.limit, 10) || 30),
+      page: Math.max(1, parseInt(req.query?.page, 10) || 1),
       skip: (parseInt(req.query?.limit, 10) || 10) * ((parseInt(req.query.page, 10) || 1) - 1),
       selectFields: req.query?.select || '',
       requestedLanguage: req.query?.language || defaultLanguage.slug,
