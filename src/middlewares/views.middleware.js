@@ -3,8 +3,6 @@ const os = require('os');
 const {Model} = require("../common/constants/models.constants");
 const Logger = require("../models/logger/logger.model");
 const {getModelsHelper} = require("../helpers/admin-panel/get-models.helper");
-
-
 const modelsForCalculatingViews = ['program', Model.news.ref, Model.events.ref];
 
 function getMacAddress() {
@@ -23,8 +21,8 @@ function getMacAddress() {
 
 const incrementViews = async (req, res, next) => {
   const now = new Date();
-  let earlier = new Date(now.getTime() - 300 * 1000);
-  // This logic for calculating views. and if createdAt is greater than 5 min then we can increment again views.
+  let earlier = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+  // This logic for calculating views. and if createdAt is greater than one day then we can increment again views.
   const checkLogger = await Logger.countDocuments({
     method: req?.method,
     url: req?.originalUrl,
@@ -32,7 +30,7 @@ const incrementViews = async (req, res, next) => {
     ip: req?.ip,
     macAddresses: getMacAddress(),
     createdAt: {
-      $gte: earlier, //5min
+      $gte: earlier, //1day
     },
   }) || 0
   console.log('checkLogger', checkLogger)
@@ -46,7 +44,7 @@ const incrementViews = async (req, res, next) => {
           if (model === Model.specialty.ref) modelToIncrementViews = getModelsHelper(Model.specialty.ref);
           if (model === Model.events.ref) modelToIncrementViews = getModelsHelper(Model.events.ref);
 
-          await modelToIncrementViews.findOne(
+          await modelToIncrementViews.findOneAndUpdate(
               {slug},
               {$inc: {views: 1}},
               {new: true}
