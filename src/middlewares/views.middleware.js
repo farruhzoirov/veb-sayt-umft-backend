@@ -1,8 +1,9 @@
 const os = require('os');
-
 const {Model} = require("../common/constants/models.constants");
 const Logger = require("../models/logger/logger.model");
 const {getModelsHelper} = require("../helpers/admin-panel/get-models.helper");
+
+// Models for calculate views
 const modelsForCalculatingViews = ['program', Model.news.ref, Model.events.ref];
 
 function getMacAddress() {
@@ -18,12 +19,12 @@ function getMacAddress() {
   return macAddresses;
 }
 
-
 const incrementViews = async (req, res, next) => {
   const startTime = new Date();
-  let earlier = new Date(startTime.getTime() - 60 * 1000);
+  let earlier = new Date(startTime.getTime() - 24 * 60 * 60 * 1000);
 
   // This logic for calculating views. and if createdAt is greater than one day then we can increment again views.
+
   const checkLogger = await Logger.countDocuments({
     method: req?.method,
     url: req?.originalUrl,
@@ -31,13 +32,13 @@ const incrementViews = async (req, res, next) => {
     ip: req?.ip,
     macAddresses: getMacAddress(),
     createdAt: {
-      $gte: earlier, //1day
+      // ------------  To check createdAt is more than 1 day. --------------  //
+      $gte: earlier,
     },
   }) || 0
 
   let body = {...res?.body};
   res.on('finish', async () => {
-    console.log('checkLogger', checkLogger)
     if (checkLogger === 0) {
       try {
         for (const model of modelsForCalculatingViews) {
