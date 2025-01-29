@@ -22,7 +22,7 @@ const incrementViews = async (req, res, next) => {
     if (!checkLogger) {
       console.log(req.originalUrl);
       const model = modelsForCalculatingViews.find((model) => {
-        req?.originalUrl?.startsWith(`/front/${model}`);
+        return req?.originalUrl?.startsWith(`/front/${model}`);
       })
       console.log('model', model);
       if (model && req.params?.slug) {
