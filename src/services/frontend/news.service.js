@@ -36,7 +36,8 @@ class NewsService {
       throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
     }
     console.log(queryParameters.category);
-    if (queryParameters.category &&  (typeof(queryParameters.category) !== 'string' || !Array.isArray(queryParameters.category))) {
+    if (queryParameters.category && typeof queryParameters.category !== 'string' ||
+        queryParameters.category && !Array.isArray(queryParameters.category)) {
       console.log('Category not found');
       throw BaseError.BadRequest("Category must be string or an array");
     }
@@ -81,7 +82,7 @@ class NewsService {
               [currentModel]: modelItem._id,
               [this.Model.language.ref]: selectedLanguage._id,
             })
-                // .select(queryParameters.selectFields ? queryParameters.selectFields : `-${currentModel} -__v -language  -updatedAt`).lean();
+            // .select(queryParameters.selectFields ? queryParameters.selectFields : `-${currentModel} -__v -language  -updatedAt`).lean();
 
             return {...modelItem, ...translationData || {}};
           })
