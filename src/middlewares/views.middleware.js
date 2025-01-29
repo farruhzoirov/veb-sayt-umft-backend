@@ -18,12 +18,14 @@ const incrementViews = async (req, res, next) => {
       ip: req?.ip,
       createdAt: {$gte: earlier},
     });
-
+    console.log('checkLogger', checkLogger);
     if (!checkLogger) {
       const model = modelsForCalculatingViews.find((model) => {
         req?.originalUrl?.startsWith(`/front/${model}`);
       })
+      console.log('model', model);
       if (model && req.params?.slug) {
+        console.log('inside of if')
         const modelToUpdate = getModelsHelper(model);
         await Promise.all([
           modelToUpdate.findOneAndUpdate(

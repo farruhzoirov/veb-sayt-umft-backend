@@ -44,7 +44,7 @@ const logging = async (req, res, next) => {
         $gte: Date.now() - MINUTE,
         $lte: Date.now() + MINUTE,
       },
-    }) || 0
+    });
     if (!check) {
       const logger = new Logger({
         method: req.method,
@@ -53,7 +53,7 @@ const logging = async (req, res, next) => {
         responseTime: duration,
         macAddresses: getMacAddress(),
         user,
-        body: req.body,
+        body: res.body,
         userAgent: req.headers['user-agent'],
         ip: req.ip,
       });
