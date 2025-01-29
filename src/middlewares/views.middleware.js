@@ -23,7 +23,7 @@ function getMacAddress() {
 
 const incrementViews = async (req, res, next) => {
   const now = new Date();
-  let earlier = new Date(now.getTime() - 300 * 1000)
+  let earlier = new Date(now.getTime() - 300 * 1000);
   // This logic for calculating views. and if createdAt is greater than 5 min then we can increment again views.
   const checkLogger = await Logger.countDocuments({
     method: req?.method,
@@ -35,7 +35,7 @@ const incrementViews = async (req, res, next) => {
       $gte: earlier, //5min
     },
   }) || 0
-
+  console.log('checkLogger', checkLogger)
   if (checkLogger === 0) {
     try {
       for (const model of modelsForCalculatingViews) {
