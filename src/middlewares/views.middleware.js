@@ -12,7 +12,7 @@ const incrementViews = async (req, res, next) => {
     const earlier = new Date(startTime.getTime() - DAY_IN_MS);
 
     // This logic for calculating views. and if createdAt is greater than one day then we can increment again views.
-    const checkLogger = await Logger.exists({
+    const checkLogger = await Logger.findOne({
       url: req?.originalUrl,
       userAgent: req?.headers['user-agent'],
       ip: req?.ip,
