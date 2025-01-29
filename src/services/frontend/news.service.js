@@ -35,7 +35,7 @@ class NewsService {
     if (!selectedLanguage) {
       throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
     }
-    console.log(queryParameters.category);
+
     if (queryParameters.category && !(typeof queryParameters.category !== 'string' || !Array.isArray(queryParameters.category))) {
       throw BaseError.BadRequest("Category must be string or an array");
     }
@@ -52,7 +52,7 @@ class NewsService {
           .lean();
     }
 
-    if (Array.isArray(queryParameters.category) || queryParameters.category.length) {
+    if (Array.isArray(queryParameters.category) || queryParameters.category) {
       console.log('2');
 
       const categories = Array.isArray(queryParameters.category)
