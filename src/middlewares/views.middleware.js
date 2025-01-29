@@ -40,7 +40,7 @@ const incrementViews = async (req, res, next) => {
     try {
       for (const model of modelsForCalculatingViews) {
         if (req?.originalUrl?.startsWith(`/front/${model}`)) {
-          const slug = req.params.slug;
+          const slug = req.params?.slug;
           let modelToIncrementViews;
           if (model === Model.news.ref) modelToIncrementViews = getModelsHelper(Model.news.ref);
           if (model === Model.specialty.ref) modelToIncrementViews = getModelsHelper(Model.specialty.ref);
