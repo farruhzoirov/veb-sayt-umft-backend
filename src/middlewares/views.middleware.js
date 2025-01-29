@@ -8,23 +8,20 @@ const modelsForCalculatingViews = ['program', Model.news.ref, Model.events.ref];
 const incrementViews = async (req, res, next) => {
   try {
     const startTime = new Date();
-    const DAY_IN_MS = 60 * 1000;
+    const DAY_IN_MS = 24 * 60 * 60 * 1000;
     const earlier = new Date(startTime.getTime() - DAY_IN_MS);
 
     // This logic for calculating views. and if createdAt is greater than one day then we can increment again views.
-    const checkLogger = await Logger.findOne({
+    const checkLogger = await Logger.exists({
       url: req?.originalUrl,
       userAgent: req?.headers['user-agent'],
       ip: req?.ip,
       createdAt: {$gte: earlier},
     });
-    console.log('checkLogger', checkLogger);
     if (!checkLogger) {
-      console.log(req.originalUrl);
       const model = modelsForCalculatingViews.find((model) => {
         return req?.originalUrl?.startsWith(`/front/${model}`);
       })
-      console.log('model', model);
       if (model && req.params?.slug) {
         console.log('inside of if')
         const modelToUpdate = getModelsHelper(model);
