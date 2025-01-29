@@ -36,7 +36,11 @@ class NewsService {
       throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
     }
 
-    if (!queryParameters.category || Array.isArray(queryParameters.category) && !queryParameters.category?.length) {
+    if (typeof (queryParameters.category) !== 'string' || !Array.isArray(queryParameters.category)) {
+      throw BaseError.BadRequest("Category must be string or an array");
+    }
+
+    if (!queryParameters.category.length && !Array.isArray(queryParameters.category)) {
       newsList = await dynamicModel
           .find({status: 1})
           .sort({_id: -1})
@@ -46,7 +50,7 @@ class NewsService {
           .lean();
     }
 
-    if (Array.isArray(queryParameters.category) && queryParameters.category?.length || queryParameters.category?.length) {
+    if (Array.isArray(queryParameters.category) || queryParameters.category?.length) {
       const categories = Array.isArray(queryParameters.category)
           ? queryParameters.category
           : [queryParameters.category];
@@ -60,12 +64,12 @@ class NewsService {
           .limit(queryParameters.limit)
           .skip(queryParameters.skip)
           .lean();
-
     }
 
     if (this.Model[currentModel].translate) {
       const translateModelName = this.TranslateModel[currentModel].ref;
       const dynamicTranslateModel = getModelsTranslateHelper(translateModelName);
+
       newsList = await Promise.all(
           newsList.map(async modelItem => {
             const translationData = await dynamicTranslateModel.findOne({

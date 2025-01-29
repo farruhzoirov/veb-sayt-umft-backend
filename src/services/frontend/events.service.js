@@ -37,7 +37,11 @@ class EventsService {
       throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
     }
 
-    if (!queryParameters.eventsCategory || Array.isArray(queryParameters.eventsCategory) && !queryParameters.eventsCategory?.length) {
+    if (typeof (queryParameters.category) !== 'string' || !Array.isArray(queryParameters.category)) {
+      throw BaseError.BadRequest("EventsCategory must be string or an array");
+    }
+
+    if (!queryParameters.eventsCategory.length && !Array.isArray(queryParameters.eventsCategory)) {
       eventsList = await dynamicModel
           .find({status: 1})
           .sort({_id: -1})
