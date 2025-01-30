@@ -10,6 +10,7 @@ const Department = require("../../../../models/data/department.model");
 const Language = require("../../../../models/settings/language.model");
 const BaseError = require("../../../../errors/base.error");
 
+const { v4: uuidv4 } = require('uuid');
 
 class FetchEmployeesService {
   async fetchEmployees() {
@@ -53,7 +54,6 @@ class FetchEmployeesService {
 
   async addNewEmployee(employeesData, defaultLanguage) {
     for (const employee of employeesData) {
-
       const matchDepartment = await Department.findOne({hemisId: employee.department.id});
       const newEmployee = await new Employee({
         hemisId: employee.hemis_id,
@@ -61,7 +61,7 @@ class FetchEmployeesService {
         url: employee.image,
         img: [],
         socialLinks: [],
-        slug: this.slugify(`${employee.first_name}${employee.second_name}${employee.third_name}`),
+        slug: this.uniqueSlug(`${employee.first_name} ${employee.second_name} ${employee.third_name}`),
         employeeId: employee.employee_id_number,
         birthDate: employee.birth_date,
         createdAt: employee.createdAt,
@@ -151,7 +151,7 @@ class FetchEmployeesService {
           url: employee.image,
           img: [],
           socialLinks: [],
-          slug: this.slugify(`${employee.first_name}${employee.second_name}${employee.third_name}`),
+          slug: this.uniqueSlug(`${employee.first_name} ${employee.second_name} ${employee.third_name}`),
           employeeId: employee.employee_id_number,
           contractNumber: employee.contract_number,
           decreeNumber: employee.decree_number,
@@ -185,7 +185,14 @@ class FetchEmployeesService {
     return str
         .toLowerCase()
         .replace(/\s+/g, '-')
-        .replace(/[^a-z0-9\-əöğıüçş]/g, '');
+        .replace(/[^a-z0-9\-əöğıüçş]/g, '')
+        .replace(/-+/g, '-');
+  };
+
+  uniqueSlug(firstName, secondName, thirdName) {
+    const baseSlug = this.slugify(`${firstName} ${secondName} ${thirdName}`);
+    const uniqueId = uuidv4().slice(0, 8);
+    return `${baseSlug}-${uniqueId}`;
   };
 }
 
