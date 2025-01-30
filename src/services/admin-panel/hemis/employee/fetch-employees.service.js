@@ -180,7 +180,6 @@ class FetchEmployeesService {
     }
   }
 
-
   slugify(str) {
     return str
         .toLowerCase()
