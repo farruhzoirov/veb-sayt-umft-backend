@@ -13,6 +13,10 @@ const LicenceSchema = new Schema({
   slug: {
     type: String,
   },
+  status: {
+    type: Number,
+    default: 1
+  }
 }, {
   timestamps: true
 });
