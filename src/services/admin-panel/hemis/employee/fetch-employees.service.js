@@ -53,6 +53,7 @@ class FetchEmployeesService {
 
   async addNewEmployee(employeesData, defaultLanguage) {
     for (const employee of employeesData) {
+
       const matchDepartment = await Department.findOne({hemisId: employee.department.id});
       const newEmployee = await new Employee({
         hemisId: employee.hemis_id,
@@ -60,7 +61,7 @@ class FetchEmployeesService {
         url: employee.image,
         img: [],
         socialLinks: [],
-        slug: `${employee.first_name}&${employee.second_name}&${employee.third_name}`,
+        slug: this.slugify(`${employee.first_name}${employee.second_name}${employee.third_name}`),
         employeeId: employee.employee_id_number,
         birthDate: employee.birth_date,
         createdAt: employee.createdAt,
@@ -150,7 +151,7 @@ class FetchEmployeesService {
           url: employee.image,
           img: [],
           socialLinks: [],
-          slug: `${employee.first_name}&${employee.second_name}&${employee.third_name}`,
+          slug: this.slugify(`${employee.first_name}${employee.second_name}${employee.third_name}`),
           employeeId: employee.employee_id_number,
           contractNumber: employee.contract_number,
           decreeNumber: employee.decree_number,
@@ -178,6 +179,14 @@ class FetchEmployeesService {
       }
     }
   }
+
+
+  async slugify(str) {
+    return str
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^a-z0-9\-əöğıüçş]/g, '');
+  };
 }
 
 module.exports = FetchEmployeesService
