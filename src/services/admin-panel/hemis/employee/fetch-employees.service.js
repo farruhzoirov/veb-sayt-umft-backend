@@ -181,7 +181,7 @@ class FetchEmployeesService {
   }
 
 
-  async slugify(str) {
+  slugify(str) {
     return str
         .toLowerCase()
         .replace(/\s+/g, '-')
