@@ -4,8 +4,8 @@ class SpecialtyController {
   constructor() {
     this.specialtiesService = new SpecialtiesService();
 
-    this.filterAndGetPrograms = this.filterAndGetPrograms.bind(this);
-    this.getOneProgram = this.getOneProgram.bind(this);
+    this.filterAndGetSpecialties = this.filterAndGetSpecialties.bind(this);
+    this.getOneSpecialty = this.getOneSpecialty.bind(this);
   }
 
   async filterAndGetSpecialties(req, res, next) {

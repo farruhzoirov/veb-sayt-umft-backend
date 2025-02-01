@@ -6,9 +6,9 @@ const {incrementViews} = require("../../middlewares/views.middleware");
 const programsController = new SpecialtyController();
 
 
-router.get('/specialty', programsController.filterAndGetPrograms);
+router.get('/specialty', programsController.filterAndGetSpecialties);
 
-router.get('/specialty/:slug', incrementViews, programsController.getOneProgram);
+router.get('/specialty/:slug', incrementViews, programsController.getOneSpecialty);
 
 
 module.exports = router;
