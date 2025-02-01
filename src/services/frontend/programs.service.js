@@ -170,7 +170,6 @@ class ProgramsService {
     }
 
     if (findThemes.length) {
-      console.log('themes')
       const populateOptions = this.Model.theme.populate || [];
       findThemes = await this.getTranslatesAndPopulates(this.Model.theme.ref, findEmployees, TopicTranslate, selectedLanguage, '', populateOptions);
       findProgram.themes = findThemes;

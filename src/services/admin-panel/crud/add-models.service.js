@@ -5,6 +5,7 @@ const {getModelsHelper} = require("../../../helpers/admin-panel/get-models.helpe
 const {addTranslations} = require("../../../helpers/admin-panel/translate.helper");
 const populateModelData = require("../../../helpers/admin-panel/populate.helper");
 const fs = require("fs");
+const generateUniqueSlug = require("../../../helpers/admin-panel/unique-slug.helper");
 
 class AddModelsService {
   constructor() {
@@ -15,7 +16,7 @@ class AddModelsService {
     const dynamicModel = getModelsHelper(modelName);
 
     if (!modelData.modelId) {
-      if(modelData?.slug) {
+      if (modelData?.slug) {
         await this.checkSlugExists(dynamicModel, modelData.slug);
       }
       return await this.handleNewModel(dynamicModel, modelName, modelData);
@@ -26,8 +27,6 @@ class AddModelsService {
 
   async checkSlugExists(dynamicModel, slug) {
     const isSlugExists = await dynamicModel.findOne({slug}).lean();
-    console.log(slug)
-    console.log(isSlugExists);
     if (isSlugExists) {
       throw BaseError.BadRequest("Slug already exists");
     }
@@ -81,6 +80,10 @@ class AddModelsService {
       modelData.isDefault = isDefault;
     }
 
+    if (modelName === this.Model.employee.ref && !modelData.slug) {
+      modelData.slug = generateUniqueSlug(`${modelData.firstName}`,  `${modelData.surName}`, `${modelData.lastName}`);
+    }
+
     const savedDocument = new dynamicModel({...modelData, img: modelData.img || []});
     await savedDocument.save();
 
@@ -92,7 +95,6 @@ class AddModelsService {
   }
 
   async validateAndFormatImages(img) {
-
     if (img && !Array.isArray(img)) {
       if (fs.existsSync(img)) {
         return [img];

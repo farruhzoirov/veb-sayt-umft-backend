@@ -11,6 +11,7 @@ const Language = require("../../../../models/settings/language.model");
 const BaseError = require("../../../../errors/base.error");
 
 const { v4: uuidv4 } = require('uuid');
+const generateUniqueSlug = require("../../../../helpers/admin-panel/unique-slug.helper");
 
 class FetchEmployeesService {
   async fetchEmployees() {
@@ -61,7 +62,7 @@ class FetchEmployeesService {
         url: employee.image,
         img: [],
         socialLinks: [],
-        slug: this.uniqueSlug(`${employee.first_name}`, `${employee.second_name}` ,`${employee.third_name}`),
+        slug: generateUniqueSlug(`${employee.first_name}`, `${employee.second_name}` ,`${employee.third_name}`),
         employeeId: employee.employee_id_number,
         birthDate: employee.birth_date,
         createdAt: employee.createdAt,
@@ -151,7 +152,7 @@ class FetchEmployeesService {
           url: employee.image,
           img: [],
           socialLinks: [],
-          slug: this.uniqueSlug(`${employee.first_name}`, `${employee.second_name}` ,`${employee.third_name}`),
+          slug: generateUniqueSlug(`${employee.first_name}`, `${employee.second_name}` ,`${employee.third_name}`),
           employeeId: employee.employee_id_number,
           contractNumber: employee.contract_number,
           decreeNumber: employee.decree_number,
@@ -179,20 +180,6 @@ class FetchEmployeesService {
       }
     }
   }
-
-  slugify(str) {
-    return str
-        .toLowerCase()
-        .replace(/\s+/g, '-')
-        .replace(/[^a-z0-9\-əöğıüçş]/g, '')
-        .replace(/-+/g, '-');
-  };
-
-  uniqueSlug(firstName, secondName, thirdName) {
-    const baseSlug = this.slugify(`${firstName} ${secondName} ${thirdName}`);
-    const uniqueId = uuidv4().slice(0, 8);
-    return `${baseSlug}-${uniqueId}`;
-  };
 }
 
 module.exports = FetchEmployeesService
