@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 
-router.use(require('./programs.route'));
+router.use(require('./specialty.route'));
 router.use(require('./news.route'));
 router.use(require('./events.route'));
 router.use(require('./socials.route'));

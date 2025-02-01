@@ -1,16 +1,13 @@
 const axios = require("axios");
-
 const config = require('../../../../config/config');
 
+// Models
 const Employee = require("../../../../models/data/employee.model");
 const EmployeeTranslate = require("../../../../models/translate/employee.model");
-
 const Department = require("../../../../models/data/department.model");
-
 const Language = require("../../../../models/settings/language.model");
-const BaseError = require("../../../../errors/base.error");
 
-const { v4: uuidv4 } = require('uuid');
+
 const generateUniqueSlug = require("../../../../helpers/admin-panel/unique-slug.helper");
 
 class FetchEmployeesService {

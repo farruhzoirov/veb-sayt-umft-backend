@@ -3,7 +3,7 @@ const Logger = require("../models/logger/logger.model");
 const {getModelsHelper} = require("../helpers/admin-panel/get-models.helper");
 
 // Models for calculate views
-const modelsForCalculatingViews = ['programs', Model.news.ref, Model.events.ref];
+const modelsForCalculatingViews = [Model.specialty.ref, Model.news.ref, Model.events.ref];
 
 const incrementViews = async (req, res, next) => {
   try {
@@ -25,7 +25,7 @@ const incrementViews = async (req, res, next) => {
       })
 
       if (model && req.params?.slug) {
-        const modelToUpdate = getModelsHelper(model === 'programs' ? 'specialty' : model);
+        const modelToUpdate = getModelsHelper(model);
         await Promise.all([
           modelToUpdate.findOneAndUpdate(
               {slug: req.params.slug},

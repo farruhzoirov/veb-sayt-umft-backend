@@ -20,12 +20,12 @@ const Theme = require("../../models/data/themes.model");
 const Employee = require("../../models/data/employee.model");
 
 
-class ProgramsService {
+class SpecialtiesService {
   constructor() {
     this.Model = Model
   }
 
-  async filterAndGetPrograms(req) {
+  async filterAndGetSpecialties(req) {
     const defaultLanguage = await Language.findOne({isDefault: true});
     const queryParameters = {
       limit: req.query?.limit ? parseInt(req.query.limit, 10) : 30,
@@ -33,7 +33,6 @@ class ProgramsService {
       skip: (req.query?.limit ? parseInt(req.query.limit, 10) : 10) * ((req.query.page ? parseInt(req.query.page, 10) : 1) - 1),
       requestedLanguage: req.query?.language || defaultLanguage.slug,
       selectFields: req.query?.select || '',
-
 
       // For filtering
       filters: {
@@ -68,7 +67,6 @@ class ProgramsService {
       const format = await Format.findOne({slug: queryParameters.filters.format}).lean();
       query["prices.format"] = format?._id;
     }
-
 
     programsList = await Specialty.find(query).select(queryParameters.select).limit(queryParameters.limit).skip(queryParameters.skip).lean();
 
@@ -106,10 +104,10 @@ class ProgramsService {
   }
 
 
-  async getOneProgram(req) {
+  async getOneSpecialty(req) {
     const defaultLanguage = await Language.findOne({isDefault: true});
     const queryParameters = {
-      program: req.params.slug,
+      slug: req.params.slug,
       requestedLanguage: req.query.language || defaultLanguage.slug,
     }
 
@@ -121,41 +119,39 @@ class ProgramsService {
       throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
     }
 
-    let findProgram = await Specialty.findOne({slug: queryParameters.program}).lean();
+    let findSpecialty = await Specialty.findOne({slug: queryParameters.slug}).lean();
 
-    if (!findProgram) {
-      throw BaseError.BadRequest("Program not found");
+    if (!findSpecialty) {
+      throw BaseError.BadRequest("Specialty not found");
     }
-    console.log(findProgram)
 
     // Employees
-    let findEmployees = await Employee.find({[this.Model.department.ref]: findProgram.department}).lean();
+    let findEmployees = await Employee.find({[this.Model.department.ref]: findSpecialty.department}).lean();
 
     // Level and topic based
-    let findTopics = await Topic.find({[this.Model.specialty.ref]: findProgram._id}).lean();
+    let findTopics = await Topic.find({[this.Model.specialty.ref]: findSpecialty._id}).lean();
 
     // Themes
     let findThemes = await Theme.find({[this.Model.topic.ref]: findTopics._id}).lean();
 
-    if (findProgram) {
-      if (findProgram.prices && Array.isArray(findProgram.prices)) {
-        for (const price of findProgram.prices) {
+    if (findSpecialty) {
+      if (findSpecialty.prices && Array.isArray(findSpecialty.prices)) {
+        for (const price of findSpecialty.prices) {
           if (price.format) {
             price.format = await getPopulates('format', price.format, selectedLanguage);
           }
         }
       }
-      findProgram = await SpecialtyTranslate.findOne({
-        [this.Model.specialty.ref]: findProgram._id,
+      findSpecialty = await SpecialtyTranslate.findOne({
+        [this.Model.specialty.ref]: findSpecialty._id,
         [this.Model.language.ref]: selectedLanguage._id
       }).select(queryParameters.selectFields ? queryParameters.selectFields : `-${this.Model.specialty.ref} -__v -language -updatedAt`).lean();
     }
 
     if (findTopics.length) {
-      console.log('topics')
       const populateOptions = this.Model.topic.populate || [];
       findTopics = await this.getTranslatesAndPopulates(this.Model.topic.ref, findTopics, TopicTranslate, selectedLanguage, '', populateOptions);
-      findProgram.topics = findTopics;
+      findSpecialty.topics = findTopics;
     }
 
     if (findEmployees.length) {
@@ -166,17 +162,17 @@ class ProgramsService {
             employee.messenger = await getPopulates("messenger", employee.messenger, selectedLanguage);
           })
       );
-      findProgram.employees = findEmployees;
+      findSpecialty.employees = findEmployees;
     }
 
     if (findThemes.length) {
       const populateOptions = this.Model.theme.populate || [];
       findThemes = await this.getTranslatesAndPopulates(this.Model.theme.ref, findEmployees, TopicTranslate, selectedLanguage, '', populateOptions);
-      findProgram.themes = findThemes;
+      findSpecialty.themes = findThemes;
     }
 
 
-    return {data:findProgram};
+    return {data:findSpecialty};
   }
 
   async getTranslatesAndPopulates(modelName, model, translateModel, language, select, populateOptions = []) {
@@ -189,7 +185,6 @@ class ProgramsService {
       if (populateOptions.length) {
         populateOptions.map(async (item) => {
           data[item] = await getPopulates(item, data[item], language);
-          console.log(data[item]);
         })
       }
       return data;
@@ -199,4 +194,4 @@ class ProgramsService {
   }
 }
 
-module.exports = ProgramsService;
+module.exports = SpecialtiesService;
