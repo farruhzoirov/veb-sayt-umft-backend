@@ -4343,7 +4343,7 @@ paths:
         - Social
 
 #Statistics
-  /api/statistics/counts:
+  /statistics/counts:
     get:
       summary: Statistics
       security:
