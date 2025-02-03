@@ -4356,6 +4356,9 @@ paths:
               schema:
                  type: object
 
+      tags:
+        - Statistics
+
 #Components
 components:
   securitySchemes:
