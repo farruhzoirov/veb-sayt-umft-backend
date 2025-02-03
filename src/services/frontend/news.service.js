@@ -24,7 +24,7 @@ class NewsService {
       skip: (parseInt(req.query?.limit, 10) || 10) * ((parseInt(req.query.page, 10) || 1) - 1),
       selectFields: req.query?.select || '',
       requestedLanguage: req.query?.language || defaultLanguage.slug,
-      category: req.query?.category,
+      category: JSON.parse(req.query?.category),
     };
 
     console.log('categorySlugs', queryParameters.category)
@@ -36,9 +36,6 @@ class NewsService {
       throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
     }
 
-    if (queryParameters.category && typeof queryParameters.category !== 'string' && !Array.isArray(queryParameters.category)) {
-      throw BaseError.BadRequest("Category must be string or an array");
-    }
 
     if (queryParameters.category && !Array.isArray(queryParameters.category)) {
       throw BaseError.BadRequest("Category must be  an array");
@@ -46,7 +43,7 @@ class NewsService {
 
     let categoryIds = [];
     if (queryParameters.category) {
-      const categories = JSON.parse(queryParameters.category);
+      const categories = queryParameters.category;
       categoryIds = await Category.find({slug: {$in: categories}}).distinct('_id').lean();
     }
     const filter = {status: 1};
