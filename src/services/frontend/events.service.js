@@ -26,7 +26,7 @@ class EventsService {
       skip: (parseInt(req.query?.limit, 10) || 10) * ((parseInt(req.query?.page, 10) || 1) - 1),
       selectFields: req.query?.select || '',
       requestedLanguage: req.query?.language || defaultLanguage.slug,
-      eventsCategory: JSON.parse(req.query?.eventsCategory)
+      eventsCategory: req.query.eventsCategory ? JSON.parse(req.query.eventsCategory) : null,
     };
 
     const selectedLanguage = await Language.findOne({slug: queryParameters.requestedLanguage}).lean();
@@ -35,9 +35,6 @@ class EventsService {
       throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
     }
 
-    if (queryParameters.category && !Array.isArray(queryParameters.category)) {
-      throw BaseError.BadRequest("EventsCategory must be  an array");
-    }
 
     let eventsCategoryIds = [];
     if (queryParameters.eventsCategory) {

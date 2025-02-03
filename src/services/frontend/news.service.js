@@ -24,11 +24,9 @@ class NewsService {
       skip: (parseInt(req.query?.limit, 10) || 10) * ((parseInt(req.query.page, 10) || 1) - 1),
       selectFields: req.query?.select || '',
       requestedLanguage: req.query?.language || defaultLanguage.slug,
-      category: JSON.parse(req.query?.category),
+      category: req.query.category ? JSON.parse(req.query?.category) : null,
     };
-
-    console.log('categorySlugs', queryParameters.category)
-    console.log('req query', req.query)
+    
 
     const selectedLanguage = await Language.findOne({slug: queryParameters.requestedLanguage}).lean();
 
