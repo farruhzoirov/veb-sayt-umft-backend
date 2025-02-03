@@ -8,7 +8,7 @@ router.use('/auth', require("./routers/admin-panel/auth.route"));
 router.use('/user', require("./routers/admin-panel/user.route"));
 
 // Statistics
-router.use('/statistic', require("./routers/admin-panel/statistics.route"));
+router.use('/statistics', require("./routers/admin-panel/statistics.route"));
 
 // For Main models
 router.use('/api', require("./routers/admin-panel/crud.route"));
