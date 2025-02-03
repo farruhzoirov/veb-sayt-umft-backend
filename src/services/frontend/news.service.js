@@ -74,7 +74,7 @@ class NewsService {
       );
     }
     newsList = newsList.filter((item) => item.title);
-    const total = await dynamicModel.countDocuments({status: 1});
+    const total = await dynamicModel.countDocuments(filter);
 
     return {
       data: newsList,

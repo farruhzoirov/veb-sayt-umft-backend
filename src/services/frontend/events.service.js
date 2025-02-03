@@ -76,7 +76,7 @@ class EventsService {
       );
     }
     eventsList = eventsList.filter((item) => item.name);
-    const total = await dynamicModel.countDocuments({status: 1});
+    const total = await dynamicModel.countDocuments(filter);
 
     return {
       data: eventsList,
