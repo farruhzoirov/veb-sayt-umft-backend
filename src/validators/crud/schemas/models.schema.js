@@ -47,11 +47,11 @@ const specialtySchema = Joi.object({
       })),
   slug: Joi.string().optional(),
   translate: Joi.object({
-    name: Joi.string().required(),
+    name: Joi.string().optional(),
     text: Joi.string().optional(),
     description: Joi.string().optional(),
-    language: Joi.string().required(),
-  }).required(),
+    language: Joi.string().optional(),
+  }).optional(),
 });
 
 const eventsCategorySchema = Joi.object({
@@ -188,11 +188,11 @@ const topicsSchema = Joi.object({
   slug: Joi.string().optional(),
   level: Joi.string().required(),
   translate: Joi.object({
-    name: Joi.string().required(),
+    name: Joi.string().optional(),
     text: Joi.string().optional(),
     description: Joi.string().optional(),
     language: Joi.string().optional(),
-  }).required(),
+  }).optional(),
 });
 
 const themeSchema = Joi.object({
