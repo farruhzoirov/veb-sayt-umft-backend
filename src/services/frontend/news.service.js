@@ -46,7 +46,7 @@ class NewsService {
 
     let categoryIds = [];
     if (queryParameters.category) {
-      const categories = queryParameters.category;
+      const categories = JSON.parse(queryParameters.category);
       categoryIds = await Category.find({slug: {$in: categories}}).distinct('_id').lean();
     }
     const filter = {status: 1};
