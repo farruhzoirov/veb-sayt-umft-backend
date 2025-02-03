@@ -5,7 +5,6 @@ const mongoose = require("mongoose");
 const SpecialtyTranslateSchema = new Schema({
   name: {
     type: String,
-    required: true,
   },
   text: {
     type: String
@@ -20,7 +19,6 @@ const SpecialtyTranslateSchema = new Schema({
   language: {
     type: Schema.Types.ObjectId,
     ref: 'language',
-    required: true,
   }
 }, {
   timestamps: true
