@@ -212,6 +212,10 @@ const pagesSchema = Joi.object({
   modelId: Joi.string().optional(),
   slug: Joi.string().required(),
   status: Joi.number().optional(),
+  video: Joi.array().items({
+    slug: Joi.string().optional(),
+    url: Joi.string().optional(),
+  }).optional(),
   translate: Joi.object({
     title: Joi.string().required(),
     text: Joi.string().required(),

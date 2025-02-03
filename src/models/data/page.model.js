@@ -6,6 +6,12 @@ const PageModel = new Schema({
     type: String,
     required: [true, 'Link is required'],
   },
+  video: [
+    {
+      slug: String,
+      url: String,
+    }
+  ],
   status: {
     type: Number,
     default: 1
@@ -14,4 +20,4 @@ const PageModel = new Schema({
   timestamps: true
 })
 
-module.exports = model("page", PageModel)
+module.exports = model("page", PageModel);
