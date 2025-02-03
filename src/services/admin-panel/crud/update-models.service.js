@@ -19,7 +19,7 @@ class UpdateModelsService {
       await this.handleDefaultLanguage(dynamicModel, updateData.isDefault);
     }
 
-    if (modelName.trim() === "specialty") {
+    if (modelName.trim() === "specialty" && updateData.prices) {
       this.validateSpecialtyPrices(existingModel.prices, updateData.prices);
     }
 
