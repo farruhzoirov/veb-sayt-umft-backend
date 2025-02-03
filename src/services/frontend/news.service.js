@@ -28,6 +28,7 @@ class NewsService {
     };
 
     console.log('categorySlugs', queryParameters.category)
+    console.log('req query', req.query)
 
     const selectedLanguage = await Language.findOne({slug: queryParameters.requestedLanguage}).lean();
 
