@@ -13,6 +13,8 @@ tags:
     description: Endpoints related to authentication
 
 paths:
+
+
   ## Auth
   /auth/add-first-admin:
     get:
@@ -4340,6 +4342,19 @@ paths:
       tags:
         - Social
 
+#Statistics
+  /api/statistics/counts:
+    get:
+      summary: Statistics
+      security:
+        - BearerAuth: [ ]
+      responses:
+        "200":
+          description: Statistics
+          content:
+            application/json:
+              schema:
+                 type: object
 
 #Components
 components:

@@ -3,7 +3,6 @@ const {getModelsHelper, getModelsTranslateHelper} = require("../../helpers/admin
 const Language = require("../../models/settings/language.model");
 const BaseError = require("../../errors/base.error");
 const {Model, TranslateModel} = require("../../common/constants/models.constants");
-
 const Category = require("../../models/data/category.model");
 
 class NewsService {
@@ -26,7 +25,7 @@ class NewsService {
       requestedLanguage: req.query?.language || defaultLanguage.slug,
       category: req.query.category ? JSON.parse(req.query?.category) : null,
     };
-    
+
 
     const selectedLanguage = await Language.findOne({slug: queryParameters.requestedLanguage}).lean();
 
@@ -73,7 +72,6 @@ class NewsService {
     }
     newsList = newsList.filter((item) => item.title);
     const total = await dynamicModel.countDocuments(filter);
-
     return {
       data: newsList,
       pagination: {
