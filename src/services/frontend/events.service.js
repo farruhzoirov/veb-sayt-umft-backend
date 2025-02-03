@@ -35,13 +35,13 @@ class EventsService {
       throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
     }
 
-    if (queryParameters.category && typeof (queryParameters.category) !== 'string' && !Array.isArray(queryParameters.category)) {
-      throw BaseError.BadRequest("EventsCategory must be string or an array");
+    if (queryParameters.category && !Array.isArray(queryParameters.category)) {
+      throw BaseError.BadRequest("EventsCategory must be  an array");
     }
 
     let eventsCategoryIds = [];
     if (queryParameters.eventsCategory) {
-      const eventsCategory = Array.isArray(queryParameters.eventsCategory) ? queryParameters.eventsCategory : [queryParameters.eventsCategory];
+      const eventsCategory = queryParameters.eventsCategory;
       eventsCategoryIds = await EventsCategory.find({slug: {$in: eventsCategory}}).distinct('_id').lean();
     }
     const filter = {status: 1};

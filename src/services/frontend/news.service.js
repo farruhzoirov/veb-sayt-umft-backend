@@ -38,9 +38,13 @@ class NewsService {
       throw BaseError.BadRequest("Category must be string or an array");
     }
 
+    if (queryParameters.category && !Array.isArray(queryParameters.category)) {
+      throw BaseError.BadRequest("Category must be  an array");
+    }
+
     let categoryIds = [];
     if (queryParameters.category) {
-      const categories = Array.isArray(queryParameters.category) ? queryParameters.category : [queryParameters.category];
+      const categories = queryParameters.category;
       categoryIds = await Category.find({slug: {$in: categories}}).distinct('_id').lean();
     }
     const filter = {status: 1};

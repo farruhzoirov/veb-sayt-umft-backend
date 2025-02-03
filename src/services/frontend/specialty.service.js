@@ -49,7 +49,7 @@ class SpecialtiesService {
       throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
     }
 
-    let programsList;
+    let specialtiesList;
 
     const query = {};
 
@@ -68,29 +68,29 @@ class SpecialtiesService {
       query["prices.format"] = format?._id;
     }
 
-    programsList = await Specialty.find(query).select(queryParameters.select).limit(queryParameters.limit).skip(queryParameters.skip).lean();
+    specialtiesList = await Specialty.find(query).select(queryParameters.select).limit(queryParameters.limit).skip(queryParameters.skip).lean();
 
-    if (programsList.length) {
-      programsList = await Promise.all(
-          programsList.map(async programItem => {
+    if (specialtiesList.length) {
+      specialtiesList = await Promise.all(
+          specialtiesList.map(async specialtyItem => {
             const translationData = await SpecialtyTranslate.findOne({
-              [this.Model.specialty.ref]: programItem._id,
+              [this.Model.specialty.ref]: specialtyItem._id,
               [this.Model.language.ref]: selectedLanguage._id
             }).select(queryParameters.selectFields ? queryParameters.selectFields : `-${this.Model.specialty.ref} -__v -language -updatedAt`).lean();
 
-            if (programItem.prices && Array.isArray(programItem.prices)) {
-              for (const price of programItem.prices) {
+            if (specialtyItem.prices && Array.isArray(specialtyItem.prices)) {
+              for (const price of specialtyItem.prices) {
                 if (price.format) {
                   price.format = await getPopulates('format', price.format, selectedLanguage);
                 }
               }
             }
-            return {...programItem, ...translationData || {}};
+            return {...specialtyItem, ...translationData || {}};
           })
       )
     }
 
-    programsList = programsList.filter((item) => item.name);
+    specialtiesList = specialtiesList.filter((item) => item.name);
     const total = await Specialty.countDocuments({status: 1});
 
     const paginationInfo = {
@@ -100,7 +100,7 @@ class SpecialtiesService {
       pages: Math.ceil(total / queryParameters.limit),
     };
 
-    return {data: programsList, pagination: paginationInfo};
+    return {data: specialtiesList, pagination: paginationInfo};
   }
 
 
@@ -131,6 +131,8 @@ class SpecialtiesService {
     // Level and topic based
     let findTopics = await Topic.find({[this.Model.specialty.ref]: findSpecialty._id}).lean();
 
+    console.log("topic")
+
     // Themes
     let findThemes = await Theme.find({[this.Model.topic.ref]: findTopics._id}).lean();
 
@@ -156,6 +158,7 @@ class SpecialtiesService {
 
     if (findEmployees.length) {
       console.log('employee')
+      console.log('employee', findEmployees);
       findEmployees = await this.getTranslatesAndPopulates(this.Model.employee.ref, findEmployees, TopicTranslate, selectedLanguage, '', []);
       await Promise.all(
           findEmployees.map(async employee => {

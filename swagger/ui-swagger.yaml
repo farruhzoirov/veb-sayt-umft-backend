@@ -732,8 +732,8 @@ paths:
 
       tags:
         - Degree
-  ## Programs
-  /front/programs:
+  ## Specialty
+  /front/specialty:
     get:
       summary: Getting specialties for frontend
       description: You can filter which you want.
@@ -780,9 +780,9 @@ paths:
                 type: object
 
       tags:
-        - Programs
+        - Specialty
 
-  /front/programs/{slug}:
+  /front/specialty/{slug}:
     get:
       summary: Getting specialty for frontend
       description: You can filter which you want.
@@ -798,4 +798,4 @@ paths:
                 type: object
 
       tags:
-        - Programs
+        - Specialty
