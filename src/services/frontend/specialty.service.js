@@ -127,14 +127,14 @@ class SpecialtiesService {
 
     // Employees
     let findEmployees = await Employee.find({[this.Model.department.ref]: findSpecialty.department}).lean();
-
+    console.log('employee', findEmployees)
     // Level and topic based
     let findTopics = await Topic.find({[this.Model.specialty.ref]: findSpecialty._id}).lean();
-
-    console.log("topic")
+    console.log("topic", findTopics)
 
     // Themes
     let findThemes = await Theme.find({[this.Model.topic.ref]: findTopics._id}).lean();
+    console.log("findThemes", findThemes)
 
     if (findSpecialty) {
       if (findSpecialty.prices && Array.isArray(findSpecialty.prices)) {
@@ -153,6 +153,7 @@ class SpecialtiesService {
     if (findTopics.length) {
       const populateOptions = this.Model.topic.populate || [];
       findTopics = await this.getTranslatesAndPopulates(this.Model.topic.ref, findTopics, TopicTranslate, selectedLanguage, '', populateOptions);
+      console.log('translate topic', findTopics)
       findSpecialty.topics = findTopics;
     }
 
@@ -160,6 +161,7 @@ class SpecialtiesService {
       console.log('employee')
       console.log('employee', findEmployees);
       findEmployees = await this.getTranslatesAndPopulates(this.Model.employee.ref, findEmployees, TopicTranslate, selectedLanguage, '', []);
+      console.log('translate employee', findEmployees);
       await Promise.all(
           findEmployees.map(async employee => {
             employee.messenger = await getPopulates("messenger", employee.messenger, selectedLanguage);
@@ -171,6 +173,7 @@ class SpecialtiesService {
     if (findThemes.length) {
       const populateOptions = this.Model.theme.populate || [];
       findThemes = await this.getTranslatesAndPopulates(this.Model.theme.ref, findEmployees, TopicTranslate, selectedLanguage, '', populateOptions);
+      console.log('translate theme', findThemes);
       findSpecialty.themes = findThemes;
     }
 
