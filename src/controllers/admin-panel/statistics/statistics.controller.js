@@ -15,6 +15,9 @@ const Partner = require('../../../models/data/partners.model');
 const Logger = require('../../../models/logger/logger.model');
 
 class StatisticController {
+  constructor() {
+    this.getUrlStatistics = this.getUrlStatistics.bind(this);
+  }
   async ModelCounts(req, res, next) {
     try {
       const languages = await Language.countDocuments() || 0;
