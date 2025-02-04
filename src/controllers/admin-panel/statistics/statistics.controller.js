@@ -59,7 +59,7 @@ class StatisticController {
       const logs = await Logger.aggregate([
         {
           $match: {
-            url: {regex: regex, $options: 'i'},
+            url: {$regex: regex, $options: 'i'},
           },
         }, {
         $group: {
