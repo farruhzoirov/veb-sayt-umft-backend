@@ -17,6 +17,7 @@ const Logger = require('../../../models/logger/logger.model');
 class StatisticController {
   constructor() {
     this.getUrlStatistics = this.getUrlStatistics.bind(this);
+    this.ModelCounts = this.ModelCounts.bind(this);
   }
   async ModelCounts(req, res, next) {
     try {
