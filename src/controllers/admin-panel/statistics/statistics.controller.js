@@ -21,7 +21,8 @@ class StatisticController {
 
   async viewCountsByMonth(req, res, next) {
     try {
-      const views = this.countsService.viewCountsByMonth();
+      const views = await this.countsService.viewCountsByMonth();
+      res.status(200).json(views);
     } catch (error) {
       next(error);
     }
