@@ -48,6 +48,7 @@ class StatisticController {
         applicants: applicants,
         degrees: degrees,
         partners: partners,
+        newsRequestCounts: newsRequestCounts
       });
     } catch (error) {
       next(error);
