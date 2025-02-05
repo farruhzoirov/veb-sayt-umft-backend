@@ -23,11 +23,12 @@ class StatisticController {
   async ModelCounts(req, res, next) {
     try {
       let statistics = {};
+      let requestedUrlCounts = {}
 
       for (const [key, model] of Object.entries(models)) {
         statistics[key] = await model.countDocuments() || 0;
       }
-
+      statistics.requestedUrlCounts = requestedUrlCounts;
       for (const key of Object.keys(models)) {
         const urlRegex = `/front/${key}/*`
         statistics.requestedUrlCounts[`${key}`] = await this.getUrlStatistics(urlRegex);
