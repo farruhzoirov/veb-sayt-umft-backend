@@ -26,7 +26,7 @@ const incrementViews = async (req, res, next) => {
 
       if (model && req.params?.slug) {
         const modelToUpdate = getModelsHelper(model);
-        const currentMonth = new Date().toISOString().slice(0, 7).replace('-', '');
+        const currentMonth = new Date().toISOString().slice(0, 10);
         await Promise.all([
           modelToUpdate.findOneAndUpdate(
               {
