@@ -35,7 +35,6 @@ class StatisticController {
 
       const newsRegex = "/front/news/*";
       const newsRequestCounts = await this.getUrlStatistics(newsRegex);
-      console.log(newsRequestCounts);
       res.status(200).json({
         languages: languages,
         categories: categories,
@@ -57,21 +56,23 @@ class StatisticController {
 
   async getUrlStatistics(regex) {
     try {
-      const logs = await Logger.aggregate([
-        {
-          $match: {
-            url: {$regex: regex, $options: 'i'},
-          },
-        }, {
-        $group: {
-          _id: "$url",
-          count: { $sum: 1 },
-        }
-        },
-        {
-          $sort: {count: -1}
-        }
-      ]);
+      // const logs = await Logger.aggregate([
+      //   {
+      //     $match: {
+      //       url: {$regex: regex, $options: 'i'},
+      //     },
+      //   }, {
+      //   $group: {
+      //     _id: "$url",
+      //     count: { $sum: 1 },
+      //   }
+      //   },
+      //   {
+      //     $sort: {count: -1}
+      //   }
+      // ]);
+
+      const logs = await Logger.countDocuments({url: {$regex: regex, $options: 'i'}})
       return logs;
     } catch (error) {
       console.log("Error getting url based statistics",error);
