@@ -37,7 +37,8 @@ class CountsService {
     const modelsGettingViewsByMonth = [Model.specialty.ref, Model.news.ref, Model.events.ref];
     let statistics = {}
     await Promise.all(modelsGettingViewsByMonth.map(async (model) => {
-        statistics[model] = await model.find().select('monthlyViews -__v -createdAt -updatedAt').lean()|| {};
+        const currentModel   = await getModelsHelper(model);
+        statistics[model] = await currentModel.find().select('monthlyViews -__v -createdAt -updatedAt').lean()|| {};
     }))
 
     return statistics;
