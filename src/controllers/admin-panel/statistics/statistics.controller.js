@@ -30,7 +30,7 @@ class StatisticController {
 
       for (const key of Object.keys(models)) {
         const urlRegex = `/front/${key}/*`
-        statistics[`${key}RequestCounts`] = await this.getUrlStatistics(urlRegex);
+        statistics['requestedUrlsCount'][`${key}`] = await this.getUrlStatistics(urlRegex);
       }
 
       res.status(200).json(statistics);
