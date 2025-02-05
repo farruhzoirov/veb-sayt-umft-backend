@@ -16,8 +16,7 @@ class UpdateUserService {
       })
     }
     const updateUser = {...req.body};
-    await User.findByIdAndUpdate(userId,
-        {$set: updateUser}, {new: true})
+    await User.findByIdAndUpdate(userId, {$set: updateUser}, {new: true})
     return res.status(201).send({
       data: updateUser
     })

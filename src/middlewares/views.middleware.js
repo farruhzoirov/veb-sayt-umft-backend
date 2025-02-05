@@ -26,10 +26,18 @@ const incrementViews = async (req, res, next) => {
 
       if (model && req.params?.slug) {
         const modelToUpdate = getModelsHelper(model);
+        const currentMonth = new Date().toISOString().slice(0, 7).replace('-', '');
         await Promise.all([
           modelToUpdate.findOneAndUpdate(
-              {slug: req.params.slug},
-              {$inc: {views: 1}},
+              {
+                slug: req.params.slug
+              },
+              {
+                $inc: {
+                  views: 1,
+                  [`monthlyViews.${currentMonth}`]: 1
+                }
+              },
               {new: true}
           ),
           Logger.create({

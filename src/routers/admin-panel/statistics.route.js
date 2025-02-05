@@ -5,6 +5,8 @@ const authMiddleware = require('../../middlewares/auth.middleware');
 
 const statisticController = new StatisticController();
 
-router.get('/counts', authMiddleware.universalAccessMiddleware,  statisticController.ModelCounts);
+router.get('/counts', authMiddleware.universalAccessMiddleware,  statisticController.modelAndUrlBasedCounts);
+
+router.get('/views-counts-by-month', authMiddleware.universalAccessMiddleware,  statisticController.viewCountsByMonth);
 
 module.exports = router;

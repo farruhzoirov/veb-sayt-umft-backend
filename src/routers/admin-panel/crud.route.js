@@ -32,7 +32,7 @@ router.post('/:model/upload', authMiddleware.universalAccessMiddleware, upload.f
 
 
 router.put('/:model/:id', authMiddleware.universalAccessMiddleware, validateModel, upload.fields([
-  {name: 'file', maxCount: 1},
+  {name: 'file', maxCount: 10},
 ]), crudController.updateModel);
 
 

@@ -4,6 +4,7 @@ const UserController = require('../../controllers/admin-panel/user/user.controll
 const authMiddleware = require('../../middlewares/auth.middleware');
 
 const userController = new UserController();
+
 router.get('/get-all', authMiddleware.adminMiddleware, userController.all);
 
 router.get('/:userId', authMiddleware.adminMiddleware, userController.get);
