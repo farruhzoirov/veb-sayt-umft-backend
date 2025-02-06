@@ -59,14 +59,16 @@ class CountsService {
       ]);
       console.log('model', model)
       console.log('result', result)
-      if (result) {
+      if (result.length) {
         result.forEach(({_id, totalViews}) => {
           const date = new Date(_id);
           const monthName = date.toLocaleDateString("default", {month: "long", year: "numeric"});
           monthlyViews[monthName] = (monthlyViews[monthName] || 0) + totalViews;
         });
+        statistics[model] = monthlyViews;
+      } else {
+        statistics[model] = {}
       }
-      statistics[model] = monthlyViews;
     }));
     return statistics;
   }
