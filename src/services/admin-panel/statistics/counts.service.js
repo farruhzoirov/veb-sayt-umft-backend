@@ -64,7 +64,7 @@ class CountsService {
       });
       statistics[model] = monthlyViews;
     }));
-    return monthlyViews;
+    return statistics;
   }
 
   async getUrlStatistics(regex) {
