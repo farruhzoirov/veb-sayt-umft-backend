@@ -14,6 +14,10 @@ const EventsSchema = new Schema({
     type: Number,
     default: 0
   },
+  monthlyViews: {
+    type: Object,
+    default: {}
+  },
   slug: {
     type: String,
   },

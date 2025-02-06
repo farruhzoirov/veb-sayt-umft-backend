@@ -59,6 +59,10 @@ const SpecialtySchema = new Schema({
     type: Number,
     default: 0
   },
+  monthlyViews: {
+    type: Object,
+    default: {}
+  },
   status: {
     type: Number,
     default: 1
