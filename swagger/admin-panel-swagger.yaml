@@ -4359,6 +4359,22 @@ paths:
       tags:
         - Statistics
 
+  /statistics/views-counts-by-month:
+    get:
+      summary: Views by month.
+      security:
+        - BearerAuth: [ ]
+      responses:
+        "200":
+          description: Statistics by month
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - Statistics
+
 #Components
 components:
   securitySchemes:
