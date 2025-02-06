@@ -63,7 +63,7 @@ class CountsService {
           // const date = new Date(_id);
           // const monthName = date.toLocaleDateString("default", {month: "long", year: "numeric"});
           monthlyViews['month'] = _id;
-          monthlyViews['month'] = (monthlyViews['month'] || 0) + totalViews;
+          monthlyViews['views'] = (monthlyViews['month'] || 0) + totalViews;
         });
         statistics[model] = [monthlyViews];
         monthlyViews = {};
