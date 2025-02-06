@@ -35,12 +35,11 @@ class CountsService {
 
   async viewCountsByMonth() {
     const modelsGettingViewsByMonth = [Model.specialty.ref, Model.news.ref, Model.events.ref];
-    let statistics = {}
-    const currentMonth = new Date().toISOString().slice(0, 10);
+    let monthlyViews = {}
 
     await Promise.all(modelsGettingViewsByMonth.map(async (model) => {
         const currentModel   = await getModelsHelper(model);
-        statistics[model] = await currentModel.aggregate([
+        const result = await currentModel.aggregate([
         {
           $project: {
             monthlyViews: { $objectToArray: "$monthlyViews" }
@@ -56,12 +55,14 @@ class CountsService {
         { $sort: { _id: 1 } }
       ]);
 
-      statistics[model].forEach(({ _id, totalViews }) => {
-        statistics[_id] = (statistics[_id] || 0) + totalViews;
+      result.forEach(({ _id, totalViews }) => {
+        const date = new Date(_id);
+        const monthName = date.toLocaleDateString("default", {month: "long", year: "numeric"});
+        monthlyViews[monthName] = (monthlyViews[monthName] || 0) + totalViews;
       });
     }))
 
-    return statistics;
+    return monthlyViews;
   }
 
   async getUrlStatistics(regex) {
