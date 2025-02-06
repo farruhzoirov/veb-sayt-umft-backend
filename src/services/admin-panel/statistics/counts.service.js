@@ -36,9 +36,29 @@ class CountsService {
   async viewCountsByMonth() {
     const modelsGettingViewsByMonth = [Model.specialty.ref, Model.news.ref, Model.events.ref];
     let statistics = {}
+    const currentMonth = new Date().toISOString().slice(0, 10);
+
     await Promise.all(modelsGettingViewsByMonth.map(async (model) => {
         const currentModel   = await getModelsHelper(model);
-        statistics[model] = await currentModel.find().select('monthlyViews').lean()|| {};
+        statistics[model] = await currentModel.aggregate([
+        {
+          $project: {
+            monthlyViews: { $objectToArray: "$monthlyViews" }
+          }
+        },
+        { $unwind: "$monthlyViews" },
+        {
+          $group: {
+            _id: "$monthlyViews.k",
+            totalViews: { $sum: "$monthlyViews.v" }
+          }
+        },
+        { $sort: { _id: 1 } }
+      ]);
+
+      statistics[model].forEach(({ _id, totalViews }) => {
+        statistics[_id] = (statistics[_id] || 0) + totalViews;
+      });
     }))
 
     return statistics;
