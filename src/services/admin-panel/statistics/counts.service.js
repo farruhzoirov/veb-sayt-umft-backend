@@ -57,11 +57,15 @@ class CountsService {
         },
         {$sort: {_id: 1}}
       ]);
-      result.forEach(({_id, totalViews}) => {
-        const date = new Date(_id);
-        const monthName = date.toLocaleDateString("default", {month: "long", year: "numeric"});
-        monthlyViews[monthName] = (monthlyViews[monthName] || 0) + totalViews;
-      });
+      console.log('model', model)
+      console.log('result', result)
+      if (result) {
+        result.forEach(({_id, totalViews}) => {
+          const date = new Date(_id);
+          const monthName = date.toLocaleDateString("default", {month: "long", year: "numeric"});
+          monthlyViews[monthName] = (monthlyViews[monthName] || 0) + totalViews;
+        });
+      }
       statistics[model] = monthlyViews;
     }));
     return statistics;
