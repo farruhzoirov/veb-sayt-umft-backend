@@ -36,6 +36,7 @@ class CountsService {
   async viewCountsByMonth() {
     const modelsGettingViewsByMonth = [Model.specialty.ref, Model.news.ref, Model.events.ref];
     let monthlyViews = {}
+    let statistics = {}
 
     await Promise.all(modelsGettingViewsByMonth.map(async (model) => {
       const currentModel = await getModelsHelper(model);
@@ -61,7 +62,7 @@ class CountsService {
         const monthName = date.toLocaleDateString("default", {month: "long", year: "numeric"});
         monthlyViews[monthName] = (monthlyViews[monthName] || 0) + totalViews;
       });
-      monthlyViews[model] = monthlyViews;
+      statistics[model] = monthlyViews;
     }));
     return monthlyViews;
   }
