@@ -38,30 +38,31 @@ class CountsService {
     let monthlyViews = {}
 
     await Promise.all(modelsGettingViewsByMonth.map(async (model) => {
-        const currentModel   = await getModelsHelper(model);
-        const result = await currentModel.aggregate([
+      const currentModel = await getModelsHelper(model);
+      const result = await currentModel.aggregate([
         {
           $project: {
-            monthlyViews: { $objectToArray: "$monthlyViews" }
+            monthlyViews: {$objectToArray: "$monthlyViews"}
           }
         },
-        { $unwind: "$monthlyViews" },
+        {
+          $unwind: "$monthlyViews"
+        },
         {
           $group: {
             _id: "$monthlyViews.k",
-            totalViews: { $sum: "$monthlyViews.v" }
+            totalViews: {$sum: "$monthlyViews.v"}
           }
         },
-        { $sort: { _id: 1 } }
+        {$sort: {_id: 1}}
       ]);
-
-      result.forEach(({ _id, totalViews }) => {
+      result.forEach(({_id, totalViews}) => {
         const date = new Date(_id);
         const monthName = date.toLocaleDateString("default", {month: "long", year: "numeric"});
         monthlyViews[monthName] = (monthlyViews[monthName] || 0) + totalViews;
       });
-    }))
-
+      monthlyViews[currentModel] = monthlyViews;
+    }));
     return monthlyViews;
   }
 
@@ -74,7 +75,6 @@ class CountsService {
     }
   }
 }
-
 
 
 module.exports = CountsService;
