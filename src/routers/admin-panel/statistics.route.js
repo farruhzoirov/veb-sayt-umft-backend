@@ -7,6 +7,6 @@ const statisticController = new StatisticController();
 
 router.get('/counts', authMiddleware.universalAccessMiddleware,  statisticController.modelAndUrlBasedCounts);
 
-router.get('/views-counts-by-month',  authMiddleware.universalAccessMiddleware, statisticController.viewCountsByMonth);
+router.get('/views-counts-by-month',  statisticController.viewCountsByMonth);
 
 module.exports = router;
