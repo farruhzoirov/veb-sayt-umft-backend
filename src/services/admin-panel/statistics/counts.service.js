@@ -57,6 +57,7 @@ class CountsService {
         },
         {$sort: {_id: 1}}
       ]);
+      console.log('result', result);
       if (result.length) {
         result.forEach(({_id, totalViews}) => {
           const date = new Date(_id);
