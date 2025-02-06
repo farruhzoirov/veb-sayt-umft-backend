@@ -65,6 +65,7 @@ class CountsService {
           monthlyViews[monthName] = (monthlyViews[monthName] || 0) + totalViews;
         });
         statistics[model] = monthlyViews;
+        console.log('statistic', statistics[model])
       } else {
         statistics[model] = {}
       }
