@@ -72,8 +72,11 @@ class CountsService {
         {
           $group: {
             _id: null,
-            viewsArray: {
-              $push: "$monthlyViews.v"
+            views: {
+              $push: {
+                date: "$monthlyViews.k",
+                views: "$monthlyViews.v"
+              }
             }
           }
         },
@@ -85,14 +88,9 @@ class CountsService {
         }
       ]);
 
-      // Har bir model uchun viewsArray ni olish
-      const viewsArray = result[0]?.viewsArray || Array(31).fill(0);
-
-      // Model nomini olish
       const modelName = modelRef.toLowerCase().replace('model', '');
 
-      // Statistikaga qo'shish
-      statistics[modelName] = viewsArray;
+      statistics[modelName] = result[0]?.views || [];
     }));
 
     return statistics;
