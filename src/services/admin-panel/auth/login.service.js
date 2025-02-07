@@ -21,7 +21,7 @@ class LoginService {
       const {name, role} = user
       const token = jwt.sign({id: user._id, role: user.role}, config.JWT_SECRET_KEY,
           {
-            expiresIn: "1d"
+            expiresIn: "1d",
           })
       res.status(200).json({
         token,

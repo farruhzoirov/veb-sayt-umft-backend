@@ -4359,11 +4359,15 @@ paths:
       tags:
         - Statistics
 
-  /statistics/views-counts-by-month:
+  /statistics/views-counts:
     get:
       summary: Views by month.
       security:
         - BearerAuth: [ ]
+      parameters:
+        - in: query
+          name: month
+          description: month must be like that 2025-02 YYYY-MM
       responses:
         "200":
           description: Statistics by month
@@ -4371,7 +4375,6 @@ paths:
             application/json:
               schema:
                 type: object
-
       tags:
         - Statistics
 

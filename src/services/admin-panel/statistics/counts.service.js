@@ -37,9 +37,14 @@ class CountsService {
   async viewCountsByMonth(req) {
     const modelsGettingViewsByMonth = [Model.specialty.ref, Model.news.ref, Model.events.ref];
     let month = req.query?.month;
+    const monthRegex = /^\d{4}-(0[1-9]|1[0-2])$/;
 
     if (!month) {
       throw BaseError.BadRequest("Month parameter is required in YYYY-MM format");
+    }
+
+    if (!monthRegex.test(month)) {
+      throw BaseError.BadRequest("Invalid month format. Use YYYY-MM format (e.g., 2025-02)");
     }
 
     const startDate = `${month}-01`;
@@ -49,7 +54,6 @@ class CountsService {
 
     await Promise.all(modelsGettingViewsByMonth.map(async (modelRef) => {
       const currentModel = getModelsHelper(modelRef);
-
       const result = await currentModel.aggregate([
         {
           $project: {
