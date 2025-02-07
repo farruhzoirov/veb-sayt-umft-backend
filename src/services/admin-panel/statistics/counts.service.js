@@ -1,6 +1,7 @@
 const Logger = require("../../../models/logger/logger.model");
 const {Model} = require("../../../common/constants/models.constants");
 const {getModelsHelper} = require("../../../helpers/admin-panel/get-models.helper");
+const BaseError = require("../../../errors/base.error");
 
 const models = {
   news: require('../../../models/data/news.model'),
@@ -33,44 +34,67 @@ class CountsService {
     return statistics;
   }
 
-  async viewCountsByMonth() {
+  async viewCountsByMonth(req) {
     const modelsGettingViewsByMonth = [Model.specialty.ref, Model.news.ref, Model.events.ref];
-    let monthlyViews = {}
-    let statistics = {}
+    let month = req.query?.month;
 
-    await Promise.all(modelsGettingViewsByMonth.map(async (model) => {
-      const currentModel = await getModelsHelper(model);
+    if (!month) {
+      throw BaseError.BadRequest("Month parameter is required in YYYY-MM format");
+    }
+
+    const startDate = `${month}-01`;
+    const endDate = `${month}-31`;
+
+    let statistics = {};
+
+    await Promise.all(modelsGettingViewsByMonth.map(async (modelRef) => {
+      const currentModel = getModelsHelper(modelRef);
+
       const result = await currentModel.aggregate([
         {
           $project: {
-            monthlyViews: {$objectToArray: "$monthlyViews"}
+            monthlyViews: {
+              $objectToArray: "$monthlyViews"
+            }
           }
         },
         {
           $unwind: "$monthlyViews"
         },
         {
-          $group: {
-            _id: "$monthlyViews.k",
-            totalViews: {$sum: "$monthlyViews.v"}
+          $match: {
+            "monthlyViews.k": {
+              $gte: startDate,
+              $lte: endDate
+            }
           }
         },
-        {$sort: {_id: 1}}
+        {
+          $group: {
+            _id: null,
+            viewsArray: {
+              $push: "$monthlyViews.v"
+            }
+          }
+        },
+        {
+          $project: {
+            _id: 0,
+            viewsArray: 1
+          }
+        }
       ]);
 
-      if (result.length) {
-        result.forEach(({_id, totalViews}) => {
-          // const date = new Date(_id);
-          // const monthName = date.toLocaleDateString("default", {month: "long", year: "numeric"});
-          monthlyViews['month'] = _id;
-          monthlyViews['views'] =totalViews;
-        });
-        statistics[model] = [monthlyViews];
-        monthlyViews = {};
-      } else {
-        statistics[model] = {}
-      }
+      // Har bir model uchun viewsArray ni olish
+      const viewsArray = result[0]?.viewsArray || Array(31).fill(0);
+
+      // Model nomini olish
+      const modelName = modelRef.toLowerCase().replace('model', '');
+
+      // Statistikaga qo'shish
+      statistics[modelName] = viewsArray;
     }));
+
     return statistics;
   }
 
