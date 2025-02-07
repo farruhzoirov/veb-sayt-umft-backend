@@ -83,7 +83,7 @@ class CountsService {
         {
           $project: {
             _id: 0,
-            viewsArray: 1
+            views: 1
           }
         }
       ]);
