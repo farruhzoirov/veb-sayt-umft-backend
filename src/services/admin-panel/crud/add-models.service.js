@@ -103,6 +103,7 @@ class AddModelsService {
       }
     }
 
+    
     if (Array.isArray(img) && img.length) {
       for (const imgPath of img) {
         if (!fs.existsSync(imgPath)) {
