@@ -17,7 +17,7 @@ paths:
       summary: Getting category for frontend
       description: You can filter which you want.
       parameters:
-        - in: path
+        - in: query
           name: language
         - in: query
           name: limit
@@ -128,7 +128,7 @@ paths:
       summary: Getting partners for frontend
       description: You can filter which you want.
       parameters:
-        - in: path
+        - in: query
           name: language
         - in: query
           name: limit
@@ -180,7 +180,7 @@ paths:
       summary: Getting socials for frontend
       description: You can filter which you want.
       parameters:
-        - in: path
+        - in: query
           name: language
         - in: query
           name: limit
@@ -300,7 +300,7 @@ paths:
       summary: Getting events for frontend
       description: You can filter which you want.
       parameters:
-        - in: path
+        - in: query
           name: language
         - in: query
           name: limit
@@ -360,7 +360,7 @@ paths:
       summary: Getting eventsCategory for frontend
       description: You can filter which you want.
       parameters:
-        - in: path
+        - in: query
           name: language
         - in: query
           name: limit
@@ -412,7 +412,7 @@ paths:
       summary: Getting licence for frontend
       description: You can filter which you want.
       parameters:
-        - in: path
+        - in: query
           name: language
         - in: query
           name: limit
@@ -464,7 +464,7 @@ paths:
       summary: Getting employee for frontend
       description: You can filter which you want.
       parameters:
-        - in: path
+        - in: query
           name: language
         - in: query
           name: limit
@@ -583,7 +583,7 @@ paths:
       summary: Getting format for frontend
       description: You can filter which you want.
       parameters:
-        - in: path
+        - in: query
           name: language
         - in: query
           name: limit
@@ -635,7 +635,7 @@ paths:
       summary: Getting department for frontend
       description: You can filter which you want.
       parameters:
-        - in: path
+        - in: query
           name: language
         - in: query
           name: limit
@@ -687,7 +687,7 @@ paths:
       summary: Getting degree for frontend
       description: You can filter which you want.
       parameters:
-        - in: path
+        - in: query
           name: language
         - in: query
           name: limit
@@ -732,13 +732,15 @@ paths:
 
       tags:
         - Degree
+
+
   ## Specialty
   /front/specialty:
     get:
       summary: Getting specialties for frontend
       description: You can filter which you want.
       parameters:
-        - in: path
+        - in: query
           name: language
         - in: query
           name: limit
@@ -799,3 +801,59 @@ paths:
 
       tags:
         - Specialty
+
+
+  ## Page
+  /front/page:
+    get:
+      summary: Getting page based data for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: query
+          name: language
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+
+      responses:
+        "200": # status code
+          description: Getting matches page based data for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - Page
+
+  /front/page/{slug}:
+    get:
+      summary: Getting page based data for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: query
+          name: language
+        - in: path
+          name: slug
+      responses:
+        "200": # status code
+          description: Getting page based data for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - Page
