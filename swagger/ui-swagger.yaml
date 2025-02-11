@@ -481,6 +481,14 @@ paths:
           schema:
             type: string
           required: false
+        - in: query
+          name: stuffPosition
+          description:
+            Kafedra mudirlari uchun - 16,
+            Bo'lim boshliqlari - 17,
+            Rektor - 20,
+            Ilmiy Prorektor - 233,
+            Xalqaro hamkorlik bo'yicha prorektor - 32,
       responses:
         "200": # status code
           description: Getting matches modelData for frontend
@@ -497,6 +505,8 @@ paths:
       summary: Getting employee for frontend
       description: You can filter which you want.
       parameters:
+        - in: query
+          name: language
         - in: path
           name: slug
       responses:
@@ -616,6 +626,8 @@ paths:
       summary: Getting format for frontend
       description: You can filter which you want.
       parameters:
+        - in: query
+          name: language
         - in: path
           name: slug
       responses:
@@ -668,6 +680,8 @@ paths:
       summary: Getting department for frontend
       description: You can filter which you want.
       parameters:
+        - in: query
+          name: language
         - in: path
           name: slug
       responses:
@@ -720,6 +734,8 @@ paths:
       summary: Getting degree for frontend
       description: You can filter which you want.
       parameters:
+        - in: query
+          name: language
         - in: path
           name: slug
       responses:
@@ -789,6 +805,8 @@ paths:
       summary: Getting specialty for frontend
       description: You can filter which you want.
       parameters:
+        - in: query
+          name: language
         - in: path
           name: slug
       responses:
