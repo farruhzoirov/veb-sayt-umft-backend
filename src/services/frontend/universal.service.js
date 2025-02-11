@@ -121,7 +121,7 @@ class UniversalService {
       throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
     }
 
-    const findDynamicModelBySlug = await dynamicModel.findOne({slug: queryParameters.slug}).lean();
+    const findDynamicModelBySlug = await dynamicModel.findOne({status: 1, slug: queryParameters.slug}).lean();
 
     if (!findDynamicModelBySlug) {
       return []

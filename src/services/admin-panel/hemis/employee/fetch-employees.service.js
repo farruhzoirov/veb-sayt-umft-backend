@@ -9,6 +9,7 @@ const Language = require("../../../../models/settings/language.model");
 
 
 const generateUniqueSlug = require("../../../../helpers/admin-panel/unique-slug.helper");
+const camelizeStr = require("../../../../helpers/admin-panel/camelize.helper");
 
 class FetchEmployeesService {
   async fetchEmployees() {
@@ -67,9 +68,9 @@ class FetchEmployeesService {
       }).save();
 
       await new EmployeeTranslate({
-        firstName: employee.first_name,
-        lastName: employee.second_name,
-        surName: employee.third_name,
+        firstName: camelizeStr(employee.first_name),
+        lastName: camelizeStr(employee.second_name),
+        surName: camelizeStr(employee.third_name),
         receptionTime: '',
         text: '',
         gender: employee.gender,
@@ -124,9 +125,9 @@ class FetchEmployeesService {
           if (existingTranslate) {
             await existingTranslate.updateOne({
               $set: {
-                firstName: employee.first_name,
-                lastName: employee.second_name,
-                surName: employee.third_name,
+                firstName: camelizeStr(employee.first_name),
+                lastName: camelizeStr(employee.second_name),
+                surName: camelizeStr(employee.third_name),
                 receptionTime: '',
                 text: '',
                 gender: employee.gender,
@@ -161,9 +162,9 @@ class FetchEmployeesService {
         }).save();
 
         await new EmployeeTranslate({
-          firstName: employee.first_name,
-          lastName: employee.second_name,
-          surName: employee.third_name,
+          firstName: camelizeStr(employee.first_name),
+          lastName: camelizeStr(employee.second_name),
+          surName: camelizeStr(employee.third_name),
           receptionTime: '',
           text: '',
           gender: employee.gender,

@@ -4,8 +4,9 @@ class EmployeeController {
   constructor() {
     this.employeesService = new EmployeesService();
 
-
+    // Bind
     this.getEmployeesForFront = this.getEmployeesForFront.bind(this);
+    this.getOneEmployeeForFront = this.getOneEmployeeForFront.bind(this);
   }
 
   async getEmployeesForFront(req, res, next) {
@@ -15,6 +16,10 @@ class EmployeeController {
     } catch (error) {
       next(error);
     }
+  }
+
+  async getOneEmployeeForFront(req, res, next) {
+
   }
 }
 
