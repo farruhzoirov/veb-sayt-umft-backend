@@ -124,17 +124,24 @@ class UniversalService {
     const findDynamicModelBySlug = await dynamicModel.findOne({slug: queryParameters.slug}).lean();
 
     if (!findDynamicModelBySlug) {
-     return []
+      return []
     }
 
     if (this.Model[currentModel].translate) {
       const translateModelName = this.TranslateModel[currentModel].ref;
       const dynamicTranslateModel = getModelsTranslateHelper(translateModelName);
 
-      const oneDynamicModelTranslate = await dynamicTranslateModel.findOne({
+      let oneDynamicModelTranslate = await dynamicTranslateModel.findOne({
         [this.Model[currentModel].ref]: findDynamicModelBySlug._id,
         [this.Model.language.ref]: findLanguageBySlug._id
       }).select(queryParameters.select ? queryParameters.select : `-${currentModel} -__v -language`).lean();
+
+      if (!oneDynamicModelTranslate) {
+        oneDynamicModelTranslate = await dynamicTranslateModel.findOne({
+          [this.Model[currentModel].ref]: findDynamicModelBySlug._id,
+          [this.Model.language.ref]: defaultLanguage._id
+        }).select(queryParameters.select ? queryParameters.select : `-${currentModel} -__v -language`).lean();
+      }
 
       return {...findDynamicModelBySlug, ...oneDynamicModelTranslate || {}};
     }
