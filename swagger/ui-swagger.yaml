@@ -1,7 +1,12 @@
 openapi: 3.1.0
 info:
   title: NEW UMFT SITE FRONTEND API
-  description: GREAT PROJECT
+  description: Staff position codelari 
+    Kafedra mudirlari uchun - 16,
+    Bo'lim boshliqlari - 17,
+    Rektor - 20,
+    Ilmiy Prorektor - 233,
+    Xalqaro hamkorlik bo'yicha prorektor - 32
   version: 1.0.0
 servers:
   - url: http://95.130.227.52:4131
@@ -483,12 +488,7 @@ paths:
           required: false
         - in: query
           name: stuffPosition
-          description:
-            Kafedra mudirlari uchun - 16,
-            Bo'lim boshliqlari - 17,
-            Rektor - 20,
-            Ilmiy Prorektor - 233,
-            Xalqaro hamkorlik bo'yicha prorektor - 32,
+
       responses:
         "200": # status code
           description: Getting matches modelData for frontend
