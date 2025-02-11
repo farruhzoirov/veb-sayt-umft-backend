@@ -40,9 +40,13 @@ class SocialService {
       messengerIds = await Messenger.find({slug: {$in: messengersSlug}}).distinct("_id").lean();
     }
     const filter = {status: 1};
-    if (messengerIds.length) {
-      filter.messenger = {$in:messengerIds};
+
+    if (!messengerIds.length) {
+      return [];
     }
+
+    filter.messenger = {$in:messengerIds};
+
 
     let socials = await Social.find(filter).select("-__v -updatedAt").lean();
 

@@ -7,6 +7,7 @@ const Language = require("../../models/settings/language.model");
 class EmployeeService {
   async getEmployeesForFront(req) {
     const defaultLanguage = await getDefaultLanguageHelper();
+
     const queryParameters = {
       staffPosition: req.query?.staffPosition,
       requestedLanguage: req.query?.language || defaultLanguage.slug
@@ -35,6 +36,8 @@ class EmployeeService {
       }
     }).lean();
 
+    console.log(findEmployeesByStaffPosition)
+
     if (!findEmployeesByStaffPosition.length) {
       return []
     }
@@ -47,3 +50,6 @@ class EmployeeService {
 
   }
 }
+
+
+module.exports = EmployeeService;

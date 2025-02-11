@@ -35,7 +35,6 @@ class EventsService {
       throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
     }
 
-
     let eventsCategoryIds = [];
     if (queryParameters.eventsCategory) {
       const eventsCategory = queryParameters.eventsCategory;
@@ -43,9 +42,11 @@ class EventsService {
     }
     const filter = {status: 1};
 
-    if (eventsCategoryIds.length) {
-      filter.eventsCategory = {$in: eventsCategoryIds};
+    if (!eventsCategoryIds.length) {
+      return [];
     }
+
+    filter.eventsCategory = {$in: eventsCategoryIds};
 
     eventsList = await dynamicModel
         .find(filter)
