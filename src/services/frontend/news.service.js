@@ -45,11 +45,9 @@ class NewsService {
     }
     const filter = {status: 1};
 
-    if (!categoryIds.length) {
-      return []
+    if (categoryIds.length) {
+      filter.category = {$in: categoryIds};
     }
-
-    filter.category = {$in: categoryIds};
 
     newsList = await dynamicModel
         .find(filter)

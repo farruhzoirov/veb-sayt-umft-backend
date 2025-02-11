@@ -42,11 +42,9 @@ class EventsService {
     }
     const filter = {status: 1};
 
-    if (!eventsCategoryIds.length) {
-      return [];
+    if (eventsCategoryIds.length) {
+      filter.eventsCategory = {$in: eventsCategoryIds};
     }
-
-    filter.eventsCategory = {$in: eventsCategoryIds};
 
     eventsList = await dynamicModel
         .find(filter)
