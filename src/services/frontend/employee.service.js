@@ -41,6 +41,8 @@ class EmployeeService {
     if (!findEmployeesByStaffPosition.length) {
       return []
     }
+
+    return findEmployeesByStaffPosition;
     // const employeeId = await findEmployeesByStaffPosition.distinct('employee');
     // const getEmployees = await Employee.find({_id: {$in:employeeId}}).lean();
 
