@@ -36,8 +36,6 @@ class EmployeeService {
       }
     }).lean();
 
-    console.log(findEmployeesByStaffPosition)
-
     if (!findEmployeesByStaffPosition.length) {
       return []
     }

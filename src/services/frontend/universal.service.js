@@ -113,18 +113,18 @@ class UniversalService {
       throw BaseError.BadRequest('Slug is required');
     }
 
-    const findDynamicModelBySlug = await dynamicModel.findOne({slug: queryParameters.slug}).lean();
-
-    if (!findDynamicModelBySlug) {
-      throw BaseError.NotFound('News not found');
-    }
-
     const findLanguageBySlug = await Language.findOne({
       slug: queryParameters.language
     }).lean();
 
     if (!findDynamicModelBySlug) {
       throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
+    }
+
+    const findDynamicModelBySlug = await dynamicModel.findOne({slug: queryParameters.slug}).lean();
+
+    if (!findDynamicModelBySlug) {
+      []
     }
 
     if (this.Model[currentModel].translate) {
