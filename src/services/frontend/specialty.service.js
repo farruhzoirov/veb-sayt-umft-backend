@@ -68,7 +68,7 @@ class SpecialtiesService {
       query["prices.format"] = format?._id;
     }
 
-    specialtiesList = await Specialty.find(query).select(queryParameters.select).limit(queryParameters.limit).skip(queryParameters.skip).lean();
+    specialtiesList = await Specialty.find(query).select(queryParameters.select ? queryParameters.select : "-monthlyViews -__v -updatedAt").limit(queryParameters.limit).skip(queryParameters.skip).lean();
 
     if (specialtiesList.length) {
       specialtiesList = await Promise.all(

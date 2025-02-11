@@ -54,6 +54,7 @@ class NewsService {
         .sort({_id: -1})
         .limit(queryParameters.limit)
         .skip(queryParameters.skip)
+        .select('-monthlyViews -__v')
         .lean()
 
     if (this.Model[currentModel].translate) {

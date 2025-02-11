@@ -49,9 +49,9 @@ class EventsService {
     eventsList = await dynamicModel
         .find(filter)
         .sort({_id: -1})
-        .select(queryParameters.selectFields ? queryParameters.selectFields : `-__v  -updatedAt -active -status`)
         .skip(queryParameters.skip)
         .limit(queryParameters.limit)
+        .select(queryParameters.selectFields ? queryParameters.selectFields : `-__v  -updatedAt -active -status -monthlyViews`)
         .lean();
 
     if (this.Model[currentModel].translate) {
