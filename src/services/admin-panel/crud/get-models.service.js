@@ -26,6 +26,8 @@ class GetModelsService {
     let search = req.query?.search;
     let department = req.query?.department;
 
+    console.log(department);
+
     const skip = (page - 1) * limit;
 
     const query = buildQuery(modelName, search);
