@@ -56,7 +56,7 @@ class GetModelsService {
     }
 
     const modelDatas = await dynamicModel
-        .find(department)
+        .find(filter)
         .select(select.toString() + "-updatedAt -__v")
         .skip(skip)
         .limit(limit)
