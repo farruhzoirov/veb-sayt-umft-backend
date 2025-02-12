@@ -93,7 +93,7 @@ class GetModelsService {
         })
     );
 
-    const count = await dynamicModel.countDocuments();
+    const count = dynamicModel.countDocuments(filter);
     return res.json({
       data: populatedData,
       count,
