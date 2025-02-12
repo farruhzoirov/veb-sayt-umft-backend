@@ -19,11 +19,12 @@ class GetModelsService {
   async getAll(req, res, modelName) {
     const dynamicModel = getModelsHelper(modelName);
 
-    let page = req.query.page || 1;
-    let limit = req.query.limit || null;
-    let select = req.query.select || [];
-    let sort = req.query.sort ? JSON.parse(req.query.sort) : {_id: -1};
-    let search = req.query.search;
+    let page = req.query?.page || 1;
+    let limit = req.query?.limit || null;
+    let select = req.query?.select || [];
+    let sort = req.query?.sort ? JSON.parse(req.query?.sort) : {_id: -1};
+    let search = req.query?.search;
+    let department = req.query?.department;
 
     const skip = (page - 1) * limit;
 
@@ -31,20 +32,29 @@ class GetModelsService {
     const populateOptions = this.Model[modelName].populate || [];
 
     if (this.Model[modelName].translate) {
-      return this.getAllWithTranslate(modelName, page, query, select, skip, limit, sort, populateOptions, res);
+      return this.getAllWithTranslate(modelName, page, query, select, skip, limit, sort, populateOptions, res, department);
     } else {
       return this.getAllWithoutTranslate(dynamicModel, page, query, select, skip, limit, sort, populateOptions, res);
     }
   }
 
-  async getAllWithTranslate(modelName, page, query, select, skip, limit, sort, populateOptions, res) {
+  async getAllWithTranslate(modelName, page, query, select, skip, limit, sort, populateOptions, res, department) {
     const translateModel = this.TranslateModel[modelName].ref;
     const dynamicTranslateModel = getModelsTranslateHelper(translateModel);
     const dynamicModel = getModelsHelper(modelName);
 
     const matchingIds = await dynamicTranslateModel.distinct(modelName, query);
+
+    const filter = {
+      _id: {$in: matchingIds}
+    }
+
+    if (department) {
+      filter.department = department;
+    }
+
     const modelDatas = await dynamicModel
-        .find({_id: {$in: matchingIds}})
+        .find(department)
         .select(select.toString() + "-updatedAt -__v")
         .skip(skip)
         .limit(limit)
