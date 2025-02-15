@@ -1,4 +1,4 @@
-// Universal crud bilan ishlash uchun va mongodbdan mos modellarni, populatelarni olish uchun kerakli ikkita obyektlar
+// Universal crud bilan ishlash uchun va mongodbdan mos modellarni, populatelarni olish uchun kerakli ikkita obyekt.
 
 const Model = {
   university: {ref: "university", translate: true},
@@ -23,7 +23,13 @@ const Model = {
   language: {ref: "language", translate: false},
   contacts: {ref: "contacts", translate: false},
   licence: {ref: "licence", translate: false},
-  social: {ref: "social", translate: true, populate: ["messenger"]}
+  social: {ref: "social", translate: true, populate: ["messenger"]},
+
+  // Album based
+  photoAlbum: {ref: "photoAlbum", translate: true, populate: ["photoAlbumCategory"]},
+  videoAlbum: {ref: "videoAlbum", translate: true, populate: ["videoAlbumCategory"]},
+  photoAlbumCategory: {ref: "photoAlbumCategory", translate: true},
+  videoAlbumCategory: {ref: "videoAlbumCategory", translate: true},
 };
 
 const TranslateModel = {
@@ -43,9 +49,14 @@ const TranslateModel = {
   theme: {ref: "themeTranslate"},
   messenger: {ref: "messengerTranslate"},
   user: {ref: "userTranslate"},
-  social: {ref: "socialTranslate"}
-};
+  social: {ref: "socialTranslate"},
 
+  // Album translate based
+  photoAlbum: {ref: "photoAlbumTranslate"},
+  videoAlbum: {ref: "videoAlbumTranslate"},
+  photoAlbumCategory: {ref: "photoAlbumCategoryTranslate"},
+  videoAlbumCategory: {ref: "videoAlbumCategoryTranslate"},
+};
 
 module.exports = {
   Model: Model,

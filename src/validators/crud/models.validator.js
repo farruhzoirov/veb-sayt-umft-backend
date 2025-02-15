@@ -17,7 +17,7 @@ const validateModel = async (req, res, next) => {
     if (!schema) {
       return res.status(400).json({
         ok: false,
-        message: `Schema not found for model: ${model}`,
+        message: `Validator Schema not found for model: ${model}`,
       });
     }
     // 3. Validate request body is present

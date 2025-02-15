@@ -19,7 +19,6 @@ const pageTranslateSchema = require("../../models/translate/page.model");
 const partnerSchema = require("../../models/data/partners.model");
 const partnerTranslateSchema = require("../../models/translate/partners.model");
 
-
 const userSchema = require("../../models/user/user.model");
 
 const languageSchema = require("../../models/settings/language.model");
@@ -60,6 +59,19 @@ const licenceSchema = require("../../models/data/licence.model");
 
 const socialSchema = require("../../models/socials/socials.model");
 const socialTranslateSchema = require("../../models/translate/socials.model");
+
+
+// Album based
+const photoAlbumSchema = require("../../models/data/photo-album.model");
+const photoAlbumTranslateSchema = require("../../models/translate/photo-album.model");
+
+const videoAlbumSchema = require("../../models/data/video-album.model");
+const videoAlbumTranslateSchema = require("../../models/translate/video-album.model");
+
+const photoAlbumCategorySchema = require('../../models/data/photo-album-category.model');
+const photoAlbumCategoryTranslateSchema = require('../../models/translate/photo-album-category.model');
+const videoAlbumCategorySchema = require('../../models/data/video-album-category.model');
+const videoAlbumCategoryTranslateSchema = require('../../models/translate/video-album-category.model');
 
 const {
   Model,
@@ -112,6 +124,14 @@ function getModelsHelper(modelKey) {
       return licenceSchema;
     case Model.social.ref:
       return socialSchema;
+    case Model.photoAlbum.ref:
+      return photoAlbumSchema;
+    case Model.videoAlbum.ref:
+      return videoAlbumSchema;
+    case Model.photoAlbumCategory.ref:
+      return photoAlbumCategorySchema;
+    case Model.videoAlbumCategory.ref:
+      return videoAlbumCategorySchema;
     default:
       throw new Error(`Model "${modelKey}" not found.`);
   }
@@ -151,6 +171,14 @@ function getModelsTranslateHelper(modelKey) {
       return employeeTranslateSchema;
     case TranslateModel.social.ref:
       return socialTranslateSchema
+    case TranslateModel.photoAlbum.ref:
+      return photoAlbumTranslateSchema;
+    case TranslateModel.videoAlbum.ref:
+      return videoAlbumTranslateSchema;
+    case TranslateModel.photoAlbumCategory.ref:
+      return photoAlbumCategoryTranslateSchema;
+    case TranslateModel.videoAlbumCategory.ref:
+      return videoAlbumCategoryTranslateSchema;
     default:
       throw new Error(`Translation model "${modelKey}" not found.`);
   }
@@ -158,6 +186,8 @@ function getModelsTranslateHelper(modelKey) {
 
 async function getModel(req) {
   const model = req.params ? req.params.model : {};
+  console.log(req.params)
+  console.log(model)
   if (!Model.hasOwnProperty(model)) {
     throw new Error('Model with that name" ' + model + '" not found.');
   }

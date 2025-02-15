@@ -27,6 +27,7 @@
     "nodemon": "^3.0.3",
     "pm2": "^5.4.2",
     "swagger-ui-express": "^5.0.0",
+    "uuid": "^11.0.5",
     "yamljs": "^0.3.0"
   }
 }

@@ -61,3 +61,4 @@ const incrementViews = async (req, res, next) => {
 module.exports = {
   incrementViews,
 }
+

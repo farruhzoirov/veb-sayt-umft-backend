@@ -4327,6 +4327,7 @@ paths:
               # $ref: "#/components/schemas/uploadResponse"
       tags:
         - Social
+
   /api/social/deleteFile:
     delete:
       summary: Deleting file and getting response
@@ -4341,6 +4342,863 @@ paths:
             # $ref: "#/components/schemas/deleteFile"
       tags:
         - Social
+
+  ## PhotoAlbumCategory
+  /api/photoAlbumCategory:
+    get:
+      summary: All categories.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+
+        - in: query
+          name: search
+          schema:
+            type: string
+          required: false
+      responses:
+        "200": # status code
+          description: All categories
+          content:
+            application/json:
+              schema:
+#                $ref: "#/components/schemas/categoriesGet"
+      tags:
+        - PhotoAlbumCategory
+    post:
+      summary: Creating one category.
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: Birinchi model qo´shganda bodyda modelId kelmaydi translatelari uchun esa bo'lishi kerak.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/photoAlbumCategory"
+      responses:
+        "201": # status code
+          description: Creating one category
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/addModel"
+      tags:
+        - PhotoAlbumCategory
+  /api/photoAlbumCategory/{id}:
+    put:
+      summary: Updating one category
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID of the category to be updated
+      requestBody:
+        description: to update category
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/photoAlbumCategory"
+      responses:
+        "201": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+#                $ref: "#/components/schemas/updateModel"
+      tags:
+        - PhotoAlbumCategory
+    get:
+      summary: Getting one category by id.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+#                  $ref: "#/components/schemas/category"
+      tags:
+        - PhotoAlbumCategory
+
+    delete:
+      summary: Deleting category.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        "200": # status code
+          description: Deleting category
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/deleteModel"
+      tags:
+        - PhotoAlbumCategory
+    patch:
+      summary: Updating status
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID of the category to be updated
+      requestBody:
+        description: to update model status
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+      responses:
+        "201": # status code
+          description: Patched model will come
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+        - PhotoAlbumCategory
+
+  /api/photoAlbumCategory/upload:
+    post:
+      summary: Uploading file and getting path
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: File must be sent
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload.
+
+      responses:
+        "200": # status code
+          description: File path
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/uploadResponse"
+
+      tags:
+        - PhotoAlbumCategory
+
+  /api/photoAlbumCategory/deleteFile:
+    delete:
+      summary: Deleting file and getting response
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: imagePath must be sent
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/deleteFile"
+      tags:
+        - PhotoAlbumCategory
+
+  /api/photoAlbumCategory/check/{slug}:
+    get:
+      summary: check slug exists or don't.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: slug
+          schema:
+            type: string
+          required: true
+      responses:
+        "200": # status code
+          description: Object
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  isSlugExists:
+                    type: Number
+      tags:
+        - PhotoAlbumCategory
+
+  ## PhotoAlbum
+  /api/photoAlbum:
+    get:
+      summary: All photoAlbums.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: school
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: title
+          schema:
+            type: string
+          required: false
+      responses:
+        "200": # status code
+          description: All news
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/newsGet"
+      tags:
+        - PhotoAlbum
+    post:
+      summary: Creating PhotoAlbum.
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: Optional description in *Markdown*
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/photoAlbum"
+      responses:
+        "201": # status code
+          description: Creating news
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/addModel"
+      tags:
+        - PhotoAlbum
+
+  /api/photoAlbum/{id}:
+    get:
+      summary: Getting one PhotoAlbum.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+        - in: path
+          name: language
+          schema:
+            type: string
+      responses:
+        "200": # status code
+          description: Getting one PhotoAlbum
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: "#/components/schemas/category"
+      tags:
+        - PhotoAlbum
+
+    put:
+      summary: Updating PhotoAlbum.
+      security:
+        - BearerAuth: [ ]
+          parameters:
+            - in: path
+              name: id
+              schema:
+                type: string
+              required: true
+
+      requestBody:
+        description: Optional description in *Markdown*
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/photoAlbum"
+      responses:
+        "200":
+          description: Updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/updateModel"
+      tags:
+        - PhotoAlbum
+    delete:
+      summary: Deleting photo album.
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/deleteModel"
+      tags:
+        - PhotoAlbum
+    patch:
+      summary: Updating status
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID of the news to be updated
+      requestBody:
+        description: to update model status
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+      responses:
+        "201": # status code
+          description: Patched model will come
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+        - PhotoAlbum
+
+  /api/photoAlbum/upload:
+    post:
+      summary: Uploading file and getting path
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: File must be sent
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload.
+
+      responses:
+        "200": # status code
+          description: File path
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/uploadResponse"
+
+      tags:
+        - PhotoAlbum
+
+  /api/photoAlbum/deleteFile:
+    delete:
+      summary: Deleting file and getting response
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: imagePath must be sent
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/deleteFile"
+      tags:
+        - PhotoAlbum
+
+    ## VideoAlbumCategory
+  /api/videoAlbumCategory:
+      get:
+        summary: All categories.
+        security:
+          - BearerAuth: [ ]
+        parameters:
+          - in: query
+            name: limit
+            schema:
+              type: string
+            required: false
+          - in: query
+            name: page
+            schema:
+              type: string
+            required: false
+          - in: query
+            name: select
+            schema:
+              type: string
+            required: false
+
+          - in: query
+            name: search
+            schema:
+              type: string
+            required: false
+        responses:
+          "200": # status code
+            description: All categories
+            content:
+              application/json:
+                schema:
+#                        $ref: "#/components/schemas/categoriesGet"
+        tags:
+          - VideoAlbumCategory
+      post:
+        summary: Creating one category.
+        security:
+          - BearerAuth: [ ]
+        requestBody:
+          description: Birinchi model qo´shganda bodyda modelId kelmaydi translatelari uchun esa bo'lishi kerak.
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/videoAlbumCategory"
+        responses:
+          "201": # status code
+            description: Creating one category
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/addModel"
+        tags:
+          - VideoAlbumCategory
+
+  /api/videoAlbumCategory/{id}:
+      put:
+        summary: Updating one category
+        security:
+          - BearerAuth: [ ]
+        parameters:
+          - in: path
+            name: id
+            required: true
+            description: ID of the category to be updated
+        requestBody:
+          description: to update category
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/videoAlbumCategory"
+        responses:
+          "201": # status code
+            description: A JSON array of user names
+            content:
+              application/json:
+                schema:
+        #                $ref: "#/components/schemas/updateModel"
+        tags:
+          - VideoAlbumCategory
+      get:
+        summary: Getting one category by id.
+        security:
+          - BearerAuth: [ ]
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: string
+            required: true
+        responses:
+          "200": # status code
+            description: A JSON array of user names
+            content:
+              application/json:
+                schema:
+                  type: object
+                  items:
+        #                  $ref: "#/components/schemas/category"
+        tags:
+          - VideoAlbumCategory
+
+      delete:
+        summary: Deleting category.
+        security:
+          - BearerAuth: [ ]
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: string
+            required: true
+        responses:
+          "200": # status code
+            description: Deleting category
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/deleteModel"
+        tags:
+          - VideoAlbumCategory
+      patch:
+        summary: Updating status
+        security:
+          - BearerAuth: [ ]
+        parameters:
+          - in: path
+            name: id
+            required: true
+            description: ID of the category to be updated
+        requestBody:
+          description: to update model status
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+        responses:
+          "201": # status code
+            description: Patched model will come
+            content:
+              application/json:
+                schema:
+                  type: object
+        tags:
+          - VideoAlbumCategory
+
+  /api/videoAlbumCategory/upload:
+      post:
+        summary: Uploading file and getting path
+        security:
+          - BearerAuth: [ ]
+        requestBody:
+          description: File must be sent
+          required: true
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  file:
+                    type: string
+                    format: binary
+                    description: The file to upload.
+
+        responses:
+          "200": # status code
+            description: File path
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/uploadResponse"
+
+        tags:
+          - VideoAlbumCategory
+
+  /api/videoAlbumCategory/deleteFile:
+      delete:
+        summary: Deleting file and getting response
+        security:
+          - BearerAuth: [ ]
+        requestBody:
+          description: imagePath must be sent
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/deleteFile"
+        tags:
+          - VideoAlbumCategory
+
+  /api/videoAlbumCategory/check/{slug}:
+      get:
+        summary: check slug exists or don't.
+        security:
+          - BearerAuth: [ ]
+        parameters:
+          - in: path
+            name: slug
+            schema:
+              type: string
+            required: true
+        responses:
+          "200": # status code
+            description: Object
+            content:
+              application/json:
+                schema:
+                  type: object
+                  items:
+                    isSlugExists:
+                      type: Number
+        tags:
+          - VideoAlbumCategory
+
+    ## VideoAlbum
+  /api/videoAlbum:
+      get:
+        summary: All videoAlbums.
+        security:
+          - BearerAuth: [ ]
+        parameters:
+          - in: query
+            name: limit
+            schema:
+              type: string
+            required: false
+          - in: query
+            name: page
+            schema:
+              type: string
+            required: false
+          - in: query
+            name: select
+            schema:
+              type: string
+            required: false
+          - in: query
+            name: school
+            schema:
+              type: string
+            required: false
+          - in: query
+            name: title
+            schema:
+              type: string
+            required: false
+        responses:
+          "200": # status code
+            description: All news
+            content:
+              application/json:
+                schema:
+#                  $ref: "#/components/schemas/newsGet"
+        tags:
+          - VideoAlbum
+      post:
+        summary: Creating PhotoAlbum.
+        security:
+          - BearerAuth: [ ]
+        requestBody:
+          description: Optional description in *Markdown*
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/videoAlbum"
+        responses:
+          "201": # status code
+            description: Creating news
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/addModel"
+        tags:
+          - VideoAlbum
+
+  /api/videoAlbum/{id}:
+      get:
+        summary: Getting one videoAlbum.
+        security:
+          - BearerAuth: [ ]
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: string
+          - in: path
+            name: language
+            schema:
+              type: string
+        responses:
+          "200": # status code
+            description: Getting one VideoAlbum
+            content:
+              application/json:
+                schema:
+                  type: object
+                  items:
+#                    $ref: "#/components/schemas/videoAlbum"
+        tags:
+          - VideoAlbum
+
+      put:
+        summary: Updating VideoAlbum.
+        security:
+          - BearerAuth: [ ]
+            parameters:
+              - in: path
+                name: id
+                schema:
+                  type: string
+                required: true
+
+        requestBody:
+          description: Optional description in *Markdown*
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/videoAlbum"
+        responses:
+          "200":
+            description: Updated successfully
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/updateModel"
+        tags:
+          - VideoAlbum
+      delete:
+        summary: Deleting photo album.
+        security:
+          - BearerAuth: [ ]
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: string
+            required: true
+        responses:
+          "200":
+            description: Deleted successfully
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/deleteModel"
+        tags:
+          - VideoAlbum
+      patch:
+        summary: Updating status
+        security:
+          - BearerAuth: [ ]
+        parameters:
+          - in: path
+            name: id
+            required: true
+            description: ID of the news to be updated
+        requestBody:
+          description: to update model status
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+        responses:
+          "201": # status code
+            description: Patched model will come
+            content:
+              application/json:
+                schema:
+                  type: object
+        tags:
+          - VideoAlbum
+
+  /api/videoAlbum/upload:
+      post:
+        summary: Uploading file and getting path
+        security:
+          - BearerAuth: [ ]
+        requestBody:
+          description: File must be sent
+          required: true
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  file:
+                    type: string
+                    format: binary
+                    description: The file to upload.
+
+        responses:
+          "200": # status code
+            description: File path
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/uploadResponse"
+
+        tags:
+          - VideoAlbum
+
+  /api/videoAlbum/deleteFile:
+      delete:
+        summary: Deleting file and getting response
+        security:
+          - BearerAuth: [ ]
+        requestBody:
+          description: imagePath must be sent
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/deleteFile"
+        tags:
+          - VideoAlbum
 
 #Statistics
   /statistics/counts:
@@ -4377,6 +5235,7 @@ paths:
                 type: object
       tags:
         - Statistics
+
 
 #Components
 components:
@@ -5840,3 +6699,106 @@ components:
             language:
               type: string
       required: [ ]
+
+    photoAlbumCategory:
+      type: object
+      properties:
+        img:
+          type: array
+          description: It is optional
+        slug:
+          type: string
+        status:
+          type: number
+        translate:
+          type: object
+          properties:
+            title:
+              type: string
+            text:
+              type: string
+            description:
+              type: string
+            language:
+              type: string
+
+    photoAlbum:
+        type: object
+        properties:
+          img:
+            type: array
+            description: It is optional
+          slug:
+            type: string
+          status:
+            type: number
+          photoAlbumCategory:
+              type: string
+          translate:
+              type: object
+              properties:
+                name:
+                  type: string
+                text:
+                  type: string
+                description:
+                  type: string
+                language:
+                  type: string
+
+
+    videoAlbumCategory:
+          type: object
+          properties:
+            img:
+              type: array
+              description: It is optional
+            slug:
+              type: string
+            status:
+              type: number
+            translate:
+              type: object
+              properties:
+                title:
+                  type: string
+                text:
+                  type: string
+                description:
+                  type: string
+                language:
+                  type: string
+
+
+    videoAlbum:
+          type: object
+          properties:
+            img:
+              type: array
+              description: It is optional
+            slug:
+              type: string
+            status:
+              type: number
+            video:
+              type: array
+              items:
+                type: object
+                properties:
+                  text:
+                    type: string
+                  url:
+                    type: string
+            videoAlbumCategory:
+              type: string
+            translate:
+              type: object
+              properties:
+                name:
+                  type: string
+                text:
+                  type: string
+                description:
+                  type: string
+                language:
+                  type: string

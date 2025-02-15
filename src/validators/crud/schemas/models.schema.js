@@ -273,6 +273,66 @@ const socialSchema = Joi.object({
   }).required()
 })
 
+// Album based
+
+
+const photoAlbumCategorySchema = Joi.object({
+  modelId: Joi.string().optional(),
+  slug: Joi.string().optional(),
+  status: Joi.number().optional(),
+  translate: Joi.object({
+    title: Joi.string().required(),
+    text: Joi.string().optional(),
+    description: Joi.string().optional(),
+    language: Joi.string().optional(),
+  }).required(),
+})
+
+
+const videoAlbumCategorySchema = Joi.object({
+  modelId: Joi.string().optional(),
+  slug: Joi.string().optional(),
+  status: Joi.number().optional(),
+  translate: Joi.object({
+    title: Joi.string().required(),
+    text: Joi.string().optional(),
+    description: Joi.string().optional(),
+    language: Joi.string().optional(),
+  }).required(),
+})
+
+
+
+const photoAlbumSchema = Joi.object({
+  modelId: Joi.string().optional(),
+  slug: Joi.string().optional(),
+  status: Joi.number().optional(),
+  photoAlbumCategory: Joi.string().optional(),
+  translate: Joi.object({
+    name: Joi.string().required(),
+    text: Joi.string().optional(),
+    description: Joi.string().optional(),
+    language: Joi.string().optional(),
+  }).required(),
+});
+
+const videoAlbumSchema = Joi.object({
+  modelId: Joi.string().optional(),
+  slug: Joi.string().optional(),
+  status: Joi.number().optional(),
+  video: Joi.array().items({
+    text: Joi.string().optional(),
+    url: Joi.string().optional(),
+  }),
+  videoAlbumCategory: Joi.string().optional(),
+  translate: Joi.object({
+    name: Joi.string().required(),
+    text: Joi.string().optional(),
+    description: Joi.string().optional(),
+    language: Joi.string().optional(),
+  }).required(),
+});
+
 
 module.exports = {
   category: categorySchema,
@@ -294,5 +354,10 @@ module.exports = {
   messenger: messengerSchema,
   contact: contactSchema,
   licence: licenceSchema,
-  social: socialSchema
+  social: socialSchema,
+  // Album based
+  photoAlbumCategory: photoAlbumCategorySchema,
+  videoAlbumCategory: videoAlbumCategorySchema,
+  photoAlbum: photoAlbumSchema,
+  videoAlbum: videoAlbumSchema,
 };

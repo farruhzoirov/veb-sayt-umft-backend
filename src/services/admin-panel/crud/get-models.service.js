@@ -3,10 +3,7 @@ const {
   getModelsTranslateHelper,
   getModel,
 } = require("../../../helpers/admin-panel/get-models.helper");
-const {
-  Model,
-  TranslateModel,
-} = require("../../../common/constants/models.constants");
+const {Model, TranslateModel} = require("../../../common/constants/models.constants");
 const {getPopulates} = require("../../../helpers/admin-panel/get-populates.helper");
 const {buildQuery} = require("../../../helpers/admin-panel/filter.helper");
 
@@ -25,8 +22,6 @@ class GetModelsService {
     let sort = req.query?.sort ? JSON.parse(req.query?.sort) : {_id: -1};
     let search = req.query?.search;
     let department = req.query?.department;
-
-    console.log(department);
 
     const skip = (page - 1) * limit;
 

@@ -7,22 +7,12 @@ class GetApplicantsService {
       const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 20;
       const select = req.query.select ? req.query.select.split(',') : '';
-      const search = req.query.search ? JSON.parse(req.query.search) : {};
-
+      const search = req.query?.search;
       const skip = (page - 1) * limit;
-
       const searchQuery = {};
 
-      if (search.name) {
-        searchQuery.name = {$regex: search.name, $options: 'i'};
-      }
-
-      if (search.email) {
-        searchQuery.email = {$regex: search.email, $options: 'i'};
-      }
-
-      if (search.phone) {
-        searchQuery.phone = {$regex: search.phone, $options: 'i'};
+      if (search) {
+        searchQuery.name = {$regex: search, $options: 'i'};
       }
 
       let applicants;
