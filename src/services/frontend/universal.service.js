@@ -124,7 +124,7 @@ class UniversalService {
     const findDynamicModelBySlug = await dynamicModel.findOne({status: 1, slug: queryParameters.slug}).lean();
 
     if (!findDynamicModelBySlug) {
-      return []
+      return {}
     }
 
     if (this.Model[currentModel].translate) {
