@@ -18,3 +18,5 @@ class PhotoAlbumController {
     }
   }
 }
+
+module.exports = PhotoAlbumController;

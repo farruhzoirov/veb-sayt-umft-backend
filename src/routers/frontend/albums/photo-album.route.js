@@ -1,13 +1,11 @@
 const router = require('express').Router();
 
 // Controllers
-const EmployeeController = require('../../controllers/frontend/employee.controller');
-const employeeController = new EmployeeController();
+const PhotoAlbumController = require('../../../controllers/frontend/albums/photo-album.controller');
+const photoAlbumController = new PhotoAlbumController();
 
 
-router.get('/employee', employeeController.getEmployeesForFront);
-
-router.get('/news/:slug', employeeController.getOneEmployeeForFront);
+router.get('/photo-album', photoAlbumController.getPhotoAlbumsForFront);
 
 
 module.exports = router;
