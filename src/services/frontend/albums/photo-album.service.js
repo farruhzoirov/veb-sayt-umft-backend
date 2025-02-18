@@ -26,7 +26,7 @@ class PhotoAlbumService {
       skip: (parseInt(req.query?.limit, 10) || 10) * ((parseInt(req.query.page, 10) || 1) - 1),
       selectFields: req.query?.select || '',
       requestedLanguage: req.query?.language || defaultLanguage.slug,
-      photoAlbumCategory: req.query.photoAlbumCategory ? JSON.parse(req.query?.photoAlbumCategory) : null,
+      photoAlbumCategory: req.query.photoAlbumCategory ? req.query.photoAlbumCategory.split(',') : null,
     };
 
     const selectedLanguage = await Language.findOne({slug: queryParameters.requestedLanguage}).lean();
