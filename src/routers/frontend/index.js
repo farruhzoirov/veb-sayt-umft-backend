@@ -2,6 +2,8 @@
 const express = require('express');
 const router = express.Router();
 
+router.use(require('./albums/photo-album.route'));
+router.use(require('./albums/video-album.route'));
 router.use(require('./specialty.route'));
 router.use(require('./employee.route'))
 router.use(require('./news.route'));
