@@ -5,6 +5,7 @@ const BaseError = require("../../../errors/base.error");
 const {Model, TranslateModel} = require("../../../common/constants/models.constants");
 
 const PhotoAlbumCategory = require("../../../models/data/photo-album-category.model");
+const {photoAlbum} = require("../../../validators/crud/schemas/models.schema");
 
 class PhotoAlbumService {
   constructor() {
@@ -17,8 +18,15 @@ class PhotoAlbumService {
     const currentModel = this.Model.photoAlbum.ref;
     const dynamicModel = getModelsHelper(currentModel);
     let photoAlbumList;
+    let photoAlbumCategory;
 
-    console.log(req.query.photoAlbumCategory)
+    if (req.query?.photoAlbumCategory && typeof req.query.photoAlbumCategory === 'string') {
+      photoAlbumCategory = [req.query.photoAlbumCategory];
+    }
+
+    if (req.query?.photoAlbumCategory && Array.isArray(req.query?.photoAlbumCategory)) {
+      photoAlbumCategory = req.query.photoAlbumCategory;
+    }
 
     const queryParameters = {
       limit: Math.max(1, parseInt(req.query?.limit, 10) || 30),
@@ -26,7 +34,7 @@ class PhotoAlbumService {
       skip: (parseInt(req.query?.limit, 10) || 10) * ((parseInt(req.query.page, 10) || 1) - 1),
       selectFields: req.query?.select || '',
       requestedLanguage: req.query?.language || defaultLanguage.slug,
-      photoAlbumCategory: req.query.photoAlbumCategory ? req.query.photoAlbumCategory.split(',') : null,
+      photoAlbumCategory: photoAlbumCategory
     };
 
     const selectedLanguage = await Language.findOne({slug: queryParameters.requestedLanguage}).lean();
