@@ -19,6 +19,7 @@ const SocialsSchema = new Schema(
         type: Number,
         default: 1,
       },
+      img: []
     },
     {
       timestamps: true,
