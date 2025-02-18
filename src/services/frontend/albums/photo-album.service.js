@@ -18,6 +18,8 @@ class PhotoAlbumService {
     const dynamicModel = getModelsHelper(currentModel);
     let photoAlbumList;
 
+    console.log(req.query.photoAlbumCategory)
+
     const queryParameters = {
       limit: Math.max(1, parseInt(req.query?.limit, 10) || 30),
       page: Math.max(1, parseInt(req.query?.page, 10) || 1),
