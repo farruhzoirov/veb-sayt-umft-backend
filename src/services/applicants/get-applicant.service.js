@@ -1,4 +1,4 @@
-const Applicants = require('../../models//applicants/applicants.model');
+  const Applicants = require('../../models//applicants/applicants.model');
 const mongoose = require("mongoose");
 
 class GetOneApplicantService {

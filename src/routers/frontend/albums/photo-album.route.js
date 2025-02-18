@@ -7,7 +7,7 @@ const employeeController = new EmployeeController();
 
 router.get('/employee', employeeController.getEmployeesForFront);
 
-router.get('/employee/:slug', employeeController.getOneEmployeeForFront);
+router.get('/news/:slug', employeeController.getOneEmployeeForFront);
 
 
 module.exports = router;

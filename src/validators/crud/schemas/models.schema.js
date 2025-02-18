@@ -1,5 +1,4 @@
 const Joi = require("joi");
-const {string} = require("joi");
 
 const universitySchema = Joi.object({
   modelId: Joi.string().optional(),
@@ -18,7 +17,7 @@ const categorySchema = Joi.object({
   translate: Joi.object({
     title: Joi.string().required(),
     text: Joi.string().optional(),
-    language: Joi.string().required(),
+    language: Joi.string().optional(),
   }).required(),
 });
 
@@ -120,15 +119,16 @@ const levelSchema = Joi.object({
 const newsSchema = Joi.object({
   modelId: Joi.string().optional(),
   views: Joi.number().optional(),
-  slug: Joi.string().required(),
+  slug: Joi.string().optional(),
   status: Joi.number().optional(),
   translate: Joi.object({
-    title: Joi.string().required(),
-    text: Joi.string().required(),
-    description: Joi.string().required(),
-    language: Joi.string().required(),
+    title: Joi.string().optional(),
+    text: Joi.string().optional(),
+    description: Joi.string().optional(),
+    language: Joi.string().optional(),
   }).required(),
 });
+
 
 const partnersSchema = Joi.object({
   modelId: Joi.string().optional(),

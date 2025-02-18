@@ -122,7 +122,7 @@ class SpecialtiesService {
     let findSpecialty = await Specialty.findOne({slug: queryParameters.slug}).lean();
 
     if (!findSpecialty) {
-      throw BaseError.BadRequest("Specialty not found");
+      return {};
     }
 
     // Employees

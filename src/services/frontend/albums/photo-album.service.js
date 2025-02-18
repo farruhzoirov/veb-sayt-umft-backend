@@ -1,21 +1,22 @@
-const getDefaultLanguageHelper = require("../../helpers/frontend/get-default-language.helper");
-const {getModelsHelper, getModelsTranslateHelper} = require("../../helpers/admin-panel/get-models.helper");
-const Language = require("../../models/settings/language.model");
-const BaseError = require("../../errors/base.error");
-const {Model, TranslateModel} = require("../../common/constants/models.constants");
-const Category = require("../../models/data/category.model");
+const getDefaultLanguageHelper = require("../../../helpers/frontend/get-default-language.helper");
+const {getModelsHelper, getModelsTranslateHelper} = require("../../../helpers/admin-panel/get-models.helper");
+const Language = require("../../../models/settings/language.model");
+const BaseError = require("../../../errors/base.error");
+const {Model, TranslateModel} = require("../../../common/constants/models.constants");
 
-class NewsService {
+const PhotoAlbumCategory = require("../../../models/data/photo-album-category.model");
+
+class PhotoAlbumService {
   constructor() {
     this.Model = Model
     this.TranslateModel = TranslateModel
   }
 
-  async getNewsForFront(req) {
+  async getPhotoAlbumsForFront(req) {
     const defaultLanguage = await getDefaultLanguageHelper();
-    const currentModel = this.Model.news.ref;
+    const currentModel = this.Model.photoAlbum.ref;
     const dynamicModel = getModelsHelper(currentModel);
-    let newsList;
+    let photoAlbumList;
 
     const queryParameters = {
       limit: Math.max(1, parseInt(req.query?.limit, 10) || 30),
@@ -23,9 +24,8 @@ class NewsService {
       skip: (parseInt(req.query?.limit, 10) || 10) * ((parseInt(req.query.page, 10) || 1) - 1),
       selectFields: req.query?.select || '',
       requestedLanguage: req.query?.language || defaultLanguage.slug,
-      category: req.query.category ? JSON.parse(req.query?.category) : null,
+      photoAlbumCategory: req.query.photoAlbumCategory ? JSON.parse(req.query?.photoAlbumCategory) : null,
     };
-
 
     const selectedLanguage = await Language.findOne({slug: queryParameters.requestedLanguage}).lean();
 
@@ -33,36 +33,35 @@ class NewsService {
       throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
     }
 
-
-    if (queryParameters.category && !Array.isArray(queryParameters.category)) {
+    if (queryParameters.photoAlbumCategory && !Array.isArray(queryParameters.photoAlbumCategory)) {
       return [];
     }
 
-    let categoryIds = [];
+    let photoAlbumCategoryIds = [];
     if (queryParameters.category) {
-      const categories = queryParameters.category;
-      categoryIds = await Category.find({slug: {$in: categories}}).distinct('_id').lean();
+      const photoAlbumCategories = queryParameters.photoAlbumCategory;
+      photoAlbumCategoryIds = await PhotoAlbumCategory.find({slug: {$in: photoAlbumCategories}}).distinct('_id').lean();
     }
     const filter = {status: 1};
 
-    if (categoryIds.length) {
-      filter.category = {$in: categoryIds};
+    if (photoAlbumCategoryIds.length) {
+      filter.photoAlbumCategory = {$in: photoAlbumCategoryIds};
     }
 
-    newsList = await dynamicModel
+    photoAlbumList = await dynamicModel
         .find(filter)
         .sort({_id: -1})
         .limit(queryParameters.limit)
         .skip(queryParameters.skip)
-        .select('-monthlyViews -__v')
+        .select('-__v')
         .lean()
 
     if (this.Model[currentModel].translate) {
       const translateModelName = this.TranslateModel[currentModel].ref;
       const dynamicTranslateModel = getModelsTranslateHelper(translateModelName);
 
-      newsList = await Promise.all(
-          newsList.map(async modelItem => {
+      photoAlbumList = await Promise.all(
+          photoAlbumList.map(async modelItem => {
             const translationData = await dynamicTranslateModel.findOne({
               [currentModel]: modelItem._id,
               [this.Model.language.ref]: selectedLanguage._id,
@@ -71,10 +70,10 @@ class NewsService {
           })
       );
     }
-    newsList = newsList.filter((item) => item.title);
+    photoAlbumList = photoAlbumList.filter((item) => item.name);
     const total = await dynamicModel.countDocuments(filter);
     return {
-      data: newsList,
+      data: photoAlbumList,
       pagination: {
         total,
         limit: queryParameters.limit,
@@ -86,4 +85,4 @@ class NewsService {
 }
 
 
-module.exports = NewsService;
+module.exports = PhotoAlbumService;
