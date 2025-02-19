@@ -109,6 +109,8 @@ class UniversalService {
       language: req.query.language || defaultLanguage.slug
     }
 
+    console.log("Page", queryParameters)
+
     if (!queryParameters.slug) {
       throw BaseError.BadRequest('Slug is required');
     }
