@@ -190,8 +190,9 @@ class SpecialtiesService {
 
       if (populateOptions.length) {
         populateOptions.map(async (item) => {
-          console.log('dataItem', data[item]);
-          data[item] = await getPopulates(item, data[item], language);
+          if (Object.keys(data).includes(item)) {
+            data[item] = await getPopulates(item, data[item], language);
+          }
         })
       }
       return data;
