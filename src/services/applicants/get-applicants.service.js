@@ -1,12 +1,11 @@
 const Applicants = require('../../models//applicants/applicants.model');
-const mongoose = require("mongoose");
 
 class GetApplicantsService {
   async getApplicants(req, res) {
     try {
-      const page = parseInt(req.query.page) || 1;
-      const limit = parseInt(req.query.limit) || 20;
-      const select = req.query.select ? req.query.select.split(',') : '';
+      const page = parseInt(req.query?.page) || 1;
+      const limit = parseInt(req.query?.limit) || 20;
+      const select = req.query?.select ? req.query?.select.split(',') : '';
       const search = req.query?.search;
       const skip = (page - 1) * limit;
       const searchQuery = {};

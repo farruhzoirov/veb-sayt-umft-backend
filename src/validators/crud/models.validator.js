@@ -27,14 +27,12 @@ const validateModel = async (req, res, next) => {
         message: "Request body is empty",
       });
     }
-    // 4. Validate body against schema
     await schema.validateAsync(req.body, {
       abortEarly: false,
       stripUnknown: true,
     });
     next();
   } catch (error) {
-    // Handle validation errors
     if (error instanceof ValidationError) {
       return res.status(400).json({
         ok: false,
@@ -45,7 +43,6 @@ const validateModel = async (req, res, next) => {
         })),
       });
     }
-    // Handle unexpected errors
     console.error("Validation middleware error:", error);
     return res.status(500).json({
       ok: false,

@@ -1,16 +1,21 @@
 const getDefaultLanguageHelper = require("../../../helpers/frontend/get-default-language.helper");
-const {getModelsHelper, getModelsTranslateHelper} = require("../../../helpers/admin-panel/get-models.helper");
+const {
+  getModelsHelper,
+  getModelsTranslateHelper,
+} = require("../../../helpers/admin-panel/get-models.helper");
 const Language = require("../../../models/settings/language.model");
 const BaseError = require("../../../errors/base.error");
-const {Model, TranslateModel} = require("../../../common/constants/models.constants");
+const {
+  Model,
+  TranslateModel,
+} = require("../../../common/constants/models.constants");
 
 const PhotoAlbumCategory = require("../../../models/data/photo-album-category.model");
-const {photoAlbum} = require("../../../validators/crud/schemas/models.schema");
 
 class PhotoAlbumService {
   constructor() {
-    this.Model = Model
-    this.TranslateModel = TranslateModel
+    this.Model = Model;
+    this.TranslateModel = TranslateModel;
   }
 
   async getPhotoAlbumsForFront(req) {
@@ -18,29 +23,23 @@ class PhotoAlbumService {
     const currentModel = this.Model.photoAlbum.ref;
     const dynamicModel = getModelsHelper(currentModel);
     let photoAlbumList;
-    let photoAlbumCategory;
-
-    if (req.query?.photoAlbumCategory && typeof req.query.photoAlbumCategory === 'string') {
-      photoAlbumCategory = [req.query.photoAlbumCategory];
-    }
-
-    if (req.query?.photoAlbumCategory && Array.isArray(req.query?.photoAlbumCategory)) {
-      photoAlbumCategory = req.query.photoAlbumCategory;
-    }
-
     const queryParameters = {
       limit: Math.max(1, parseInt(req.query?.limit, 10) || 30),
       page: Math.max(1, parseInt(req.query?.page, 10) || 1),
       skip: (parseInt(req.query?.limit, 10) || 10) * ((parseInt(req.query.page, 10) || 1) - 1),
-      selectFields: req.query?.select || '',
+      selectFields: req.query?.select || "",
       requestedLanguage: req.query?.language || defaultLanguage.slug,
-      photoAlbumCategory: photoAlbumCategory
+      photoAlbumCategory: req.query?.photoAlbumCategory ? JSON.parse(req.query?.photoAlbumCategory) : null,
     };
 
-    const selectedLanguage = await Language.findOne({slug: queryParameters.requestedLanguage}).lean();
+    const selectedLanguage = await Language.findOne({
+      slug: queryParameters.requestedLanguage,
+    }).lean();
 
     if (!selectedLanguage) {
-      throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
+      throw BaseError.BadRequest(
+          "Language doesn't exists which matches to this slug"
+      );
     }
 
     if (queryParameters.photoAlbumCategory && !Array.isArray(queryParameters.photoAlbumCategory)) {
@@ -50,7 +49,9 @@ class PhotoAlbumService {
     let photoAlbumCategoryIds = [];
     if (queryParameters.category) {
       const photoAlbumCategories = queryParameters.photoAlbumCategory;
-      photoAlbumCategoryIds = await PhotoAlbumCategory.find({slug: {$in: photoAlbumCategories}}).distinct('_id').lean();
+      photoAlbumCategoryIds = await PhotoAlbumCategory.find({slug: {$in: photoAlbumCategories}})
+          .distinct("_id")
+          .lean();
     }
     const filter = {status: 1};
 
@@ -63,19 +64,23 @@ class PhotoAlbumService {
         .sort({_id: -1})
         .limit(queryParameters.limit)
         .skip(queryParameters.skip)
-        .select('-__v')
-        .lean()
+        .select("-__v")
+        .lean();
 
     if (this.Model[currentModel].translate) {
       const translateModelName = this.TranslateModel[currentModel].ref;
-      const dynamicTranslateModel = getModelsTranslateHelper(translateModelName);
+      const dynamicTranslateModel =
+          getModelsTranslateHelper(translateModelName);
 
       photoAlbumList = await Promise.all(
-          photoAlbumList.map(async modelItem => {
-            const translationData = await dynamicTranslateModel.findOne({
-              [currentModel]: modelItem._id,
-              [this.Model.language.ref]: selectedLanguage._id,
-            }).select(`-${currentModel} -__v -language  -updatedAt`).lean();
+          photoAlbumList.map(async (modelItem) => {
+            const translationData = await dynamicTranslateModel
+                .findOne({
+                  [currentModel]: modelItem._id,
+                  [this.Model.language.ref]: selectedLanguage._id,
+                })
+                .select(`-${currentModel} -__v -language  -updatedAt`)
+                .lean();
             return {...modelItem, ...(translationData || {})};
           })
       );
@@ -93,6 +98,5 @@ class PhotoAlbumService {
     };
   }
 }
-
 
 module.exports = PhotoAlbumService;
