@@ -104,6 +104,7 @@ class UniversalService {
     const currentModel = await getModel(req);
     const dynamicModel = getModelsHelper(currentModel);
 
+    console.log('query language', req.query?.language)
     const queryParameters = {
       slug: req.params.slug,
       language: req.query.language || defaultLanguage.slug
