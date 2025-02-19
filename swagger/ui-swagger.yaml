@@ -875,3 +875,225 @@ paths:
 
       tags:
         - Page
+
+  ##PhotoAlbumCategory
+  /front/photoAlbumCategory:
+    get:
+      summary: Getting photoAlbumCategory for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: query
+          name: language
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+      responses:
+        "200": # status code
+          description: Getting matches model for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - PhotoAlbumCategory
+
+  /front/photoAlbumCategory/{slug}:
+    get:
+      summary: Getting photoAlbumCategory for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: path
+          name: slug
+      responses:
+        "200": # status code
+          description: Getting one modelData for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - PhotoAlbumCategory
+
+    ## PhotoAlbum
+  /front/photoAlbum:
+      get:
+        summary: Getting photoAlbums for frontend
+        description: You can filter which you want.
+        parameters:
+          - in: query
+            name: language
+          - in: query
+            name: limit
+            schema:
+              type: string
+            required: false
+          - in: query
+            name: page
+            schema:
+              type: string
+            required: false
+          - in: query
+            name: select
+            schema:
+              type: string
+            required: false
+          - in: query
+            name: photoAlbumCategory
+            schema:
+              type: array
+              items:
+                type: string
+
+        responses:
+          "200": # status code
+            description: Getting photoAlbums for frontend
+            content:
+              application/json:
+                schema:
+                  type: object
+
+        tags:
+          - PhotoAlbum
+
+  /front/photoAlbum/{slug}:
+    get:
+      summary: Getting photoAlbums for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: path
+          name: slug
+      responses:
+        "200": # status code
+          description: Getting one photoAlbums for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - PhotoAlbum
+
+  ##VideoAlbumCategory
+  /front/videoAlbumCategory:
+    get:
+      summary: Getting videoAlbumCategory for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: query
+          name: language
+        - in: query
+          name: limit
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: select
+          schema:
+            type: string
+          required: false
+      responses:
+        "200": # status code
+          description: Getting matches model for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - VideoAlbumCategory
+
+  /front/videoAlbumCategory/{slug}:
+    get:
+      summary: Getting videoAlbumCategory for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: path
+          name: slug
+      responses:
+        "200": # status code
+          description: Getting one modelData for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - VideoAlbumCategory
+
+    ## VideoAlbum
+  /front/videoAlbum:
+      get:
+        summary: Getting videoAlbums for frontend
+        description: You can filter which you want.
+        parameters:
+          - in: query
+            name: language
+          - in: query
+            name: limit
+            schema:
+              type: string
+            required: false
+          - in: query
+            name: page
+            schema:
+              type: string
+            required: false
+          - in: query
+            name: select
+            schema:
+              type: string
+            required: false
+          - in: query
+            name: videoAlbumCategory
+            schema:
+              type: array
+              items:
+                type: string
+
+        responses:
+          "200":
+            description: Getting videoAlbums for frontend
+            content:
+              application/json:
+                schema:
+                  type: object
+
+        tags:
+          - VideoAlbum
+
+  /front/videoAlbum/{slug}:
+    get:
+      summary: Getting videoAlbums for frontend
+      description: You can filter which you want.
+      parameters:
+        - in: path
+          name: slug
+      responses:
+        "200": # status code
+          description: Getting one videoAlbums for frontend
+          content:
+            application/json:
+              schema:
+                type: object
+
+      tags:
+        - VideoAlbum
