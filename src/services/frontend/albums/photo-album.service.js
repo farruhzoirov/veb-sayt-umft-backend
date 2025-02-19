@@ -23,6 +23,7 @@ class PhotoAlbumService {
     const currentModel = this.Model.photoAlbum.ref;
     const dynamicModel = getModelsHelper(currentModel);
     let photoAlbumList;
+    console.log('photoAlbumCategory', req.query?.photoAlbumCategory)
     const queryParameters = {
       limit: Math.max(1, parseInt(req.query?.limit, 10) || 30),
       page: Math.max(1, parseInt(req.query?.page, 10) || 1),
@@ -31,6 +32,9 @@ class PhotoAlbumService {
       requestedLanguage: req.query?.language || defaultLanguage.slug,
       photoAlbumCategory: req.query?.photoAlbumCategory ? JSON.parse(req.query?.photoAlbumCategory) : null,
     };
+
+    console.log('photoAlbumCategory2', queryParameters.photoAlbumCategory)
+
 
     const selectedLanguage = await Language.findOne({
       slug: queryParameters.requestedLanguage,
