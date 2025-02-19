@@ -16,16 +16,19 @@ class NewsService {
     const currentModel = this.Model.news.ref;
     const dynamicModel = getModelsHelper(currentModel);
     let newsList;
-
-    const queryParameters = {
-      limit: Math.max(1, parseInt(req.query?.limit, 10) || 30),
-      page: Math.max(1, parseInt(req.query?.page, 10) || 1),
-      skip: (parseInt(req.query?.limit, 10) || 10) * ((parseInt(req.query.page, 10) || 1) - 1),
-      selectFields: req.query?.select || '',
-      requestedLanguage: req.query?.language || defaultLanguage.slug,
-      category: req.query.category ? JSON.parse(req.query?.category) : null,
-    };
-
+    let queryParameters;
+    try {
+      queryParameters = {
+        limit: Math.max(1, parseInt(req.query?.limit, 10) || 30),
+        page: Math.max(1, parseInt(req.query?.page, 10) || 1),
+        skip: (parseInt(req.query?.limit, 10) || 10) * ((parseInt(req.query.page, 10) || 1) - 1),
+        selectFields: req.query?.select || '',
+        requestedLanguage: req.query?.language || defaultLanguage.slug,
+        category: req.query.category ? JSON.parse(req.query?.category) : null,
+      };
+    } catch (err) {
+      throw BaseError.BadRequest("Error parsing queryParameter");
+    }
 
     const selectedLanguage = await Language.findOne({slug: queryParameters.requestedLanguage}).lean();
 
