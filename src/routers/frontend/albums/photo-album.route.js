@@ -5,7 +5,7 @@ const PhotoAlbumController = require('../../../controllers/frontend/albums/photo
 const photoAlbumController = new PhotoAlbumController();
 
 
-router.get('/photo-album', photoAlbumController.getPhotoAlbumsForFront);
+router.get('/photoAlbum', photoAlbumController.getPhotoAlbumsForFront);
 
 
 module.exports = router;

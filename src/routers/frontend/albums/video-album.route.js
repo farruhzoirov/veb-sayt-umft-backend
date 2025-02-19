@@ -5,7 +5,7 @@ const VideoAlbumController = require('../../../controllers/frontend/albums/video
 const videoAlbumController = new VideoAlbumController();
 
 
-router.get('/video-album', videoAlbumController.getVideoAlbumsForFront);
+router.get('/videoAlbum', videoAlbumController.getVideoAlbumsForFront);
 
 
 module.exports = router;
