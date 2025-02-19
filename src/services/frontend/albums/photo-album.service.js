@@ -23,27 +23,26 @@ class PhotoAlbumService {
     const currentModel = this.Model.photoAlbum.ref;
     const dynamicModel = getModelsHelper(currentModel);
     let photoAlbumList;
-    console.log('photoAlbumCategory', req.query?.photoAlbumCategory)
-    const queryParameters = {
-      limit: Math.max(1, parseInt(req.query?.limit, 10) || 30),
-      page: Math.max(1, parseInt(req.query?.page, 10) || 1),
-      skip: (parseInt(req.query?.limit, 10) || 10) * ((parseInt(req.query.page, 10) || 1) - 1),
-      selectFields: req.query?.select || "",
-      requestedLanguage: req.query?.language || defaultLanguage.slug,
-      photoAlbumCategory: req.query?.photoAlbumCategory ? JSON.parse(req.query?.photoAlbumCategory) : null,
-    };
-
-    console.log('photoAlbumCategory2', queryParameters.photoAlbumCategory)
-
+    let queryParameters;
+    try {
+      queryParameters = {
+        limit: Math.max(1, parseInt(req.query?.limit, 10) || 30),
+        page: Math.max(1, parseInt(req.query?.page, 10) || 1),
+        skip: (parseInt(req.query?.limit, 10) || 10) * ((parseInt(req.query.page, 10) || 1) - 1),
+        selectFields: req.query?.select || "",
+        requestedLanguage: req.query?.language || defaultLanguage.slug,
+        photoAlbumCategory: req.query?.photoAlbumCategory ? JSON.parse(req.query?.photoAlbumCategory) : null,
+      };
+    } catch (err) {
+      throw BaseError.BadRequest('Error parsing queryParameter');
+    }
 
     const selectedLanguage = await Language.findOne({
       slug: queryParameters.requestedLanguage,
     }).lean();
 
     if (!selectedLanguage) {
-      throw BaseError.BadRequest(
-          "Language doesn't exists which matches to this slug"
-      );
+      throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
     }
 
     if (queryParameters.photoAlbumCategory && !Array.isArray(queryParameters.photoAlbumCategory)) {

@@ -17,15 +17,19 @@ class VideoAlbumService {
     const currentModel = this.Model.videoAlbum.ref;
     const dynamicModel = getModelsHelper(currentModel);
     let videoAlbumList;
-
-    const queryParameters = {
-      limit: Math.max(1, parseInt(req.query?.limit, 10) || 30),
-      page: Math.max(1, parseInt(req.query?.page, 10) || 1),
-      skip: (parseInt(req.query?.limit, 10) || 10) * ((parseInt(req.query.page, 10) || 1) - 1),
-      selectFields: req.query?.select || '',
-      requestedLanguage: req.query?.language || defaultLanguage.slug,
-      videoAlbumCategory: req.query.videoAlbumCategory ? JSON.parse(req.query?.videoAlbumCategory) : null,
-    };
+    let queryParameters;
+    try {
+      queryParameters = {
+        limit: Math.max(1, parseInt(req.query?.limit, 10) || 30),
+        page: Math.max(1, parseInt(req.query?.page, 10) || 1),
+        skip: (parseInt(req.query?.limit, 10) || 10) * ((parseInt(req.query.page, 10) || 1) - 1),
+        selectFields: req.query?.select || "",
+        requestedLanguage: req.query?.language || defaultLanguage.slug,
+        videoAlbumCategory: req.query?.videoAlbumCategory ? JSON.parse(req.query?.videoAlbumCategory) : null,
+      };
+    } catch (err) {
+      throw BaseError.BadRequest('Error parsing queryParameter');
+    }
 
     const selectedLanguage = await Language.findOne({slug: queryParameters.requestedLanguage}).lean();
 
