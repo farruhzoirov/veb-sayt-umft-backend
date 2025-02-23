@@ -25,7 +25,7 @@ class VideoAlbumService {
         skip: (parseInt(req.query?.limit, 10) || 10) * ((parseInt(req.query.page, 10) || 1) - 1),
         selectFields: req.query?.select || "",
         requestedLanguage: req.query?.language || defaultLanguage.slug,
-        videoAlbumCategory: req.query?.videoAlbumCategory ? JSON.parse(req.query?.videoAlbumCategory) : null,
+        videoAlbumCategory: req.query?.videoAlbumCategory || null,
       };
     } catch (err) {
       throw BaseError.BadRequest('Error parsing queryParameter');
@@ -37,13 +37,10 @@ class VideoAlbumService {
       throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
     }
 
-    if (queryParameters.videoAlbumCategory && !Array.isArray(queryParameters.videoAlbumCategory)) {
-      return [];
-    }
 
     let videoAlbumCategoryIds = [];
-    if (queryParameters.category) {
-      const videoAlbumCategories = queryParameters.videoAlbumCategory;
+    if (queryParameters.videoAlbumCategory) {
+      const videoAlbumCategories = [queryParameters.videoAlbumCategory];
       videoAlbumCategoryIds = await VideoAlbumCategory.find({slug: {$in: videoAlbumCategories}}).distinct('_id').lean();
     }
     const filter = {status: 1};

@@ -31,7 +31,7 @@ class PhotoAlbumService {
         skip: (parseInt(req.query?.limit, 10) || 10) * ((parseInt(req.query.page, 10) || 1) - 1),
         selectFields: req.query?.select || "",
         requestedLanguage: req.query?.language || defaultLanguage.slug,
-        photoAlbumCategory: req.query?.photoAlbumCategory ? JSON.parse(req.query?.photoAlbumCategory) : null,
+        photoAlbumCategory: req.query?.photoAlbumCategory || null,
       };
     } catch (err) {
       throw BaseError.BadRequest('Error parsing queryParameter');
@@ -45,13 +45,9 @@ class PhotoAlbumService {
       throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
     }
 
-    if (queryParameters.photoAlbumCategory && !Array.isArray(queryParameters.photoAlbumCategory)) {
-      return [];
-    }
-
     let photoAlbumCategoryIds = [];
-    if (queryParameters.category) {
-      const photoAlbumCategories = queryParameters.photoAlbumCategory;
+    if (queryParameters.photoAlbumCategory) {
+      const photoAlbumCategories = [queryParameters.photoAlbumCategory];
       photoAlbumCategoryIds = await PhotoAlbumCategory.find({slug: {$in: photoAlbumCategories}})
           .distinct("_id")
           .lean();
