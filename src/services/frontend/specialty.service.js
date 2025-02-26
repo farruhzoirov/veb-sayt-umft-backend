@@ -7,18 +7,13 @@ const {getPopulates} = require("../../helpers/admin-panel/get-populates.helper")
 
 // For filtering
 const Department = require("../../models/data/department.model");
-
+const DepartmentTranslate = require("../../models/translate/department.model");
 const Degree = require("../../models/data/degrees.model");
-
 const Format = require("../../models/data/format.model");
-
 const Topic = require("../../models/data/topics.model");
 const TopicTranslate = require("../../models/translate/topics.model");
-
 const Theme = require("../../models/data/themes.model");
-
 const Employee = require("../../models/data/employee.model");
-const {Types} = require("mongoose");
 
 
 class SpecialtiesService {
@@ -34,8 +29,6 @@ class SpecialtiesService {
       skip: (req.query?.limit ? parseInt(req.query.limit, 10) : 10) * ((req.query.page ? parseInt(req.query.page, 10) : 1) - 1),
       requestedLanguage: req.query?.language || defaultLanguage.slug,
       selectFields: req.query?.select || '',
-
-      // For filtering
       filters: {
         department: req.query?.department || '',
         degree: req.query?.degree || '',
@@ -50,20 +43,25 @@ class SpecialtiesService {
     if (!selectedLanguage) {
       throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
     }
-
-
     let specialtiesList;
-
     const query = {status: 1};
-
-    if (queryParameters.filters.department && !queryParameters.filters.structureType) {
-      const department = await Department.findOne({slug: queryParameters.filters.department}).lean();
-      query.department = department?._id;
+    let departmentQuery = {};
+    if (queryParameters.filters.structureType) {
+      departmentQuery["structureType.code"] = queryParameters.filters.structureType;
     }
 
-    if (!queryParameters.filters.department && queryParameters.filters.structureType) {
+    const departments = await Department.find(departmentQuery).lean();
+    const departmentIds = departments.map(dep => dep._id);
+    const departmentTranslations = await DepartmentTranslate.find({
+      department: { $in: departmentIds },
+      language: selectedLanguage._id,
+    }).lean();
+
+    if (queryParameters.filters.department) {
+      const department = await Department.findOne({slug: queryParameters.filters.department}).lean();
+      query.department = department?._id;
+    } else if (queryParameters.filters.structureType) {
       const departmentIds = await Department.find({"structureType.code": queryParameters.filters.structureType}).distinct('_id');
-      // const departmentObjectIds = departmentIds.map(id => new Types.ObjectId(id));
       query.department = {$in: departmentIds};
     }
 
@@ -76,11 +74,10 @@ class SpecialtiesService {
       const format = await Format.findOne({slug: queryParameters.filters.format}).lean();
       query["prices.format"] = format?._id;
     }
-
-
     specialtiesList = await Specialty.find(query)
         .select(queryParameters.select ? queryParameters.select : "-monthlyViews -__v -updatedAt")
         .limit(queryParameters.limit).skip(queryParameters.skip).lean();
+
 
     if (specialtiesList.length) {
       specialtiesList = await Promise.all(
@@ -104,17 +101,28 @@ class SpecialtiesService {
     }
 
     specialtiesList = specialtiesList.filter((item) => item.name);
+
+    const departmentMap = {};
+    departments.forEach(dep => {
+      const translation = departmentTranslations.find(dt => dt.department.toString() === dep._id.toString());
+      departmentMap[dep._id] = {
+        _id: dep._id,
+        name: translation ? translation.name : null,
+        specialties: [],
+      };
+    });
+
+    specialtiesList.forEach((spec) => {
+      if (departmentMap[spec.department]) {
+        departmentMap[spec.department].specialties.push(spec);
+      }
+    })
+
     const total = await Specialty.countDocuments(query);
 
-    const paginationInfo = {
-      total: total,
-      limit: queryParameters.limit,
-      page: queryParameters.page,
-      pages: Math.ceil(total / queryParameters.limit),
-    };
-
-    return {data: specialtiesList, pagination: paginationInfo};
+    return {data: departmentMap, total: total};
   }
+
 
 
   async getOneSpecialty(req) {
