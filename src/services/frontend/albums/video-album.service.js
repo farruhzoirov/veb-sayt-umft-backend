@@ -46,7 +46,7 @@ class VideoAlbumService {
     const filter = {status: 1};
 
     if (videoAlbumCategoryIds.length) {
-      filter.photoAlbumCategory = {$in: photoAlbumCategoryIds};
+      filter.videoAlbumCategory = {$in: videoAlbumCategoryIds};
     }
 
     videoAlbumList = await dynamicModel
