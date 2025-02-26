@@ -60,7 +60,7 @@ class SpecialtiesService {
     }
 
     if (!queryParameters.filters.department && queryParameters.filters.structureType) {
-      const departmentIds = await Department.find({"structureType.code": queryParameters.filters.structureType }).lean();
+      const departmentIds = await Department.find({"structureType.code": queryParameters.filters.structureType }).distinct('_id').lean();
       query.department = {$in: departmentIds};
     }
 
