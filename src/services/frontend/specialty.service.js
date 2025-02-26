@@ -51,11 +51,10 @@ class SpecialtiesService {
       throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
     }
 
-    console.log("StructureType", queryParameters.filters.structureType)
 
     let specialtiesList;
 
-    const query = {};
+    const query = {status: 1};
 
     if (queryParameters.filters.department && !queryParameters.filters.structureType) {
       const department = await Department.findOne({slug: queryParameters.filters.department}).lean();
@@ -79,7 +78,6 @@ class SpecialtiesService {
       query["prices.format"] = format?._id;
     }
 
-    console.log(query)
 
     specialtiesList = await Specialty.find(query)
         .select(queryParameters.select ? queryParameters.select : "-monthlyViews -__v -updatedAt")
@@ -107,7 +105,7 @@ class SpecialtiesService {
     }
 
     specialtiesList = specialtiesList.filter((item) => item.name);
-    const total = await Specialty.countDocuments({status: 1});
+    const total = await Specialty.countDocuments(query);
 
     const paginationInfo = {
       total: total,
