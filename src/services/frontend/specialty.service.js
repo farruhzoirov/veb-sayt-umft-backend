@@ -62,10 +62,9 @@ class SpecialtiesService {
     }
 
     if (!queryParameters.filters.department && queryParameters.filters.structureType) {
-      console.log('StructureTypeInside', queryParameters.filters.structureType)
-      const departmentIds = await Department.find({"structureType.code": queryParameters.filters.structureType }).distinct('_id').lean();
-      const departmentObjectIds = departmentIds.map(id => new Types.ObjectId(id));
-      query.department = {$in: departmentObjectIds};
+      const departmentIds = await Department.find({"structureType.code": queryParameters.filters.structureType}).distinct('_id');
+      // const departmentObjectIds = departmentIds.map(id => new Types.ObjectId(id));
+      query.department = {$in: departmentIds};
     }
 
     if (queryParameters.filters.degree) {
