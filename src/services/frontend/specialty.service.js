@@ -120,7 +120,7 @@ class SpecialtiesService {
 
     const total = await Specialty.countDocuments(query);
 
-    return {data: departmentMap, total: total};
+    return {data: Object.values(departmentMap), total: total};
   }
 
 
