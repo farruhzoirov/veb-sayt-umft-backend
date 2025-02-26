@@ -64,7 +64,6 @@ class SpecialtiesService {
     if (!queryParameters.filters.department && queryParameters.filters.structureType) {
       console.log('StructureTypeInside', queryParameters.filters.structureType)
       const departmentIds = await Department.find({"structureType.code": queryParameters.filters.structureType }).distinct('_id').lean();
-      console.log(departmentIds);
       query.department = {$in: departmentIds};
     }
 
@@ -77,6 +76,8 @@ class SpecialtiesService {
       const format = await Format.findOne({slug: queryParameters.filters.format}).lean();
       query["prices.format"] = format?._id;
     }
+
+    console.log(query)
 
     specialtiesList = await Specialty.find(query)
         .select(queryParameters.select ? queryParameters.select : "-monthlyViews -__v -updatedAt")
