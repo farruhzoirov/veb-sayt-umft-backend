@@ -103,7 +103,7 @@ class SpecialtiesService {
     specialtiesList = specialtiesList.filter((item) => item.name);
     let total = await Specialty.countDocuments(query);
 
-    if (departments.length) {
+    if (queryParameters.filters.structureType) {
       const departmentMap = {};
       departments.forEach(dep => {
         const translation = departmentTranslations.find(dt => dt.department.toString() === dep._id.toString());
@@ -223,7 +223,6 @@ class SpecialtiesService {
       }
       return data;
     }));
-
     return model;
   }
 }
