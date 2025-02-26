@@ -39,6 +39,7 @@ class SpecialtiesService {
         department: req.query?.department || '',
         degree: req.query?.degree || '',
         format: req.query?.format || '',
+        structureType: req.query?.structureType || '',
       }
     }
     const selectedLanguage = await Language.findOne({
@@ -53,9 +54,14 @@ class SpecialtiesService {
 
     const query = {};
 
-    if (queryParameters.filters.department) {
+    if (queryParameters.filters.department && !queryParameters.filters.structureType) {
       const department = await Department.findOne({slug: queryParameters.filters.department}).lean();
       query.department = department?._id;
+    }
+
+    if (!queryParameters.filters.department && queryParameters.filters.structureType) {
+      const departmentIds = await Department.find({"structureType.code": queryParameters.filters.structureType }).lean();
+      query.department = {$in: departmentIds};
     }
 
     if (queryParameters.filters.degree) {
@@ -68,7 +74,9 @@ class SpecialtiesService {
       query["prices.format"] = format?._id;
     }
 
-    specialtiesList = await Specialty.find(query).select(queryParameters.select ? queryParameters.select : "-monthlyViews -__v -updatedAt").limit(queryParameters.limit).skip(queryParameters.skip).lean();
+    specialtiesList = await Specialty.find(query)
+        .select(queryParameters.select ? queryParameters.select : "-monthlyViews -__v -updatedAt")
+        .limit(queryParameters.limit).skip(queryParameters.skip).lean();
 
     if (specialtiesList.length) {
       specialtiesList = await Promise.all(
@@ -76,7 +84,8 @@ class SpecialtiesService {
             const translationData = await SpecialtyTranslate.findOne({
               [this.Model.specialty.ref]: specialtyItem._id,
               [this.Model.language.ref]: selectedLanguage._id
-            }).select(queryParameters.selectFields ? queryParameters.selectFields : `-${this.Model.specialty.ref} -__v -language -updatedAt`).lean();
+            }).select(queryParameters.selectFields ? queryParameters.selectFields :
+                `-${this.Model.specialty.ref} -__v -language -updatedAt`).lean();
 
             if (specialtyItem.prices && Array.isArray(specialtyItem.prices)) {
               for (const price of specialtyItem.prices) {
@@ -178,7 +187,7 @@ class SpecialtiesService {
     }
 
 
-    return {data:findSpecialty};
+    return {data: findSpecialty};
   }
 
   async getTranslatesAndPopulates(modelName, model, translateModel, language, select, populateOptions = []) {
