@@ -785,6 +785,9 @@ paths:
           required: false
         - in: query
           name: format
+        - in: query
+          name: structureType
+          description: Bu structureType code bo'ladi masalan (11)
           schema:
             type: string
           required: false
