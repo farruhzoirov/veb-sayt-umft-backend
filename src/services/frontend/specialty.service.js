@@ -18,6 +18,7 @@ const TopicTranslate = require("../../models/translate/topics.model");
 const Theme = require("../../models/data/themes.model");
 
 const Employee = require("../../models/data/employee.model");
+const {Types} = require("mongoose");
 
 
 class SpecialtiesService {
@@ -64,7 +65,8 @@ class SpecialtiesService {
     if (!queryParameters.filters.department && queryParameters.filters.structureType) {
       console.log('StructureTypeInside', queryParameters.filters.structureType)
       const departmentIds = await Department.find({"structureType.code": queryParameters.filters.structureType }).distinct('_id').lean();
-      query.department = {$in: departmentIds};
+      const departmentObjectIds = departmentIds.map(id => new Types.ObjectId(id));
+      query.department = {$in: departmentObjectIds};
     }
 
     if (queryParameters.filters.degree) {
