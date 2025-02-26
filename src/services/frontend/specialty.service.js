@@ -107,7 +107,8 @@ class SpecialtiesService {
       const translation = departmentTranslations.find(dt => dt.department.toString() === dep._id.toString());
       departmentMap[dep._id] = {
         _id: dep._id,
-        name: translation ? translation.name : null,
+        name: translation?.name ? translation.name : null,
+        description: translation?.description ? translation.description : '',
         specialties: [],
       };
     });
