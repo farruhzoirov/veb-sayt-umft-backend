@@ -50,6 +50,8 @@ class SpecialtiesService {
       throw BaseError.BadRequest("Language doesn't exists which matches to this slug");
     }
 
+    console.log("StructureType", queryParameters.filters.structureType)
+
     let specialtiesList;
 
     const query = {};
@@ -60,7 +62,9 @@ class SpecialtiesService {
     }
 
     if (!queryParameters.filters.department && queryParameters.filters.structureType) {
+      console.log('StructureTypeInside', queryParameters.filters.structureType)
       const departmentIds = await Department.find({"structureType.code": queryParameters.filters.structureType }).distinct('_id').lean();
+      console.log(departmentIds);
       query.department = {$in: departmentIds};
     }
 
