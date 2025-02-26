@@ -101,27 +101,31 @@ class SpecialtiesService {
     }
 
     specialtiesList = specialtiesList.filter((item) => item.name);
+    let total = await Specialty.countDocuments(query);
 
-    const departmentMap = {};
-    departments.forEach(dep => {
-      const translation = departmentTranslations.find(dt => dt.department.toString() === dep._id.toString());
-      departmentMap[dep._id] = {
-        _id: dep._id,
-        name: translation?.name ? translation.name : null,
-        description: translation?.description ? translation.description : '',
-        specialties: [],
-      };
-    });
+    if (departments.length) {
+      const departmentMap = {};
+      departments.forEach(dep => {
+        const translation = departmentTranslations.find(dt => dt.department.toString() === dep._id.toString());
+        departmentMap[dep._id] = {
+          _id: dep._id,
+          name: translation?.name ? translation.name : null,
+          description: translation?.description ? translation.description : '',
+          specialties: [],
+        };
+      });
 
-    specialtiesList.forEach((spec) => {
-      if (departmentMap[spec.department]) {
-        departmentMap[spec.department].specialties.push(spec);
-      }
-    })
+      specialtiesList.forEach((spec) => {
+        if (departmentMap[spec.department]) {
+          departmentMap[spec.department].specialties.push(spec);
+        }
+      })
 
-    const total = await Specialty.countDocuments(query);
+      total = await Specialty.countDocuments(query);
+      return {data: Object.values(departmentMap), total: total};
+    }
 
-    return {data: Object.values(departmentMap), total: total};
+    return {data: specialtiesList, total: total};
   }
 
 
