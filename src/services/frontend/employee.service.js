@@ -37,16 +37,10 @@ class EmployeeService {
     }).lean();
 
     if (!findEmployeesByStaffPosition.length) {
-      return []
+      return [];
     }
 
     return findEmployeesByStaffPosition;
-    // const employeeId = await findEmployeesByStaffPosition.distinct('employee');
-    // const getEmployees = await Employee.find({_id: {$in:employeeId}}).lean();
-
-    // if (!getEmployees.length) {
-    //   return [];
-    // }
 
   }
 }

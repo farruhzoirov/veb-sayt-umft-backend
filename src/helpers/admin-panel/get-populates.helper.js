@@ -1,4 +1,4 @@
-const {Model, TranslateModel} = require("../../common/constants/models.constants");
+  const {Model, TranslateModel} = require("../../common/constants/models.constants");
 const mongoose = require("mongoose");
 const {getModelsTranslateHelper, getModelsHelper} = require("./get-models.helper");
 const BaseError = require("../../errors/base.error");

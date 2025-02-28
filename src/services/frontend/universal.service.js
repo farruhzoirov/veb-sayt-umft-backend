@@ -1,8 +1,6 @@
 const Language = require('../../models/settings/language.model');
 
 const {Model, TranslateModel} = require('../../common/constants/models.constants');
-
-
 // For Getting default language helper
 const getDefaultLanguageHelper = require('../../helpers/frontend/get-default-language.helper');
 const BaseError = require("../../errors/base.error");
@@ -108,8 +106,6 @@ class UniversalService {
       slug: req.params.slug,
       language: req.query.language || defaultLanguage.slug
     }
-
-    console.log("Page", queryParameters)
 
     if (!queryParameters.slug) {
       throw BaseError.BadRequest('Slug is required');
